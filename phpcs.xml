@@ -8,6 +8,7 @@
     <arg value="nps"/>
 
     <!-- Directories and files to be checked -->
+    <file>cms</file>
     <file>src</file>
 
     <!-- Include full Doctrine Coding Standard -->

@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import out from 'cli-output';
 import path from 'path';
 import recursive from 'recursive-readdir-sync';
-import {minify} from 'terser';
+import { minify } from 'terser';
 import appRootPath from 'app-root-path';
 
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
@@ -28,7 +28,7 @@ if (fs.existsSync(manifestLocation)) {
 }
 
 // Process a single source JS file
-export async function processSourceFile(filePath, pathInsert) {
+export async function processSourceFile (filePath, pathInsert) {
     const ext = path.extname(filePath);
 
     let relativePath = filePath.slice(
@@ -88,7 +88,7 @@ export async function processSourceFile(filePath, pathInsert) {
 
         // Create directory if it doesn't exist
         if (!fs.existsSync(outputFullPathDir)) {
-            fs.mkdirSync(outputFullPathDir, {recursive: true});
+            fs.mkdirSync(outputFullPathDir, { recursive: true });
         }
 
         // Write the sourcemap to disk
@@ -118,7 +118,7 @@ export async function processSourceFile(filePath, pathInsert) {
     }
 }
 
-export async function processLibFile(filePath, outputFileName, pathInsert) {
+export async function processLibFile (filePath, outputFileName, pathInsert) {
     let writeFilePath = jsOutputDir;
 
     if (pathInsert) {

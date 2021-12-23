@@ -155,7 +155,7 @@ export default (prod) => {
 
             // If the directory doesn't exist, create it
             if (!fs.existsSync(cssOutputFile)) {
-                fs.mkdirSync(cssOutputFile, {recursive: true});
+                fs.mkdirSync(cssOutputFile, { recursive: true });
             }
 
             // Now add the file name to the output filename
