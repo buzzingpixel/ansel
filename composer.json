@@ -15,12 +15,18 @@
     "autoload": {
         "psr-4": {
             "BuzzingPixel\\Ansel\\": "src/",
+            "BuzzingPixel\\AnselConfig\\": "config/",
             "BuzzingPixel\\AnselCms\\": "cms/"
         }
     },
     "config": {
         "bin-compat": "full",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     },
     "extra": {
         "changelogUrl": "https://github.com/buzzingpixel/ansel-craft/blob/master/changelog.md",
@@ -36,7 +42,7 @@
         "themePath": "assetsDist"
     },
     "minimum-stability": "dev",
-    "prefer-stable" : true,
+    "prefer-stable": true,
     "repositories": {
         "expression-engine": {
             "type": "package",
@@ -52,7 +58,9 @@
         }
     },
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "buzzingpixel/container": "^1.1"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.31.0",

@@ -13,3 +13,6 @@ if (! class_exists(Yii::class)) {
 if (! class_exists(Craft::class)) {
     include_once __DIR__ . '/vendor/craftcms/cms/src/Craft.php';
 }
+
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Template/Variables/ModifiableTrait.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/fieldtypes/EE_Fieldtype.php';

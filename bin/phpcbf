@@ -1,0 +1,4 @@
+#!/usr/bin/env php74
+<?php
+
+require dirname(__DIR__) . '/vendor/squizlabs/php_codesniffer/bin/phpcbf';
