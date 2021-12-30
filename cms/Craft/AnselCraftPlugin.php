@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselCms\Craft;
 
-class AnselCraftPlugin
+use craft\base\Plugin;
+
+class AnselCraftPlugin extends Plugin
 {
 }
