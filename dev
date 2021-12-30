@@ -34,14 +34,14 @@ allArgsExceptFirst=${@:2};
 secondArg=${2};
 
 # Source all of our executable files — these should contain functions that can be run
-for f in $(find bin -name '*.sh'); do
+for f in $(find devBin -name '*.sh'); do
     chmod +x ${f};
     source ${f};
 done
 
 # If no command/function name to run was provided, list out the functions available
 if [[ -z "${cmd}" || ${secondArg} == "help" ]]; then
-    source bin/.help;
+    source devBin/.help;
     exit 0;
 fi
 
