@@ -37,3 +37,4 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Library/Data/SerializableEntity.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/Model.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Addon/Module.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/Query/Builder.php';

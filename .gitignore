@@ -9,6 +9,7 @@
 # Tools
 #------------------------------------
 
+dev.php
 .php_cs.cache
 .phpunit.result.cache
 /docker-compose.env.yml
