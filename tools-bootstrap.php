@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.PHP.GlobalKeyword.NotAllowed
+// phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint
+// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
+
 const ANSEL_ENV  = 'testing';
 const BASEPATH   = __DIR__ . '/vendor/expressionengine/expressionengine/system/ee/legacy/';
 const ANSEL_NAME = 'Ansel';
@@ -17,6 +21,35 @@ if (! class_exists(Yii::class)) {
 
 if (! class_exists(Craft::class)) {
     include_once __DIR__ . '/vendor/craftcms/cms/src/Craft.php';
+}
+
+/**
+ * @phpstan-ignore-next-line
+ * @noinspection PhpMissingReturnTypeInspection
+ */
+function get_instance()
+{
+    global $CI;
+
+    return $CI;
+}
+
+/** @phpstan-ignore-next-line */
+function ee($dep = null)
+{
+    $facade = get_instance();
+
+    if (isset($dep) && isset($facade->di)) {
+        $args = func_get_args();
+
+        return call_user_func_array(
+            /** @phpstan-ignore-next-line */
+            [$facade->di, 'make'],
+            $args,
+        );
+    }
+
+    return $facade;
 }
 
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Template/Variables/ModifiableTrait.php';

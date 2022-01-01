@@ -13,7 +13,6 @@ class EeQueryBuilderFactory
 {
     public function create(): Query
     {
-        /** @phpstan-ignore-next-line */
         return ee('db');
     }
 }
