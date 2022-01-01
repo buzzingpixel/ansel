@@ -11,6 +11,8 @@
 
 declare(strict_types=1);
 
+use BuzzingPixel\Ansel\Migrate\EeFieldVersionUpdater;
+use BuzzingPixel\Ansel\Migrate\EeModuleVersionUpdater;
 use BuzzingPixel\Ansel\Migrate\MigrationContract;
 use BuzzingPixel\Ansel\Migrate\Migrator;
 use BuzzingPixel\AnselCms\ExpressionEngine\legacy\Updates\V130\Legacy130FieldSettingsUpdater;
@@ -141,7 +143,21 @@ class Ansel_upd
             $legacy200ImagesUpdater->process();
         }
 
-        // TODO: Standard updates to make sure version number(s) are up to date
+        /**
+         * Ensure module and field records version numbers are up to date
+         */
+
+        $fieldVerUpdater = $this->container->get(
+            EeFieldVersionUpdater::class,
+        );
+        assert($fieldVerUpdater instanceof EeFieldVersionUpdater);
+        $fieldVerUpdater->update();
+
+        $moduleVerUpdater = $this->container->get(
+            EeModuleVersionUpdater::class,
+        );
+        assert($moduleVerUpdater instanceof EeModuleVersionUpdater);
+        $moduleVerUpdater->update();
 
         return true;
     }
