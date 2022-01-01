@@ -5,20 +5,19 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Migrate\Migrations;
 
 use BuzzingPixel\Ansel\Migrate\MigrationContract;
-use BuzzingPixel\Ansel\Shared\Meta;
-use ExpressionEngine\Model\Addon\Module;
+use ExpressionEngine\Model\Addon\Action;
 use ExpressionEngine\Service\Model\Facade as RecordService;
 use ExpressionEngine\Service\Model\Query\Builder;
 use PHPUnit\Framework\TestCase;
 
-class EeMigration0002AddModuleRecordTest extends TestCase
+class EeMigration0003AddLicensePingActionRecordTest extends TestCase
 {
     /** @var mixed[] */
     private array $calls = [];
 
     private bool $firstReturnsRecord;
 
-    private EeMigration0002AddModuleRecord $migration;
+    private EeMigration0003AddLicensePingActionRecord $migration;
 
     protected function setUp(): void
     {
@@ -28,10 +27,7 @@ class EeMigration0002AddModuleRecordTest extends TestCase
 
         $this->firstReturnsRecord = false;
 
-        $meta = new Meta('4.5.6');
-
-        $this->migration = new EeMigration0002AddModuleRecord(
-            $meta,
+        $this->migration = new EeMigration0003AddLicensePingActionRecord(
             $this->mockRecordService(),
         );
     }
@@ -53,7 +49,7 @@ class EeMigration0002AddModuleRecordTest extends TestCase
         );
 
         $mock->method('make')->willReturnCallback(
-            function (string $name): Module {
+            function (string $name): Action {
                 $this->calls[] = [
                     'object' => 'RecordService',
                     'method' => 'make',
@@ -90,17 +86,17 @@ class EeMigration0002AddModuleRecordTest extends TestCase
         );
 
         $mock->method('first')->willReturnCallback(
-            function (): ?Module {
+            function (): ?Action {
                 if (! $this->firstReturnsRecord) {
                     return null;
                 }
 
-                $mock = $this->createMock(Module::class);
+                $mock = $this->createMock(Action::class);
 
                 $mock->method('delete')->willReturnCallback(
-                    function () use ($mock): Module {
+                    function () use ($mock): Action {
                         $this->calls[] = [
-                            'object' => 'Module',
+                            'object' => 'Action',
                             'method' => 'delete',
                         ];
 
@@ -115,19 +111,19 @@ class EeMigration0002AddModuleRecordTest extends TestCase
         return $mock;
     }
 
-    private function mockRecord(): Module
+    private function mockRecord(): Action
     {
-        $mock = $this->createMock(Module::class);
+        $mock = $this->createMock(Action::class);
 
         $mock->method('setProperty')->willReturnCallback(
             function (
                 string $name,
-                string $value
+                $value
             ) use (
                 $mock
-            ): Module {
+            ): Action {
                 $this->calls[] = [
-                    'object' => 'Module',
+                    'object' => 'Action',
                     'method' => 'setProperty',
                     'name' => $name,
                     'value' => $value,
@@ -138,9 +134,9 @@ class EeMigration0002AddModuleRecordTest extends TestCase
         );
 
         $mock->method('save')->willReturnCallback(
-            function () use ($mock): Module {
+            function () use ($mock): Action {
                 $this->calls[] = [
-                    'object' => 'Module',
+                    'object' => 'Action',
                     'method' => 'save',
                 ];
 
@@ -170,13 +166,19 @@ class EeMigration0002AddModuleRecordTest extends TestCase
                 [
                     'object' => 'RecordService',
                     'method' => 'get',
-                    'name' => 'Module',
+                    'name' => 'Action',
                 ],
                 [
                     'object' => 'Builder',
                     'method' => 'filter',
-                    'property' => 'module_name',
+                    'property' => 'class',
                     'value' => 'Ansel',
+                ],
+                [
+                    'object' => 'Builder',
+                    'method' => 'filter',
+                    'property' => 'method',
+                    'value' => 'licensePing',
                 ],
             ],
             $this->calls,
@@ -192,45 +194,45 @@ class EeMigration0002AddModuleRecordTest extends TestCase
                 [
                     'object' => 'RecordService',
                     'method' => 'get',
-                    'name' => 'Module',
+                    'name' => 'Action',
                 ],
                 [
                     'object' => 'Builder',
                     'method' => 'filter',
-                    'property' => 'module_name',
+                    'property' => 'class',
                     'value' => 'Ansel',
+                ],
+                [
+                    'object' => 'Builder',
+                    'method' => 'filter',
+                    'property' => 'method',
+                    'value' => 'licensePing',
                 ],
                 [
                     'object' => 'RecordService',
                     'method' => 'make',
-                    'name' => 'Module',
+                    'name' => 'Action',
                 ],
                 [
-                    'object' => 'Module',
+                    'object' => 'Action',
                     'method' => 'setProperty',
-                    'name' => 'module_name',
+                    'name' => 'class',
                     'value' => 'Ansel',
                 ],
                 [
-                    'object' => 'Module',
+                    'object' => 'Action',
                     'method' => 'setProperty',
-                    'name' => 'module_version',
-                    'value' => '4.5.6',
+                    'name' => 'method',
+                    'value' => 'licensePing',
                 ],
                 [
-                    'object' => 'Module',
+                    'object' => 'Action',
                     'method' => 'setProperty',
-                    'name' => 'has_cp_backend',
-                    'value' => 'y',
+                    'name' => 'csrf_exempt',
+                    'value' => true,
                 ],
                 [
-                    'object' => 'Module',
-                    'method' => 'setProperty',
-                    'name' => 'has_publish_fields',
-                    'value' => 'n',
-                ],
-                [
-                    'object' => 'Module',
+                    'object' => 'Action',
                     'method' => 'save',
                 ],
             ],
@@ -247,13 +249,19 @@ class EeMigration0002AddModuleRecordTest extends TestCase
                 [
                     'object' => 'RecordService',
                     'method' => 'get',
-                    'name' => 'Module',
+                    'name' => 'Action',
                 ],
                 [
                     'object' => 'Builder',
                     'method' => 'filter',
-                    'property' => 'module_name',
+                    'property' => 'class',
                     'value' => 'Ansel',
+                ],
+                [
+                    'object' => 'Builder',
+                    'method' => 'filter',
+                    'property' => 'method',
+                    'value' => 'licensePing',
                 ],
             ],
             $this->calls,
@@ -271,16 +279,22 @@ class EeMigration0002AddModuleRecordTest extends TestCase
                 [
                     'object' => 'RecordService',
                     'method' => 'get',
-                    'name' => 'Module',
+                    'name' => 'Action',
                 ],
                 [
                     'object' => 'Builder',
                     'method' => 'filter',
-                    'property' => 'module_name',
+                    'property' => 'class',
                     'value' => 'Ansel',
                 ],
                 [
-                    'object' => 'Module',
+                    'object' => 'Builder',
+                    'method' => 'filter',
+                    'property' => 'method',
+                    'value' => 'licensePing',
+                ],
+                [
+                    'object' => 'Action',
                     'method' => 'delete',
                 ],
             ],
