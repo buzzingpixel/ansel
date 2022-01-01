@@ -10,14 +10,14 @@ use CI_DB_forge;
 use ExpressionEngine\Service\Database\Query;
 use PHPUnit\Framework\TestCase;
 
-class EeMigration0001AddMigrationsTableTest extends TestCase
+class E0001AddMigrationsTableTest extends TestCase
 {
     /** @var mixed[] */
     private array $calls = [];
 
     private bool $tableExistsReturn = false;
 
-    private EeMigration0001AddMigrationsTable $migration;
+    private E0001AddMigrationsTable $migration;
 
     protected function setUp(): void
     {
@@ -27,7 +27,7 @@ class EeMigration0001AddMigrationsTableTest extends TestCase
 
         $this->tableExistsReturn = false;
 
-        $this->migration = new EeMigration0001AddMigrationsTable(
+        $this->migration = new E0001AddMigrationsTable(
             $this->mockForge(),
             $this->mockQueryBuilderFactory(),
         );

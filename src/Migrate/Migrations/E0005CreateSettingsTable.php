@@ -8,7 +8,7 @@ use BuzzingPixel\Ansel\Migrate\MigrationContract;
 use BuzzingPixel\Ansel\Shared\EeQueryBuilderFactory;
 use CI_DB_forge;
 
-class EeMigration0005CreateSettingsTable implements MigrationContract
+class E0005CreateSettingsTable implements MigrationContract
 {
     private CI_DB_forge $dbForge;
 

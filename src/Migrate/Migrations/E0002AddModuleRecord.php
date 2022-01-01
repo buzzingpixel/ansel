@@ -11,7 +11,7 @@ use ExpressionEngine\Service\Model\Facade as RecordService;
 
 use function assert;
 
-class EeMigration0002AddModuleRecord implements MigrationContract
+class E0002AddModuleRecord implements MigrationContract
 {
     private Meta $meta;
 

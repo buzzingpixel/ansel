@@ -10,7 +10,7 @@ use ExpressionEngine\Service\Model\Facade as RecordService;
 
 use function assert;
 
-class EeMigration0003AddLicensePingActionRecord implements MigrationContract
+class E0003AddLicensePingActionRecord implements MigrationContract
 {
     private RecordService $recordService;
 

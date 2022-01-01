@@ -10,14 +10,14 @@ use ExpressionEngine\Service\Model\Facade as RecordService;
 use ExpressionEngine\Service\Model\Query\Builder;
 use PHPUnit\Framework\TestCase;
 
-class EeMigration0003AddLicensePingActionRecordTest extends TestCase
+class E0003AddLicensePingActionRecordTest extends TestCase
 {
     /** @var mixed[] */
     private array $calls = [];
 
     private bool $firstReturnsRecord;
 
-    private EeMigration0003AddLicensePingActionRecord $migration;
+    private E0003AddLicensePingActionRecord $migration;
 
     protected function setUp(): void
     {
@@ -27,7 +27,7 @@ class EeMigration0003AddLicensePingActionRecordTest extends TestCase
 
         $this->firstReturnsRecord = false;
 
-        $this->migration = new EeMigration0003AddLicensePingActionRecord(
+        $this->migration = new E0003AddLicensePingActionRecord(
             $this->mockRecordService(),
         );
     }

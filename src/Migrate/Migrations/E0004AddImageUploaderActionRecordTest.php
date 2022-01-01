@@ -10,14 +10,14 @@ use ExpressionEngine\Service\Model\Facade as RecordService;
 use ExpressionEngine\Service\Model\Query\Builder;
 use PHPUnit\Framework\TestCase;
 
-class EeMigration0004AddImageUploaderActionRecordTest extends TestCase
+class E0004AddImageUploaderActionRecordTest extends TestCase
 {
     /** @var mixed[] */
     private array $calls = [];
 
     private bool $firstReturnsRecord;
 
-    private EeMigration0004AddImageUploaderActionRecord $migration;
+    private E0004AddImageUploaderActionRecord $migration;
 
     protected function setUp(): void
     {
@@ -27,7 +27,7 @@ class EeMigration0004AddImageUploaderActionRecordTest extends TestCase
 
         $this->firstReturnsRecord = false;
 
-        $this->migration = new EeMigration0004AddImageUploaderActionRecord(
+        $this->migration = new E0004AddImageUploaderActionRecord(
             $this->mockRecordService(),
         );
     }

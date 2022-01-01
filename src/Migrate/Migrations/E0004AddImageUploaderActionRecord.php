@@ -10,7 +10,7 @@ use ExpressionEngine\Service\Model\Facade as RecordService;
 
 use function assert;
 
-class EeMigration0004AddImageUploaderActionRecord implements MigrationContract
+class E0004AddImageUploaderActionRecord implements MigrationContract
 {
     private RecordService $recordService;
 

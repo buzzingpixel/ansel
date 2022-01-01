@@ -11,14 +11,14 @@ use ExpressionEngine\Service\Model\Facade as RecordService;
 use ExpressionEngine\Service\Model\Query\Builder;
 use PHPUnit\Framework\TestCase;
 
-class EeMigration0002AddModuleRecordTest extends TestCase
+class E0002AddModuleRecordTest extends TestCase
 {
     /** @var mixed[] */
     private array $calls = [];
 
     private bool $firstReturnsRecord;
 
-    private EeMigration0002AddModuleRecord $migration;
+    private E0002AddModuleRecord $migration;
 
     protected function setUp(): void
     {
@@ -30,7 +30,7 @@ class EeMigration0002AddModuleRecordTest extends TestCase
 
         $meta = new Meta('4.5.6');
 
-        $this->migration = new EeMigration0002AddModuleRecord(
+        $this->migration = new E0002AddModuleRecord(
             $meta,
             $this->mockRecordService(),
         );
