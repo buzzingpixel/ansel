@@ -18,27 +18,30 @@ use function dirname;
 use function file_get_contents;
 use function json_decode;
 
-class ContainerBuilder
+class ContainerManager
 {
-    public function build(): ContainerInterface
+    private static ?ContainerInterface $builtContainer = null;
+
+    public function container(): ContainerInterface
     {
+        if (self::$builtContainer !== null) {
+            return self::$builtContainer;
+        }
+
         $composerJson = json_decode(
             (string) file_get_contents(
                 dirname(__DIR__) . '/composer.json',
             )
         );
 
-        return new Container(
+        $container = new Container(
             [
                 CI_DB_forge::class => static function (): CI_DB_forge {
                     /**
                      * Make sure the forge class is loaded
-                     *
-                     * @phpstan-ignore-next-line
                      */
                     ee()->load->dbforge();
 
-                    /** @phpstan-ignore-next-line */
                     return ee()->dbforge;
                 },
                 MigrationsTableContract::class => static function (
@@ -58,7 +61,6 @@ class ContainerBuilder
                     );
                 },
                 Facade::class => static function (): Facade {
-                    /** @phpstan-ignore-next-line */
                     return ee('Model');
                 },
             ],
@@ -71,5 +73,9 @@ class ContainerBuilder
                 ),
             ],
         );
+
+        self::$builtContainer = $container;
+
+        return $container;
     }
 }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Shared\Meta;
-use BuzzingPixel\AnselConfig\ContainerBuilder;
+use BuzzingPixel\AnselConfig\ContainerManager;
 
 const ANSEL_ENV = 'ee';
 
@@ -13,7 +13,7 @@ if (file_exists($autoloadFile)) {
     require_once $autoloadFile;
 }
 
-$container = (new ContainerBuilder())->build();
+$container = (new ContainerManager())->container();
 
 /** @noinspection PhpUnhandledExceptionInspection */
 $meta = $container->get(Meta::class);

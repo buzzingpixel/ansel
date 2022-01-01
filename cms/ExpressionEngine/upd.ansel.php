@@ -20,7 +20,7 @@ use BuzzingPixel\AnselCms\ExpressionEngine\legacy\Updates\V130\Legacy130ImagesUp
 use BuzzingPixel\AnselCms\ExpressionEngine\legacy\Updates\V130\Legacy130SettingsUpdater;
 use BuzzingPixel\AnselCms\ExpressionEngine\legacy\Updates\V140\Legacy140ImagesUpdater;
 use BuzzingPixel\AnselCms\ExpressionEngine\legacy\Updates\V200\Legacy200ImagesUpdater;
-use BuzzingPixel\AnselConfig\ContainerBuilder;
+use BuzzingPixel\AnselConfig\ContainerManager;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -31,7 +31,7 @@ class Ansel_upd
 
     public function __construct()
     {
-        $this->container = (new ContainerBuilder())->build();
+        $this->container = (new ContainerManager())->container();
     }
 
     /**
