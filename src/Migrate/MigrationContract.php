@@ -8,6 +8,8 @@ interface MigrationContract
 {
     public const EE = 'ee';
 
+    public const CRAFT = 'craft';
+
     public function for(): string;
 
     public function up(): bool;

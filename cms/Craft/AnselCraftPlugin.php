@@ -10,14 +10,20 @@ use craft\services\Fields;
 use yii\base\Event;
 
 use function define;
+use function defined;
 
+/**
+ * @codeCoverageIgnore
+ */
 class AnselCraftPlugin extends Plugin
 {
     public function init(): void
     {
         parent::init();
 
-        define('ANSEL_ENV', 'craft');
+        if (! defined('ANSEL_ENV')) {
+            define('ANSEL_ENV', 'craft');
+        }
 
         Event::on(
             Fields::class,

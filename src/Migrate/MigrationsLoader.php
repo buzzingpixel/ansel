@@ -7,6 +7,7 @@ namespace BuzzingPixel\Ansel\Migrate;
 use DirectoryIterator;
 use Psr\Container\ContainerInterface;
 use SplFileInfo;
+use Throwable;
 
 use function array_filter;
 use function array_map;
@@ -50,7 +51,10 @@ class MigrationsLoader
                 continue;
             }
 
-            include_once $fileInfo->getPathname();
+            try {
+                include_once $fileInfo->getPathname();
+            } catch (Throwable $e) {
+            }
         }
 
         $migrationClasses = array_filter(
@@ -73,14 +77,23 @@ class MigrationsLoader
         ksort($migrationClasses, SORT_NUMERIC);
 
         $migrations = array_map(
-            function (string $className): MigrationContract {
-                $class = $this->container->get($className);
+            function (string $className): ?MigrationContract {
+                try {
+                    $class = $this->container->get($className);
 
-                assert($class instanceof MigrationContract);
+                    assert($class instanceof MigrationContract);
 
-                return $class;
+                    return $class;
+                } catch (Throwable $e) {
+                    return null;
+                }
             },
             $migrationClasses,
+        );
+
+        $migrations = array_filter(
+            $migrations,
+            static fn (?MigrationContract $m) => $m !== null,
         );
 
         if ($for === null) {

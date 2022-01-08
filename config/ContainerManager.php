@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace BuzzingPixel\AnselConfig;
 
 use BuzzingPixel\Ansel\Migrate\MigrationsTableContract;
+use BuzzingPixel\Ansel\Migrate\MigrationsTableCraft;
 use BuzzingPixel\Ansel\Migrate\MigrationsTableExpressionEngine;
 use BuzzingPixel\Ansel\Shared\Meta;
 use BuzzingPixel\Container\ConstructorParamConfig;
 use BuzzingPixel\Container\Container;
 use CI_DB_forge;
+use Craft;
+use craft\db\Connection as DbConnection;
 use ExpressionEngine\Service\Model\Facade;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
@@ -47,21 +50,35 @@ class ContainerManager
                 MigrationsTableContract::class => static function (
                     ContainerInterface $container
                 ): MigrationsTableContract {
-                    /** @phpstan-ignore-next-line */
-                    if (ANSEL_ENV !== 'ee') {
-                        throw new RuntimeException(
-                            'Class is not implemented for platform' .
-                                ANSEL_ENV,
-                        );
-                    }
+                    switch (ANSEL_ENV) {
+                        /** @phpstan-ignore-next-line */
+                        case 'ee':
+                            /** @phpstan-ignore-next-line */
+                            return $container->get(
+                                MigrationsTableExpressionEngine::class,
+                            );
 
-                    /** @phpstan-ignore-next-line */
-                    return $container->get(
-                        MigrationsTableExpressionEngine::class,
-                    );
+                        /** @phpstan-ignore-next-line */
+                        case 'craft':
+                            /** @phpstan-ignore-next-line */
+                            return $container->get(
+                                MigrationsTableCraft::class,
+                            );
+
+                        default:
+                            $msg = 'Class is not implemented for platform ';
+
+                            throw new RuntimeException(
+                                $msg . ANSEL_ENV,
+                            );
+                    }
                 },
                 Facade::class => static function (): Facade {
                     return ee('Model');
+                },
+                DbConnection::class => static function (): DbConnection {
+                    /** @phpstan-ignore-next-line */
+                    return Craft::$app->getDb();
                 },
             ],
             [

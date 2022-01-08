@@ -11,6 +11,9 @@ use yii\db\Schema;
 
 use function assert;
 
+/**
+ * @codeCoverageIgnore
+ */
 class AnselCraftField extends Field
 {
     private static ?Meta $meta = null;
