@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselCms\Craft;
 
+use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
+use craft\helpers\UrlHelper;
 use craft\services\Fields;
 use yii\base\Event;
+use yii\web\Response;
 
 use function define;
 use function defined;
@@ -33,6 +36,14 @@ class AnselCraftPlugin extends Plugin
             ): void {
                 $event->types[] = AnselCraftField::class;
             },
+        );
+    }
+
+    public function getSettingsResponse(): Response
+    {
+        /** @phpstan-ignore-next-line */
+        return Craft::$app->controller->redirect(
+            UrlHelper::cpUrl('ansel'),
         );
     }
 }
