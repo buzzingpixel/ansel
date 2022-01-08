@@ -24,7 +24,7 @@ class C0004RemoveOldLicensingSettingsTest extends TestCase
 
         $this->calls = [];
 
-        $this->tableExistsReturn = 'false';
+        $this->tableExists = '';
 
         $this->migration = new C0004RemoveOldLicensingSettings(
             $this->mockDb(),
