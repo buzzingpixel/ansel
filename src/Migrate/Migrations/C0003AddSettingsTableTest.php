@@ -258,8 +258,6 @@ class C0003AddSettingsTableTest extends TestCase
                 'table' => '{{%ansel_settings}}',
                 'columns' => ['settingsType', 'settingsKey', 'settingsValue'],
                 'rows' => [
-                    ['string', 'licenseKey', null],
-                    ['int', 'phoneHome', 0],
                     ['string', 'defaultHost', null],
                     ['int', 'defaultMaxQty', null],
                     ['int', 'defaultImageQuality', 90],
@@ -275,8 +273,6 @@ class C0003AddSettingsTableTest extends TestCase
                     ['bool', 'defaultRequireCover', 'n'],
                     ['string', 'defaultCoverLabel', null],
                     ['bool', 'hideSourceSaveInstructions', 'n'],
-                    ['string', 'encoding', ''],
-                    ['string', 'encodingData', ''],
                 ],
             ],
             $this->calls[3],

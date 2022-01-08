@@ -61,8 +61,6 @@ class C0003AddSettingsTable implements MigrationContract
             '{{%ansel_settings}}',
             ['settingsType', 'settingsKey', 'settingsValue'],
             [
-                ['string', 'licenseKey', null],
-                ['int', 'phoneHome', 0],
                 ['string', 'defaultHost', null],
                 ['int', 'defaultMaxQty', null],
                 ['int', 'defaultImageQuality', 90],
@@ -78,8 +76,6 @@ class C0003AddSettingsTable implements MigrationContract
                 ['bool', 'defaultRequireCover', 'n'],
                 ['string', 'defaultCoverLabel', null],
                 ['bool', 'hideSourceSaveInstructions', 'n'],
-                ['string', 'encoding', ''],
-                ['string', 'encodingData', ''],
             ],
         )->execute();
 
