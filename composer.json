@@ -60,7 +60,8 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-json": "*",
-        "buzzingpixel/container": "^1.1"
+        "buzzingpixel/container": "^1.1",
+        "twig/twig": "^2"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.31.0",
