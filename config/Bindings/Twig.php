@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace BuzzingPixel\AnselConfig\Bindings;
 
 use BuzzingPixel\Ansel\AnselSrc;
+use BuzzingPixel\Ansel\Shared\CraftTwigLoader;
 use BuzzingPixel\AnselConfig\AnselConfig;
+use Craft;
+use craft\web\twig\TemplateLoader;
 use Psr\Container\ContainerInterface;
+use RuntimeException;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader;
 
@@ -20,12 +24,8 @@ class Twig
     public static function get(): array
     {
         return [
-            TwigEnvironment::class => static function (
-                ContainerInterface $container
-            ): TwigEnvironment {
-                $loader = $container->get(FilesystemLoader::class);
-
-                assert($loader instanceof FilesystemLoader);
+            FilesystemLoader::class => static function (): FilesystemLoader {
+                $loader = new FilesystemLoader();
 
                 $loader->addPath(
                     AnselConfig::getPath(),
@@ -37,10 +37,50 @@ class Twig
                     'AnselSrc',
                 );
 
-                return new TwigEnvironment(
-                    $loader,
-                    [],
-                );
+                return $loader;
+            },
+            TwigEnvironment::class => static function (
+                ContainerInterface $container
+            ): TwigEnvironment {
+                $filesystemLoader = $container->get(FilesystemLoader::class);
+
+                assert($filesystemLoader instanceof FilesystemLoader);
+
+                switch (ANSEL_ENV) {
+                    /** @phpstan-ignore-next-line */
+                    case 'ee':
+                        return new TwigEnvironment(
+                            $filesystemLoader,
+                            [],
+                        );
+
+                    /** @phpstan-ignore-next-line */
+                    case 'craft':
+                        /** @phpstan-ignore-next-line */
+                        $twig = Craft::$app->getView()->getTwig();
+
+                        $craftLoader = $twig->getLoader();
+
+                        assert(
+                            $craftLoader instanceof TemplateLoader,
+                        );
+
+                        $twig->setLoader(
+                            new CraftTwigLoader(
+                                $filesystemLoader,
+                                $craftLoader,
+                            ),
+                        );
+
+                        return $twig;
+
+                    default:
+                        $msg = 'Class is not implemented for platform ';
+
+                        throw new RuntimeException(
+                            $msg . ANSEL_ENV,
+                        );
+                }
             },
         ];
     }

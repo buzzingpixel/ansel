@@ -1,34 +1,34 @@
 <?php
 
-/** @noinspection PhpIllegalPsrClassPathInspection */
-
 declare(strict_types=1);
 
-// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
-// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
-// phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
-// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
-// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
-use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\GetIndexAction;
+namespace BuzzingPixel\AnselCms\Craft\Controllers\CpSettings;
+
+use BuzzingPixel\Ansel\Cp\Settings\Craft\Index\GetIndexAction;
 use BuzzingPixel\AnselConfig\ContainerManager;
+use craft\web\Controller;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use yii\web\Response;
 
-class Ansel_mcp
+use function assert;
+
+/**
+ * @codeCoverageIgnore
+ */
+class GetCpSettingsController extends Controller
 {
     /**
-     * @return string[]
-     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function index(): array
+    public function actionIndex(): Response
     {
         $container = (new ContainerManager())->container();
 
@@ -38,9 +38,12 @@ class Ansel_mcp
 
         $model = $action->render();
 
-        return [
-            'heading' => $model->heading(),
-            'body' => $model->content(),
-        ];
+        return $this->renderTemplate(
+            'ansel/Cp.twig',
+            [
+                'title' => $model->title(),
+                'content' => $model->content(),
+            ],
+        );
     }
 }
