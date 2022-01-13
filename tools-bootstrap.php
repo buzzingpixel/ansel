@@ -73,3 +73,7 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/Query/Builder.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Addon/Action.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Addon/Fieldtype.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Library/CP/URL.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/URL/URLFactory.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Csrf.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/core/Lang.php';

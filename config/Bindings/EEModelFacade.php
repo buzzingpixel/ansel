@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig\Bindings;
 
-use ExpressionEngine\Service\Model\Facade;
+use ExpressionEngine\Service\Model\Facade as ModelFacade;
 
-class EEFacade
+class EEModelFacade
 {
     /**
      * @return callable[]
@@ -14,7 +14,7 @@ class EEFacade
     public static function get(): array
     {
         return [
-            Facade::class => static function (): Facade {
+            ModelFacade::class => static function (): ModelFacade {
                 return ee('Model');
             },
         ];

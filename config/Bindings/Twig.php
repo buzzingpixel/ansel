@@ -51,7 +51,10 @@ class Twig
                     case 'ee':
                         return new TwigEnvironment(
                             $filesystemLoader,
-                            [],
+                            [
+                                'debug' => true,
+                                'strict_variables' => true,
+                            ],
                         );
 
                     /** @phpstan-ignore-next-line */

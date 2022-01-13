@@ -6,7 +6,7 @@ namespace BuzzingPixel\AnselConfig\Bindings;
 
 use CI_DB_forge;
 
-class CIDBForge
+class EECIDBForge
 {
     /**
      * @return callable[]

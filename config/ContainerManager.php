@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace BuzzingPixel\AnselConfig;
 
 use BuzzingPixel\Ansel\Shared\Meta;
-use BuzzingPixel\AnselConfig\Bindings\CIDBForge;
 use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
-use BuzzingPixel\AnselConfig\Bindings\EEFacade;
+use BuzzingPixel\AnselConfig\Bindings\EECIDBForge;
+use BuzzingPixel\AnselConfig\Bindings\EECPURLFactory;
+use BuzzingPixel\AnselConfig\Bindings\EECsrf;
+use BuzzingPixel\AnselConfig\Bindings\EELang;
+use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
+use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\Container\ConstructorParamConfig;
 use BuzzingPixel\Container\Container;
@@ -37,10 +41,14 @@ class ContainerManager
 
         $container = new Container(
             array_merge(
-                CIDBForge::get(),
                 CraftDbConnection::get(),
-                EEFacade::get(),
+                EECIDBForge::get(),
+                EECPURLFactory::get(),
+                EECsrf::get(),
+                EELang::get(),
+                EEModelFacade::get(),
                 Migrations::get(),
+                SettingsRepository::get(),
                 Twig::get(),
             ),
             [
