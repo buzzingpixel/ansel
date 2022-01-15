@@ -16,7 +16,8 @@
         "psr-4": {
             "BuzzingPixel\\Ansel\\": "src/",
             "BuzzingPixel\\AnselConfig\\": "config/",
-            "BuzzingPixel\\AnselCms\\": "cms/"
+            "BuzzingPixel\\AnselCms\\": "cms/",
+            "BuzzingPixel\\AssetsDist\\": "assetsDist/"
         }
     },
     "config": {
