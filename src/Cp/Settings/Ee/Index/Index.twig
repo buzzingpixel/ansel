@@ -1,1 +1,48 @@
-TODO: Build settings page
+{# @var \BuzzingPixel\Ansel\Settings\SettingsCollection settingsCollection #}
+
+{% extends '@AnselSrc/Cp/Settings/Ee/SettingsLayout.twig' %}
+
+{% block content %}
+    {% for settingItem in settingsCollection.items %}
+        <fieldset>
+            <div class="field-instruct">
+                <label for="{{ settingItem.key }}">
+                    {{ settingItem.label }}
+                </label>
+                {% if settingItem.description %}
+                    <em>{{ settingItem.description }}</em>
+                {% endif %}
+            </div>
+            <div class="field-control">
+                {% if settingItem.type == constant('TYPE_BOOL', settingItem) %}
+                    <button
+                        id="{{ settingItem.key }}"
+                        type="button"
+                        class="toggle-btn yes_no {% if settingItem.value %}on{% else %}off{% endif %}"
+                        data-toggle-for="{{ settingItem.key }}"
+                        data-state="{% if settingItem.value %}on{% else %}off{% endif %}"
+                        role="switch"
+                        aria-checked="{% if settingItem.value %}true{% else %}false{% endif %}"
+                        alt="{% if settingItem.value %}on{% else %}off{% endif %}"
+                    >
+                        <input
+                            type="hidden"
+                            name="{{ settingItem.key }}"
+                            value="{% if settingItem.value %}y{% else %}n{% endif %}"
+                        >
+                        <span class="slider"></span>
+                    </button>
+                {% else %}
+                    <input
+                        id="{{ settingItem.key }}"
+                        type="text"
+                        name="{{ settingItem.key }}"
+                        value="{{ settingItem.value }}"
+                        autocomplete="off"
+                        class=""
+                    >
+                {% endif %}
+            </div>
+        </fieldset>
+    {% endfor %}
+{% endblock %}

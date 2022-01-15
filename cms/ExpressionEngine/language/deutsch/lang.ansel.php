@@ -5,6 +5,8 @@ declare(strict_types=1);
 // @codeCoverageIgnoreStart
 $lang = [
     'settings' => 'Einstellungen',
+    'save_settings' => 'Einstellungen speichern',
+    'saving' => 'Speichern',
     'global_settings' => 'Einstellungen',
     'updates' => 'Updates',
     'license' => 'Lizenz',

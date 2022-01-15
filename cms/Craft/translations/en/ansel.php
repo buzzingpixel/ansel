@@ -5,6 +5,8 @@ declare(strict_types=1);
 // @codeCoverageIgnoreStart
 return [
     'settings' => 'Settings',
+    'save_settings' => 'Save Settings',
+    'saving' => 'Saving',
     'global_settings' => 'Global Settings',
     'updates' => 'Updates',
     'license' => 'License',

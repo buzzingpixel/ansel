@@ -1,0 +1,84 @@
+<div class="secondary-sidebar-container">
+    <div class="secondary-sidebar">
+        <div class="box sidebar ">
+            <div class="scroll-wrap">
+                <div class="folder-list">
+                    {% for item in sidebar %}
+                        <div
+                            class="sidebar__link sidebar__link--parent{% if item.isActive %} active{% endif %}"
+                        >
+                            <a href="{{ item.href }}">
+                                {{ item.content }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="panel">
+            <div class="form-standard">
+                {% if formAction is defined %}
+                <form
+                    action="{{ formAction }}"
+                    method="post"
+                    enctype="multipart/form-data"
+                >
+                {% endif %}
+                    {% if formAction is defined and csrfToken is defined %}
+                    <input type="hidden" name="csrf_token" value="{{ csrfToken }}">
+                    {% endif %}
+                    <div class="panel-heading">
+                        <div class="form-btns form-btns-top">
+                            <div class="title-bar title-bar--large">
+                                <h3 class="title-bar__title">{{ pageTitle }}</h3>
+                                {% if formAction is defined %}
+                                    {% set submitButtonContent = submitButtonContent ?? 'Submit' %}
+                                    {% set submitButtonWorkingContent = submitButtonWorkingContent ?? 'Submitting' %}
+
+                                    <div class="title-bar__extra-tools">
+                                        <button
+                                            class="button button--primary"
+                                            type="submit"
+                                            data-shortcut="s"
+                                            value="{{ submitButtonContent }}"
+                                            data-submit-text="{{ submitButtonContent }}"
+                                            data-work-text="{{ submitButtonWorkingContent }}"
+                                        >
+                                            {{ submitButtonContent }}
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        {% block content %}{% endblock %}
+                    </div>
+                    {% if formAction is defined %}
+                        {% set submitButtonContent = submitButtonContent ?? 'Submit' %}
+                        {% set submitButtonWorkingContent = submitButtonWorkingContent ?? 'Submitting' %}
+
+                        <div class="panel-footer">
+                            <div class="form-btns">
+                                <button
+                                    class="button button--primary"
+                                    type="submit"
+                                    data-shortcut="s"
+                                    value="{{ submitButtonContent }}"
+                                    data-submit-text="{{ submitButtonContent }}"
+                                    data-work-text="{{ submitButtonWorkingContent }}"
+                                >
+                                    {{ submitButtonContent }}
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% if formAction is defined %}
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
