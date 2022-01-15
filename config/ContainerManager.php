@@ -7,8 +7,10 @@ namespace BuzzingPixel\AnselConfig;
 use BuzzingPixel\Ansel\Shared\Meta;
 use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
 use BuzzingPixel\AnselConfig\Bindings\EECIDBForge;
+use BuzzingPixel\AnselConfig\Bindings\EECP;
 use BuzzingPixel\AnselConfig\Bindings\EECPURLFactory;
 use BuzzingPixel\AnselConfig\Bindings\EECsrf;
+use BuzzingPixel\AnselConfig\Bindings\EeCssJsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
@@ -43,8 +45,10 @@ class ContainerManager
             array_merge(
                 CraftDbConnection::get(),
                 EECIDBForge::get(),
+                EECP::get(),
                 EECPURLFactory::get(),
                 EECsrf::get(),
+                EeCssJsBinding::get(),
                 EELang::get(),
                 EEModelFacade::get(),
                 Migrations::get(),

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Project JS" pattern="file[ansel]:assets//*.js" />
+</component>

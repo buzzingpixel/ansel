@@ -77,3 +77,4 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/URL/URLFactory.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Csrf.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/core/Lang.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Cp.php';
