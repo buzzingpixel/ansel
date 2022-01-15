@@ -39,6 +39,8 @@ class SettingsCollectionTest extends TestCase
 
         self::assertSame($item1, $collection->first());
 
+        self::assertSame($item1, $collection->firstOrNull());
+
         self::assertSame(
             [
                 ['label' => 'foo-label1'],
@@ -63,5 +65,11 @@ class SettingsCollectionTest extends TestCase
             'foo-label2',
             $settingsOnlyCollection->first()->label(),
         );
+
+        $noItems = $collection->filter(
+            static fn (SettingItem $i) => $i->key() === 'foo-bar-no'
+        );
+
+        self::assertNull($noItems->firstOrNull());
     }
 }

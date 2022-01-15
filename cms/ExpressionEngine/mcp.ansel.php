@@ -4,43 +4,83 @@
 
 declare(strict_types=1);
 
+use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\GetIndexAction;
+use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\PostIndexAction;
+use BuzzingPixel\AnselConfig\ContainerManager;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 // phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
-use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\GetIndexAction;
-use BuzzingPixel\AnselConfig\ContainerManager;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class Ansel_mcp
 {
+    private ServerRequestInterface $request;
+
+    private GetIndexAction $getIndexAction;
+
+    private PostIndexAction $postIndexAction;
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function __construct()
+    {
+        $container = (new ContainerManager())->container();
+
+        /** @phpstan-ignore-next-line */
+        $this->request = $container->get(ServerRequestInterface::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->getIndexAction = $container->get(GetIndexAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->postIndexAction = $container->get(PostIndexAction::class);
+    }
+
     /**
      * @return string[]
      *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
     public function index(): array
     {
-        $container = (new ContainerManager())->container();
+        if (mb_strtolower($this->request->getMethod()) === 'post') {
+            $this->indexPost();
+        }
 
-        $action = $container->get(GetIndexAction::class);
+        return $this->indexGet();
+    }
 
-        assert($action instanceof GetIndexAction);
-
-        $model = $action->render();
+    /**
+     * @return string[]
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    private function indexGet(): array
+    {
+        $model = $this->getIndexAction->render();
 
         return [
             'heading' => $model->heading(),
             'body' => $model->content(),
         ];
+    }
+
+    private function indexPost(): void
+    {
+        $this->postIndexAction->run($this->request);
     }
 }

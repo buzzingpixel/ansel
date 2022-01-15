@@ -12,9 +12,11 @@ use BuzzingPixel\AnselConfig\Bindings\EECP;
 use BuzzingPixel\AnselConfig\Bindings\EECPURLFactory;
 use BuzzingPixel\AnselConfig\Bindings\EECsrf;
 use BuzzingPixel\AnselConfig\Bindings\EeCssJsBinding;
+use BuzzingPixel\AnselConfig\Bindings\EEFunctionsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
+use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
 use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\Container\ConstructorParamConfig;
@@ -51,9 +53,11 @@ class ContainerManager
                 EECPURLFactory::get(),
                 EECsrf::get(),
                 EeCssJsBinding::get(),
+                EEFunctionsBinding::get(),
                 EELang::get(),
                 EEModelFacade::get(),
                 Migrations::get(),
+                ServerRequest::get(),
                 SettingsRepository::get(),
                 Twig::get(),
             ),

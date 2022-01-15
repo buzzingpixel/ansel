@@ -12,7 +12,7 @@ use function array_walk;
 class SettingsCollection
 {
     /** @var SettingItem[] */
-    private array $items;
+    private array $items = [];
 
     /**
      * @param SettingItem[] $items
@@ -38,6 +38,11 @@ class SettingsCollection
     public function first(): SettingItem
     {
         return array_values($this->items)[0];
+    }
+
+    public function firstOrNull(): ?SettingItem
+    {
+        return array_values($this->items)[0] ?? null;
     }
 
     /**
