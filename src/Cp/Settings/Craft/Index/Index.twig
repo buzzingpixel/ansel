@@ -1,1 +1,28 @@
-TODO: Build settings page
+{# @var \BuzzingPixel\Ansel\Settings\SettingsCollection settingsCollection #}
+
+{% import "_includes/forms" as forms %}
+
+{% block content %}
+    <div id="fields">
+        {% for settingItem in settingsCollection.items %}
+            {% if settingItem.type == constant('TYPE_BOOL', settingItem) %}
+                {{ forms.lightswitchField({
+                    label: settingItem.label,
+                    instructions: settingItem.description,
+                    id: settingItem.key,
+                    name: settingItem.key,
+                    on: settingItem.value
+                }) }}
+            {% else %}
+                {{ forms.textField({
+                    label: settingItem.label,
+                    instructions: settingItem.description,
+                    id: settingItem.key,
+                    name: settingItem.key,
+                    value: settingItem.value,
+                    maxlength: 255
+                }) }}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -12,6 +12,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use yii\base\InvalidConfigException;
 use yii\web\Response;
 
 use function assert;
@@ -27,6 +28,7 @@ class GetCpSettingsController extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws InvalidConfigException
      */
     public function actionIndex(): Response
     {
@@ -43,6 +45,7 @@ class GetCpSettingsController extends Controller
             [
                 'title' => $model->title(),
                 'content' => $model->content(),
+                'fullPageForm' => true,
             ],
         );
     }

@@ -29,10 +29,6 @@ class SidebarTest extends TestCase
 
         $mock->method('line')->willReturnCallback(
             static function (string $which): string {
-                if ($which === 'phone_home_explain') {
-                    return $which;
-                }
-
                 return $which . '-lang';
             }
         );

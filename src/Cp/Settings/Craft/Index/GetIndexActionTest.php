@@ -2,22 +2,19 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Index;
+namespace BuzzingPixel\Ansel\Cp\Settings\Craft\Index;
 
-use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Settings\SettingItem;
 use BuzzingPixel\Ansel\Settings\SettingsCollection;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
-use BuzzingPixel\Ansel\Shared\EeCssJs;
-use Csrf;
-use EE_Lang;
-use ExpressionEngine\Library\CP\URL;
-use ExpressionEngine\Service\URL\URLFactory;
+use BuzzingPixel\Ansel\Shared\CraftRegisterAssetBundle;
+use BuzzingPixel\Ansel\Shared\CraftTranslator;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use yii\base\InvalidConfigException;
 
 use function assert;
 use function is_array;
@@ -36,73 +33,11 @@ class GetIndexActionTest extends TestCase
         $this->calls = [];
 
         $this->action = new GetIndexAction(
-            $this->mockCsrf(),
-            $this->mockLang(),
-            $this->mockEeCssJs(),
-            $this->mockSideBar(),
             $this->mockTwig(),
-            $this->mockUrlFactory(),
+            $this->mockTranslator(),
+            $this->mockRegisterAssetBundle(),
             $this->mockSettingsRepository(),
         );
-    }
-
-    private function mockCsrf(): Csrf
-    {
-        $mock = $this->createMock(Csrf::class);
-
-        $mock->method('get_user_token')->willReturn(
-            'foo-csrf-token',
-        );
-
-        return $mock;
-    }
-
-    private function mockLang(): EE_Lang
-    {
-        $mock = $this->createMock(EE_Lang::class);
-
-        $mock->method('line')->willReturnCallback(
-            static function (string $which): string {
-                return $which . '-lang';
-            }
-        );
-
-        return $mock;
-    }
-
-    private function mockEeCssJs(): EeCssJs
-    {
-        $mock = $this->createMock(EeCssJs::class);
-
-        $mock->method('add')->willReturnCallback(
-            function (): void {
-                $this->calls[] = [
-                    'object' => 'EeCssJs',
-                    'method' => 'add',
-                ];
-            }
-        );
-
-        return $mock;
-    }
-
-    private function mockSideBar(): Sidebar
-    {
-        $mock = $this->createMock(Sidebar::class);
-
-        $mock->method('get')->willReturnCallback(
-            function (string $active): array {
-                $this->calls[] = [
-                    'object' => 'Sidebar',
-                    'method' => 'get',
-                    'active' => $active,
-                ];
-
-                return ['foo' => 'bar'];
-            }
-        );
-
-        return $mock;
     }
 
     private function mockTwig(): TwigEnvironment
@@ -125,25 +60,32 @@ class GetIndexActionTest extends TestCase
         return $mock;
     }
 
-    private function mockUrlFactory(): URLFactory
+    private function mockTranslator(): CraftTranslator
     {
-        $mock = $this->createMock(URLFactory::class);
+        $mock = $this->createMock(CraftTranslator::class);
 
-        $mock->method('make')->willReturnCallback(
-            function (string $path): URL {
-                return $this->mockUrl($path);
+        $mock->method('translate')->willReturnCallback(
+            static function (string $which): string {
+                return $which . '-lang';
             }
         );
 
         return $mock;
     }
 
-    private function mockUrl(string $path): URL
+    private function mockRegisterAssetBundle(): CraftRegisterAssetBundle
     {
-        $mock = $this->createMock(URL::class);
+        $mock = $this->createMock(
+            CraftRegisterAssetBundle::class,
+        );
 
-        $mock->method('compile')->willReturn(
-            '/url/object/' . $path,
+        $mock->method('register')->willReturnCallback(
+            function (): void {
+                $this->calls[] = [
+                    'object' => 'CraftRegisterAssetBundle',
+                    'method' => 'register',
+                ];
+            }
         );
 
         return $mock;
@@ -185,14 +127,15 @@ class GetIndexActionTest extends TestCase
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws InvalidConfigException
      */
     public function testRender(): void
     {
         $model = $this->action->render();
 
         self::assertSame(
-            'settings-lang',
-            $model->heading(),
+            'Ansel settings-lang',
+            $model->title(),
         );
 
         self::assertSame(
@@ -200,82 +143,41 @@ class GetIndexActionTest extends TestCase
             $model->content(),
         );
 
-        self::assertCount(3, $this->calls);
+        self::assertCount(2, $this->calls);
 
         $call0 = $this->calls[0];
 
         self::assertSame(
             [
-                'object' => 'EeCssJs',
-                'method' => 'add',
+                'object' => 'CraftRegisterAssetBundle',
+                'method' => 'register',
             ],
             $call0,
         );
 
         $call1 = $this->calls[1];
 
-        self::assertSame(
-            [
-                'object' => 'Sidebar',
-                'method' => 'get',
-                'active' => 'settings',
-            ],
-            $call1,
-        );
+        assert(is_array($call1));
 
-        $call2 = $this->calls[2];
-
-        assert(is_array($call2));
-
-        self::assertCount(4, $call2);
+        self::assertCount(4, $call1);
 
         self::assertSame(
             'TwigEnvironment',
-            $call2['object'],
+            $call1['object'],
         );
 
-        self::assertSame('render', $call2['method']);
+        self::assertSame('render', $call1['method']);
 
         self::assertSame(
-            '@AnselSrc/Cp/Settings/Ee/Index/Index.twig',
-            $call2['name'],
+            '@AnselSrc/Cp/Settings/Craft/Index/Index.twig',
+            $call1['name'],
         );
 
-        $context = $call2['context'];
+        $context = $call1['context'];
 
         assert(is_array($context));
 
-        self::assertCount(7, $context);
-
-        self::assertSame(
-            ['foo' => 'bar'],
-            $context['sidebar'],
-        );
-
-        self::assertSame(
-            'settings-lang',
-            $context['pageTitle'],
-        );
-
-        self::assertSame(
-            '/url/object/addons/settings/ansel',
-            $context['formAction'],
-        );
-
-        self::assertSame(
-            'foo-csrf-token',
-            $context['csrfToken'],
-        );
-
-        self::assertSame(
-            'save_settings-lang',
-            $context['submitButtonContent'],
-        );
-
-        self::assertSame(
-            'saving-lang...',
-            $context['submitButtonWorkingContent'],
-        );
+        self::assertCount(1, $context);
 
         $contextSettingsCollection = $context['settingsCollection'];
 
