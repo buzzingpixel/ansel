@@ -15,10 +15,12 @@ use BuzzingPixel\AnselConfig\Bindings\EeCssJsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EEFunctionsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
+use BuzzingPixel\AnselConfig\Bindings\GuzzleConfig;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
 use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
 use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
+use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
 use BuzzingPixel\Container\ConstructorParamConfig;
 use BuzzingPixel\Container\Container;
 use Psr\Container\ContainerInterface;
@@ -56,19 +58,23 @@ class ContainerManager
                 EEFunctionsBinding::get(),
                 EELang::get(),
                 EEModelFacade::get(),
+                GuzzleConfig::get(),
                 Migrations::get(),
                 ServerRequest::get(),
                 SettingsRepository::get(),
                 Twig::get(),
             ),
-            [
-                new ConstructorParamConfig(
-                    Meta::class,
-                    'version',
-                    /** @phpstan-ignore-next-line */
-                    $composerJson->version,
-                ),
-            ],
+            array_merge(
+                [
+                    new ConstructorParamConfig(
+                        Meta::class,
+                        'version',
+                        /** @phpstan-ignore-next-line */
+                        $composerJson->version,
+                    ),
+                ],
+                FeedConfig::get(),
+            ),
         );
 
         self::$builtContainer = $container;

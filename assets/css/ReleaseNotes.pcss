@@ -1,0 +1,29 @@
+.release-notes h1 {
+    @apply
+        pt-4
+    ;
+}
+
+.release-notes p {
+    @apply
+        leading-6
+        mb-1
+        ml-6
+        relative
+    ;
+}
+
+.release-notes p::before {
+    @apply
+        absolute
+        bg-black
+        inline-block
+        rounded-full
+    ;
+
+    content: " ";
+    height: 6px;
+    left: -15px;
+    top: 7px;
+    width: 6px;
+}

@@ -79,3 +79,4 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/librarie
 require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/core/Lang.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Cp.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Functions.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Typography.php';

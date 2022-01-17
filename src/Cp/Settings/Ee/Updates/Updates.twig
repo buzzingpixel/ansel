@@ -1,0 +1,31 @@
+{# @var \BuzzingPixel\Ansel\UpdatesFeed\UpdateCollection updates #}
+
+{% extends '@AnselSrc/Cp/Settings/Ee/SettingsLayout.twig' %}
+
+{% block content %}
+    {% for update in updates.items %}
+        <div>
+            {% if update.isNew %}
+                <span class="inline-flex align-middle items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800 mr-1">New</span>
+            {% endif %}
+            <span class="inline-flex text-2xl font-bold align-middle">{{ update.version }}</span>
+            {% if update.isNew %}
+                <a
+                    class="button button--xsmall button--primary float-right"
+                    href="{{ update.downloadUrl }}"
+                >
+                    Download
+                </a>
+            {% endif %}
+        </div>
+        <div class="text-lg">
+            Released on {{ update.date.format('F j, Y') }}
+        </div>
+        <div class="release-notes">
+            {{ update.notes|raw }}
+        </div>
+        {% if not loop.last %}
+            <hr class="my-10">
+        {% endif %}
+    {% endfor %}
+{% endblock %}

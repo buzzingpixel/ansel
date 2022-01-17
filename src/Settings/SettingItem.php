@@ -67,6 +67,16 @@ class SettingItem
         return $this->value;
     }
 
+    public function getString(): string
+    {
+        return (string) $this->value;
+    }
+
+    public function getInt(): int
+    {
+        return (int) $this->value;
+    }
+
     /**
      * @param string|int|bool $value
      */

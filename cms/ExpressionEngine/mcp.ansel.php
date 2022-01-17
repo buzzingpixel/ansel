@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\GetIndexAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\PostIndexAction;
+use BuzzingPixel\Ansel\Cp\Settings\Ee\Updates\GetUpdatesAction;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -28,6 +29,8 @@ class Ansel_mcp
 
     private PostIndexAction $postIndexAction;
 
+    private GetUpdatesAction $getUpdatesAction;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -44,6 +47,9 @@ class Ansel_mcp
 
         /** @phpstan-ignore-next-line */
         $this->postIndexAction = $container->get(PostIndexAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->getUpdatesAction = $container->get(GetUpdatesAction::class);
     }
 
     /**
@@ -82,5 +88,18 @@ class Ansel_mcp
     private function indexPost(): void
     {
         $this->postIndexAction->run($this->request);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function updates(): array
+    {
+        $model = $this->getUpdatesAction->render();
+
+        return [
+            'heading' => $model->heading(),
+            'body' => $model->content(),
+        ];
     }
 }
