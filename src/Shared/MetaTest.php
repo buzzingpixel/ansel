@@ -10,34 +10,66 @@ class MetaTest extends TestCase
 {
     public function test(): void
     {
-        $meta = new Meta('fooVersion');
+        $metaEe = new Meta(
+            'ee',
+            'fooVersion',
+        );
 
-        self::assertSame('fooVersion', $meta->version());
+        self::assertSame('fooVersion', $metaEe->version());
 
-        self::assertSame('Ansel', $meta->name());
+        self::assertSame('Ansel', $metaEe->name());
 
-        self::assertSame('ansel', $meta->shortName());
+        self::assertSame('ansel', $metaEe->shortName());
 
         self::assertSame(
             'Crop images with pre-defined constraints.',
-            $meta->description(),
+            $metaEe->description(),
         );
 
-        self::assertSame('TJ Draper', $meta->author());
+        self::assertSame('TJ Draper', $metaEe->author());
 
         self::assertSame(
             'https://www.buzzingpixel.com',
-            $meta->authorUrl(),
+            $metaEe->authorUrl(),
         );
 
         self::assertSame(
             'https://www.buzzingpixel.com/software/ansel-ee/documentation',
-            $meta->eeDocsUrl(),
+            $metaEe->docsUrl(),
+        );
+
+        self::assertSame(
+            'https://www.buzzingpixel.com/software/ansel-ee',
+            $metaEe->softwarePageLink(),
+        );
+
+        self::assertSame(
+            'https://www.buzzingpixel.com/account',
+            $metaEe->buzzingPixelAccountUrl(),
+        );
+
+        $metaCraft = new Meta(
+            'craft',
+            'fooVersion',
         );
 
         self::assertSame(
             'https://www.buzzingpixel.com/software/ansel-craft/documentation',
-            $meta->craftDocsUrl(),
+            $metaCraft->docsUrl(),
         );
+
+        self::assertSame(
+            'https://www.buzzingpixel.com/software/ansel-craft',
+            $metaCraft->softwarePageLink(),
+        );
+
+        $metaNone = new Meta(
+            '',
+            'fooVersion',
+        );
+
+        self::assertSame('', $metaNone->docsUrl());
+
+        self::assertSame('', $metaNone->softwarePageLink());
     }
 }

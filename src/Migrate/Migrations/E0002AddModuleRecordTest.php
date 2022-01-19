@@ -28,7 +28,10 @@ class E0002AddModuleRecordTest extends TestCase
 
         $this->firstReturnsRecord = false;
 
-        $meta = new Meta('4.5.6');
+        $meta = new Meta(
+            'ee',
+            '4.5.6',
+        );
 
         $this->migration = new E0002AddModuleRecord(
             $meta,

@@ -9,7 +9,7 @@
         {
             "name": "TJ Draper",
             "email": "tj@buzzingpixel.com",
-            "homepage": "https://buzzingpixel.com"
+            "homepage": "https://www.buzzingpixel.com"
         }
     ],
     "autoload": {
@@ -33,8 +33,8 @@
         "changelogUrl": "https://github.com/buzzingpixel/ansel-craft/blob/master/changelog.md",
         "class": "BuzzingPixel\\AnselCms\\Craft\\AnselCraftPlugin",
         "developer": "BuzzingPixel, LLC",
-        "developerUrl": "https://buzzingpixel.com",
-        "documentationUrl": "https://buzzingpixel.com/software/ansel-craft/documentation",
+        "developerUrl": "https://www.buzzingpixel.com",
+        "documentationUrl": "https://www.buzzingpixel.com/software/ansel-craft/documentation",
         "handle": "ansel",
         "hasCpSettings": true,
         "name": "Ansel",

@@ -27,7 +27,10 @@ class EeFieldVersionUpdaterTest extends TestCase
 
         $this->firstReturnsRecord = false;
 
-        $meta = new Meta('9.8.7');
+        $meta = new Meta(
+            'ee',
+            '9.8.7',
+        );
 
         $this->updater = new EeFieldVersionUpdater(
             $meta,

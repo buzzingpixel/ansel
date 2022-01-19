@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3459dab16a870965ca9002d92a783d1d",
+    "content-hash": "8f34994530717a1e5abd063bf7fa827b",
     "packages": [
         {
             "name": "buzzingpixel/container",
@@ -2336,16 +2336,16 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "3.7.28",
+            "version": "3.7.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/craftcms/cms.git",
-                "reference": "7b3728dd95dbdda80ebf0aa1fd84eb9d6d98f744"
+                "reference": "a54e725a3ad01da409d466e30369855642845a41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/7b3728dd95dbdda80ebf0aa1fd84eb9d6d98f744",
-                "reference": "7b3728dd95dbdda80ebf0aa1fd84eb9d6d98f744",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/a54e725a3ad01da409d466e30369855642845a41",
+                "reference": "a54e725a3ad01da409d466e30369855642845a41",
                 "shasum": ""
             },
             "require": {
@@ -2440,7 +2440,7 @@
                 "rss": "https://github.com/craftcms/cms/releases.atom",
                 "source": "https://github.com/craftcms/cms"
             },
-            "time": "2022-01-05T20:16:48+00:00"
+            "time": "2022-01-18T18:58:42+00:00"
         },
         {
             "name": "craftcms/oauth2-craftid",
@@ -4400,16 +4400,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.4.0",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "72b04d97b5e6e60a081f17c416fef35bd521120b"
+                "reference": "1dd8f3e40bf7aa30031a75c65cece99220a161b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/72b04d97b5e6e60a081f17c416fef35bd521120b",
-                "reference": "72b04d97b5e6e60a081f17c416fef35bd521120b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1dd8f3e40bf7aa30031a75c65cece99220a161b8",
+                "reference": "1dd8f3e40bf7aa30031a75c65cece99220a161b8",
                 "shasum": ""
             },
             "require": {
@@ -4440,7 +4440,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.4.0"
+                "source": "https://github.com/phpstan/phpstan/tree/1.4.2"
             },
             "funding": [
                 {
@@ -4460,7 +4460,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-14T15:58:47+00:00"
+            "time": "2022-01-18T16:09:11+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

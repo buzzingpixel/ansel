@@ -26,7 +26,7 @@ return [
     'author' => $meta->author(),
     'author_url' => $meta->authorUrl(),
     'description' => $meta->description(),
-    'docs_url' => $meta->eeDocsUrl(),
+    'docs_url' => $meta->docsUrl(),
     'name' => $meta->name(),
     'namespace' => 'BuzzingPixel\AnselCms\ExpressionEngine;',
     'settings_exist' => true,
