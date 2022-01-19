@@ -7,6 +7,7 @@ namespace BuzzingPixel\AnselConfig;
 use BuzzingPixel\Ansel\Shared\Meta;
 use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
 use BuzzingPixel\AnselConfig\Bindings\CraftWebView;
+use BuzzingPixel\AnselConfig\Bindings\EEAlertCollectionBinding;
 use BuzzingPixel\AnselConfig\Bindings\EECIDBForge;
 use BuzzingPixel\AnselConfig\Bindings\EECP;
 use BuzzingPixel\AnselConfig\Bindings\EECPURLFactory;
@@ -51,6 +52,7 @@ class ContainerManager
             array_merge(
                 CraftDbConnection::get(),
                 CraftWebView::get(),
+                EEAlertCollectionBinding::get(),
                 EECIDBForge::get(),
                 EECP::get(),
                 EECPURLFactory::get(),
