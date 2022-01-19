@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Shared;
+namespace BuzzingPixel\Ansel\Translations;
 
 use Craft;
 
 /**
  * @codeCoverageIgnore
  */
-class CraftTranslator
+class CraftTranslatorFacade
 {
     public function translate(string $key): string
     {

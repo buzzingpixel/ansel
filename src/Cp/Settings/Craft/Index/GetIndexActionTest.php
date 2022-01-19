@@ -8,7 +8,7 @@ use BuzzingPixel\Ansel\Settings\SettingItem;
 use BuzzingPixel\Ansel\Settings\SettingsCollection;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\CraftRegisterAssetBundle;
-use BuzzingPixel\Ansel\Shared\CraftTranslator;
+use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
@@ -60,9 +60,9 @@ class GetIndexActionTest extends TestCase
         return $mock;
     }
 
-    private function mockTranslator(): CraftTranslator
+    private function mockTranslator(): CraftTranslatorFacade
     {
-        $mock = $this->createMock(CraftTranslator::class);
+        $mock = $this->createMock(CraftTranslatorFacade::class);
 
         $mock->method('translate')->willReturnCallback(
             static function (string $which): string {

@@ -6,7 +6,7 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Craft\Index;
 
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\CraftRegisterAssetBundle;
-use BuzzingPixel\Ansel\Shared\CraftTranslator;
+use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -17,7 +17,7 @@ class GetIndexAction
 {
     private TwigEnvironment $twig;
 
-    private CraftTranslator $translator;
+    private CraftTranslatorFacade $translator;
 
     private CraftRegisterAssetBundle $registerAssetBundle;
 
@@ -25,7 +25,7 @@ class GetIndexAction
 
     public function __construct(
         TwigEnvironment $twig,
-        CraftTranslator $translator,
+        CraftTranslatorFacade $translator,
         CraftRegisterAssetBundle $registerAssetBundle,
         SettingsRepositoryContract $settingsRepository
     ) {

@@ -19,6 +19,7 @@ use BuzzingPixel\AnselConfig\Bindings\GuzzleConfig;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
 use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
 use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
+use BuzzingPixel\AnselConfig\Bindings\TranslatorBinding;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
 use BuzzingPixel\Container\ConstructorParamConfig;
@@ -62,6 +63,7 @@ class ContainerManager
                 Migrations::get(),
                 ServerRequest::get(),
                 SettingsRepository::get(),
+                TranslatorBinding::get(),
                 Twig::get(),
             ),
             array_merge(

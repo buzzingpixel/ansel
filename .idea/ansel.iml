@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/cms" isTestSource="false" packagePrefix="BuzzingPixel\AnselCms\" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="BuzzingPixel\Ansel\" />
       <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" packagePrefix="BuzzingPixel\AnselConfig\" />
+      <sourceFolder url="file://$MODULE_DIR$/assetsDist" isTestSource="false" packagePrefix="BuzzingPixel\AssetsDist\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/voku/portable-utf8" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/seld/jsonlint" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/voku/stringy" />

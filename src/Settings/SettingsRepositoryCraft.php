@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Settings;
 
 use BuzzingPixel\Ansel\Shared\CraftQueryBuilderFactory;
-use BuzzingPixel\Ansel\Shared\CraftTranslator;
+use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
 use craft\db\Connection as DbConnection;
 use yii\db\Exception;
 
@@ -15,13 +15,13 @@ class SettingsRepositoryCraft implements SettingsRepositoryContract
 {
     private DbConnection $db;
 
-    private CraftTranslator $craftTranslator;
+    private CraftTranslatorFacade $craftTranslator;
 
     private CraftQueryBuilderFactory $queryBuilderFactory;
 
     public function __construct(
         DbConnection $db,
-        CraftTranslator $craftTranslator,
+        CraftTranslatorFacade $craftTranslator,
         CraftQueryBuilderFactory $queryBuilderFactory
     ) {
         $this->db                  = $db;

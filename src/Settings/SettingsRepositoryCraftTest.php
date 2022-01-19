@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Settings;
 
 use BuzzingPixel\Ansel\Shared\CraftQueryBuilderFactory;
-use BuzzingPixel\Ansel\Shared\CraftTranslator;
+use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
 use craft\db\Command;
 use craft\db\Connection as DbConnection;
 use craft\db\Query;
@@ -100,9 +100,9 @@ class SettingsRepositoryCraftTest extends TestCase
         return $mock;
     }
 
-    private function mockCraftTranslator(): CraftTranslator
+    private function mockCraftTranslator(): CraftTranslatorFacade
     {
-        $mock = $this->createMock(CraftTranslator::class);
+        $mock = $this->createMock(CraftTranslatorFacade::class);
 
         $mock->method('translate')->willReturnCallback(
             static function (string $key): string {
