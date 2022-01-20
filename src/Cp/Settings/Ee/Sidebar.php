@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Cp\Settings\Ee;
 
-use EE_Lang;
+use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use ExpressionEngine\Service\URL\URLFactory;
 
 class Sidebar
 {
-    private EE_Lang $lang;
-
     private URLFactory $urlFactory;
 
+    private TranslatorContract $translator;
+
     public function __construct(
-        EE_Lang $lang,
-        URLFactory $urlFactory
+        URLFactory $urlFactory,
+        TranslatorContract $translator
     ) {
-        $this->lang       = $lang;
         $this->urlFactory = $urlFactory;
+        $this->translator = $translator;
     }
 
     /**
@@ -28,21 +28,21 @@ class Sidebar
     {
         $items = [
             'settings' => [
-                'content' => $this->lang->line('settings'),
+                'content' => $this->translator->getLine('settings'),
                 'href' => $this->urlFactory
                     ->make('addons/settings/ansel')
                     ->compile(),
                 'isActive' => false,
             ],
             'updates' => [
-                'content' => $this->lang->line('updates'),
+                'content' => $this->translator->getLine('updates'),
                 'href' => $this->urlFactory
                     ->make('addons/settings/ansel/updates')
                     ->compile(),
                 'isActive' => false,
             ],
             'license' => [
-                'content' => $this->lang->line('license'),
+                'content' => $this->translator->getLine('license'),
                 'href' => $this->urlFactory
                     ->make('addons/settings/ansel/license')
                     ->compile(),

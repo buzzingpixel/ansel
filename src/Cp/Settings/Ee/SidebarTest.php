@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Cp\Settings\Ee;
 
-use EE_Lang;
+use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use ExpressionEngine\Library\CP\URL;
 use ExpressionEngine\Service\URL\URLFactory;
 use PHPUnit\Framework\TestCase;
@@ -18,22 +18,9 @@ class SidebarTest extends TestCase
         parent::setUp();
 
         $this->sidebar = new Sidebar(
-            $this->mockLang(),
             $this->mockUrlFactory(),
+            new TranslatorForTesting(),
         );
-    }
-
-    private function mockLang(): EE_Lang
-    {
-        $mock = $this->createMock(EE_Lang::class);
-
-        $mock->method('line')->willReturnCallback(
-            static function (string $which): string {
-                return $which . '-lang';
-            }
-        );
-
-        return $mock;
     }
 
     private function mockUrlFactory(): URLFactory
@@ -68,19 +55,19 @@ class SidebarTest extends TestCase
             [
                 'settings' =>
                     [
-                        'content' => 'settings-lang',
+                        'content' => 'settings-translator',
                         'href' => '/url/object/addons/settings/ansel',
                         'isActive' => false,
                     ],
                 'updates' =>
                     [
-                        'content' => 'updates-lang',
+                        'content' => 'updates-translator',
                         'href' => '/url/object/addons/settings/ansel/updates',
                         'isActive' => true,
                     ],
                 'license' =>
                     [
-                        'content' => 'license-lang',
+                        'content' => 'license-translator',
                         'href' => '/url/object/addons/settings/ansel/license',
                         'isActive' => false,
                     ],
