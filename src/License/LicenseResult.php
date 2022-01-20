@@ -28,6 +28,11 @@ class LicenseResult
         self::STATUS_INVALID_EXPIRED,
     ];
 
+    public const LOCKOUT_STATUSES = [
+        self::STATUS_EXPIRED,
+        self::STATUS_INVALID_EXPIRED,
+    ];
+
     private string $status;
 
     /**
@@ -76,5 +81,14 @@ class LicenseResult
     public function isExpiredWithInvalidLicenseKey(): bool
     {
         return $this->status() === self::STATUS_INVALID_EXPIRED;
+    }
+
+    public function shouldLockOut(): bool
+    {
+        return in_array(
+            $this->status(),
+            self::LOCKOUT_STATUSES,
+            true,
+        );
     }
 }

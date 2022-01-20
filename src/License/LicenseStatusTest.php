@@ -113,6 +113,8 @@ class LicenseStatusTest extends TestCase
         self::assertFalse($result->isTrialWithInvalidLicenseKey());
 
         self::assertTrue($result->isExpiredWithInvalidLicenseKey());
+
+        self::assertTrue($result->shouldLockOut());
     }
 
     public function testWhenLicenseInvalidAndNotExpired(): void
@@ -139,6 +141,8 @@ class LicenseStatusTest extends TestCase
         self::assertTrue($result->isTrialWithInvalidLicenseKey());
 
         self::assertFalse($result->isExpiredWithInvalidLicenseKey());
+
+        self::assertFalse($result->shouldLockOut());
     }
 
     public function testWhenLicenseIsValid(): void
@@ -165,6 +169,8 @@ class LicenseStatusTest extends TestCase
         self::assertFalse($result->isTrialWithInvalidLicenseKey());
 
         self::assertFalse($result->isExpiredWithInvalidLicenseKey());
+
+        self::assertFalse($result->shouldLockOut());
     }
 
     public function testWhenNoLicenseKeyAndIsNotExpired(): void
@@ -189,6 +195,8 @@ class LicenseStatusTest extends TestCase
         self::assertFalse($result->isTrialWithInvalidLicenseKey());
 
         self::assertFalse($result->isExpiredWithInvalidLicenseKey());
+
+        self::assertFalse($result->shouldLockOut());
     }
 
     public function testWhenNoLicenseKeyAndIsExpired(): void
@@ -213,5 +221,7 @@ class LicenseStatusTest extends TestCase
         self::assertFalse($result->isTrialWithInvalidLicenseKey());
 
         self::assertFalse($result->isExpiredWithInvalidLicenseKey());
+
+        self::assertTrue($result->shouldLockOut());
     }
 }
