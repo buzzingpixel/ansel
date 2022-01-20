@@ -8,7 +8,7 @@ use BuzzingPixel\Ansel\Settings\SettingItem;
 use BuzzingPixel\Ansel\Settings\SettingsCollection;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\CraftRegisterAssetBundle;
-use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
+use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
@@ -34,7 +34,7 @@ class GetIndexActionTest extends TestCase
 
         $this->action = new GetIndexAction(
             $this->mockTwig(),
-            $this->mockTranslator(),
+            new TranslatorForTesting(),
             $this->mockRegisterAssetBundle(),
             $this->mockSettingsRepository(),
         );
@@ -54,19 +54,6 @@ class GetIndexActionTest extends TestCase
                 ];
 
                 return 'fooBarTwigRender';
-            }
-        );
-
-        return $mock;
-    }
-
-    private function mockTranslator(): CraftTranslatorFacade
-    {
-        $mock = $this->createMock(CraftTranslatorFacade::class);
-
-        $mock->method('translate')->willReturnCallback(
-            static function (string $which): string {
-                return $which . '-lang';
             }
         );
 
@@ -134,7 +121,7 @@ class GetIndexActionTest extends TestCase
         $model = $this->action->render();
 
         self::assertSame(
-            'Ansel settings-lang',
+            'Ansel settings-translator',
             $model->title(),
         );
 

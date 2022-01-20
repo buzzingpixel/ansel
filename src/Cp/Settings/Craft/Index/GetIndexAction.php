@@ -6,7 +6,7 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Craft\Index;
 
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\CraftRegisterAssetBundle;
-use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
+use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -17,7 +17,7 @@ class GetIndexAction
 {
     private TwigEnvironment $twig;
 
-    private CraftTranslatorFacade $translator;
+    private TranslatorContract $translator;
 
     private CraftRegisterAssetBundle $registerAssetBundle;
 
@@ -25,14 +25,14 @@ class GetIndexAction
 
     public function __construct(
         TwigEnvironment $twig,
-        CraftTranslatorFacade $translator,
+        TranslatorContract $translator,
         CraftRegisterAssetBundle $registerAssetBundle,
         SettingsRepositoryContract $settingsRepository
     ) {
         $this->twig                = $twig;
-        $this->translator          = $translator;
         $this->registerAssetBundle = $registerAssetBundle;
         $this->settingsRepository  = $settingsRepository;
+        $this->translator          = $translator;
     }
 
     /**
@@ -46,7 +46,7 @@ class GetIndexAction
         $this->registerAssetBundle->register();
 
         return new GetIndexModel(
-            'Ansel ' . $this->translator->translate('settings'),
+            'Ansel ' . $this->translator->getLine('settings'),
             $this->twig->render(
                 '@AnselSrc/Cp/Settings/Craft/Index/Index.twig',
                 [
