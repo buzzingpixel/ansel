@@ -9,8 +9,8 @@ use BuzzingPixel\Ansel\Settings\SettingItem;
 use BuzzingPixel\Ansel\Settings\SettingsCollection;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use Csrf;
-use EE_Lang;
 use ExpressionEngine\Library\CP\URL;
 use ExpressionEngine\Service\URL\URLFactory;
 use PHPUnit\Framework\TestCase;
@@ -37,11 +37,11 @@ class GetIndexActionTest extends TestCase
 
         $this->action = new GetIndexAction(
             $this->mockCsrf(),
-            $this->mockLang(),
             $this->mockEeCssJs(),
             $this->mockSideBar(),
             $this->mockTwig(),
             $this->mockUrlFactory(),
+            new TranslatorForTesting(),
             $this->mockSettingsRepository(),
         );
     }
@@ -52,19 +52,6 @@ class GetIndexActionTest extends TestCase
 
         $mock->method('get_user_token')->willReturn(
             'foo-csrf-token',
-        );
-
-        return $mock;
-    }
-
-    private function mockLang(): EE_Lang
-    {
-        $mock = $this->createMock(EE_Lang::class);
-
-        $mock->method('line')->willReturnCallback(
-            static function (string $which): string {
-                return $which . '-lang';
-            }
         );
 
         return $mock;
@@ -191,7 +178,7 @@ class GetIndexActionTest extends TestCase
         $model = $this->action->render();
 
         self::assertSame(
-            'settings-lang',
+            'settings-translator',
             $model->heading(),
         );
 
@@ -253,7 +240,7 @@ class GetIndexActionTest extends TestCase
         );
 
         self::assertSame(
-            'settings-lang',
+            'settings-translator',
             $context['pageTitle'],
         );
 
@@ -268,12 +255,12 @@ class GetIndexActionTest extends TestCase
         );
 
         self::assertSame(
-            'save_settings-lang',
+            'save_settings-translator',
             $context['submitButtonContent'],
         );
 
         self::assertSame(
-            'saving-lang...',
+            'saving-translator...',
             $context['submitButtonWorkingContent'],
         );
 
