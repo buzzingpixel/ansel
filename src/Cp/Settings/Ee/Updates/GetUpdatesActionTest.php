@@ -6,9 +6,9 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Updates;
 
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use BuzzingPixel\Ansel\UpdatesFeed\UpdateCollection;
 use BuzzingPixel\Ansel\UpdatesFeed\UpdatesFeedRepository;
-use EE_Lang;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
@@ -36,25 +36,12 @@ class GetUpdatesActionTest extends TestCase
         $this->updateCollection = new UpdateCollection();
 
         $this->action = new GetUpdatesAction(
-            $this->mockLang(),
             $this->mockEeCssJs(),
             $this->mockSideBar(),
             $this->mockTwig(),
+            new TranslatorForTesting(),
             $this->mockUpdatesFeedRepository(),
         );
-    }
-
-    private function mockLang(): EE_Lang
-    {
-        $mock = $this->createMock(EE_Lang::class);
-
-        $mock->method('line')->willReturnCallback(
-            static function (string $which): string {
-                return $which . '-lang';
-            }
-        );
-
-        return $mock;
     }
 
     private function mockEeCssJs(): EeCssJs
@@ -135,7 +122,7 @@ class GetUpdatesActionTest extends TestCase
         $model = $this->action->render();
 
         self::assertSame(
-            'updates-lang',
+            'updates-translator',
             $model->heading(),
         );
 
@@ -197,7 +184,7 @@ class GetUpdatesActionTest extends TestCase
         );
 
         self::assertSame(
-            'updates-lang',
+            'updates-translator',
             $context['pageTitle'],
         );
 
