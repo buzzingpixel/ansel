@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Settings;
 
 use BuzzingPixel\Ansel\Shared\EeQueryBuilderFactory;
-use EE_Lang;
+use BuzzingPixel\Ansel\Translations\TranslatorContract;
 
 use function array_map;
 
 class SettingsRepositoryEe implements SettingsRepositoryContract
 {
-    private EE_Lang $lang;
+    private TranslatorContract $translator;
+
     private EeQueryBuilderFactory $queryBuilderFactory;
 
     public function __construct(
-        EE_Lang $lang,
+        TranslatorContract $translator,
         EeQueryBuilderFactory $queryBuilderFactory
     ) {
-        $this->lang                = $lang;
+        $this->translator          = $translator;
         $this->queryBuilderFactory = $queryBuilderFactory;
     }
 
@@ -97,11 +98,11 @@ class SettingsRepositoryEe implements SettingsRepositoryContract
      */
     private function createSetting(string $key, ?array $dbSetting): SettingItem
     {
-        $label = $this->lang->line($key);
+        $label = $this->translator->getLine($key);
 
         $descKey = $key . '_explain';
 
-        $desc = $this->lang->line($key . '_explain');
+        $desc = $this->translator->getLine($descKey);
 
         if ($desc === $descKey) {
             $desc = '';
