@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Index;
+namespace BuzzingPixel\Ansel\Cp\Settings\Ee\License;
 
-use BuzzingPixel\Ansel\Cp\Settings\Ee\License\GetLicenseAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Settings\SettingItem;
 use BuzzingPixel\Ansel\Settings\SettingsCollection;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
+use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use cebe\markdown\GithubMarkdown;
 use Csrf;
-use EE_Lang;
 use ExpressionEngine\Library\CP\URL;
 use ExpressionEngine\Service\URL\URLFactory;
 use PHPUnit\Framework\TestCase;
@@ -37,12 +36,12 @@ class GetLicenseActionTest extends TestCase
 
         $this->action = new GetLicenseAction(
             $this->mockCsrf(),
-            $this->mockLang(),
             $this->mockEeCssJs(),
             $this->mockSideBar(),
             $this->mockTwig(),
             $this->mockUrlFactory(),
             $this->mockMarkDown(),
+            new TranslatorForTesting(),
             $this->mockInternalFunctions(),
             $this->mockSettingsRepository(),
         );
@@ -54,19 +53,6 @@ class GetLicenseActionTest extends TestCase
 
         $mock->method('get_user_token')->willReturn(
             'foo-csrf-token',
-        );
-
-        return $mock;
-    }
-
-    private function mockLang(): EE_Lang
-    {
-        $mock = $this->createMock(EE_Lang::class);
-
-        $mock->method('line')->willReturnCallback(
-            static function (string $which): string {
-                return $which . '-lang';
-            }
         );
 
         return $mock;
@@ -223,7 +209,7 @@ class GetLicenseActionTest extends TestCase
         $model = $this->action->render();
 
         self::assertSame(
-            'license-lang',
+            'license-translator',
             $model->heading(),
         );
 
@@ -259,14 +245,14 @@ class GetLicenseActionTest extends TestCase
                     'name' => '@AnselSrc/Cp/Settings/Ee/License/License.twig',
                     'context' => [
                         'sidebar' => ['foo' => 'bar'],
-                        'pageTitle' => 'license-lang',
+                        'pageTitle' => 'license-translator',
                         'formAction' => '/url/object/addons/settings/ansel/license',
                         'csrfToken' => 'foo-csrf-token',
-                        'submitButtonContent' => 'update-lang',
-                        'submitButtonWorkingContent' => 'updating-lang...',
-                        'licenseLabel' => 'license_agreement-lang',
+                        'submitButtonContent' => 'update-translator',
+                        'submitButtonWorkingContent' => 'updating-translator...',
+                        'licenseLabel' => 'license_agreement-translator',
                         'licenseText' => 'foo-markdown',
-                        'licenseKeyLabel' => 'your_license_key-lang',
+                        'licenseKeyLabel' => 'your_license_key-translator',
                         'licenseKey' => 'foo-license-key',
                     ],
                 ],
