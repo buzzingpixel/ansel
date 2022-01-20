@@ -40,5 +40,9 @@ class SettingItemTest extends TestCase
         self::assertSame('bar', $item->value());
 
         self::assertTrue($item->includeOnSettingsPage());
+
+        $item->setToBase64('foo-bar');
+
+        self::assertSame('foo-bar', $item->getFromBase64());
     }
 }

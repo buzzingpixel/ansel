@@ -6,6 +6,7 @@ namespace BuzzingPixel\Ansel\Migrate\Migrations;
 
 use BuzzingPixel\Ansel\Migrate\MigrationContract;
 use BuzzingPixel\Ansel\Shared\EeQueryBuilderFactory;
+use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use CI_DB_result;
 use ExpressionEngine\Service\Database\Query;
 use PHPUnit\Framework\TestCase;
@@ -22,8 +23,31 @@ class E0006AddSettingsTest extends TestCase
         parent::setUp();
 
         $this->migration = new E0006AddSettings(
+            $this->mockInternalFunctions(),
             $this->mockQueryBuilderFactory(),
         );
+    }
+
+    private function mockInternalFunctions(): InternalFunctions
+    {
+        $mock = $this->createMock(InternalFunctions::class);
+
+        $mock->method('time')->willReturn(123);
+
+        $mock->method('strToTime')->willReturnCallback(
+            function (string $dateTime, int $baseTimestamp): int {
+                $this->calls[] = [
+                    'object' => 'InternalFunctions',
+                    'method' => 'strToTime',
+                    'dateTime' => $dateTime,
+                    'baseTimestamp' => $baseTimestamp,
+                ];
+
+                return 456;
+            }
+        );
+
+        return $mock;
     }
 
     private function mockQueryBuilderFactory(): EeQueryBuilderFactory
@@ -121,6 +145,12 @@ class E0006AddSettingsTest extends TestCase
 
         self::assertSame(
             [
+                [
+                    'object' => 'InternalFunctions',
+                    'method' => 'strToTime',
+                    'dateTime' => '+30 days',
+                    'baseTimestamp' => 123,
+                ],
                 [
                     'object' => 'Query',
                     'method' => 'where',
@@ -549,7 +579,7 @@ class E0006AddSettingsTest extends TestCase
                     'set' => [
                         'settings_type' => 'string',
                         'settings_key' => 'encoding',
-                        'settings_value' => '',
+                        'settings_value' => 'NDU2',
                     ],
                 ],
                 [

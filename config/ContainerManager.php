@@ -23,6 +23,7 @@ use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
 use BuzzingPixel\AnselConfig\Bindings\TranslatorBinding;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
+use BuzzingPixel\AnselConfig\ConstructorConfigs\LicensePingConfig;
 use BuzzingPixel\Container\ConstructorParamConfig;
 use BuzzingPixel\Container\Container;
 use Psr\Container\ContainerInterface;
@@ -72,12 +73,18 @@ class ContainerManager
                 [
                     new ConstructorParamConfig(
                         Meta::class,
+                        'env',
+                        ANSEL_ENV,
+                    ),
+                    new ConstructorParamConfig(
+                        Meta::class,
                         'version',
                         /** @phpstan-ignore-next-line */
                         $composerJson->version,
                     ),
                 ],
                 FeedConfig::get(),
+                LicensePingConfig::get(),
             ),
         );
 

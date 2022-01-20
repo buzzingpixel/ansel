@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Settings;
 
+use function base64_decode;
+use function base64_encode;
+
 class SettingItem
 {
     public const TYPE_STRING = 'string';
@@ -72,6 +75,11 @@ class SettingItem
         return (string) $this->value;
     }
 
+    public function getFromBase64(): string
+    {
+        return (string) base64_decode($this->getString(), true);
+    }
+
     public function getInt(): int
     {
         return (int) $this->value;
@@ -83,6 +91,11 @@ class SettingItem
     public function setValue($value): void
     {
         $this->value = $value;
+    }
+
+    public function setToBase64(string $value): void
+    {
+        $this->value = base64_encode($value);
     }
 
     public function description(): string
