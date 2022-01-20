@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Settings;
 
 use BuzzingPixel\Ansel\Shared\CraftQueryBuilderFactory;
-use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
+use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use craft\db\Connection as DbConnection;
 use yii\db\Exception;
 
@@ -15,17 +15,17 @@ class SettingsRepositoryCraft implements SettingsRepositoryContract
 {
     private DbConnection $db;
 
-    private CraftTranslatorFacade $craftTranslator;
+    private TranslatorContract $translator;
 
     private CraftQueryBuilderFactory $queryBuilderFactory;
 
     public function __construct(
         DbConnection $db,
-        CraftTranslatorFacade $craftTranslator,
+        TranslatorContract $translator,
         CraftQueryBuilderFactory $queryBuilderFactory
     ) {
         $this->db                  = $db;
-        $this->craftTranslator     = $craftTranslator;
+        $this->translator          = $translator;
         $this->queryBuilderFactory = $queryBuilderFactory;
     }
 
@@ -117,11 +117,11 @@ class SettingsRepositoryCraft implements SettingsRepositoryContract
      */
     private function createSetting(string $key, ?array $dbSetting): SettingItem
     {
-        $label = $this->craftTranslator->translate($key);
+        $label = $this->translator->getLine($key);
 
         $descKey = $key . '_explain';
 
-        $desc = $this->craftTranslator->translate($descKey);
+        $desc = $this->translator->getLine($descKey);
 
         if ($desc === $descKey) {
             $desc = '';

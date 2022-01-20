@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Settings;
 
 use BuzzingPixel\Ansel\Shared\CraftQueryBuilderFactory;
-use BuzzingPixel\Ansel\Translations\CraftTranslatorFacade;
+use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use craft\db\Command;
 use craft\db\Connection as DbConnection;
 use craft\db\Query;
@@ -30,7 +30,7 @@ class SettingsRepositoryCraftTest extends TestCase
 
         $this->settingsRepository = new SettingsRepositoryCraft(
             $this->mockDb(),
-            $this->mockCraftTranslator(),
+            $this->mockTranslator(),
             $this->mockQueryBuilderFactory(),
         );
     }
@@ -100,17 +100,17 @@ class SettingsRepositoryCraftTest extends TestCase
         return $mock;
     }
 
-    private function mockCraftTranslator(): CraftTranslatorFacade
+    private function mockTranslator(): TranslatorContract
     {
-        $mock = $this->createMock(CraftTranslatorFacade::class);
+        $mock = $this->createMock(TranslatorContract::class);
 
-        $mock->method('translate')->willReturnCallback(
+        $mock->method('getLine')->willReturnCallback(
             static function (string $key): string {
                 if ($key === 'phone_home_explain') {
                     return $key;
                 }
 
-                return $key . '-lang';
+                return $key . '-translator';
             }
         );
 
@@ -207,15 +207,15 @@ class SettingsRepositoryCraftTest extends TestCase
                 [
                     'type' => 'string',
                     'key' => 'license_key',
-                    'label' => 'license_key-lang',
+                    'label' => 'license_key-translator',
                     'value' => 'foo-bar-license',
-                    'description' => 'license_key_explain-lang',
+                    'description' => 'license_key_explain-translator',
                     'includeOnSettingsPage' => false,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'phone_home',
-                    'label' => 'phone_home-lang',
+                    'label' => 'phone_home-translator',
                     'value' => '',
                     'description' => '',
                     'includeOnSettingsPage' => false,
@@ -223,145 +223,145 @@ class SettingsRepositoryCraftTest extends TestCase
                 [
                     'type' => 'string',
                     'key' => 'default_max_qty',
-                    'label' => 'default_max_qty-lang',
+                    'label' => 'default_max_qty-translator',
                     'value' => '',
-                    'description' => 'default_max_qty_explain-lang',
+                    'description' => 'default_max_qty_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'int',
                     'key' => 'default_image_quality',
-                    'label' => 'default_image_quality-lang',
+                    'label' => 'default_image_quality-translator',
                     'value' => 87,
-                    'description' => 'default_image_quality_explain-lang',
+                    'description' => 'default_image_quality_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_jpg',
-                    'label' => 'default_jpg-lang',
+                    'label' => 'default_jpg-translator',
                     'value' => '',
-                    'description' => 'default_jpg_explain-lang',
+                    'description' => 'default_jpg_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_retina',
-                    'label' => 'default_retina-lang',
+                    'label' => 'default_retina-translator',
                     'value' => '',
-                    'description' => 'default_retina_explain-lang',
+                    'description' => 'default_retina_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_show_title',
-                    'label' => 'default_show_title-lang',
+                    'label' => 'default_show_title-translator',
                     'value' => '',
-                    'description' => 'default_show_title_explain-lang',
+                    'description' => 'default_show_title_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_require_title',
-                    'label' => 'default_require_title-lang',
+                    'label' => 'default_require_title-translator',
                     'value' => '',
-                    'description' => 'default_require_title_explain-lang',
+                    'description' => 'default_require_title_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_title_label',
-                    'label' => 'default_title_label-lang',
+                    'label' => 'default_title_label-translator',
                     'value' => '',
-                    'description' => 'default_title_label_explain-lang',
+                    'description' => 'default_title_label_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_show_caption',
-                    'label' => 'default_show_caption-lang',
+                    'label' => 'default_show_caption-translator',
                     'value' => '',
-                    'description' => 'default_show_caption_explain-lang',
+                    'description' => 'default_show_caption_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_require_caption',
-                    'label' => 'default_require_caption-lang',
+                    'label' => 'default_require_caption-translator',
                     'value' => '',
-                    'description' => 'default_require_caption_explain-lang',
+                    'description' => 'default_require_caption_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_caption_label',
-                    'label' => 'default_caption_label-lang',
+                    'label' => 'default_caption_label-translator',
                     'value' => '',
-                    'description' => 'default_caption_label_explain-lang',
+                    'description' => 'default_caption_label_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_show_cover',
-                    'label' => 'default_show_cover-lang',
+                    'label' => 'default_show_cover-translator',
                     'value' => '',
-                    'description' => 'default_show_cover_explain-lang',
+                    'description' => 'default_show_cover_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'bool',
                     'key' => 'default_require_cover',
-                    'label' => 'default_require_cover-lang',
+                    'label' => 'default_require_cover-translator',
                     'value' => false,
-                    'description' => 'default_require_cover_explain-lang',
+                    'description' => 'default_require_cover_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'default_cover_label',
-                    'label' => 'default_cover_label-lang',
+                    'label' => 'default_cover_label-translator',
                     'value' => '',
-                    'description' => 'default_cover_label_explain-lang',
+                    'description' => 'default_cover_label_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'bool',
                     'key' => 'hide_source_save_instructions',
-                    'label' => 'hide_source_save_instructions-lang',
+                    'label' => 'hide_source_save_instructions-translator',
                     'value' => true,
-                    'description' => 'hide_source_save_instructions_explain-lang',
+                    'description' => 'hide_source_save_instructions_explain-translator',
                     'includeOnSettingsPage' => true,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'check_for_updates',
-                    'label' => 'check_for_updates-lang',
+                    'label' => 'check_for_updates-translator',
                     'value' => '',
-                    'description' => 'check_for_updates_explain-lang',
+                    'description' => 'check_for_updates_explain-translator',
                     'includeOnSettingsPage' => false,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'update_feed',
-                    'label' => 'update_feed-lang',
+                    'label' => 'update_feed-translator',
                     'value' => '',
-                    'description' => 'update_feed_explain-lang',
+                    'description' => 'update_feed_explain-translator',
                     'includeOnSettingsPage' => false,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'encoding',
-                    'label' => 'encoding-lang',
+                    'label' => 'encoding-translator',
                     'value' => '',
-                    'description' => 'encoding_explain-lang',
+                    'description' => 'encoding_explain-translator',
                     'includeOnSettingsPage' => false,
                 ],
                 [
                     'type' => 'string',
                     'key' => 'encoding_data',
-                    'label' => 'encoding_data-lang',
+                    'label' => 'encoding_data-translator',
                     'value' => '',
-                    'description' => 'encoding_data_explain-lang',
+                    'description' => 'encoding_data_explain-translator',
                     'includeOnSettingsPage' => false,
                 ],
             ],
