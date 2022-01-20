@@ -1,0 +1,37 @@
+{# @var string licenseLabel #}
+{# @var string licenseText #}
+{# @var string licenseKeyLabel #}
+{# @var string licenseKey #}
+
+{% extends '@AnselSrc/Cp/Settings/Ee/SettingsLayout.twig' %}
+
+{% block content %}
+    <fieldset>
+        <div class="field-instruct">
+            <label>
+                {{ licenseLabel|raw }}
+            </label>
+        </div>
+        <div class="field-control">
+            <div class="license-scroll-wrap">
+                {{ licenseText|raw }}
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="field-instruct">
+            <label for="license_key">
+                {{ licenseKeyLabel|raw }}
+            </label>
+        </div>
+        <div class="field-control">
+            <input
+                id="license_key"
+                type="text"
+                name="license_key"
+                value="{{ licenseKey }}"
+                autocomplete="off"
+            >
+        </div>
+    </fieldset>
+{% endblock %}

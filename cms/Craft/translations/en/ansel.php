@@ -136,4 +136,5 @@ return [
     'license_agreement' => 'License Agreement',
     'prevent_upload_over_max' => 'Prevent file uploads when max quantity reached',
     'prevent_upload_over_max_explain' => 'Normally, Ansel will allow uploads beyond max quantity gray them out to indicate they will not be displayed. This is great for preparing images for later. But rarely you need to keep those images from uploading at all.',
+    'trial_active_invalid_license_key_body' => 'Your trial is still active, but the license key you entered is either invalid, or has not been authorized to run on this domain.<br><br>If you have not added an authorized domain, you may do so by {{accountLinkStart}}logging in to your account page on BuzzingPixel.com{{linkEnd}} and adding the domain you wish to run this license on.<br><br>If you need to purchase a site license, you can do so by {{purchaseLinkStart}}clicking here{{linkEnd}}. If you have another license key, go ahead and enter it by {{licenseLinkStart}}clicking here{{linkEnd}}.',
 ];

@@ -6,8 +6,13 @@ declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\GetIndexAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\PostIndexAction;
+use BuzzingPixel\Ansel\Cp\Settings\Ee\License\GetLicenseAction;
+use BuzzingPixel\Ansel\Cp\Settings\Ee\License\PostLicenseAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Updates\GetUpdatesAction;
+use BuzzingPixel\Ansel\License\EeLicenseBanner;
+use BuzzingPixel\Ansel\License\LicenseStatus;
 use BuzzingPixel\AnselConfig\ContainerManager;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,6 +36,14 @@ class Ansel_mcp
 
     private GetUpdatesAction $getUpdatesAction;
 
+    private GetLicenseAction $getLicenseAction;
+
+    private PostLicenseAction $postLicenseAction;
+
+    private LicenseStatus $licenseStatus;
+
+    private EeLicenseBanner $eeLicenseBanner;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -50,6 +63,18 @@ class Ansel_mcp
 
         /** @phpstan-ignore-next-line */
         $this->getUpdatesAction = $container->get(GetUpdatesAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->getLicenseAction = $container->get(GetLicenseAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->postLicenseAction = $container->get(PostLicenseAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->licenseStatus = $container->get(LicenseStatus::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->eeLicenseBanner = $container->get(EeLicenseBanner::class);
     }
 
     /**
@@ -77,6 +102,10 @@ class Ansel_mcp
      */
     private function indexGet(): array
     {
+        $this->eeLicenseBanner->setFromLicenseResult(
+            $this->licenseStatus->get(),
+        );
+
         $model = $this->getIndexAction->render();
 
         return [
@@ -92,14 +121,68 @@ class Ansel_mcp
 
     /**
      * @return string[]
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function updates(): array
     {
+        $this->eeLicenseBanner->setFromLicenseResult(
+            $this->licenseStatus->get(),
+        );
+
         $model = $this->getUpdatesAction->render();
 
         return [
             'heading' => $model->heading(),
             'body' => $model->content(),
         ];
+    }
+
+    /**
+     * @return string[]
+     *
+     * @throws GuzzleException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function license(): array
+    {
+        if (mb_strtolower($this->request->getMethod()) === 'post') {
+            $this->licensePost();
+        }
+
+        return $this->licenseGet();
+    }
+
+    /**
+     * @return string[]
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    private function licenseGet(): array
+    {
+        $this->eeLicenseBanner->setFromLicenseResult(
+            $this->licenseStatus->get(),
+        );
+
+        $model = $this->getLicenseAction->render();
+
+        return [
+            'heading' => $model->heading(),
+            'body' => $model->content(),
+        ];
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    private function licensePost(): void
+    {
+        $this->postLicenseAction->run($this->request);
     }
 }
