@@ -184,7 +184,15 @@ class GetIndexActionTest extends TestCase
 
         self::assertSame(
             'fooBarTwigRender',
-            $model->content(),
+            $model->body(),
+        );
+
+        self::assertSame(
+            [
+                'heading' => 'settings-translator',
+                'content' => 'fooBarTwigRender',
+            ],
+            $model->toArray(),
         );
 
         self::assertCount(3, $this->calls);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Cp\Settings\Ee\License;
 
+use BuzzingPixel\Ansel\Cp\Settings\Ee\McpModel;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
@@ -64,11 +65,11 @@ class GetLicenseAction
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function render(): GetLicenseModel
+    public function render(): McpModel
     {
         $this->eeCssJs->add();
 
-        return new GetLicenseModel(
+        return new McpModel(
             $this->translator->getLine('license'),
             $this->twig->render(
                 '@AnselSrc/Cp/Settings/Ee/License/License.twig',

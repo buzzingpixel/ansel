@@ -106,12 +106,7 @@ class Ansel_mcp
             $this->licenseStatus->get(),
         );
 
-        $model = $this->getIndexAction->render();
-
-        return [
-            'heading' => $model->heading(),
-            'body' => $model->content(),
-        ];
+        return $this->getIndexAction->render()->toArray();
     }
 
     private function indexPost(): void
@@ -132,12 +127,7 @@ class Ansel_mcp
             $this->licenseStatus->get(),
         );
 
-        $model = $this->getUpdatesAction->render();
-
-        return [
-            'heading' => $model->heading(),
-            'body' => $model->content(),
-        ];
+        return $this->getUpdatesAction->render()->toArray();
     }
 
     /**
@@ -170,12 +160,7 @@ class Ansel_mcp
             $this->licenseStatus->get(),
         );
 
-        $model = $this->getLicenseAction->render();
-
-        return [
-            'heading' => $model->heading(),
-            'body' => $model->content(),
-        ];
+        return $this->getLicenseAction->render()->toArray();
     }
 
     /**

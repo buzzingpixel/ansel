@@ -215,7 +215,15 @@ class GetLicenseActionTest extends TestCase
 
         self::assertSame(
             'fooBarTwigRender',
-            $model->content(),
+            $model->body(),
+        );
+
+        self::assertSame(
+            [
+                'heading' => 'license-translator',
+                'content' => 'fooBarTwigRender',
+            ],
+            $model->toArray(),
         );
 
         self::assertSame(

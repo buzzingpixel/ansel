@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Index;
 
+use BuzzingPixel\Ansel\Cp\Settings\Ee\McpModel;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
@@ -54,11 +55,11 @@ class GetIndexAction
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function render(): GetIndexModel
+    public function render(): McpModel
     {
         $this->eeCssJs->add();
 
-        return new GetIndexModel(
+        return new McpModel(
             $this->translator->getLine('settings'),
             $this->twig->render(
                 '@AnselSrc/Cp/Settings/Ee/Index/Index.twig',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Updates;
 
+use BuzzingPixel\Ansel\Cp\Settings\Ee\McpModel;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
@@ -44,11 +45,11 @@ class GetUpdatesAction
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function render(): GetUpdatesModel
+    public function render(): McpModel
     {
         $this->eeCssJs->add();
 
-        return new GetUpdatesModel(
+        return new McpModel(
             $this->translator->getLine('updates'),
             $this->twig->render(
                 '@AnselSrc/Cp/Settings/Ee/Updates/Updates.twig',
