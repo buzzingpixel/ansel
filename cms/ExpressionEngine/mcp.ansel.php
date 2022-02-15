@@ -8,8 +8,11 @@ use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\GetIndexAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Index\PostIndexAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\License\GetLicenseAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\License\PostLicenseAction;
+use BuzzingPixel\Ansel\Cp\Settings\Ee\LockoutExpired\GetLockoutExpiredAction;
+use BuzzingPixel\Ansel\Cp\Settings\Ee\LockoutInvalid\GetLockoutInvalidAction;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Updates\GetUpdatesAction;
 use BuzzingPixel\Ansel\License\EeLicenseBanner;
+use BuzzingPixel\Ansel\License\LicenseResult;
 use BuzzingPixel\Ansel\License\LicenseStatus;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use GuzzleHttp\Exception\GuzzleException;
@@ -40,6 +43,10 @@ class Ansel_mcp
 
     private PostLicenseAction $postLicenseAction;
 
+    private GetLockoutInvalidAction $getLockoutInvalidAction;
+
+    private GetLockoutExpiredAction $getLockoutExpiredAction;
+
     private LicenseStatus $licenseStatus;
 
     private EeLicenseBanner $eeLicenseBanner;
@@ -69,6 +76,16 @@ class Ansel_mcp
 
         /** @phpstan-ignore-next-line */
         $this->postLicenseAction = $container->get(PostLicenseAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->getLockoutInvalidAction = $container->get(
+            GetLockoutInvalidAction::class,
+        );
+
+        /** @phpstan-ignore-next-line */
+        $this->getLockoutExpiredAction = $container->get(
+            GetLockoutExpiredAction::class,
+        );
 
         /** @phpstan-ignore-next-line */
         $this->licenseStatus = $container->get(LicenseStatus::class);
@@ -102,9 +119,13 @@ class Ansel_mcp
      */
     private function indexGet(): array
     {
-        $this->eeLicenseBanner->setFromLicenseResult(
-            $this->licenseStatus->get(),
-        );
+        $licenseResult = $this->licenseStatus->get();
+
+        if ($licenseResult->shouldLockOut()) {
+            return $this->lockout($licenseResult);
+        }
+
+        $this->eeLicenseBanner->setFromLicenseResult($licenseResult);
 
         return $this->getIndexAction->render()->toArray();
     }
@@ -123,9 +144,13 @@ class Ansel_mcp
      */
     public function updates(): array
     {
-        $this->eeLicenseBanner->setFromLicenseResult(
-            $this->licenseStatus->get(),
-        );
+        $licenseResult = $this->licenseStatus->get();
+
+        if ($licenseResult->shouldLockOut()) {
+            return $this->lockout($licenseResult);
+        }
+
+        $this->eeLicenseBanner->setFromLicenseResult($licenseResult);
 
         return $this->getUpdatesAction->render()->toArray();
     }
@@ -169,5 +194,21 @@ class Ansel_mcp
     private function licensePost(): void
     {
         $this->postLicenseAction->run($this->request);
+    }
+
+    /**
+     * @return string[]
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    private function lockout(LicenseResult $licenseResult): array
+    {
+        if ($licenseResult->isExpired()) {
+            return $this->getLockoutExpiredAction->render()->toArray();
+        }
+
+        return $this->getLockoutInvalidAction->render()->toArray();
     }
 }

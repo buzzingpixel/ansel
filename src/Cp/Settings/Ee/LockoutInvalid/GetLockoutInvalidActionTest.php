@@ -2,30 +2,24 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Updates;
+namespace BuzzingPixel\Ansel\Cp\Settings\Ee\LockoutInvalid;
 
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Shared\Meta;
 use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
-use BuzzingPixel\Ansel\UpdatesFeed\UpdateCollection;
-use BuzzingPixel\Ansel\UpdatesFeed\UpdatesFeedRepository;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-use function assert;
-use function is_array;
-
-class GetUpdatesActionTest extends TestCase
+class GetLockoutInvalidActionTest extends TestCase
 {
     /** @var mixed[] */
     private array $calls = [];
 
-    private UpdateCollection $updateCollection;
-
-    private GetUpdatesAction $action;
+    private GetLockoutInvalidAction $getLockoutInvalidAction;
 
     protected function setUp(): void
     {
@@ -33,15 +27,32 @@ class GetUpdatesActionTest extends TestCase
 
         $this->calls = [];
 
-        $this->updateCollection = new UpdateCollection();
-
-        $this->action = new GetUpdatesAction(
+        $this->getLockoutInvalidAction = new GetLockoutInvalidAction(
+            $this->mockMeta(),
             $this->mockEeCssJs(),
             $this->mockSideBar(),
             $this->mockTwig(),
             new TranslatorForTesting(),
-            $this->mockUpdatesFeedRepository(),
         );
+    }
+
+    private function mockMeta(): Meta
+    {
+        $mock = $this->createMock(Meta::class);
+
+        $mock->method('softwarePageLink')->willReturn(
+            '/software/page',
+        );
+
+        $mock->method('licenseCpLink')->willReturn(
+            '/license/cp',
+        );
+
+        $mock->method('buzzingPixelAccountUrl')->willReturn(
+            '/bzpxl/acct',
+        );
+
+        return $mock;
     }
 
     private function mockEeCssJs(): EeCssJs
@@ -99,19 +110,6 @@ class GetUpdatesActionTest extends TestCase
         return $mock;
     }
 
-    private function mockUpdatesFeedRepository(): UpdatesFeedRepository
-    {
-        $mock = $this->createMock(
-            UpdatesFeedRepository::class,
-        );
-
-        $mock->method('getUpdates')->willReturn(
-            $this->updateCollection,
-        );
-
-        return $mock;
-    }
-
     /**
      * @throws LoaderError
      * @throws RuntimeError
@@ -119,86 +117,39 @@ class GetUpdatesActionTest extends TestCase
      */
     public function testRender(): void
     {
-        $model = $this->action->render();
-
-        self::assertSame(
-            'updates-translator',
-            $model->heading(),
-        );
-
-        self::assertSame(
-            'fooBarTwigRender',
-            $model->body(),
-        );
+        $model = $this->getLockoutInvalidAction->render();
 
         self::assertSame(
             [
-                'heading' => 'updates-translator',
+                'heading' => 'ansel_license_invalid-translator',
                 'body' => 'fooBarTwigRender',
             ],
             $model->toArray(),
         );
 
-        self::assertCount(3, $this->calls);
-
-        $call0 = $this->calls[0];
-
         self::assertSame(
             [
-                'object' => 'EeCssJs',
-                'method' => 'add',
+                [
+                    'object' => 'EeCssJs',
+                    'method' => 'add',
+                ],
+                [
+                    'object' => 'Sidebar',
+                    'method' => 'get',
+                    'active' => '',
+                ],
+                [
+                    'object' => 'TwigEnvironment',
+                    'method' => 'render',
+                    'name' => '@AnselSrc/Cp/Settings/Ee/LockoutInvalid/LockoutInvalid.twig',
+                    'context' => [
+                        'sidebar' => ['foo' => 'bar'],
+                        'pageTitle' => 'ansel_license_invalid-translator',
+                        'content' => 'ansel_license_invalid_body-translator <a href="/bzpxl/acct">link</a><a href="/software/page">link</a> <a href="/license/cp">link</a>',
+                    ],
+                ],
             ],
-            $call0,
-        );
-
-        $call1 = $this->calls[1];
-
-        self::assertSame(
-            [
-                'object' => 'Sidebar',
-                'method' => 'get',
-                'active' => 'updates',
-            ],
-            $call1,
-        );
-
-        $call2 = $this->calls[2];
-
-        assert(is_array($call2));
-
-        self::assertCount(4, $call2);
-
-        self::assertSame(
-            'TwigEnvironment',
-            $call2['object'],
-        );
-
-        self::assertSame('render', $call2['method']);
-
-        self::assertSame(
-            '@AnselSrc/Cp/Settings/Ee/Updates/Updates.twig',
-            $call2['name'],
-        );
-
-        $context = $call2['context'];
-
-        assert(is_array($context));
-
-        self::assertCount(3, $context);
-
-        self::assertSame(
-            ['foo' => 'bar'],
-            $context['sidebar'],
-        );
-
-        self::assertSame(
-            'updates-translator',
-            $context['pageTitle'],
-        );
-
-        self::assertSame(
-            $this->updateCollection,
-            $context['updates'],
+            $this->calls,
         );
     }
 }

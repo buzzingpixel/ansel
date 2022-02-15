@@ -190,7 +190,7 @@ class GetIndexActionTest extends TestCase
         self::assertSame(
             [
                 'heading' => 'settings-translator',
-                'content' => 'fooBarTwigRender',
+                'body' => 'fooBarTwigRender',
             ],
             $model->toArray(),
         );
