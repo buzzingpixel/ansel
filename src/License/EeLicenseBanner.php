@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\License;
 
 use BuzzingPixel\Ansel\Shared\Facades\EeAlerts;
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 
 class EeLicenseBanner

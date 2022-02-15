@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Migrate\Migrations;
 
 use BuzzingPixel\Ansel\Migrate\MigrationContract;
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use ExpressionEngine\Model\Addon\Module;
 use ExpressionEngine\Service\Model\Facade as RecordService;
 

@@ -2,17 +2,33 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Shared;
+namespace BuzzingPixel\Ansel\Shared\Meta;
 
+use BuzzingPixel\Ansel\Shared\Environment;
+use BuzzingPixel\Ansel\Shared\Version;
 use PHPUnit\Framework\TestCase;
 
 class MetaTest extends TestCase
 {
     public function test(): void
     {
+        $version = new class extends Version {
+            public function toString(): string
+            {
+                return 'fooVersion';
+            }
+        };
+
+        $eeEnvironment = new class extends Environment {
+            public function toString(): string
+            {
+                return 'ee';
+            }
+        };
+
         $metaEe = new Meta(
-            'ee',
-            'fooVersion',
+            $version,
+            $eeEnvironment,
         );
 
         self::assertSame('fooVersion', $metaEe->version());
@@ -48,9 +64,16 @@ class MetaTest extends TestCase
             $metaEe->buzzingPixelAccountUrl(),
         );
 
+        $craftEnvironment = new class extends Environment {
+            public function toString(): string
+            {
+                return 'craft';
+            }
+        };
+
         $metaCraft = new Meta(
-            'craft',
-            'fooVersion',
+            $version,
+            $craftEnvironment,
         );
 
         self::assertSame(
@@ -63,9 +86,16 @@ class MetaTest extends TestCase
             $metaCraft->softwarePageLink(),
         );
 
+        $emptyEnvironment = new class extends Environment {
+            public function toString(): string
+            {
+                return '';
+            }
+        };
+
         $metaNone = new Meta(
-            '',
-            'fooVersion',
+            $version,
+            $emptyEnvironment,
         );
 
         self::assertSame('', $metaNone->docsUrl());

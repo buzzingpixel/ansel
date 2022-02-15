@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
 
 const ANSEL_ENV = 'ee';
@@ -20,7 +20,6 @@ $meta = $container->get(Meta::class);
 assert($meta instanceof Meta);
 
 define('ANSEL_NAME', $meta->name());
-define('ANSEL_VER', $meta->version());
 
 return [
     'author' => $meta->author(),

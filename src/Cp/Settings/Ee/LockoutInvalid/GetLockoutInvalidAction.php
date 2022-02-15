@@ -7,7 +7,7 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Ee\LockoutInvalid;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\McpModel;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Shared\EeCssJs;
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;

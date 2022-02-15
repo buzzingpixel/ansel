@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\UpdatesFeed;
 
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\Ansel\UpdatesFeed\FeedRetrieval\RetrieveFeedFactory;
 use cebe\markdown\GithubMarkdown;
 use DateTimeImmutable;

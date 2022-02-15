@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\License;
 
 use BuzzingPixel\Ansel\Shared\Facades\EeAlerts;
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use ExpressionEngine\Service\Alert\Alert;
 use PHPUnit\Framework\TestCase;

@@ -2,29 +2,32 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Shared;
+namespace BuzzingPixel\Ansel\Shared\Meta;
 
+use BuzzingPixel\Ansel\Shared\Environment;
+use BuzzingPixel\Ansel\Shared\Version;
 use ExpressionEngine\Service\URL\URLFactory as CPURLFactory;
 
 use function assert;
+use function ee;
 
 class Meta
 {
-    private string $env;
+    private Version $version;
 
-    private string $version;
+    private Environment $environment;
 
     public function __construct(
-        string $env,
-        string $version
+        Version $version,
+        Environment $environment
     ) {
-        $this->env     = $env;
-        $this->version = $version;
+        $this->version     = $version;
+        $this->environment = $environment;
     }
 
     public function version(): string
     {
-        return $this->version;
+        return $this->version->toString();
     }
 
     public function name(): string
@@ -54,11 +57,11 @@ class Meta
 
     public function docsUrl(): string
     {
-        if ($this->env === 'ee') {
+        if ($this->environment->isEqualTo('ee')) {
             return 'https://www.buzzingpixel.com/software/ansel-ee/documentation';
         }
 
-        if ($this->env === 'craft') {
+        if ($this->environment->isEqualTo('craft')) {
             return 'https://www.buzzingpixel.com/software/ansel-craft/documentation';
         }
 
@@ -67,11 +70,11 @@ class Meta
 
     public function softwarePageLink(): string
     {
-        if ($this->env === 'ee') {
+        if ($this->environment->isEqualTo('ee')) {
             return 'https://www.buzzingpixel.com/software/ansel-ee';
         }
 
-        if ($this->env === 'craft') {
+        if ($this->environment->isEqualTo('craft')) {
             return 'https://www.buzzingpixel.com/software/ansel-craft';
         }
 
@@ -83,7 +86,7 @@ class Meta
      */
     public function licenseCpLink(): string
     {
-        if ($this->env !== 'ee') {
+        if ($this->environment->isNotEqualTo('ee')) {
             return '';
         }
 

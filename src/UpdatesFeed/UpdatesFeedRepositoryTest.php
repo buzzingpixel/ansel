@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\UpdatesFeed;
 
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Environment;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
+use BuzzingPixel\Ansel\Shared\Version;
 use BuzzingPixel\Ansel\UpdatesFeed\FeedRetrieval\RetrieveFeedContract;
 use BuzzingPixel\Ansel\UpdatesFeed\FeedRetrieval\RetrieveFeedFactory;
 use cebe\markdown\GithubMarkdown;
@@ -21,10 +23,26 @@ class UpdatesFeedRepositoryTest extends TestCase
     {
         parent::setUp();
 
+        $version = new class extends Version {
+            public function toString(): string
+            {
+                return '2.0.0';
+            }
+        };
+
+        // @codeCoverageIgnoreStart
+        $environment = new class extends Environment {
+            public function toString(): string
+            {
+                return 'ee';
+            }
+        };
+        // @codeCoverageIgnoreEnd
+
         $this->repository = new UpdatesFeedRepository(
             new Meta(
-                'ee',
-                '2.0.0',
+                $version,
+                $environment,
             ),
             new GithubMarkdown(),
             $this->mockRetrieveFeedFactory(),

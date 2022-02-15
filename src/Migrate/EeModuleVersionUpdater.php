@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Migrate;
 
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use ExpressionEngine\Model\Addon\Module;
 use ExpressionEngine\Service\Model\Facade as RecordService;
 

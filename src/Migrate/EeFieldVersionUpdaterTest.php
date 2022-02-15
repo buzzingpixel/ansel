@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Migrate;
 
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Environment;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
+use BuzzingPixel\Ansel\Shared\Version;
 use ExpressionEngine\Model\Addon\Fieldtype;
 use ExpressionEngine\Service\Model\Facade as RecordService;
 use ExpressionEngine\Service\Model\Query\Builder;
@@ -27,9 +29,25 @@ class EeFieldVersionUpdaterTest extends TestCase
 
         $this->firstReturnsRecord = false;
 
+        $version = new class extends Version {
+            public function toString(): string
+            {
+                return '9.8.7';
+            }
+        };
+
+        // @codeCoverageIgnoreStart
+        $environment = new class extends Environment {
+            public function toString(): string
+            {
+                return 'ee';
+            }
+        };
+        // @codeCoverageIgnoreEnd
+
         $meta = new Meta(
-            'ee',
-            '9.8.7',
+            $version,
+            $environment,
         );
 
         $this->updater = new EeFieldVersionUpdater(

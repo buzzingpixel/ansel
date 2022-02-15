@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig;
 
-use BuzzingPixel\Ansel\Shared\Meta;
 use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
 use BuzzingPixel\AnselConfig\Bindings\CraftWebView;
 use BuzzingPixel\AnselConfig\Bindings\EEAlertCollectionBinding;
@@ -24,11 +23,12 @@ use BuzzingPixel\AnselConfig\Bindings\TranslatorBinding;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\LicensePingConfig;
-use BuzzingPixel\Container\ConstructorParamConfig;
 use BuzzingPixel\Container\Container;
 use Psr\Container\ContainerInterface;
 
 use function array_merge;
+use function define;
+use function defined;
 use function dirname;
 use function file_get_contents;
 use function json_decode;
@@ -48,6 +48,11 @@ class ContainerManager
                 dirname(__DIR__) . '/composer.json',
             )
         );
+
+        if (! defined('ANSEL_VER')) {
+            /** @phpstan-ignore-next-line */
+            define('ANSEL_VER', $composerJson->version);
+        }
 
         $container = new Container(
             array_merge(
@@ -70,19 +75,6 @@ class ContainerManager
                 Twig::get(),
             ),
             array_merge(
-                [
-                    new ConstructorParamConfig(
-                        Meta::class,
-                        'env',
-                        ANSEL_ENV,
-                    ),
-                    new ConstructorParamConfig(
-                        Meta::class,
-                        'version',
-                        /** @phpstan-ignore-next-line */
-                        $composerJson->version,
-                    ),
-                ],
                 FeedConfig::get(),
                 LicensePingConfig::get(),
             ),

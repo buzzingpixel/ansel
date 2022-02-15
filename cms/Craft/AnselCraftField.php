@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselCms\Craft;
 
-use BuzzingPixel\Ansel\Shared\Meta;
+use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use craft\base\Field;
 use yii\db\Schema;
