@@ -1,0 +1,72 @@
+{# @var \BuzzingPixel\Ansel\Field\Settings\Craft\FieldSettingsRenderModel model #}
+{# @var \BuzzingPixel\Ansel\Translations\TranslatorContract translator #}
+
+{% import "_includes/forms" as forms %}
+
+<div style="max-width: 400px;">
+    {% if not model.hideSourceSaveInstructions %}
+        <div class="field">
+            <div class="heading">
+                <label>{{ model.uploadSaveDirExplanation|raw }}</label>
+                <div class="instructions">
+                    <p>{{ model.uploadSaveDirHide|raw }}</p>
+                </div>
+            </div>
+            <div class="input">
+                <p>{{ model.uploadSaveDirExplainUpload|raw }}</p>
+                <p>{{ model.uploadSaveDirExplainSave|raw }}</p>
+                <p>{{ model.uploadSaveDirExplainDifferentSources }}</p>
+            </div>
+        </div>
+    {% endif %}
+
+    {% for fieldSetting in model.fieldSettings.asArray %}
+        {# @var \BuzzingPixel\Ansel\Field\Settings\FieldSettingItemContract fieldSetting #}
+        {% switch fieldSetting.type %}
+            {% case 'directory' %}
+                {{ forms.selectField({
+                    label: translator.getLine(fieldSetting.labelTranslationKey),
+                    instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
+                    name: fieldSetting.key,
+                    id: fieldSetting.key,
+                    value: fieldSetting.value,
+                    required: fieldSetting.required,
+                    class: null,
+                    options: model.locationSelectionCollection.asArray,
+                    errors: [],
+                }) }}
+            {% case 'boolean' %}
+                {{ forms.lightswitchField({
+                    label: translator.getLine(fieldSetting.labelTranslationKey),
+                    instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
+                    name: fieldSetting.key,
+                    id: fieldSetting.key,
+                    on: fieldSetting.value,
+                    required: fieldSetting.required,
+                    errors: [],
+                }) }}
+            {% case 'integer' %}
+                {{ forms.textField({
+                    label: translator.getLine(fieldSetting.labelTranslationKey),
+                    instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
+                    name: fieldSetting.key,
+                    id: fieldSetting.key,
+                    value: fieldSetting.value > 0 ? fieldSetting.value : '',
+                    required: fieldSetting.required,
+                    size: 20,
+                    errors: [],
+                }) }}
+            {% default %}
+                {{ forms.textField({
+                    label: translator.getLine(fieldSetting.labelTranslationKey),
+                    instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
+                    name: fieldSetting.key,
+                    id: fieldSetting.key,
+                    value: fieldSetting.value,
+                    required: fieldSetting.required,
+                    size: 20,
+                    errors: [],
+                }) }}
+        {% endswitch %}
+    {% endfor %}
+</div>
