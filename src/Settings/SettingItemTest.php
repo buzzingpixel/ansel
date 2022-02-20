@@ -45,4 +45,29 @@ class SettingItemTest extends TestCase
 
         self::assertSame('foo-bar', $item->getFromBase64());
     }
+
+    public function testGetBool(): void
+    {
+        $item1 = new SettingItem(
+            'foo-type',
+            'foo-key',
+            'foo-label',
+            true,
+            'foo-desc',
+            true,
+        );
+
+        $item2 = new SettingItem(
+            'foo-type',
+            'foo-key',
+            'foo-label',
+            false,
+            'foo-desc',
+            true,
+        );
+
+        self::assertTrue($item1->getBool());
+
+        self::assertFalse($item2->getBool());
+    }
 }
