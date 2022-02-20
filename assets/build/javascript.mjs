@@ -148,12 +148,6 @@ export default (prod) => {
     // Empty the JS dir first
     fs.emptyDirSync(jsOutputDir);
 
-    // Add the gitignore file back
-    fs.writeFileSync(
-        `${jsOutputDir}/.gitignore`,
-        '*\n!.gitignore',
-    );
-
     // We'll create a hash of the JS to make a path insert for cache breaking
     // if we're in prod mode
     let pathInsert = '';

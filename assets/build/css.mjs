@@ -147,12 +147,6 @@ export default (prod) => {
             // Empty the path
             fs.emptyDirSync(cssOutputPath);
 
-            // Make sure gitignore is in place
-            fs.writeFileSync(
-                `${cssOutputPath}/.gitignore`,
-                '*\n!.gitignore\n',
-            );
-
             // If the directory doesn't exist, create it
             if (!fs.existsSync(cssOutputFile)) {
                 fs.mkdirSync(cssOutputFile, { recursive: true });
