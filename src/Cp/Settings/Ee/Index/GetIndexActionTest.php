@@ -8,7 +8,7 @@ use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Settings\SettingItem;
 use BuzzingPixel\Ansel\Settings\SettingsCollection;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
-use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use Csrf;
 use ExpressionEngine\Library\CP\URL;

@@ -7,7 +7,7 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Ee\License;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\McpModel;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
-use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use cebe\markdown\GithubMarkdown;

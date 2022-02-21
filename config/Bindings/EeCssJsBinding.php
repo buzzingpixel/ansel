@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig\Bindings;
 
-use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use Cp;
 use Psr\Container\ContainerInterface;

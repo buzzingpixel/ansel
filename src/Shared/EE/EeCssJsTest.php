@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Shared;
+namespace BuzzingPixel\Ansel\Shared\EE;
 
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use Cp;
@@ -69,7 +69,7 @@ class EeCssJsTest extends TestCase
                 ];
 
                 return (string) json_encode([
-                    'main.js' => '/foo/bar/main.js',
+                    'ansel.min.js' => '/foo/bar/ansel.min.js',
                     'ansel.min.css' => '/foo/bar/ansel.min.css',
                     'test.1' => 'foo/bar/test.1',
                     'test.2' => 'foo/bar/test.2',
@@ -94,7 +94,7 @@ class EeCssJsTest extends TestCase
                 [
                     'object' => 'Cp',
                     'method' => 'add_to_head',
-                    'data' => '<link rel="stylesheet" href="/foo/bar/url/third/themes/ansel/css//foo/bar/main.js">',
+                    'data' => '<link rel="stylesheet" href="/foo/bar/url/third/themes/ansel/css//foo/bar/ansel.min.js">',
                 ],
                 [
                     'object' => 'Cp',
@@ -134,7 +134,7 @@ class EeCssJsTest extends TestCase
                 [
                     'object' => 'Cp',
                     'method' => 'add_to_foot',
-                    'data' => '<script type="text/javascript" src="/foo/bar/url/third/themes/ansel/js//foo/bar/main.js"></script>',
+                    'data' => '<script type="text/javascript" src="/foo/bar/url/third/themes/ansel/js//foo/bar/ansel.min.js"></script>',
                 ],
             ],
             $this->calls,

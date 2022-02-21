@@ -6,7 +6,7 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Updates;
 
 use BuzzingPixel\Ansel\Cp\Settings\Ee\McpModel;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
-use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use BuzzingPixel\Ansel\UpdatesFeed\UpdatesFeedRepository;
 use Twig\Environment as TwigEnvironment;

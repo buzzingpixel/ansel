@@ -7,7 +7,7 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Ee\Index;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\McpModel;
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
-use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use Csrf;
 use ExpressionEngine\Service\URL\URLFactory;

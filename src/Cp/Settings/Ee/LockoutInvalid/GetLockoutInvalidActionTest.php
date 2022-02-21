@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Cp\Settings\Ee\LockoutInvalid;
 
 use BuzzingPixel\Ansel\Cp\Settings\Ee\Sidebar;
-use BuzzingPixel\Ansel\Shared\EeCssJs;
+use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use PHPUnit\Framework\TestCase;

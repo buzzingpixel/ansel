@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Shared;
+namespace BuzzingPixel\Ansel\Shared\EE;
 
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use Cp;
@@ -84,9 +84,9 @@ class EeCssJs
         assert(is_array($jsManifest));
 
         // Make sure main.js (our main JS) is last
-        $mainJsLoc = $jsManifest['main.js'];
-        unset($jsManifest['main.js']);
-        $jsManifest['main.js'] = $mainJsLoc;
+        $mainJsLoc = $jsManifest['ansel.min.js'];
+        unset($jsManifest['ansel.min.js']);
+        $jsManifest['ansel.min.js'] = $mainJsLoc;
 
         array_walk(
             $jsManifest,
