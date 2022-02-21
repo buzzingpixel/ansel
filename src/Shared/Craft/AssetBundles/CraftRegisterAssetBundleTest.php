@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Shared;
+namespace BuzzingPixel\Ansel\Shared\Craft\AssetBundles;
 
 use craft\web\View;
 use PHPUnit\Framework\TestCase;

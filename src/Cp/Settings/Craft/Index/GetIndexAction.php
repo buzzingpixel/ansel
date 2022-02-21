@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Cp\Settings\Craft\Index;
 
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
-use BuzzingPixel\Ansel\Shared\CraftRegisterAssetBundle;
+use BuzzingPixel\Ansel\Shared\Craft\AssetBundles\CraftRegisterAssetBundle;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;

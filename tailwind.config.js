@@ -2,6 +2,7 @@
 
 module.exports = {
     content: [
+        './assets/react/**/*.jsx',
         './cms/**/*.{html,svg,template.php,twig}',
         './src/**/*.{html,svg,template.php,twig}',
     ],

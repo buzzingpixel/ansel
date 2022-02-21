@@ -23,10 +23,6 @@ const options = {
 // Get the manifest
 let manifestObject = {};
 
-if (fs.existsSync(manifestLocation)) {
-    manifestObject = JSON.parse(fs.readFileSync(manifestLocation));
-}
-
 // Process a single source JS file
 export async function processSourceFile (filePath, pathInsert) {
     const ext = path.extname(filePath);

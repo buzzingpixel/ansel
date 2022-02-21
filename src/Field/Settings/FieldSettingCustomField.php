@@ -17,16 +17,20 @@ class FieldSettingCustomField
 
     private string $label;
 
+    private string $handle;
+
     private string $type;
 
     private bool $required;
 
     public function __construct(
         string $label,
+        string $handle,
         string $type,
         bool $required
     ) {
         $this->label    = $label;
+        $this->handle   = $handle;
         $this->type     = $type;
         $this->required = $required;
     }
@@ -34,6 +38,11 @@ class FieldSettingCustomField
     public function label(): string
     {
         return $this->label;
+    }
+
+    public function handle(): string
+    {
+        return $this->handle;
     }
 
     public function type(): string

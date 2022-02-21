@@ -7,7 +7,7 @@ namespace BuzzingPixel\Ansel\Cp\Settings\Craft\Index;
 use BuzzingPixel\Ansel\Settings\SettingItem;
 use BuzzingPixel\Ansel\Settings\SettingsCollection;
 use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
-use BuzzingPixel\Ansel\Shared\CraftRegisterAssetBundle;
+use BuzzingPixel\Ansel\Shared\Craft\AssetBundles\CraftRegisterAssetBundle;
 use BuzzingPixel\Ansel\Translations\TranslatorForTesting;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment as TwigEnvironment;

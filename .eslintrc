@@ -1,6 +1,14 @@
 {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "extends": [
-        "airbnb-base"
+        "eslint:recommended",
+        "airbnb-base",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "env": {
         "browser": true,
@@ -13,6 +21,7 @@
         "parser": "babel-eslint"
     },
     "rules": {
+        "max-classes-per-file": ["error", 99999],
         "no-param-reassign": 0,
         "import/extensions": ["error", "never", { "js": "always", "mjs": "always" }],
         "indent": ["error", 4, {
