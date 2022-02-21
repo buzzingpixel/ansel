@@ -64,8 +64,8 @@ class CraftAnselAssetBundleTest extends TestCase
                 ];
 
                 return (string) json_encode([
-                    'main.js' => 'foo/bar/main.js',
-                    'style.min.css' => 'foo/bar/style.min.css',
+                    'ansel.min.js' => 'foo/bar/ansel.min.js',
+                    'ansel.min.css' => 'foo/bar/ansel.min.css',
                     'test.1' => 'foo/bar/test.1',
                     'test.2' => 'foo/bar/test.2',
                 ]);
@@ -91,20 +91,20 @@ class CraftAnselAssetBundleTest extends TestCase
 
         self::assertSame(
             [
-                'js/foo/bar/style.min.css',
+                'js/foo/bar/ansel.min.css',
                 'js/foo/bar/test.1',
                 'js/foo/bar/test.2',
-                'js/foo/bar/main.js',
+                'js/foo/bar/ansel.min.js',
             ],
             $this->assetBundle->js,
         );
 
         self::assertSame(
             [
-                'css/foo/bar/main.js',
+                'css/foo/bar/ansel.min.js',
                 'css/foo/bar/test.1',
                 'css/foo/bar/test.2',
-                'css/foo/bar/style.min.css',
+                'css/foo/bar/ansel.min.css',
             ],
             $this->assetBundle->css,
         );

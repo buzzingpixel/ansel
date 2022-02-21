@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Project CSS and React" pattern="file[ansel]:assets//*.css||file[ansel]:assets//*.pcss||file[ansel]:assets//*.html||file[ansel]:assets//*.twig||file[ansel]:assets//*.template.php||file[ansel]:src//*.css||file[ansel]:src//*.pcss||file[ansel]:assets//*.html||file[ansel]:src//*.twig||file[ansel]:src//*.template.php||file[ansel]:assets/react//*.js||file[ansel]:assets/react//*.jsx" />
-</component>

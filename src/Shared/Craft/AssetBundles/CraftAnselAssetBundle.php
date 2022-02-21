@@ -67,9 +67,9 @@ class CraftAnselAssetBundle extends AssetBundle
         assert(is_array($cssManifest));
 
         // Make sure style.min (our main CSS) is last
-        $mainCssLoc = $cssManifest['style.min.css'];
-        unset($cssManifest['style.min.css']);
-        $cssManifest['style.min.css'] = $mainCssLoc;
+        $mainCssLoc = $cssManifest['ansel.min.css'];
+        unset($cssManifest['ansel.min.css']);
+        $cssManifest['ansel.min.css'] = $mainCssLoc;
 
         $this->css = array_values(array_map(
             static fn ($cssLoc) => 'css/' . $cssLoc,
@@ -90,10 +90,10 @@ class CraftAnselAssetBundle extends AssetBundle
 
         assert(is_array($jsManifest));
 
-        // Make sure main.js (our main JS) is last
-        $mainJsLoc = $jsManifest['main.js'];
-        unset($jsManifest['main.js']);
-        $jsManifest['main.js'] = $mainJsLoc;
+        // Make sure style.min (our main CSS) is last
+        $mainJsLoc = $jsManifest['ansel.min.js'];
+        unset($jsManifest['ansel.min.js']);
+        $jsManifest['ansel.min.js'] = $mainJsLoc;
 
         $this->js = array_values(array_map(
             static fn ($jsLoc) => 'js/' . $jsLoc,

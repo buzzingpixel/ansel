@@ -1,34 +1,5 @@
-class Field {
-    public label: string;
-
-    public handle: string;
-
-    public type: string;
-
-    public require: boolean;
-
-    constructor (
-        {
-            label,
-            handle,
-            type,
-            require,
-        }: {
-            label?: string,
-            handle?: string,
-            type?: string,
-            require?: boolean,
-        },
-    ) {
-        this.label = label !== undefined ? label : '';
-
-        this.handle = handle !== undefined ? handle : '';
-
-        this.type = type !== undefined ? type : '';
-
-        this.require = Boolean(require);
-    }
-}
+import * as React from 'react';
+import Field from './Field';
 
 type Props = Record<string, unknown>;
 
@@ -36,7 +7,10 @@ type FieldSettingsFieldsState = {
     fields: Array<Field>,
 };
 
-class FieldSettingsFields extends React.Component<Props, FieldSettingsFieldsState> {
+export default class FieldSettingsFields extends React.Component<
+    Props,
+    FieldSettingsFieldsState
+> {
     state: FieldSettingsFieldsState;
 
     private readonly inputNameBase: string;
@@ -244,18 +218,3 @@ class FieldSettingsFields extends React.Component<Props, FieldSettingsFieldsStat
         );
     }
 }
-
-const fieldSettingsFieldsContainer = document.getElementsByClassName(
-    'field_settings_fields',
-).item(0);
-
-const templateInput = fieldSettingsFieldsContainer.getElementsByClassName(
-    'custom_fields',
-).item(0);
-
-ReactDOM.render(
-    <FieldSettingsFields
-        templateInput={templateInput}
-    />,
-    fieldSettingsFieldsContainer,
-);

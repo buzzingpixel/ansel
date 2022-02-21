@@ -70,7 +70,7 @@ class EeCssJsTest extends TestCase
 
                 return (string) json_encode([
                     'main.js' => '/foo/bar/main.js',
-                    'style.min.css' => '/foo/bar/style.min.css',
+                    'ansel.min.css' => '/foo/bar/ansel.min.css',
                     'test.1' => 'foo/bar/test.1',
                     'test.2' => 'foo/bar/test.2',
                 ]);
@@ -109,7 +109,7 @@ class EeCssJsTest extends TestCase
                 [
                     'object' => 'Cp',
                     'method' => 'add_to_head',
-                    'data' => '<link rel="stylesheet" href="/foo/bar/url/third/themes/ansel/css//foo/bar/style.min.css">',
+                    'data' => '<link rel="stylesheet" href="/foo/bar/url/third/themes/ansel/css//foo/bar/ansel.min.css">',
                 ],
                 [
                     'object' => 'InternalFunctions',
@@ -119,7 +119,7 @@ class EeCssJsTest extends TestCase
                 [
                     'object' => 'Cp',
                     'method' => 'add_to_foot',
-                    'data' => '<script type="text/javascript" src="/foo/bar/url/third/themes/ansel/js//foo/bar/style.min.css"></script>',
+                    'data' => '<script type="text/javascript" src="/foo/bar/url/third/themes/ansel/js//foo/bar/ansel.min.css"></script>',
                 ],
                 [
                     'object' => 'Cp',

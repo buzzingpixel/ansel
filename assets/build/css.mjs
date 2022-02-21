@@ -12,11 +12,11 @@ import tailwindcss from 'tailwindcss';
 const appDir = process.cwd();
 const cssLocation = `${appDir}/assets/css`;
 const cssOutputPath = `${appDir}/assetsDist/css`;
-const cssOutputFileName = 'style.min.css';
+const cssOutputFileName = 'ansel.min.css';
 const startFile = `${appDir}/assets/css/start.pcss`;
 const libDir = `${appDir}/assets/css/lib`;
 
-export default (prod) => {
+export default () => {
     const mediaQueries = [];
     const mediaQueryCss = {};
     const files = {};
@@ -130,19 +130,17 @@ export default (prod) => {
             // Create the relative file path for the manifest
             let manifestPath = cssOutputFileName;
 
-            // If prod is requested, get a hash of the css content and insert
-            // it into the file path for cache breaking
-            if (prod === true) {
-                // Get a hash of the css content
-                const md5 = crypto.createHash('md5');
-                const hash = `${md5.update(result.css).digest('hex')}`;
+            // Get a hash of the css content and insert it into the file path
+            // for cache breaking
+            // Get a hash of the css content
+            const md5 = crypto.createHash('md5');
+            const hash = `${md5.update(result.css).digest('hex')}`;
 
-                // and insert it into the file path for cache breaking
-                cssOutputFile += `/${hash}`;
+            // and insert it into the file path for cache breaking
+            cssOutputFile += `/${hash}`;
 
-                // Update the manifest path
-                manifestPath = `${hash}/${manifestPath}`;
-            }
+            // Update the manifest path
+            manifestPath = `${hash}/${manifestPath}`;
 
             // Empty the path
             fs.emptyDirSync(cssOutputPath);

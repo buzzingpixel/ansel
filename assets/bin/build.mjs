@@ -1,5 +1,5 @@
 import css from '../build/css.mjs';
-import javascript from '../build/javascript.mjs';
+import js from '../build/js.mjs';
 
-css(true);
-javascript(true);
+css();
+js();

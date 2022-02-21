@@ -20,10 +20,19 @@
     "parserOptions": {
         "parser": "babel-eslint"
     },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
     "rules": {
-        "max-classes-per-file": ["error", 99999],
         "no-param-reassign": 0,
-        "import/extensions": ["error", "never", { "js": "always", "mjs": "always" }],
+        "import/extensions": [
+            "error",
+            "never"
+        ],
         "indent": ["error", 4, {
             "SwitchCase": 1,
             "VariableDeclarator": 1,

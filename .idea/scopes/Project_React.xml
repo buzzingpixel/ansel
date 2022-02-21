@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Project React" pattern="file[ansel]:assets/react//*.js||file[ansel]:assets/react//*.jsx" />
-</component>

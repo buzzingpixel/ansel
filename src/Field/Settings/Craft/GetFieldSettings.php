@@ -27,22 +27,18 @@ class GetFieldSettings
 
     private CraftRegisterAssetBundle $registerAssetBundle;
 
-    private RegisterFieldSettingsAssetBundle $registerFieldSettingsAssetBundle;
-
     public function __construct(
         TwigEnvironment $twig,
         GetAllVolumes $getAllVolumes,
         TranslatorContract $translator,
         SettingsRepositoryContract $settingsRepository,
-        CraftRegisterAssetBundle $registerAssetBundle,
-        RegisterFieldSettingsAssetBundle $registerFieldSettingsAssetBundle
+        CraftRegisterAssetBundle $registerAssetBundle
     ) {
-        $this->twig                             = $twig;
-        $this->getAllVolumes                    = $getAllVolumes;
-        $this->translator                       = $translator;
-        $this->settingsRepository               = $settingsRepository;
-        $this->registerAssetBundle              = $registerAssetBundle;
-        $this->registerFieldSettingsAssetBundle = $registerFieldSettingsAssetBundle;
+        $this->twig                = $twig;
+        $this->getAllVolumes       = $getAllVolumes;
+        $this->translator          = $translator;
+        $this->settingsRepository  = $settingsRepository;
+        $this->registerAssetBundle = $registerAssetBundle;
     }
 
     /**
@@ -55,8 +51,6 @@ class GetFieldSettings
         FieldSettingsCollection $fieldSettings
     ): GetFieldSettingsModel {
         $this->registerAssetBundle->register();
-
-        $this->registerFieldSettingsAssetBundle->register();
 
         return new GetFieldSettingsModel(
             $this->twig->render(
