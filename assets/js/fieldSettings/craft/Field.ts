@@ -1,3 +1,10 @@
+type FieldConstructor = {
+    label?: string,
+    handle?: string,
+    type?: string,
+    required?: boolean,
+};
+
 export default class Field {
     public label: string;
 
@@ -5,20 +12,15 @@ export default class Field {
 
     public type: string;
 
-    public require: boolean;
+    public required: boolean;
 
     constructor (
         {
             label,
             handle,
             type,
-            require,
-        }: {
-            label?: string,
-            handle?: string,
-            type?: string,
-            require?: boolean,
-        },
+            required,
+        }: FieldConstructor = {},
     ) {
         this.label = label !== undefined ? label : '';
 
@@ -26,6 +28,6 @@ export default class Field {
 
         this.type = type !== undefined ? type : '';
 
-        this.require = Boolean(require);
+        this.required = Boolean(required);
     }
 }

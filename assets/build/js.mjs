@@ -52,4 +52,6 @@ export default async () => {
             'ansel.min.js': `${pathInsert}/ansel.min.js`,
         }, null, 4),
     );
+
+    out.success('JS compiled');
 };
