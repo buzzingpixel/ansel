@@ -7,6 +7,7 @@ function lint-all() {
     phpstan;
     phpcs;
     eslint;
+    typescript-check;
     stylelint;
 
     return 0;

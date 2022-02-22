@@ -1,0 +1,10 @@
+{
+    "include": [
+        "assets/js/**/*"
+    ],
+    "compilerOptions": {
+        "jsx": "react",
+        "skipLibCheck": true,
+        "noEmit": true
+    }
+}
