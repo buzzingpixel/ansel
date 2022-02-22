@@ -240,7 +240,7 @@ class GetLicenseActionTest extends TestCase
                 [
                     'object' => 'InternalFunctions',
                     'method' => 'fileGetContents',
-                    'filename' => '/Volumes/Promenade/git/ansel/src/Cp/Settings/Ee/License/License.md',
+                    'filename' => __DIR__ . '/License.md',
                 ],
                 [
                     'object' => 'GithubMarkdown',
