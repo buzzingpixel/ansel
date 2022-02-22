@@ -11,7 +11,8 @@
     "name": "ansel-build-process",
     "version": "1.0.0",
     "description": "Ansel Front-End Build",
-    "license": "proprietary",
+    "license": "UNLICENSED",
+    "private": true,
     "author": "TJ Draper",
     "dependencies": {
         "@babel/cli": "^7.17.3",

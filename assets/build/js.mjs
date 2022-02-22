@@ -9,24 +9,7 @@ const sourceDir = `${appDir}/assets/js`;
 const outputDir = `${appDir}/assetsDist/js`;
 const manifestLocation = `${outputDir}/manifest.json`;
 
-export default async () => {
-    // Let the user know what we're doing
-    out.info('Compiling JS...');
-
-    // Empty the output dir
-    fsExtra.emptyDirSync(outputDir);
-
-    const bundler = new Parcel({
-        entries: `${sourceDir}/ansel.ts`,
-        defaultConfig: '@parcel/config-default',
-        mode: 'production',
-        env: {
-            NODE_ENV: 'production',
-        },
-    });
-
-    await bundler.run();
-
+const finish = () => {
     // Get the contents of our intermediate file
     const jsString = String(fs.readFileSync(`${outputDir}/ansel.min.js`));
 
@@ -55,3 +38,48 @@ export default async () => {
 
     out.success('JS compiled');
 };
+
+const dataStore = {
+    hasStarted: false,
+    tries: 0,
+};
+
+const runBundler = async () => {
+    const bundler = new Parcel({
+        entries: `${sourceDir}/ansel.ts`,
+        defaultConfig: '@parcel/config-default',
+        mode: 'production',
+        env: {
+            NODE_ENV: 'production',
+        },
+    });
+
+    await bundler.run();
+};
+
+const js = async () => {
+    if (!dataStore.hasStarted) {
+        out.info('Compiling JS...');
+
+        dataStore.hasStarted = true;
+    }
+
+    // Empty the output dir
+    fsExtra.emptyDirSync(outputDir);
+
+    runBundler()
+        .then(() => {
+            finish();
+        })
+        .catch((error) => {
+            if (dataStore.tries > 100) {
+                throw error;
+            }
+
+            dataStore.tries += 1;
+
+            js();
+        });
+};
+
+export default js;
