@@ -1,0 +1,24 @@
+name: CI
+on: [push]
+jobs:
+  code-quality:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install composer dependencies
+        run: php74 /usr/local/bin/composer install --no-interaction --no-ansi --no-progress
+      - name: Install javascript dependencies
+        run: yarn install --production=false --frozen-lockfile
+      - name: Run PHP Unit Tests
+        run: XDEBUG_MODE=coverage php74 ./vendor/bin/phpunit
+      - name: Run PHP Static Analysis
+        run: XDEBUG_MODE=off php74 -d memory_limit=4G ./vendor/bin/phpstan analyse cms src --no-progress
+      - name: Run PHP Code Sniffer
+        run: php74 -d memory_limit=4G ./vendor/bin/phpcs
+      - name: Run JavaScript linting
+        run: yarn eslint --ext .js --ext .ts --ext .jsx --ext .tsx --ext .html --ext .vue --ext .mjs --no-error-on-unmatched-pattern assets/js assets/react/app --max-warnings=0
+      - name: Run TypeScript type checking
+        run: yarn tsc
+      - name: Run style linting
+        run: yarn stylelint --allow-empty-input "assets/**/*.{css,pcss}" "src/**/*.{css,pcss}" --fix
