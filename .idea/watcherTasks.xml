@@ -42,7 +42,7 @@
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="js" />
+      <option name="arguments" value="" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />
       <option name="exitCodeBehavior" value="ERROR" />
@@ -54,7 +54,7 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="yarn" />
+      <option name="program" value="$PROJECT_DIR$/bin/yarn-js.sh" />
       <option name="runOnExternalChanges" value="false" />
       <option name="scopeName" value="Project JS" />
       <option name="trackOnlyRoot" value="false" />
