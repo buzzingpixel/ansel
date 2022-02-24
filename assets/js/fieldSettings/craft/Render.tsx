@@ -9,7 +9,10 @@ export default (fieldSettingsFieldsContainer: Element) => {
         ).item(0) as HTMLInputElement;
 
     ReactDOM.render(
-        <FieldSettingsFields templateInput={templateInput} />,
+        <FieldSettingsFields
+            templateInput={templateInput}
+            existingFields={JSON.parse(templateInput.dataset.existingFields)}
+        />,
         fieldSettingsFieldsContainer,
     );
 };

@@ -14,14 +14,35 @@ const SortableItem = SortableElement(
     (props) => <TableRow {...props} />,
 );
 
+type InitialField = {
+    label: string,
+    handle: string,
+    type: string,
+    required: boolean,
+}
+
 const FieldSettingsFields = (
-    { templateInput }: {templateInput: HTMLInputElement},
+    {
+        templateInput,
+        existingFields,
+    }: {
+        templateInput: HTMLInputElement,
+        existingFields: Array<InitialField>,
+    },
 ) => {
+    const initialExistingFields = [];
+
+    existingFields.forEach((field) => {
+        initialExistingFields.push(new Field(field));
+    });
+
     const inputNameBase = templateInput.name;
 
     const tableWrapperRef = useRef(document.createElement('div'));
 
-    const [fields, setFields] = useState<Array<Field>>([]);
+    const [fields, setFields] = useState<Array<Field>>(
+        initialExistingFields,
+    );
 
     const addField = () => {
         setFields([

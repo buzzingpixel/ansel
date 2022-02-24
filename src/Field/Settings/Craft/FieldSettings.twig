@@ -74,5 +74,10 @@
 <div
     class="craft_field_settings_fields mt-6"
 >
-    <input type="hidden" name="fieldSettings[customFields]" class="customFields">
+    <input
+        type="hidden"
+        name="fieldSettings[customFields]"
+        class="customFields"
+        data-existing-fields="{{ model.fieldSettings.customFields.asJson }}"
+    >
 </div>

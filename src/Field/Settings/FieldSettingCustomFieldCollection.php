@@ -6,6 +6,7 @@ namespace BuzzingPixel\Ansel\Field\Settings;
 
 use function array_map;
 use function array_values;
+use function json_encode;
 
 class FieldSettingCustomFieldCollection
 {
@@ -31,6 +32,19 @@ class FieldSettingCustomFieldCollection
     public function asArray(): array
     {
         return $this->fields;
+    }
+
+    public function asJson(): string
+    {
+        return (string) json_encode(array_map(
+            static fn (FieldSettingCustomField $f) => [
+                'label' => $f->label(),
+                'handle' => $f->handle(),
+                'type' => $f->type(),
+                'required' => $f->required(),
+            ],
+            $this->asArray(),
+        ));
     }
 
     public function addField(FieldSettingCustomField $field): void
