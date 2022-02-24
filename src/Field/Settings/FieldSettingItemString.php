@@ -71,4 +71,14 @@ class FieldSettingItemString implements FieldSettingItemContract
     {
         $this->value = $value;
     }
+
+    public function setValueFromString(string $value): void
+    {
+        $this->value = $value;
+    }
+
+    public function isEmpty(): bool
+    {
+        return $this->value === '';
+    }
 }

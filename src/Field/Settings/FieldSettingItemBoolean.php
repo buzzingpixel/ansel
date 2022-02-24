@@ -71,4 +71,17 @@ class FieldSettingItemBoolean implements FieldSettingItemContract
     {
         $this->value = $value;
     }
+
+    public function setValueFromString(string $value): void
+    {
+        $this->value = $value === '1';
+    }
+
+    /**
+     * Booleans don't have an empty state
+     */
+    public function isEmpty(): bool
+    {
+        return false;
+    }
 }

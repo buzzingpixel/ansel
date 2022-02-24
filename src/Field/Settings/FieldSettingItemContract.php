@@ -23,5 +23,9 @@ interface FieldSettingItemContract
     /** @phpstan-ignore-next-line */
     public function setValue($value): void;
 
+    public function setValueFromString(string $value): void;
+
     public function required(): bool;
+
+    public function isEmpty(): bool;
 }

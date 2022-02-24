@@ -88,4 +88,14 @@ class FieldSettingItemInteger implements FieldSettingItemContract
 
         $this->value = $value;
     }
+
+    public function setValueFromString(string $value): void
+    {
+        $this->value = (int) $value;
+    }
+
+    public function isEmpty(): bool
+    {
+         return $this->value < 1;
+    }
 }

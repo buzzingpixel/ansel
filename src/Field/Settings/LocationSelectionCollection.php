@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Settings;
 
+use function array_filter;
 use function array_map;
 use function array_merge;
 use function array_values;
@@ -45,5 +46,26 @@ class LocationSelectionCollection
                 $this->items,
             ),
         ));
+    }
+
+    public function firstOrNull(): ?LocationSelectionItem
+    {
+        return array_values($this->items)[0] ?? null;
+    }
+
+    public function filter(callable $callback): self
+    {
+        return new self(array_filter(
+            $this->items,
+            $callback,
+        ));
+    }
+
+    public function getLocationByValueOrNull(
+        string $value
+    ): ?LocationSelectionItem {
+        return $this->filter(static fn (
+            LocationSelectionItem $i
+        ) => $i->value() === $value)->firstOrNull();
     }
 }

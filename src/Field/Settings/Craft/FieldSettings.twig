@@ -4,6 +4,7 @@
 {% import "_includes/forms" as forms %}
 
 <div style="max-width: 400px;">
+    <input type="hidden" name="fieldSettings[placeholder]">
     {% if not model.hideSourceSaveInstructions %}
         <div class="field">
             <div class="heading">
@@ -27,7 +28,7 @@
                 {{ forms.selectField({
                     label: translator.getLine(fieldSetting.labelTranslationKey),
                     instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
-                    name: fieldSetting.key,
+                    name: 'fieldSettings[' ~ fieldSetting.key ~ ']',
                     id: fieldSetting.key,
                     value: fieldSetting.value,
                     required: fieldSetting.required,
@@ -39,7 +40,7 @@
                 {{ forms.lightswitchField({
                     label: translator.getLine(fieldSetting.labelTranslationKey),
                     instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
-                    name: fieldSetting.key,
+                    name: 'fieldSettings[' ~ fieldSetting.key ~ ']',
                     id: fieldSetting.key,
                     on: fieldSetting.value,
                     required: fieldSetting.required,
@@ -49,7 +50,7 @@
                 {{ forms.textField({
                     label: translator.getLine(fieldSetting.labelTranslationKey),
                     instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
-                    name: fieldSetting.key,
+                    name: 'fieldSettings[' ~ fieldSetting.key ~ ']',
                     id: fieldSetting.key,
                     value: fieldSetting.value > 0 ? fieldSetting.value : '',
                     required: fieldSetting.required,
@@ -60,7 +61,7 @@
                 {{ forms.textField({
                     label: translator.getLine(fieldSetting.labelTranslationKey),
                     instructions: translator.getLine(fieldSetting.descriptionTranslationKey),
-                    name: fieldSetting.key,
+                    name: 'fieldSettings[' ~ fieldSetting.key ~ ']',
                     id: fieldSetting.key,
                     value: fieldSetting.value,
                     required: fieldSetting.required,
@@ -73,5 +74,5 @@
 <div
     class="craft_field_settings_fields mt-6"
 >
-    <input type="hidden" name="custom_fields" class="custom_fields">
+    <input type="hidden" name="fieldSettings[customFields]" class="customFields">
 </div>

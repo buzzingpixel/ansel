@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Settings;
 
+use function array_filter;
+use function array_map;
+use function array_walk;
+use function assert;
+use function is_array;
+use function is_string;
+
 class FieldSettingsCollection
 {
     private FieldSettingItemDirectory $uploadLocation;
 
     private FieldSettingItemDirectory $saveLocation;
 
-    private FieldSettingItemString $minQty;
+    private FieldSettingItemInteger $minQty;
 
-    private FieldSettingItemString $maxQty;
+    private FieldSettingItemInteger $maxQty;
 
     private FieldSettingItemBoolean $preventUploadOverMax;
 
@@ -34,6 +41,55 @@ class FieldSettingsCollection
 
     private FieldSettingCustomFieldCollection $customFields;
 
+    /**
+     * @param mixed[] $fieldSettings
+     */
+    public static function fromFieldArray(array $fieldSettings): self
+    {
+        $collection = new self();
+
+        array_walk(
+            $fieldSettings,
+            static function ($item, $index) use ($collection): void {
+                /** @phpstan-ignore-next-line */
+                $setting = $collection->{$index}();
+
+                if ($setting instanceof FieldSettingItemContract) {
+                    assert(is_string($item));
+
+                    $setting->setValueFromString($item);
+
+                    return;
+                }
+
+                assert($setting instanceof FieldSettingCustomFieldCollection);
+
+                assert(is_array($item));
+
+                $item = array_filter(
+                    $item,
+                    static fn ($val) => is_array($val)
+                );
+
+                array_walk(
+                    $item,
+                    static function (array $val) use ($setting): void {
+                        $required = (string) ($val['required'] ?? '');
+
+                        $setting->addField(new FieldSettingCustomField(
+                            (string) ($val['label'] ?? ''),
+                            (string) ($val['handle'] ?? ''),
+                            (string) ($val['type'] ?? ''),
+                            $required === '1',
+                        ));
+                    }
+                );
+            },
+        );
+
+        return $collection;
+    }
+
     public function __construct()
     {
         $this->uploadLocation = new FieldSettingItemDirectory(
@@ -50,13 +106,13 @@ class FieldSettingsCollection
             true,
         );
 
-        $this->minQty = new FieldSettingItemString(
+        $this->minQty = new FieldSettingItemInteger(
             'minQty',
             'min_quantity',
             'optional',
         );
 
-        $this->maxQty = new FieldSettingItemString(
+        $this->maxQty = new FieldSettingItemInteger(
             'maxQty',
             'max_quantity',
             'optional',
@@ -142,6 +198,14 @@ class FieldSettingsCollection
         ];
     }
 
+    /**
+     * @return mixed[]
+     */
+    public function map(callable $callback): array
+    {
+        return array_map($callback, $this->asArray());
+    }
+
     public function uploadLocation(): FieldSettingItemDirectory
     {
         return $this->uploadLocation;
@@ -152,12 +216,12 @@ class FieldSettingsCollection
         return $this->saveLocation;
     }
 
-    public function minQty(): FieldSettingItemString
+    public function minQty(): FieldSettingItemInteger
     {
         return $this->minQty;
     }
 
-    public function maxQty(): FieldSettingItemString
+    public function maxQty(): FieldSettingItemInteger
     {
         return $this->maxQty;
     }

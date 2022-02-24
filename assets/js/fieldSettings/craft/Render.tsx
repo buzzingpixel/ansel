@@ -5,7 +5,7 @@ import FieldSettingsFields from './FieldSettingsFields';
 export default (fieldSettingsFieldsContainer: Element) => {
     const templateInput: HTMLInputElement = fieldSettingsFieldsContainer
         .getElementsByClassName(
-            'custom_fields',
+            'customFields',
         ).item(0) as HTMLInputElement;
 
     ReactDOM.render(
