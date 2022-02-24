@@ -7,6 +7,7 @@ namespace BuzzingPixel\AnselCms\Craft;
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorCraft;
+use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use craft\base\Field;
@@ -71,6 +72,12 @@ class AnselCraftField extends Field
 
     private FieldSettingsCollectionValidatorCraft $fieldSettingsCollectionValidator;
 
+    private PopulateFieldSettingsFromDefaults $populateFieldSettingsFromDefaults;
+
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
     public function init(): void
     {
         $container = (new ContainerManager())->container();
@@ -86,6 +93,14 @@ class AnselCraftField extends Field
             $fieldSettingsCollectionValidator instanceof FieldSettingsCollectionValidatorCraft
         );
         $this->fieldSettingsCollectionValidator = $fieldSettingsCollectionValidator;
+
+        $populateFieldSettingsFromDefaults = $container->get(
+            PopulateFieldSettingsFromDefaults::class,
+        );
+        assert(
+            $populateFieldSettingsFromDefaults instanceof PopulateFieldSettingsFromDefaults
+        );
+        $this->populateFieldSettingsFromDefaults = $populateFieldSettingsFromDefaults;
     }
 
     public function getContentColumnType(): string
@@ -110,8 +125,16 @@ class AnselCraftField extends Field
      */
     public function getSettingsHtml(): string
     {
+        $fieldSettings = $this->getFieldSettingsCollection();
+
+        if ($this->getIsNew()) {
+            $this->populateFieldSettingsFromDefaults->populate(
+                $fieldSettings,
+            );
+        }
+
         return $this->getFieldSettings->render(
-            $this->getFieldSettingsCollection(),
+            $fieldSettings,
         )->content();
     }
 
