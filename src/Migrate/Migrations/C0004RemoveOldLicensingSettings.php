@@ -6,6 +6,7 @@ namespace BuzzingPixel\Ansel\Migrate\Migrations;
 
 use BuzzingPixel\Ansel\Migrate\MigrationContract;
 use craft\db\Connection as DbConnection;
+use yii\db\Exception;
 
 class C0004RemoveOldLicensingSettings implements MigrationContract
 {
@@ -21,6 +22,9 @@ class C0004RemoveOldLicensingSettings implements MigrationContract
         return MigrationContract::CRAFT;
     }
 
+    /**
+     * @throws Exception
+     */
     public function up(): bool
     {
         $tableName = '';
@@ -38,22 +42,22 @@ class C0004RemoveOldLicensingSettings implements MigrationContract
         $this->db->createCommand()->delete(
             $tableName,
             "settingsKey = 'licenseKey'",
-        );
+        )->execute();
 
         $this->db->createCommand()->delete(
             $tableName,
             "settingsKey = 'phoneHome'",
-        );
+        )->execute();
 
         $this->db->createCommand()->delete(
             $tableName,
             "settingsKey = 'encoding'",
-        );
+        )->execute();
 
         $this->db->createCommand()->delete(
             $tableName,
             "settingsKey = 'encodingData'",
-        );
+        )->execute();
 
         return true;
     }

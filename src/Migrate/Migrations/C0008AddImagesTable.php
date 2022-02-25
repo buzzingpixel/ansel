@@ -117,7 +117,7 @@ class C0008AddImagesTable implements MigrationContract
             ['id'],
             'RESTRICT',
             'RESTRICT',
-        );
+        )->execute();
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
@@ -127,7 +127,7 @@ class C0008AddImagesTable implements MigrationContract
             ['id'],
             'RESTRICT',
             'RESTRICT',
-        );
+        )->execute();
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
@@ -137,7 +137,7 @@ class C0008AddImagesTable implements MigrationContract
             ['id'],
             'RESTRICT',
             'RESTRICT',
-        );
+        )->execute();
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
@@ -147,7 +147,7 @@ class C0008AddImagesTable implements MigrationContract
             ['id'],
             'SET NULL',
             'RESTRICT',
-        );
+        )->execute();
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
@@ -157,7 +157,7 @@ class C0008AddImagesTable implements MigrationContract
             ['id'],
             'SET NULL',
             'RESTRICT',
-        );
+        )->execute();
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
@@ -167,7 +167,7 @@ class C0008AddImagesTable implements MigrationContract
             ['id'],
             'SET NULL',
             'RESTRICT',
-        );
+        )->execute();
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
@@ -177,7 +177,7 @@ class C0008AddImagesTable implements MigrationContract
             ['id'],
             'SET NULL',
             'RESTRICT',
-        );
+        )->execute();
 
         return true;
     }
