@@ -1,4 +1,4 @@
-import CraftFieldSettingsFieldsRender from './fieldSettings/craft/Render';
+import CraftFieldSettingsFieldsRender from './FieldSettings/Craft/Render';
 
 const craftFieldSettingsFieldsContainer = document.getElementsByClassName(
     'craft_field_settings_fields',

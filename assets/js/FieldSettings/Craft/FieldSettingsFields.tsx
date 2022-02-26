@@ -3,8 +3,8 @@ import { useState, useCallback, useRef } from 'react';
 // @see https://codesandbox.io/s/table-draggable-rows-137ku?file=/src/TableRow.js
 import { SortableContainer, SortableElement, SortStart } from 'react-sortable-hoc';
 import TableRow from './TableRow';
-import arrayMove from './arrayMove';
-import Field from './Field';
+import ArrayMove from '../../Utility/ArrayMove';
+import Field from '../Field';
 
 const SortableCont = SortableContainer(
     ({ children }) => <tbody>{children}</tbody>,
@@ -123,7 +123,7 @@ const FieldSettingsFields = (
     const onSortEnd = useCallback(({ oldIndex, newIndex }) => {
         // eslint-disable-next-line arrow-body-style
         setFields((oldFields) => {
-            return arrayMove(oldFields, oldIndex, newIndex);
+            return ArrayMove(oldFields, oldIndex, newIndex);
         });
 
         const sortHelpers = document.getElementsByClassName(

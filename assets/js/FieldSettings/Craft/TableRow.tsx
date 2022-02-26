@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {
     ChangeEventHandler, MouseEventHandler,
 } from 'react';
-import Field from './Field';
+import Field from '../Field';
 
 const TrWrapper = styled.tr`
   .firstElement {
