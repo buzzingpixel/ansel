@@ -156,8 +156,8 @@ const FieldSettingsFields = (
                         </tr>
                     </thead>
                     <SortableCont
-                        onSortEnd={onSortEnd}
                         onSortStart={onSortStart}
+                        onSortEnd={onSortEnd}
                         axis="y"
                         lockAxis="y"
                         lockToContainerEdges={true}

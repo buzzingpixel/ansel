@@ -62,6 +62,7 @@
         "php": "^7.4|^8.0",
         "ext-json": "*",
         "buzzingpixel/container": "^1.1",
+        "buzzingpixel/twig-switch": "^1.0",
         "cebe/markdown": "^1.2",
         "guzzlehttp/guzzle": "^6.5.5|^7.2.0",
         "slim/psr7": "^1.5",

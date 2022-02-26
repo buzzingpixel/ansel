@@ -8,6 +8,8 @@ use function array_filter;
 use function array_map;
 use function array_merge;
 use function array_values;
+use function base64_encode;
+use function json_encode;
 
 class LocationSelectionCollection
 {
@@ -45,6 +47,41 @@ class LocationSelectionCollection
                 },
                 $this->items,
             ),
+        ));
+    }
+
+    public function formatForEEReactDropdown(
+        string $name,
+        string $selected = ''
+    ): string {
+        $array = [
+            'name' => $name,
+            'items' => $this->asArrayNoBlank(),
+            'selected' => $selected,
+            'disabled' => false,
+            'tooMany' => 8,
+            'filterUrl' => null,
+            'limit' => 100,
+            'groupToggle' => [],
+            'emptyText' => 'Choose Location...',
+            'noResults' => 'No <b>locations</b> found.',
+        ];
+
+        $json = (string) json_encode($array);
+
+        return base64_encode($json);
+    }
+
+    /**
+     * @return array<int, array<string>|string>
+     */
+    public function asArrayNoBlank(): array
+    {
+        return array_values(array_map(
+            static function (LocationSelectionItem $item) {
+                return $item->asArray();
+            },
+            $this->items,
         ));
     }
 

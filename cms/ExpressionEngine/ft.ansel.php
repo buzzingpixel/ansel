@@ -11,6 +11,11 @@ declare(strict_types=1);
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
+use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
+use BuzzingPixel\AnselConfig\ContainerManager;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class Ansel_ft extends EE_Fieldtype
 {
@@ -45,6 +50,22 @@ class Ansel_ft extends EE_Fieldtype
         'version' => ANSEL_VER,
     ];
 
+    private GetFieldSettings $getFieldSettings;
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $container = (new ContainerManager())->container();
+
+        /** @phpstan-ignore-next-line */
+        $this->getFieldSettings = $container->get(GetFieldSettings::class);
+    }
+
     /**
      * @param mixed $data
      */
@@ -52,5 +73,27 @@ class Ansel_ft extends EE_Fieldtype
     {
         // TODO: Implement display_field() method.
         dd('TODO: Implement display_field() method.');
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return mixed[]
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function display_settings($data): array
+    {
+        return [
+            'field_options_ansel' => [
+                'label' => 'field_options',
+                'group' => 'ansel',
+                'settings' => [
+                    $this->getFieldSettings->render(
+                        new FieldSettingsCollection(),
+                    )->content(),
+                ],
+            ],
+        ];
     }
 }

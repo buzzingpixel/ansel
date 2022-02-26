@@ -1,0 +1,119 @@
+{# @var \BuzzingPixel\Ansel\Field\Settings\Craft\FieldSettingsRenderModel model #}
+{# @var \BuzzingPixel\Ansel\Translations\TranslatorContract translator #}
+
+<div style="max-width: 500px;">
+    <input type="hidden" name="fieldSettings[placeholder]">
+    {% if not model.hideSourceSaveInstructions %}
+        <fieldset>
+            <div class="field-instruct">
+                <label>{{ model.uploadSaveDirExplanation|raw }}</label>
+                <p>{{ model.uploadSaveDirExplainUpload|raw }}</p>
+                <p>{{ model.uploadSaveDirExplainSave|raw }}</p>
+                <p>{{ model.uploadSaveDirExplainDifferentSources }}</p>
+            </div>
+            {#<div class="field-control">
+                <button type="button" class="toggle-btn off yes_no  " data-toggle-for="field_show_fmt" data-state="off" role="switch" aria-checked="false" alt="off">
+                    <input type="hidden" name="field_show_fmt" value="n">
+                    <span class="slider"></span>
+                </button>
+            </div>#}
+        </fieldset>
+    {% endif %}
+
+    {% for fieldSetting in model.fieldSettings.asArray %}
+        {# @var \BuzzingPixel\Ansel\Field\Settings\FieldSettingItemContract fieldSetting #}
+        {% set fieldName = 'fieldSettings[' ~ fieldSetting.key ~ ']' %}
+        {% switch fieldSetting.type %}
+            {% case 'directory' %}
+                <fieldset>
+                    <div class="field-instruct">
+                        <label>{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
+                        <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
+                    </div>
+                    <div class="field-control">
+                        <div
+                            data-dropdown-react="{{ model.locationSelectionCollection.formatForEEReactDropdown(
+                                fieldName,
+                                fieldSetting.value,
+                            ) }}"
+                            data-input-value="{{ fieldName }}"
+                        >
+                            <div class="fields-select-drop">
+                                <div class="select">
+                                    <div class="select__button">
+                                        <label class="select__button-label">
+                                            <i>Choose Location...</i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            {% case 'boolean' %}
+                <fieldset>
+                    <div class="field-instruct">
+                        <label>{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
+                        <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
+                    </div>
+                    <div class="field-control">
+                        <button
+                            type="button"
+                            class="toggle-btn off yes_no"
+                            data-toggle-for="{{ fieldName }}"
+                            data-state="{% if fieldSetting.value %}on{% else %}off{%  endif %}"
+                            role="switch"
+                            aria-checked="{% if fieldSetting.value %}true{% else %}false{% endif %}"
+                        >
+                            <input
+                                type="hidden"
+                                name="{{ fieldName }}"
+                                value="n"
+                            >
+                            <span class="slider"></span>
+                        </button>
+                    </div>
+                </fieldset>
+            {% case 'integer' %}
+                <fieldset>
+                    <div class="field-instruct">
+                        <label for="{{ fieldName }}">{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
+                        <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
+                    </div>
+                    <div class="field-control">
+                        <input
+                            id="{{ fieldName }}"
+                            type="text"
+                            name="{{ fieldName }}"
+                            value="{{ fieldSetting.value > 0 ? fieldSetting.value : '' }}"
+                        >
+                    </div>
+                </fieldset>
+            {% default %}
+                <fieldset>
+                    <div class="field-instruct">
+                        <label for="{{ fieldName }}">{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
+                        <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
+                    </div>
+                    <div class="field-control">
+                        <input
+                            id="{{ fieldName }}"
+                            type="text"
+                            name="{{ fieldName }}"
+                            value="{{ fieldSetting.value }}"
+                        >
+                    </div>
+                </fieldset>
+        {% endswitch %}
+    {% endfor %}
+</div>
+<div
+    class="ee_field_settings_fields"
+>
+    <input
+        type="hidden"
+        name="fieldSettings[customFields]"
+        class="customFields"
+        data-existing-fields="{{ model.fieldSettings.customFields.asJson }}"
+    >
+</div>

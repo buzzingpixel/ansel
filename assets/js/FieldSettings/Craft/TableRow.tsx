@@ -55,25 +55,25 @@ const TableRow = ({
 }) => (
         <TrWrapper>
             <td className="singleline-cell textual">
-                    <textarea
-                        onChange={updateLabel}
-                        name={`${inputNameBase}[${rowIndex}][label]`}
-                        rows={1}
-                        style={{ minHeight: '34px', boxShadow: 'none' }}
-                        value={field.label}
-                        data-index={rowIndex}
-                        className='focus:outline-none'
-                    />
+                <textarea
+                    onChange={updateLabel}
+                    name={`${inputNameBase}[${rowIndex}][label]`}
+                    rows={1}
+                    style={{ minHeight: '34px', boxShadow: 'none' }}
+                    value={field.label}
+                    data-index={rowIndex}
+                    className='focus:outline-none'
+                />
             </td>
             <td className="code singleline-cell textual">
-                    <textarea
-                        onChange={updateHandle}
-                        name={`${inputNameBase}[${rowIndex}][handle]`}
-                        rows={1}
-                        style={{ minHeight: '34px', boxShadow: 'none' }}
-                        value={field.handle}
-                        data-index={rowIndex}
-                    />
+                <textarea
+                    onChange={updateHandle}
+                    name={`${inputNameBase}[${rowIndex}][handle]`}
+                    rows={1}
+                    style={{ minHeight: '34px', boxShadow: 'none' }}
+                    value={field.handle}
+                    data-index={rowIndex}
+                />
             </td>
             <td className="singleline-cell textual">
                 <div className="input ltr p-2">
@@ -119,7 +119,7 @@ const TableRow = ({
                     <label htmlFor={`checkbox${rowIndex}`}/>
                 </div>
             </td>
-            <RowHandler/>
+            <RowHandler />
             <td
                 className="thin action"
             >

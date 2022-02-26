@@ -7,6 +7,7 @@ namespace BuzzingPixel\AnselConfig\Bindings;
 use BuzzingPixel\Ansel\AnselSrc;
 use BuzzingPixel\Ansel\Shared\CraftTwigLoader;
 use BuzzingPixel\AnselConfig\AnselConfig;
+use buzzingpixel\twigswitch\SwitchTwigExtension;
 use Craft;
 use craft\web\twig\TemplateLoader;
 use Psr\Container\ContainerInterface;
@@ -49,13 +50,19 @@ class Twig
                 switch (ANSEL_ENV) {
                     /** @phpstan-ignore-next-line */
                     case 'ee':
-                        return new TwigEnvironment(
+                        $twig = new TwigEnvironment(
                             $filesystemLoader,
                             [
                                 'debug' => true,
                                 'strict_variables' => true,
                             ],
                         );
+
+                        $twig->addExtension(
+                            new SwitchTwigExtension(),
+                        );
+
+                        return $twig;
 
                     /** @phpstan-ignore-next-line */
                     case 'craft':

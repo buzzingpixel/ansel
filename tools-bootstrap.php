@@ -83,3 +83,6 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/librarie
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/View/View.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Alert/AlertCollection.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Alert/Alert.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Library/Data/Collection.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/Collection.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/File/UploadDestination.php';
