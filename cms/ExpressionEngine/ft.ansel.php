@@ -130,15 +130,6 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * @param mixed $data
      */
-    public function display_field($data)
-    {
-        // TODO: Implement display_field() method.
-        dd('TODO: Implement display_field() method.');
-    }
-
-    /**
-     * @param mixed $data
-     */
     private function getDisplaySettings($data): string
     {
         $fieldSettings = $this->getFieldSettingsCollection(
@@ -200,6 +191,22 @@ class Ansel_ft extends EE_Fieldtype
     }
 
     /**
+     * @param mixed $data
+     *
+     * @return mixed[]
+     */
+    public function var_display_settings($data): array
+    {
+        return [
+            'field_options_ansel' => [
+                'label' => 'field_options',
+                'group' => 'ansel',
+                'settings' => [$this->getDisplaySettings($data)],
+            ],
+        ];
+    }
+
+    /**
      * This is called before validate settings :eyeroll:
      *
      * @param mixed[] $data
@@ -236,5 +243,48 @@ class Ansel_ft extends EE_Fieldtype
         }
 
         return $result;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function display_field($data)
+    {
+        // TODO: Implement display_field() method.
+        // dd('TODO: Implement display_field() method.');
+        return 'TODO: Implement display_field() method.';
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function var_display_field($data)
+    {
+        // TODO: Implement display_field() method.
+        // dd('TODO: Implement var_display_field() method.');
+        return 'TODO: Implement var_display_field() method.';
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function var_save($data)
+    {
+        // TODO: Implement display_field() method.
+        dd('TODO: Implement var_save() method.');
+    }
+
+    /**
+     * Prevent Low Vars from doing anything on post save
+     */
+    public function var_post_save(): void
+    {
+        return;
     }
 }
