@@ -6,6 +6,7 @@ declare(strict_types=1);
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
+use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use ExpressionEngine\Service\Validation\Result;
 use Psr\Container\ContainerExceptionInterface;
@@ -62,6 +63,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
 
+    private PopulateFieldSettingsFromDefaults $populateFieldSettingsFromDefaults;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -78,6 +81,11 @@ class Ansel_ft extends EE_Fieldtype
         /** @phpstan-ignore-next-line */
         $this->fieldSettingsValidator = $container->get(
             FieldSettingsCollectionValidatorContract::class,
+        );
+
+        /** @phpstan-ignore-next-line */
+        $this->populateFieldSettingsFromDefaults = $container->get(
+            PopulateFieldSettingsFromDefaults::class,
         );
     }
 
@@ -121,6 +129,22 @@ class Ansel_ft extends EE_Fieldtype
             /** @phpstan-ignore-next-line */
             $this->postedSettings ?? $data,
         );
+
+        /** @phpstan-ignore-next-line */
+        $anselData = $this->postedSettings['ansel']['fieldSettings'] ?? null;
+
+        if ($anselData === null) {
+            /** @phpstan-ignore-next-line */
+            $anselData = $data['ansel']['fieldSettings'] ?? null;
+        }
+
+        $isNew = $anselData === null;
+
+        if ($isNew) {
+            $this->populateFieldSettingsFromDefaults->populate(
+                $fieldSettings,
+            );
+        }
 
         return [
             'field_options_ansel' => [
