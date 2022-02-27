@@ -169,7 +169,7 @@ class C0008AddImagesTableTest extends TestCase
 
         self::assertTrue($this->migration->up());
 
-        self::assertCount(10, $this->calls);
+        self::assertCount(17, $this->calls);
 
         self::assertSame(
             [
@@ -368,6 +368,14 @@ class C0008AddImagesTableTest extends TestCase
         self::assertSame(
             [
                 'object' => 'Command',
+                'method' => 'execute',
+            ],
+            $this->calls[4]
+        );
+
+        self::assertSame(
+            [
+                'object' => 'Command',
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
                 'table' => '{{%anselImages}}',
@@ -377,7 +385,15 @@ class C0008AddImagesTableTest extends TestCase
                 'delete' => 'RESTRICT',
                 'update' => 'RESTRICT',
             ],
-            $this->calls[4],
+            $this->calls[5],
+        );
+
+        self::assertSame(
+            [
+                'object' => 'Command',
+                'method' => 'execute',
+            ],
+            $this->calls[6]
         );
 
         self::assertSame(
@@ -392,7 +408,15 @@ class C0008AddImagesTableTest extends TestCase
                 'delete' => 'RESTRICT',
                 'update' => 'RESTRICT',
             ],
-            $this->calls[5],
+            $this->calls[7],
+        );
+
+        self::assertSame(
+            [
+                'object' => 'Command',
+                'method' => 'execute',
+            ],
+            $this->calls[8]
         );
 
         self::assertSame(
@@ -407,7 +431,15 @@ class C0008AddImagesTableTest extends TestCase
                 'delete' => 'SET NULL',
                 'update' => 'RESTRICT',
             ],
-            $this->calls[6],
+            $this->calls[9],
+        );
+
+        self::assertSame(
+            [
+                'object' => 'Command',
+                'method' => 'execute',
+            ],
+            $this->calls[10]
         );
 
         self::assertSame(
@@ -422,7 +454,15 @@ class C0008AddImagesTableTest extends TestCase
                 'delete' => 'SET NULL',
                 'update' => 'RESTRICT',
             ],
-            $this->calls[7],
+            $this->calls[11],
+        );
+
+        self::assertSame(
+            [
+                'object' => 'Command',
+                'method' => 'execute',
+            ],
+            $this->calls[12]
         );
 
         self::assertSame(
@@ -437,7 +477,15 @@ class C0008AddImagesTableTest extends TestCase
                 'delete' => 'SET NULL',
                 'update' => 'RESTRICT',
             ],
-            $this->calls[8],
+            $this->calls[13],
+        );
+
+        self::assertSame(
+            [
+                'object' => 'Command',
+                'method' => 'execute',
+            ],
+            $this->calls[14]
         );
 
         self::assertSame(
@@ -452,7 +500,15 @@ class C0008AddImagesTableTest extends TestCase
                 'delete' => 'SET NULL',
                 'update' => 'RESTRICT',
             ],
-            $this->calls[9],
+            $this->calls[15],
+        );
+
+        self::assertSame(
+            [
+                'object' => 'Command',
+                'method' => 'execute',
+            ],
+            $this->calls[16]
         );
     }
 
