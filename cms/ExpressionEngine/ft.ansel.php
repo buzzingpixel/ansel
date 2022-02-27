@@ -108,6 +108,26 @@ class Ansel_ft extends EE_Fieldtype
     }
 
     /**
+     * @param string $name
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function accepts_content_type($name): bool
+    {
+        return in_array(
+            $name,
+            [
+                'blocks/1',
+                'channel',
+                'grid',
+                'low_variables',
+                'fluid_field',
+            ],
+            true,
+        );
+    }
+
+    /**
      * @param mixed $data
      */
     public function display_field($data)
@@ -118,15 +138,11 @@ class Ansel_ft extends EE_Fieldtype
 
     /**
      * @param mixed $data
-     *
-     * @return mixed[]
-     *
-     * @phpstan-ignore-next-line
      */
-    public function display_settings($data): array
+    private function getDisplaySettings($data): string
     {
         $fieldSettings = $this->getFieldSettingsCollection(
-            /** @phpstan-ignore-next-line */
+        /** @phpstan-ignore-next-line */
             $this->postedSettings ?? $data,
         );
 
@@ -146,16 +162,40 @@ class Ansel_ft extends EE_Fieldtype
             );
         }
 
+        return $this->getFieldSettings->render(
+            $fieldSettings,
+        )->content();
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return mixed[]
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function display_settings($data): array
+    {
         return [
             'field_options_ansel' => [
                 'label' => 'field_options',
                 'group' => 'ansel',
                 'settings' => [
-                    $this->getFieldSettings->render(
-                        $fieldSettings,
-                    )->content(),
+                    $this->getDisplaySettings($data),
                 ],
             ],
+        ];
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return mixed[]
+     */
+    public function grid_display_settings($data): array
+    {
+        return [
+            'field_options' => [$this->getDisplaySettings($data)],
         ];
     }
 

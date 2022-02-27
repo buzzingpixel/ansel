@@ -13,6 +13,9 @@ use Psr\Container\NotFoundExceptionInterface;
 
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 
+/**
+ * @codeCoverageIgnore
+ */
 class m220225_002341_RemoveOldSettings extends AnselMigration
 {
     /**
