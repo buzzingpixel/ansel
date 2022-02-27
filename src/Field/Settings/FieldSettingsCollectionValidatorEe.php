@@ -4,33 +4,31 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Settings;
 
-use BuzzingPixel\Ansel\Field\Settings\Craft\GetAllVolumes;
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetAllLocations;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 
 use function array_filter;
 use function array_keys;
 
-class FieldSettingsCollectionValidatorCraft implements FieldSettingsCollectionValidatorContract
+class FieldSettingsCollectionValidatorEe implements FieldSettingsCollectionValidatorContract
 {
-    private GetAllVolumes $getAllVolumes;
-
     private TranslatorContract $translator;
+    private GetAllLocations $getAllLocations;
 
     public function __construct(
-        GetAllVolumes $getAllVolumes,
-        TranslatorContract $translator
+        TranslatorContract $translator,
+        GetAllLocations $getAllLocations
     ) {
-        $this->getAllVolumes = $getAllVolumes;
-        $this->translator    = $translator;
+        $this->translator      = $translator;
+        $this->getAllLocations = $getAllLocations;
     }
 
     /**
-     * @return string[]
+     * @inheritDoc
      */
-    public function validate(
-        FieldSettingsCollection $collection
-    ): array {
-        $volumes = $this->getAllVolumes->get();
+    public function validate(FieldSettingsCollection $collection): array
+    {
+        $locations = $this->getAllLocations->get();
 
         $errors = array_filter(
             $collection->map(
@@ -42,19 +40,19 @@ class FieldSettingsCollectionValidatorCraft implements FieldSettingsCollectionVa
             static fn (bool $hasError) => $hasError,
         );
 
-        $uploadVolume = $volumes->getLocationByValueOrNull(
+        $uploadLocation = $locations->getLocationByValueOrNull(
             $collection->uploadLocation()->value(),
         );
 
-        if ($uploadVolume === null) {
+        if ($uploadLocation === null) {
             $errors['uploadLocation'] = true;
         }
 
-        $saveVolume = $volumes->getLocationByValueOrNull(
+        $saveLocation = $locations->getLocationByValueOrNull(
             $collection->saveLocation()->value(),
         );
 
-        if ($saveVolume === null) {
+        if ($saveLocation === null) {
             $errors['saveLocation'] = true;
         }
 

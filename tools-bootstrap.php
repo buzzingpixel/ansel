@@ -86,3 +86,4 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Library/Data/Collection.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/Collection.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/File/UploadDestination.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Validation/Result.php';

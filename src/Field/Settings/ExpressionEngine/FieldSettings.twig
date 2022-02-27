@@ -2,7 +2,7 @@
 {# @var \BuzzingPixel\Ansel\Translations\TranslatorContract translator #}
 
 <div style="max-width: 500px;">
-    <input type="hidden" name="fieldSettings[placeholder]">
+    <input type="hidden" name="ansel[fieldSettings][placeholder]">
     {% if not model.hideSourceSaveInstructions %}
         <fieldset>
             <div class="field-instruct">
@@ -11,21 +11,19 @@
                 <p>{{ model.uploadSaveDirExplainSave|raw }}</p>
                 <p>{{ model.uploadSaveDirExplainDifferentSources }}</p>
             </div>
-            {#<div class="field-control">
-                <button type="button" class="toggle-btn off yes_no  " data-toggle-for="field_show_fmt" data-state="off" role="switch" aria-checked="false" alt="off">
-                    <input type="hidden" name="field_show_fmt" value="n">
-                    <span class="slider"></span>
-                </button>
-            </div>#}
         </fieldset>
     {% endif %}
 
     {% for fieldSetting in model.fieldSettings.asArray %}
         {# @var \BuzzingPixel\Ansel\Field\Settings\FieldSettingItemContract fieldSetting #}
-        {% set fieldName = 'fieldSettings[' ~ fieldSetting.key ~ ']' %}
-        {% switch fieldSetting.type %}
-            {% case 'directory' %}
-                <fieldset>
+        {% set fieldName = 'ansel[fieldSettings][' ~ fieldSetting.key ~ ']' %}
+        <fieldset
+            {% if fieldSetting.required %}
+            class="fieldset-required"
+            {% endif %}
+        >
+            {% switch fieldSetting.type %}
+                {% case 'directory' %}
                     <div class="field-instruct">
                         <label>{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
                         <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
@@ -49,9 +47,7 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
-            {% case 'boolean' %}
-                <fieldset>
+                {% case 'boolean' %}
                     <div class="field-instruct">
                         <label>{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
                         <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
@@ -59,7 +55,7 @@
                     <div class="field-control">
                         <button
                             type="button"
-                            class="toggle-btn off yes_no"
+                            class="toggle-btn {% if fieldSetting.value %}on{% else %}off{% endif %} yes_no"
                             data-toggle-for="{{ fieldName }}"
                             data-state="{% if fieldSetting.value %}on{% else %}off{%  endif %}"
                             role="switch"
@@ -68,14 +64,12 @@
                             <input
                                 type="hidden"
                                 name="{{ fieldName }}"
-                                value="n"
+                                value="{% if fieldSetting.value %}y{% else %}n{% endif %}"
                             >
                             <span class="slider"></span>
                         </button>
                     </div>
-                </fieldset>
-            {% case 'integer' %}
-                <fieldset>
+                {% case 'integer' %}
                     <div class="field-instruct">
                         <label for="{{ fieldName }}">{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
                         <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
@@ -88,9 +82,7 @@
                             value="{{ fieldSetting.value > 0 ? fieldSetting.value : '' }}"
                         >
                     </div>
-                </fieldset>
-            {% default %}
-                <fieldset>
+                {% default %}
                     <div class="field-instruct">
                         <label for="{{ fieldName }}">{{ translator.getLine(fieldSetting.labelTranslationKey) }}</label>
                         <em>{{ translator.getLine(fieldSetting.descriptionTranslationKey) }}</em>
@@ -103,8 +95,8 @@
                             value="{{ fieldSetting.value }}"
                         >
                     </div>
-                </fieldset>
-        {% endswitch %}
+            {% endswitch %}
+        </fieldset>
     {% endfor %}
 </div>
 <div
@@ -112,7 +104,7 @@
 >
     <input
         type="hidden"
-        name="fieldSettings[customFields]"
+        name="ansel[fieldSettings][customFields]"
         class="customFields"
         data-existing-fields="{{ model.fieldSettings.customFields.asJson }}"
     >

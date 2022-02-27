@@ -15,6 +15,7 @@ use BuzzingPixel\AnselConfig\Bindings\EeCssJsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EEFunctionsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
+use BuzzingPixel\AnselConfig\Bindings\FieldSettingsConfig;
 use BuzzingPixel\AnselConfig\Bindings\GuzzleConfig;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
 use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
@@ -68,6 +69,7 @@ class ContainerManager
                 EEFunctionsBinding::get(),
                 EELang::get(),
                 EEModelFacade::get(),
+                FieldSettingsConfig::get(),
                 GuzzleConfig::get(),
                 Migrations::get(),
                 ServerRequest::get(),

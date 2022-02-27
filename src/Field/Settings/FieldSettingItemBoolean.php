@@ -74,7 +74,7 @@ class FieldSettingItemBoolean implements FieldSettingItemContract
 
     public function setValueFromString(string $value): void
     {
-        $this->value = $value === '1';
+        $this->value = $value === '1' || $value === 'y';
     }
 
     /**

@@ -1,6 +1,15 @@
 <?php
+/** @noinspection PhpIllegalPsrClassPathInspection */
 
 declare(strict_types=1);
+
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
+use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
+use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
+use BuzzingPixel\AnselConfig\ContainerManager;
+use ExpressionEngine\Service\Validation\Result;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
@@ -11,11 +20,7 @@ declare(strict_types=1);
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
-use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
-use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
-use BuzzingPixel\AnselConfig\ContainerManager;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 
 class Ansel_ft extends EE_Fieldtype
 {
@@ -40,6 +45,9 @@ class Ansel_ft extends EE_Fieldtype
     /** Set field type as tag pair */
     public bool $has_array_data = true;
 
+    /** @var mixed[]|null  */
+    private ?array $postedSettings = null;
+
     /**
      * Required info for EE fieldtype
      *
@@ -51,6 +59,8 @@ class Ansel_ft extends EE_Fieldtype
     ];
 
     private GetFieldSettings $getFieldSettings;
+
+    private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
 
     /**
      * @throws ContainerExceptionInterface
@@ -64,6 +74,29 @@ class Ansel_ft extends EE_Fieldtype
 
         /** @phpstan-ignore-next-line */
         $this->getFieldSettings = $container->get(GetFieldSettings::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->fieldSettingsValidator = $container->get(
+            FieldSettingsCollectionValidatorContract::class,
+        );
+    }
+
+    /**
+     * @param mixed[] $rawEeFieldSettings
+     */
+    private function getFieldSettingsCollection(
+        array $rawEeFieldSettings
+    ): FieldSettingsCollection {
+        /** @phpstan-ignore-next-line */
+        $fieldSettingsArray = $rawEeFieldSettings['ansel']['fieldSettings'] ?? [];
+
+        /** @phpstan-ignore-next-line */
+        unset($fieldSettingsArray['placeholder']);
+
+        return FieldSettingsCollection::fromFieldArray(
+        /** @phpstan-ignore-next-line */
+            $fieldSettingsArray,
+        );
     }
 
     /**
@@ -84,16 +117,60 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function display_settings($data): array
     {
+        $fieldSettings = $this->getFieldSettingsCollection(
+            /** @phpstan-ignore-next-line */
+            $this->postedSettings ?? $data,
+        );
+
         return [
             'field_options_ansel' => [
                 'label' => 'field_options',
                 'group' => 'ansel',
                 'settings' => [
                     $this->getFieldSettings->render(
-                        new FieldSettingsCollection(),
+                        $fieldSettings,
                     )->content(),
                 ],
             ],
         ];
+    }
+
+    /**
+     * This is called before validate settings :eyeroll:
+     *
+     * @param mixed[] $data
+     *
+     * @return mixed[]
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function save_settings($data): array
+    {
+        $this->postedSettings = $data;
+
+        return $data;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function validate_settings($data): Result
+    {
+        $errors = $this->fieldSettingsValidator->validate(
+            $this->getFieldSettingsCollection(
+                $data
+            ),
+        );
+
+        $result = new Result();
+
+        foreach ($errors as $errorKey => $error) {
+            /** @phpstan-ignore-next-line */
+            $result->addFailed($errorKey, $error);
+        }
+
+        return $result;
     }
 }

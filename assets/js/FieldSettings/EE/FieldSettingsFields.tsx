@@ -122,6 +122,11 @@ const FieldSettingsFields = (
 
     return (
         <div className="field-control mt-6">
+            <input
+                type="hidden"
+                name={`${inputNameBase}[]`}
+                value=""
+            />
             <div className="field-instruct">
                 <label>Custom Fields</label>
             </div>

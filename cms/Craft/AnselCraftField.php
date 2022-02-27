@@ -6,7 +6,7 @@ namespace BuzzingPixel\AnselCms\Craft;
 
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
-use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorCraft;
+use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
 use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
@@ -70,7 +70,7 @@ class AnselCraftField extends Field
 
     private GetFieldSettings $getFieldSettings;
 
-    private FieldSettingsCollectionValidatorCraft $fieldSettingsCollectionValidator;
+    private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
 
     private PopulateFieldSettingsFromDefaults $populateFieldSettingsFromDefaults;
 
@@ -82,25 +82,18 @@ class AnselCraftField extends Field
     {
         $container = (new ContainerManager())->container();
 
-        $getFieldSettings = $container->get(GetFieldSettings::class);
-        assert($getFieldSettings instanceof GetFieldSettings);
-        $this->getFieldSettings = $getFieldSettings;
+        /** @phpstan-ignore-next-line */
+        $this->getFieldSettings = $container->get(GetFieldSettings::class);
 
-        $fieldSettingsCollectionValidator = $container->get(
-            FieldSettingsCollectionValidatorCraft::class,
+        /** @phpstan-ignore-next-line */
+        $this->fieldSettingsValidator = $container->get(
+            FieldSettingsCollectionValidatorContract::class,
         );
-        assert(
-            $fieldSettingsCollectionValidator instanceof FieldSettingsCollectionValidatorCraft
-        );
-        $this->fieldSettingsCollectionValidator = $fieldSettingsCollectionValidator;
 
-        $populateFieldSettingsFromDefaults = $container->get(
+        /** @phpstan-ignore-next-line */
+        $this->populateFieldSettingsFromDefaults = $container->get(
             PopulateFieldSettingsFromDefaults::class,
         );
-        assert(
-            $populateFieldSettingsFromDefaults instanceof PopulateFieldSettingsFromDefaults
-        );
-        $this->populateFieldSettingsFromDefaults = $populateFieldSettingsFromDefaults;
     }
 
     public function getContentColumnType(): string
@@ -143,7 +136,7 @@ class AnselCraftField extends Field
      */
     public function validate($attributeNames = null, $clearErrors = true): bool
     {
-        $errors = $this->fieldSettingsCollectionValidator->validate(
+        $errors = $this->fieldSettingsValidator->validate(
             $this->getFieldSettingsCollection(),
         );
 

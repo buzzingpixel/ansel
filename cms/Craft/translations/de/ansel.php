@@ -134,4 +134,5 @@ return [
     'prevent_upload_over_max' => 'Uploads verhindern wenn die maximale Anzahl Bilder erreicht wurde',
     'prevent_upload_over_max_explain' => 'Normalerweise erlaubt Ansel das Hochladen überzähliger Bilder, welche ausgegraut erscheinen um zu zeigen, dass sie nicht im Artikel dargestellt werden. Dies ist von Vorteil um Bilder für später vorzubereiten. In seltenen Fällen müssen sie das Hochladen überzähliger Bilder jedoch verhindern.',
     'trial_active_invalid_license_key_body' => 'Ihre Testversion ist noch aktiv, aber der eingegebene Lizenzschlüssel den Sie eingegeben haben ist entweder ungültig oder wurde nicht für diese Domain autorisiert.<br><br>Wenn Sie noch keine autorisierte Domain hinzugefügt haben, können Sie dies tun indem Sie sich {{accountLinkStart}}in ihren Account auf BuzzingPixel.com einloggen{{linkEnd}} und die gewünschte Domain hinzufügen.<br><br>Wenn Sie eine Seitenlizenz kaufen möchten, können Sie dies {{purchaseLinkStart}}hier{{linkEnd}} tun. Wenn Sie noch einen anderen Lizenzschlüssel besitzen, können Sie ihn {{licenseLinkStart}}hier eingeben{{linkEnd}}.',
+    'setting_required' => 'Diese Einstellung ist erforderlich',
 ];
