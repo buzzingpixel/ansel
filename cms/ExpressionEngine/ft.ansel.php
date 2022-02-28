@@ -22,6 +22,7 @@ use Psr\Container\NotFoundExceptionInterface;
 // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+// phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint
 
 class Ansel_ft extends EE_Fieldtype
 {
@@ -217,6 +218,26 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function save_settings($data): array
     {
+        // Blocks ignores the validation result so we have to throw an exception
+        // if there are errors
+        $errors = $this->fieldSettingsValidator->validate(
+            $this->getFieldSettingsCollection(
+                $data
+            ),
+        );
+
+        if (count($errors) > 0) {
+            $msg = 'Some settings did not validate<br><br><ul>';
+
+            foreach ($errors as $key => $val) {
+                $msg .= '<li>' . $key . ': ' . $val . '</li>';
+            }
+
+            $msg .= '</ul>';
+
+            show_error($msg);
+        }
+
         $this->postedSettings = $data;
 
         return $data;
@@ -243,6 +264,14 @@ class Ansel_ft extends EE_Fieldtype
         }
 
         return $result;
+    }
+
+    /**
+     * @param mixed[] $data
+     */
+    public function grid_validate_settings(array $data): Result
+    {
+        return $this->validate_settings($data);
     }
 
     /**
