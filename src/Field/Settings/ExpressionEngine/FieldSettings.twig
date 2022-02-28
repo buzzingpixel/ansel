@@ -1,10 +1,11 @@
 {# @var \BuzzingPixel\Ansel\Field\Settings\Craft\FieldSettingsRenderModel model #}
 {# @var \BuzzingPixel\Ansel\Translations\TranslatorContract translator #}
+{# @var string fieldNameRoot #}
 
 <div style="max-width: 500px;" class="ansel_field_settings_general">
     <input
         type="hidden"
-        name="ansel[fieldSettings][placeholder]"
+        name="{{ fieldNameRoot }}[placeholder]"
         class="ansel_field_settings_placeholder"
     >
     {% if not model.hideSourceSaveInstructions %}
@@ -20,7 +21,7 @@
 
     {% for fieldSetting in model.fieldSettings.asArray %}
         {# @var \BuzzingPixel\Ansel\Field\Settings\FieldSettingItemContract fieldSetting #}
-        {% set fieldName = 'ansel[fieldSettings][' ~ fieldSetting.key ~ ']' %}
+        {% set fieldName = fieldNameRoot ~ '[' ~ fieldSetting.key ~ ']' %}
         <fieldset
             {% if fieldSetting.required %}
             class="fieldset-required"
@@ -107,7 +108,7 @@
 >
     <input
         type="hidden"
-        name="ansel[fieldSettings][customFields]"
+        name="{{ fieldNameRoot }}[customFields]"
         class="customFields"
         data-existing-fields="{{ model.fieldSettings.customFields.asJson }}"
     >

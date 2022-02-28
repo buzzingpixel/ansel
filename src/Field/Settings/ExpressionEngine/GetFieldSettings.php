@@ -35,6 +35,7 @@ class GetFieldSettings
     }
 
     public function render(
+        string $fieldNameRoot,
         FieldSettingsCollection $fieldSettings
     ): GetFieldSettingsModel {
         $this->eeCssJs->add();
@@ -45,6 +46,7 @@ class GetFieldSettings
             $this->twig->render(
                 '@AnselSrc/Field/Settings/ExpressionEngine/FieldSettings.twig',
                 [
+                    'fieldNameRoot' => $fieldNameRoot,
                     'model' => new FieldSettingsRenderModel(
                         $fieldSettings,
                         $this->settingsRepository

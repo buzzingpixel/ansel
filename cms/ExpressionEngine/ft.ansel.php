@@ -131,7 +131,7 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * @param mixed $data
      */
-    private function getDisplaySettings($data): string
+    private function getDisplaySettings($data, string $fieldNameRoot): string
     {
         $fieldSettings = $this->getFieldSettingsCollection(
         /** @phpstan-ignore-next-line */
@@ -155,6 +155,7 @@ class Ansel_ft extends EE_Fieldtype
         }
 
         return $this->getFieldSettings->render(
+            $fieldNameRoot,
             $fieldSettings,
         )->content();
     }
@@ -173,7 +174,10 @@ class Ansel_ft extends EE_Fieldtype
                 'label' => 'field_options',
                 'group' => 'ansel',
                 'settings' => [
-                    $this->getDisplaySettings($data),
+                    $this->getDisplaySettings(
+                        $data,
+                        'ansel[fieldSettings]',
+                    ),
                 ],
             ],
         ];
@@ -187,7 +191,12 @@ class Ansel_ft extends EE_Fieldtype
     public function grid_display_settings($data): array
     {
         return [
-            'field_options' => [$this->getDisplaySettings($data)],
+            'field_options' => [
+                $this->getDisplaySettings(
+                    $data,
+                    'ansel[fieldSettings]',
+                ),
+            ],
         ];
     }
 
@@ -202,7 +211,12 @@ class Ansel_ft extends EE_Fieldtype
             'field_options_ansel' => [
                 'label' => 'field_options',
                 'group' => 'ansel',
-                'settings' => [$this->getDisplaySettings($data)],
+                'settings' => [
+                    $this->getDisplaySettings(
+                        $data,
+                        'variable_settings[ansel][fieldSettings]',
+                    ),
+                ],
             ],
         ];
     }
@@ -218,29 +232,43 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function save_settings($data): array
     {
-        // Blocks ignores the validation result so we have to throw an exception
-        // if there are errors
-        $errors = $this->fieldSettingsValidator->validate(
-            $this->getFieldSettingsCollection(
-                $data
-            ),
-        );
+        // Blocks and low variables ignores the validation result so we have to
+        // throw an exception if there are errors
+        if (
+            $this->content_type() === 'blocks' ||
+            $this->content_type() === 'low_variables'
+        ) {
+            $errors = $this->fieldSettingsValidator->validate(
+                $this->getFieldSettingsCollection(
+                    $data
+                ),
+            );
+            if (count($errors) > 0) {
+                $msg = 'Some settings did not validate<br><br><ul>';
+                foreach ($errors as $key => $val) {
+                    $msg .= '<li>' . $key . ': ' . $val . '</li>';
+                }
 
-        if (count($errors) > 0) {
-            $msg = 'Some settings did not validate<br><br><ul>';
-
-            foreach ($errors as $key => $val) {
-                $msg .= '<li>' . $key . ': ' . $val . '</li>';
+                $msg .= '</ul>';
+                show_error($msg);
             }
-
-            $msg .= '</ul>';
-
-            show_error($msg);
         }
 
         $this->postedSettings = $data;
 
         return $data;
+    }
+
+    /**
+     * This is called before validate settings :eyeroll:
+     *
+     * @param mixed[] $data
+     *
+     * @return mixed[]
+     */
+    public function var_save_settings($data): array
+    {
+        return $this->save_settings(['ansel' => $data]);
     }
 
     /**

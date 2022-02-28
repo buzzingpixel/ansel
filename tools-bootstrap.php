@@ -6,8 +6,9 @@ declare(strict_types=1);
 // phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 
+const SYSPATH    = __DIR__ . '/vendor/expressionengine/expressionengine/system/';
 const ANSEL_ENV  = 'testing';
-const BASEPATH   = __DIR__ . '/vendor/expressionengine/expressionengine/system/ee/legacy/';
+const BASEPATH   = SYSPATH . 'ee/legacy/';
 const ANSEL_NAME = 'Ansel';
 const ANSEL_VER  = '9.8.7';
 
