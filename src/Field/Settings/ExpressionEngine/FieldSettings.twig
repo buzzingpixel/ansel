@@ -2,7 +2,11 @@
 {# @var \BuzzingPixel\Ansel\Translations\TranslatorContract translator #}
 
 <div style="max-width: 500px;" class="ansel_field_settings_general">
-    <input type="hidden" name="ansel[fieldSettings][placeholder]">
+    <input
+        type="hidden"
+        name="ansel[fieldSettings][placeholder]"
+        class="ansel_field_settings_placeholder"
+    >
     {% if not model.hideSourceSaveInstructions %}
         <fieldset>
             <div class="field-instruct">

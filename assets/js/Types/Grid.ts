@@ -1,3 +1,7 @@
+/**
+ * Create the interface to represent EE Grid
+ */
+
 // ESLint says it's already defined when it's clearly not
 // eslint-disable-next-line no-shadow
 export enum GridBindEvent {
