@@ -2,6 +2,7 @@ import CraftFieldSettingsFieldsRender from './FieldSettings/Craft/Render';
 import EEFieldSettingsFieldsRender from './FieldSettings/EE/Render';
 import Grid, { GridBindEvent } from './Types/Grid';
 import RenderAllSelectsInContainer from './SelectDropdown/RenderAllSelectsInContainer';
+import FieldRender from './Field/Render';
 
 /**
  * Declare the EE Grid global
@@ -93,4 +94,16 @@ if (window.Grid) {
             EEFieldSettingsFieldsRender(fieldsContainer);
         },
     );
+}
+
+/**
+ * Init ansel general fields
+ */
+const anselFieldEls = document.getElementsByClassName(
+    'ansel_field',
+);
+for (let i = 0; i < anselFieldEls.length; i += 1) {
+    const anselFieldEl = anselFieldEls[i] as HTMLDivElement;
+
+    FieldRender(anselFieldEl);
 }

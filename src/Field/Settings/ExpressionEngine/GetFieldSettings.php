@@ -11,6 +11,9 @@ use BuzzingPixel\Ansel\Settings\SettingsRepositoryContract;
 use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use Twig\Environment as TwigEnvironment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class GetFieldSettings
 {
@@ -34,6 +37,11 @@ class GetFieldSettings
         $this->settingsRepository = $settingsRepository;
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function render(
         string $fieldNameRoot,
         FieldSettingsCollection $fieldSettings

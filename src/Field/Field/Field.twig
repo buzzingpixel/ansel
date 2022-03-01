@@ -1,0 +1,12 @@
+{# @var \BuzzingPixel\Ansel\Field\Field\FieldRenderModel model #}
+
+<div class="ansel_field">
+    <span
+        class="ansel_field_settings"
+        data-json='{{ model.fieldSettings|json_encode|raw }}'
+    ></span>
+    <span
+        class="ansel_field_custom_fields"
+        data-json='{{ model.customFields|json_encode|raw }}'
+    ></span>
+</div>

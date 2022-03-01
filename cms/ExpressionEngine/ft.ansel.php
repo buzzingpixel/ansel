@@ -3,6 +3,7 @@
 
 declare(strict_types=1);
 
+use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
@@ -11,6 +12,9 @@ use BuzzingPixel\AnselConfig\ContainerManager;
 use ExpressionEngine\Service\Validation\Result;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
@@ -66,6 +70,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private PopulateFieldSettingsFromDefaults $populateFieldSettingsFromDefaults;
 
+    private GetEeFieldAction $getFieldAction;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -88,6 +94,9 @@ class Ansel_ft extends EE_Fieldtype
         $this->populateFieldSettingsFromDefaults = $container->get(
             PopulateFieldSettingsFromDefaults::class,
         );
+
+        /** @phpstan-ignore-next-line */
+        $this->getFieldAction = $container->get(GetEeFieldAction::class);
     }
 
     /**
@@ -265,6 +274,8 @@ class Ansel_ft extends EE_Fieldtype
      * @param mixed[] $data
      *
      * @return mixed[]
+     *
+     * @noinspection PhpMissingParamTypeInspection
      */
     public function var_save_settings($data): array
     {
@@ -305,25 +316,37 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * @param mixed[] $data
      *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     *
      * @phpstan-ignore-next-line
      */
-    public function display_field($data)
+    public function display_field($data): string
     {
-        // TODO: Implement display_field() method.
-        // dd('TODO: Implement display_field() method.');
-        return 'TODO: Implement display_field() method.';
+        // TODO: License check
+
+        $fieldSettings = $this->getFieldSettingsCollection(
+            $this->settings
+        );
+
+        return $this->getFieldAction->render(
+            $fieldSettings,
+        );
     }
 
     /**
      * @param mixed[] $data
      *
-     * @phpstan-ignore-next-line
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     *
+     * @noinspection PhpMissingParamTypeInspection
      */
-    public function var_display_field($data)
+    public function var_display_field($data): string
     {
-        // TODO: Implement display_field() method.
-        // dd('TODO: Implement var_display_field() method.');
-        return 'TODO: Implement var_display_field() method.';
+        return $this->display_field($data);
     }
 
     /**

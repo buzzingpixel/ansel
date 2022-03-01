@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselCms\Craft;
 
+use BuzzingPixel\Ansel\Field\Field\GetCraftFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
 use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
+use craft\base\ElementInterface;
 use craft\base\Field;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -74,6 +76,8 @@ class AnselCraftField extends Field
 
     private PopulateFieldSettingsFromDefaults $populateFieldSettingsFromDefaults;
 
+    private GetCraftFieldAction $getFieldAction;
+
     /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
@@ -94,6 +98,9 @@ class AnselCraftField extends Field
         $this->populateFieldSettingsFromDefaults = $container->get(
             PopulateFieldSettingsFromDefaults::class,
         );
+
+        /** @phpstan-ignore-next-line */
+        $this->getFieldAction = $container->get(GetCraftFieldAction::class);
     }
 
     public function getContentColumnType(): string
@@ -147,5 +154,20 @@ class AnselCraftField extends Field
         $this->addErrors($errors);
 
         return false;
+    }
+
+    /**
+     * @throws SyntaxError
+     * @throws InvalidConfigException
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function getInputHtml(
+        $value,
+        ?ElementInterface $element = null
+    ): string {
+        return $this->getFieldAction->render(
+            $this->getFieldSettingsCollection(),
+        );
     }
 }

@@ -199,6 +199,17 @@ class FieldSettingsCollection
     }
 
     /**
+     * @return scalar[]
+     */
+    public function asScalarArray(): array
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->map(
+            static fn (FieldSettingItemContract $s) => $s->value(),
+        );
+    }
+
+    /**
      * @return mixed[]
      */
     public function map(callable $callback): array

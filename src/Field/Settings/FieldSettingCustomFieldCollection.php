@@ -34,9 +34,13 @@ class FieldSettingCustomFieldCollection
         return $this->fields;
     }
 
-    public function asJson(): string
+    /**
+     * @return scalar[]
+     */
+    public function asScalarArray(): array
     {
-        return (string) json_encode(array_map(
+        /** @phpstan-ignore-next-line */
+        return array_values(array_map(
             static fn (FieldSettingCustomField $f) => [
                 'label' => $f->label(),
                 'handle' => $f->handle(),
@@ -45,6 +49,11 @@ class FieldSettingCustomFieldCollection
             ],
             $this->asArray(),
         ));
+    }
+
+    public function asJson(): string
+    {
+        return (string) json_encode($this->asScalarArray());
     }
 
     public function addField(FieldSettingCustomField $field): void
