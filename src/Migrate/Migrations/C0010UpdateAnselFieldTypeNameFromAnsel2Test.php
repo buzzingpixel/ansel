@@ -22,6 +22,8 @@ class C0010UpdateAnselFieldTypeNameFromAnsel2Test extends TestCase
     {
         parent::setUp();
 
+        $this->calls = [];
+
         $this->migration = new C0010UpdateAnselFieldTypeNameFromAnsel2(
             $this->mockDb(),
         );
@@ -52,7 +54,7 @@ class C0010UpdateAnselFieldTypeNameFromAnsel2Test extends TestCase
             ) use ($mock): Command {
                 $this->calls[] = [
                     'object' => 'Command',
-                    'method' => 'createTable',
+                    'method' => 'update',
                     'table' => $table,
                     'columns' => $columns,
                     'condition' => $condition,
@@ -95,7 +97,7 @@ class C0010UpdateAnselFieldTypeNameFromAnsel2Test extends TestCase
             [
                 [
                     'object' => 'Command',
-                    'method' => 'createTable',
+                    'method' => 'update',
                     'table' => '{{%fields}}',
                     'columns' => ['type' => AnselCraftField::class],
                     'condition' => "`type` = 'buzzingpixel\\ansel\\fields\\AnselField'",
