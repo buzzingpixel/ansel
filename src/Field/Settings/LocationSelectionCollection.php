@@ -68,4 +68,12 @@ class LocationSelectionCollection
             LocationSelectionItem $i
         ) => $i->value() === $value)->firstOrNull();
     }
+
+    public function add(LocationSelectionCollection $toAdd): self
+    {
+        return new self(array_merge(
+            $this->items,
+            $toAdd->items,
+        ));
+    }
 }

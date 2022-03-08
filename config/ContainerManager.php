@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig;
 
+use BuzzingPixel\AnselConfig\Bindings\AddonFactoryBinding;
+use BuzzingPixel\AnselConfig\Bindings\AssetsBinding;
 use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
 use BuzzingPixel\AnselConfig\Bindings\CraftWebView;
 use BuzzingPixel\AnselConfig\Bindings\EEAlertCollectionBinding;
@@ -17,11 +19,13 @@ use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
 use BuzzingPixel\AnselConfig\Bindings\FieldSettingsConfig;
 use BuzzingPixel\AnselConfig\Bindings\GuzzleConfig;
+use BuzzingPixel\AnselConfig\Bindings\LocationGettersBinding;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
 use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
 use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
 use BuzzingPixel\AnselConfig\Bindings\SiteMetaConfig;
 use BuzzingPixel\AnselConfig\Bindings\TranslatorBinding;
+use BuzzingPixel\AnselConfig\Bindings\TreasuryBindings;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\LicensePingConfig;
@@ -58,6 +62,8 @@ class ContainerManager
 
         $container = new Container(
             array_merge(
+                AddonFactoryBinding::get(),
+                AssetsBinding::get(),
                 CraftDbConnection::get(),
                 CraftWebView::get(),
                 EEAlertCollectionBinding::get(),
@@ -71,11 +77,13 @@ class ContainerManager
                 EEModelFacade::get(),
                 FieldSettingsConfig::get(),
                 GuzzleConfig::get(),
+                LocationGettersBinding::get(),
                 Migrations::get(),
                 ServerRequest::get(),
                 SettingsRepository::get(),
                 SiteMetaConfig::get(),
                 TranslatorBinding::get(),
+                TreasuryBindings::get(),
                 Twig::get(),
             ),
             array_merge(

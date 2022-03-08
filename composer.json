@@ -20,6 +20,11 @@
             "BuzzingPixel\\AssetsDist\\": "assetsDist/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "BuzzingPixel\\Treasury\\": "devResources/treasury-ee/treasury"
+        }
+    },
     "config": {
         "bin-compat": "full",
         "sort-packages": true,

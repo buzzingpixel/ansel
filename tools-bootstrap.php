@@ -7,6 +7,7 @@ declare(strict_types=1);
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 
 const SYSPATH    = __DIR__ . '/vendor/expressionengine/expressionengine/system/';
+const PATH_THIRD = SYSPATH . '/user/addons/';
 const ANSEL_ENV  = 'testing';
 const BASEPATH   = SYSPATH . 'ee/legacy/';
 const ANSEL_NAME = 'Ansel';
@@ -89,3 +90,8 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/File/UploadDestination.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Validation/Result.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Boot/boot.common.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Addon/Factory.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Dependency/ServiceProvider.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Dependency/InjectionBindingDecorator.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Core/Provider.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Addon/Addon.php';
