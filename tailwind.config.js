@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 
 module.exports = {
+    prefix: 'ansel_',
     content: [
         './assets/js/**/*.jsx',
         './assets/js/**/*.tsx',
@@ -10,6 +11,9 @@ module.exports = {
     theme: {
         extend: {
             colors: {},
+            screens: {
+                '3xl': '1750px',
+            },
         },
     },
     plugins: [

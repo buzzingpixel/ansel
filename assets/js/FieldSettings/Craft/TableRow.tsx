@@ -76,7 +76,7 @@ const TableRow = ({
                 />
             </td>
             <td className="singleline-cell textual">
-                <div className="input ltr p-2">
+                <div className="input ltr ansel_p-2">
                     <div className="select">
                         <select
                             onChange={updateType}

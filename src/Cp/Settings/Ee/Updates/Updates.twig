@@ -6,26 +6,30 @@
     {% for update in updates.items %}
         <div>
             {% if update.isNew %}
-                <span class="inline-flex align-middle items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800 mr-1">New</span>
+                <span class="ansel_inline-flex ansel_align-middle ansel_items-center ansel_px-2.5 ansel_py-0.5 ansel_rounded-md ansel_text-sm ansel_font-medium ansel_bg-green-100 ansel_text-green-800 ansel_mr-1">
+                    New
+                </span>
             {% endif %}
-            <span class="inline-flex text-2xl font-bold align-middle">{{ update.version }}</span>
+            <span class="ansel_inline-flex ansel_text-2xl ansel_font-bold ansel_align-middle">
+                {{ update.version }}
+            </span>
             {% if update.isNew %}
                 <a
-                    class="button button--xsmall button--primary float-right"
+                    class="button button--xsmall button--primary ansel_float-right"
                     href="{{ update.downloadUrl }}"
                 >
                     Download
                 </a>
             {% endif %}
         </div>
-        <div class="text-lg">
+        <div class="ansel_text-lg">
             Released on {{ update.date.format('F j, Y') }}
         </div>
-        <div class="release-notes">
+        <div class="ansel_release-notes">
             {{ update.notes|raw }}
         </div>
         {% if not loop.last %}
-            <hr class="my-10">
+            <hr class="ansel_my-10">
         {% endif %}
     {% endfor %}
 {% endblock %}
