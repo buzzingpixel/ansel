@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useCallback, useState } from 'react';
+import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 import { IconContext } from 'react-icons';
 import { ImCrop } from 'react-icons/im';
 import { FiEdit } from 'react-icons/fi';
@@ -10,27 +10,9 @@ import FieldSettingsType from './FieldSettingsType';
 import CustomFieldType from './CustomFieldType';
 import FieldUploadSelect from './FieldUploadSelect';
 import DragInProgress from './DragInProgress';
-
-const images = [
-    // {
-    //     imageUrl: 'https://images.unsplash.com/photo-1501532358732-8b50b34df1c4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80',
-    // },
-    // {
-    //     imageUrl: 'https://images.unsplash.com/photo-1550479023-2a811e19dfd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2831&q=80',
-    // },
-    // {
-    //     imageUrl: 'https://images.unsplash.com/photo-1504894577131-1ec09a4bc15b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2050&q=80',
-    // },
-    // {
-    //     imageUrl: 'https://images.unsplash.com/photo-1578374173696-f8a2d504b144?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80',
-    // },
-    // {
-    //     imageUrl: 'https://images.unsplash.com/photo-1599719500956-d158a26ab3ee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2671&q=80',
-    // },
-    // {
-    //     imageUrl: 'https://images.unsplash.com/photo-1587279484796-61a264afc18b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80',
-    // },
-];
+import Image from './Image';
+import FieldError from './FieldError';
+import OnDropRejected from './DropHandlers/DropRejected/OnDropRejected';
 
 const Field = (
     {
@@ -41,14 +23,25 @@ const Field = (
         customFields: Array<CustomFieldType>,
     },
 ) => {
-    // eslint-disable-next-line no-console
-    console.log(fieldSettings, customFields);
+    const [errorMessages, setErrorMessages] = useState({});
 
-    const onDrop = useCallback(
-        (acceptedFiles) => {
-            console.log(acceptedFiles);
+    const [images, setImages] = useState<Array<Image>>([]);
+
+    const onDropAccepted = useCallback(
+        (files: Array<File>) => {
+            console.log(files);
         },
         [],
+    );
+
+    const onDropRejected = useCallback(
+        (rejected: Array<FileRejection>) => {
+            OnDropRejected(rejected, setErrorMessages);
+        },
+        [
+            errorMessages,
+            setErrorMessages,
+        ],
     );
 
     const {
@@ -58,9 +51,11 @@ const Field = (
         isDragActive,
     } = useDropzone(
         {
-            onDrop,
+            onDropAccepted,
+            onDropRejected,
             noClick: true,
             noKeyboard: true,
+            accept: 'image/jpeg, image/png, image/gif',
         },
     );
 
@@ -76,6 +71,11 @@ const Field = (
             {...getRootProps()}
         >
             { isDragActive && <DragInProgress /> }
+            {
+                Object.keys(errorMessages).map((errorKey) => (
+                    <FieldError errorMessage={errorMessages[errorKey]} />
+                ))
+            }
             <input {...getInputProps()} />
             <div className="ansel_p-4">
                 <div className={uploaderClass}>
