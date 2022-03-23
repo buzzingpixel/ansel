@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselCms\Craft;
 
+use BuzzingPixel\AnselCms\Craft\Controllers\CpSettings\ActionsController;
 use BuzzingPixel\AnselCms\Craft\Controllers\CpSettings\GetCpSettingsController;
 use Craft;
 use craft\base\Plugin;
@@ -49,6 +50,7 @@ class AnselCraftPlugin extends Plugin
     private function mapControllers(): void
     {
         $this->controllerMap = [
+            'actions' => ActionsController::class,
             'get-cp-settings' => GetCpSettingsController::class,
         ];
     }

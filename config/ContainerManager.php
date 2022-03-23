@@ -19,9 +19,12 @@ use BuzzingPixel\AnselConfig\Bindings\EEFunctionsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
 use BuzzingPixel\AnselConfig\Bindings\FieldSettingsConfig;
+use BuzzingPixel\AnselConfig\Bindings\GetUploadKeyBinding;
+use BuzzingPixel\AnselConfig\Bindings\GetUploadUrlBinding;
 use BuzzingPixel\AnselConfig\Bindings\GuzzleConfig;
 use BuzzingPixel\AnselConfig\Bindings\LocationGettersBinding;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
+use BuzzingPixel\AnselConfig\Bindings\SaveUploadKeyBinding;
 use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
 use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
 use BuzzingPixel\AnselConfig\Bindings\SiteMetaConfig;
@@ -78,9 +81,12 @@ class ContainerManager
                 EELang::get(),
                 EEModelFacade::get(),
                 FieldSettingsConfig::get(),
+                GetUploadKeyBinding::get(),
+                GetUploadUrlBinding::get(),
                 GuzzleConfig::get(),
                 LocationGettersBinding::get(),
                 Migrations::get(),
+                SaveUploadKeyBinding::get(),
                 ServerRequest::get(),
                 SettingsRepository::get(),
                 SiteMetaConfig::get(),
