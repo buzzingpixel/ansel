@@ -7,6 +7,8 @@ namespace BuzzingPixel\AnselConfig\Bindings;
 use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
 use RuntimeException;
 
+use function rtrim;
+
 class SiteMetaConfig
 {
     /**
@@ -19,8 +21,22 @@ class SiteMetaConfig
                 switch (ANSEL_ENV) {
                     /** @phpstan-ignore-next-line */
                     case 'ee':
+                        $frontEndUrl = (string) ee()->config->item(
+                            'site_url'
+                        );
+
+                        $frontEndUrl = rtrim(
+                            $frontEndUrl,
+                            '/'
+                        );
+
+                        $frontEndUrl .= '/' . ee()->config->item(
+                            'site_index'
+                        );
+
                         return new SiteMeta(
                             (int) ee()->config->item('site_id'),
+                            $frontEndUrl
                         );
 
                     default:

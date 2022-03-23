@@ -8,13 +8,21 @@ class SiteMeta
 {
     private int $siteId;
 
-    public function __construct(int $siteId)
+    private string $frontEndUrl;
+
+    public function __construct(int $siteId, string $frontEndUrl)
     {
-        $this->siteId = $siteId;
+        $this->siteId      = $siteId;
+        $this->frontEndUrl = $frontEndUrl;
     }
 
     public function siteId(): int
     {
         return $this->siteId;
+    }
+
+    public function frontEndUrl(): string
+    {
+        return $this->frontEndUrl;
     }
 }
