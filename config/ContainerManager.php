@@ -6,6 +6,7 @@ namespace BuzzingPixel\AnselConfig;
 
 use BuzzingPixel\AnselConfig\Bindings\AddonFactoryBinding;
 use BuzzingPixel\AnselConfig\Bindings\AssetsBinding;
+use BuzzingPixel\AnselConfig\Bindings\ClockBinding;
 use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
 use BuzzingPixel\AnselConfig\Bindings\CraftWebView;
 use BuzzingPixel\AnselConfig\Bindings\EEAlertCollectionBinding;
@@ -64,6 +65,7 @@ class ContainerManager
             array_merge(
                 AddonFactoryBinding::get(),
                 AssetsBinding::get(),
+                ClockBinding::get(),
                 CraftDbConnection::get(),
                 CraftWebView::get(),
                 EEAlertCollectionBinding::get(),
