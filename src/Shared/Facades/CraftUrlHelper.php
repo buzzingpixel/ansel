@@ -29,4 +29,23 @@ class CraftUrlHelper
             $scheme,
         );
     }
+
+    /**
+     * @param array|string|null $params
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function actionUrl(
+        string $path = '',
+        $params = null,
+        ?string $scheme = null,
+        ?bool $showScriptName = null
+    ): string {
+        return UrlHelper::actionUrl(
+            $path,
+            $params,
+            $scheme,
+            $showScriptName,
+        );
+    }
 }
