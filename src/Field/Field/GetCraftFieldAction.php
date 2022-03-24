@@ -15,13 +15,18 @@ use yii\base\InvalidConfigException;
 class GetCraftFieldAction
 {
     private TwigEnvironment $twig;
+
+    private GetFieldParameters $getFieldParameters;
+
     private CraftRegisterAssetBundle $registerAssetBundle;
 
     public function __construct(
         TwigEnvironment $twig,
+        GetFieldParameters $getFieldParameters,
         CraftRegisterAssetBundle $registerAssetBundle
     ) {
         $this->twig                = $twig;
+        $this->getFieldParameters  = $getFieldParameters;
         $this->registerAssetBundle = $registerAssetBundle;
     }
 
@@ -42,6 +47,7 @@ class GetCraftFieldAction
                 'model' => new FieldRenderModel(
                     $fieldSettings->asScalarArray(),
                     $fieldSettings->customFields()->asScalarArray(),
+                    $this->getFieldParameters->get()->asArray(),
                 ),
             ],
         );

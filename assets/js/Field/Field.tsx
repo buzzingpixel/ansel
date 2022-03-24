@@ -13,14 +13,18 @@ import DragInProgress from './DragInProgress';
 import Image from './Image';
 import FieldError from './FieldError';
 import OnDropRejected from './DropHandlers/DropRejected/OnDropRejected';
+import OnDropAccepted from './DropHandlers/DropAccepted/OnDropAccepted';
+import FieldParametersType from './FieldParametersType';
 
 const Field = (
     {
         fieldSettings,
         customFields,
+        parameters,
     }: {
         fieldSettings: FieldSettingsType,
         customFields: Array<CustomFieldType>,
+        parameters: FieldParametersType,
     },
 ) => {
     const [errorMessages, setErrorMessages] = useState({});
@@ -29,9 +33,12 @@ const Field = (
 
     const onDropAccepted = useCallback(
         (files: Array<File>) => {
-            console.log(files);
+            OnDropAccepted(files, setImages);
         },
-        [],
+        [
+            images,
+            setImages,
+        ],
     );
 
     const onDropRejected = useCallback(

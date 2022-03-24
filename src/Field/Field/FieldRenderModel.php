@@ -12,16 +12,22 @@ class FieldRenderModel
     /** @var scalar[] */
     private array $customFields;
 
+    /** @var scalar[] */
+    private array $parameters;
+
     /**
      * @param scalar[] $fieldSettings
      * @param scalar[] $customFields
+     * @param scalar[] $parameters
      */
     public function __construct(
         array $fieldSettings,
-        array $customFields
+        array $customFields,
+        array $parameters
     ) {
         $this->fieldSettings = $fieldSettings;
         $this->customFields  = $customFields;
+        $this->parameters    = $parameters;
     }
 
     /**
@@ -38,5 +44,13 @@ class FieldRenderModel
     public function customFields(): array
     {
         return $this->customFields;
+    }
+
+    /**
+     * @return scalar[]
+     */
+    public function parameters(): array
+    {
+        return $this->parameters;
     }
 }

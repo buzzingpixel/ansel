@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import FieldSettingsType from './FieldSettingsType';
 import CustomFieldType from './CustomFieldType';
 import Field from './Field';
+import FieldParametersType from './FieldParametersType';
 
 export default (anselFieldEl: HTMLDivElement) => {
     const fieldSettingsElement = anselFieldEl.getElementsByClassName(
@@ -21,10 +22,19 @@ export default (anselFieldEl: HTMLDivElement) => {
         customFieldsElement.dataset.json,
     ) as Array<CustomFieldType>;
 
+    const parametersElement = anselFieldEl.getElementsByClassName(
+        'ansel_field_parameters',
+    ).item(0) as HTMLSpanElement;
+
+    const parameters = JSON.parse(
+        parametersElement.dataset.json,
+    ) as FieldParametersType;
+
     ReactDOM.render(
         <Field
             fieldSettings={fieldSettings}
             customFields={customFields}
+            parameters={parameters}
         />,
         anselFieldEl,
     );

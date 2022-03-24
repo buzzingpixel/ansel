@@ -17,12 +17,16 @@ class GetEeFieldAction
 
     private TwigEnvironment $twig;
 
+    private GetFieldParameters $getFieldParameters;
+
     public function __construct(
         EeCssJs $eeCssJs,
-        TwigEnvironment $twig
+        TwigEnvironment $twig,
+        GetFieldParameters $getFieldParameters
     ) {
-        $this->eeCssJs = $eeCssJs;
-        $this->twig    = $twig;
+        $this->eeCssJs            = $eeCssJs;
+        $this->twig               = $twig;
+        $this->getFieldParameters = $getFieldParameters;
     }
 
     /**
@@ -41,6 +45,7 @@ class GetEeFieldAction
                 'model' => new FieldRenderModel(
                     $fieldSettings->asScalarArray(),
                     $fieldSettings->customFields()->asScalarArray(),
+                    $this->getFieldParameters->get()->asArray(),
                 ),
             ],
         );
