@@ -33,7 +33,7 @@ const Field = (
 
     const onDropAccepted = useCallback(
         (files: Array<File>) => {
-            OnDropAccepted(files, setImages);
+            OnDropAccepted(files, setImages, parameters);
         },
         [
             images,
