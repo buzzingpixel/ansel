@@ -37,4 +37,9 @@ class InternalFunctions
     {
         return (string) file_get_contents($filename);
     }
+
+    public function doExit(): void
+    {
+        exit;
+    }
 }
