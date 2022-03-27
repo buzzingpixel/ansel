@@ -102,7 +102,7 @@ return [
     'browser_does_not_support_drag_and_drop' => 'Ihr Browser unterstützt kein Upload per drag and drop',
     'please_use_fallback_form' => 'Bitte benutzen Sie das untenstehende Formular um ihre Bilder hochzuladen',
     'file_too_big' => 'Die Datei ist zu gross ({{filesize}}MiB). Maximale Dateigrösse: {{maxFilesize}}MiB.',
-    'invalid_file_type' => 'Es können keine Dateien dieses Typs hochgeladen werden.',
+    'invalid_file_type' => 'Es können keine Dateien dieses Typs hochgeladen werden',
     'cancel_upload' => 'Upload abbrechen',
     'cancel_upload_confirmation' => 'Wollen Sie diesen Upload wirklich abbrechen?',
     'remove_file' => 'Dokument entfernen',
@@ -135,4 +135,6 @@ return [
     'prevent_upload_over_max_explain' => 'Normalerweise erlaubt Ansel das Hochladen überzähliger Bilder, welche ausgegraut erscheinen um zu zeigen, dass sie nicht im Artikel dargestellt werden. Dies ist von Vorteil um Bilder für später vorzubereiten. In seltenen Fällen müssen sie das Hochladen überzähliger Bilder jedoch verhindern.',
     'trial_active_invalid_license_key_body' => 'Ihre Testversion ist noch aktiv, aber der eingegebene Lizenzschlüssel den Sie eingegeben haben ist entweder ungültig oder wurde nicht für diese Domain autorisiert.<br><br>Wenn Sie noch keine autorisierte Domain hinzugefügt haben, können Sie dies tun indem Sie sich {{accountLinkStart}}in ihren Account auf BuzzingPixel.com einloggen{{linkEnd}} und die gewünschte Domain hinzufügen.<br><br>Wenn Sie eine Seitenlizenz kaufen möchten, können Sie dies {{purchaseLinkStart}}hier{{linkEnd}} tun. Wenn Sie noch einen anderen Lizenzschlüssel besitzen, können Sie ihn {{licenseLinkStart}}hier eingeben{{linkEnd}}.',
     'setting_required' => 'Diese Einstellung ist erforderlich',
+    'invalid_upload_request' => 'Die Upload-Anfrage war ungültig',
+    'image_upload_error' => 'Beim Hochladen Ihres Bildes ist ein Fehler aufgetreten',
 ];
