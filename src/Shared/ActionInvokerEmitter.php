@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Shared;
 
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\ResponseEmitter;
 
@@ -13,7 +12,7 @@ class ActionInvokerEmitter
 {
     private ResponseEmitter $responseEmitter;
 
-    private ResponseFactoryInterface $responseFactory;
+    private ResponseFactory $responseFactory;
 
     private InternalFunctions $internalFunctions;
 
