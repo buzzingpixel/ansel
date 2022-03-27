@@ -30,11 +30,21 @@ export default (anselFieldEl: HTMLDivElement) => {
         parametersElement.dataset.json,
     ) as FieldParametersType;
 
+    const translationsElement = anselFieldEl.getElementsByClassName(
+        'ansel_translations',
+    ).item(0) as HTMLSpanElement;
+
+    const translations = JSON.parse(
+        translationsElement.dataset.json,
+    ) as FieldParametersType;
+
     ReactDOM.render(
         <Field
             fieldSettings={fieldSettings}
             customFields={customFields}
             parameters={parameters}
+            // @ts-ignore
+            translations={translations}
         />,
         anselFieldEl,
     );

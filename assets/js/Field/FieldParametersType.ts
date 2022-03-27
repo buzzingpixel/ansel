@@ -1,6 +1,6 @@
 interface FieldParametersType {
-    uploadKey: string,
-    uploadUrl: string,
+    uploadKey: string;
+    uploadUrl: string;
 }
 
 export default FieldParametersType;
