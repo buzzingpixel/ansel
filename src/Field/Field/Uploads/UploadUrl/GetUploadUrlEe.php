@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\Uploads;
 
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadUrl\GetUploadUrlContract;
 use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
 use Cp;
 

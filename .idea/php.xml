@@ -134,6 +134,7 @@
       <path value="$PROJECT_DIR$/vendor/psr/http-server-middleware" />
       <path value="$PROJECT_DIR$/vendor/psr/http-server-handler" />
       <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-switch" />
+      <path value="$PROJECT_DIR$/vendor/marc1706/fast-image-size" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />

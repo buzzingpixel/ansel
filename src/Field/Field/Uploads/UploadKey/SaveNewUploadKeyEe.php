@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\Uploads;
 
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\SaveNewUploadKeyContract;
 use BuzzingPixel\Ansel\Shared\ClockContract;
 use BuzzingPixel\Ansel\Shared\EeQueryBuilderFactory;
 
