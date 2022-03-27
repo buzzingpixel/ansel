@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig\Bindings;
 
-use BuzzingPixel\Ansel\Field\Field\Uploads\SaveNewUploadKeyContract;
-use BuzzingPixel\Ansel\Field\Field\Uploads\SaveNewUploadKeyCraft;
-use BuzzingPixel\Ansel\Field\Field\Uploads\SaveNewUploadKeyEe;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\SaveNewUploadKeyContract;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\SaveNewUploadKeyCraft;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\SaveNewUploadKeyEe;
 use RuntimeException;
 
 class SaveUploadKeyBinding

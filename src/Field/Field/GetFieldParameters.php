@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field;
 
-use BuzzingPixel\Ansel\Field\Field\Uploads\GetUploadKeyContract;
-use BuzzingPixel\Ansel\Field\Field\Uploads\GetUploadUrlContract;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\GetUploadKeyContract;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadUrl\GetUploadUrlContract;
 
 class GetFieldParameters
 {

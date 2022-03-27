@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig\Bindings;
 
-use BuzzingPixel\Ansel\Field\Field\Uploads\GetUploadUrlContract;
-use BuzzingPixel\Ansel\Field\Field\Uploads\GetUploadUrlCraft;
-use BuzzingPixel\Ansel\Field\Field\Uploads\GetUploadUrlEe;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadUrl\GetUploadUrlContract;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadUrl\GetUploadUrlCraft;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadUrl\GetUploadUrlEe;
 use RuntimeException;
 
 class GetUploadUrlBinding

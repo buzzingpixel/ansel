@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Field\Uploads;
-
-use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\GetUploadKeyContract;
+namespace BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey;
 
 use function dd;
 

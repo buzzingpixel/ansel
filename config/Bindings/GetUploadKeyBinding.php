@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig\Bindings;
 
-use BuzzingPixel\Ansel\Field\Field\Uploads\GetUploadKey;
-use BuzzingPixel\Ansel\Field\Field\Uploads\GetUploadKeyContract;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\GetUploadKey;
+use BuzzingPixel\Ansel\Field\Field\Uploads\UploadKey\GetUploadKeyContract;
 
 class GetUploadKeyBinding
 {
