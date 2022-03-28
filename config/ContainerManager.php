@@ -34,6 +34,7 @@ use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\AnselConfig\Bindings\ValidateUploadKeyBinding;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\LicensePingConfig;
+use BuzzingPixel\AnselConfig\ConstructorConfigs\PathsConfig;
 use BuzzingPixel\Container\Container;
 use Psr\Container\ContainerInterface;
 
@@ -99,6 +100,7 @@ class ContainerManager
             array_merge(
                 FeedConfig::get(),
                 LicensePingConfig::get(),
+                PathsConfig::get(),
             ),
         );
 
