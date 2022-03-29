@@ -69,11 +69,17 @@ const Field = (fieldData: FieldDataType) => {
         bgColorClass = 'ansel_bg-red-50';
     }
 
+    let fieldWorkingClass = '';
+
+    if (fieldState.processes > 0) {
+        fieldWorkingClass = 'ansel-field-working';
+    }
+
     return (
         <>
             <WorkingIndicator fieldState={fieldState} />
             <div
-                className={`${bgColorClass} ansel_border ansel_border-gray-200 ansel_border-solid ansel_relative`}
+                className={`${bgColorClass} ${fieldWorkingClass} ansel_border ansel_border-gray-200 ansel_border-solid ansel_relative`}
                 {...getRootProps()}
             >
                 { isDragActive && <DragInProgress /> }
