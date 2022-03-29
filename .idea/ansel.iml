@@ -135,6 +135,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-server-handler" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/buzzingpixel/twig-switch" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/marc1706/fast-image-size" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ramsey/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cocur/slugify" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
