@@ -3,13 +3,13 @@ import ErrorHandler from './ErrorHandler';
 
 const RejectedItemHandler = (
     rejectedItem: FileRejection,
-    setErrorMessages: CallableFunction,
+    setFieldState: CallableFunction,
 ) => {
     rejectedItem.errors.forEach((error) => {
         ErrorHandler(
             rejectedItem.file.name,
             error.message,
-            setErrorMessages,
+            setFieldState,
         );
     });
 };

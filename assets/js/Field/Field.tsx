@@ -1,69 +1,44 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
-import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { IconContext } from 'react-icons';
 import { ImCrop } from 'react-icons/im';
 import { FiEdit } from 'react-icons/fi';
 import { CgEditBlackPoint } from 'react-icons/cg';
 import { MdDelete } from 'react-icons/md';
 import { SpinningCircles } from 'react-loading-icons';
-import FieldSettingsType from './FieldSettingsType';
-import CustomFieldType from './CustomFieldType';
 import FieldUploadSelect from './FieldUploadSelect';
 import DragInProgress from './DragInProgress';
-import Image from './Image';
 import FieldError from './FieldError';
 import OnDropRejected from './DropHandlers/DropRejected/OnDropRejected';
 import OnDropAccepted from './DropHandlers/DropAccepted/OnDropAccepted';
-import FieldParametersType from './FieldParametersType';
-import Translations from './Translations';
+import FieldStateType from './Types/FieldStateType';
+import FieldDataType from './Types/FieldDataType';
 
-const Field = (
-    {
-        fieldSettings,
-        customFields,
-        parameters,
-        translations,
-    }: {
-        fieldSettings: FieldSettingsType,
-        customFields: Array<CustomFieldType>,
-        parameters: FieldParametersType,
-        translations: Translations,
-    },
-) => {
-    const [processCount, setProcessCount] = useState(0);
-
-    const [errorMessages, setErrorMessages] = useState({});
-
-    const [images, setImages] = useState<Array<Image>>([]);
+const Field = (fieldData: FieldDataType) => {
+    const [fieldState, setFieldState] = useState<FieldStateType>({
+        processes: 0,
+        errorMessages: {},
+        images: [],
+    });
 
     const onDropAccepted = useCallback(
         (files: Array<File>) => {
-            OnDropAccepted(
-                files,
-                setImages,
-                setErrorMessages,
-                parameters,
-                fieldSettings,
-                translations,
-            );
+            OnDropAccepted(files, fieldData, setFieldState);
         },
         [
-            images,
-            setImages,
-            errorMessages,
-            setErrorMessages,
-            parameters,
+            fieldState,
+            setFieldState,
         ],
     );
 
     const onDropRejected = useCallback(
         (rejected: Array<FileRejection>) => {
-            OnDropRejected(rejected, setErrorMessages);
+            OnDropRejected(rejected, setFieldState);
         },
         [
-            errorMessages,
-            setErrorMessages,
+            fieldState,
+            setFieldState,
         ],
     );
 
@@ -84,13 +59,13 @@ const Field = (
 
     let uploaderClass = '';
 
-    if (images.length > 0) {
-        uploaderClass = '';
+    if (fieldState.images.length > 0) {
+        uploaderClass = 'ansel_pb-4';
     }
 
     return (
         <>
-            <div className={processCount > 0 ? 'ansel_opacity-1' : 'ansel_opacity-0'}>
+            <div className={fieldState.processes > 0 ? 'ansel_opacity-1' : 'ansel_opacity-0'}>
                 <SpinningCircles
                     fill="#000"
                     stroke="#cdcdcd"
@@ -105,8 +80,8 @@ const Field = (
             >
                 { isDragActive && <DragInProgress /> }
                 {
-                    Object.keys(errorMessages).map((errorKey) => (
-                        <FieldError errorMessage={errorMessages[errorKey]} />
+                    Object.keys(fieldState.errorMessages).map((errorKey) => (
+                        <FieldError errorMessage={fieldState.errorMessages[errorKey]} />
                     ))
                 }
                 <input {...getInputProps()} />
@@ -116,9 +91,9 @@ const Field = (
                     </div>
                     <ul
                         role="list"
-                        className="ansel_grid ansel_grid-cols-1 ansel_gap-6 md:ansel_grid-cols-2 2xl:ansel_grid-cols-3 3xl:ansel_grid-cols-4 ansel_p-4"
+                        className="ansel_grid ansel_grid-cols-1 ansel_gap-6 md:ansel_grid-cols-2 2xl:ansel_grid-cols-3 3xl:ansel_grid-cols-4"
                     >
-                        {images.map((image, index) => (
+                        {fieldState.images.map((image, index) => (
                             <li
                                 key={index}
                                 className="ansel_col-span-1 ansel_flex ansel_flex-col ansel_text-center ansel_bg-white ansel_rounded-lg ansel_shadow ansel_divide-y ansel_divide-gray-200"
@@ -181,7 +156,7 @@ const Field = (
                             </li>
                         ))}
                     </ul>
-                    {images.length > 4
+                    {fieldState.images.length > 4
                         && <div className="ansel_pt-6">
                             <FieldUploadSelect />
                         </div>

@@ -1,20 +1,23 @@
 import { v4 as uuid } from 'uuid';
+import FieldStateType from '../../Types/FieldStateType';
 
 const ErrorHandler = (
     fileName: string,
     errorMessage: string,
-    setErrorMessages: CallableFunction,
+    setFieldState: CallableFunction,
 ) => {
     const id = uuid();
 
-    setErrorMessages((prevState) => ({
-        ...prevState,
-        [id]: `${fileName}: ${errorMessage}`,
-    }));
+    setFieldState((prevState: FieldStateType) => {
+        prevState.errorMessages[id] = `${fileName}: ${errorMessage}`;
+
+        return { ...prevState };
+    });
 
     setTimeout(() => {
-        setErrorMessages((prevState) => {
-            delete prevState[id];
+        setFieldState((prevState) => {
+            delete prevState.errorMessages[id];
+
             return { ...prevState };
         });
     }, 10000);

@@ -3,10 +3,10 @@ import RejectedItemHandler from './RejectedItemHandler';
 
 const OnDropRejected = (
     rejected: Array<FileRejection>,
-    setErrorMessages: CallableFunction,
+    setFieldState: CallableFunction,
 ) => {
     rejected.forEach((rejectedItem) => {
-        RejectedItemHandler(rejectedItem, setErrorMessages);
+        RejectedItemHandler(rejectedItem, setFieldState);
     });
 };
 
