@@ -4,6 +4,7 @@ import FieldSettingsType from './FieldSettingsType';
 import CustomFieldType from './CustomFieldType';
 import Field from './Field';
 import FieldParametersType from './FieldParametersType';
+import Translations from './Translations';
 
 export default (anselFieldEl: HTMLDivElement) => {
     const fieldSettingsElement = anselFieldEl.getElementsByClassName(
@@ -36,14 +37,13 @@ export default (anselFieldEl: HTMLDivElement) => {
 
     const translations = JSON.parse(
         translationsElement.dataset.json,
-    ) as FieldParametersType;
+    ) as Translations;
 
     ReactDOM.render(
         <Field
             fieldSettings={fieldSettings}
             customFields={customFields}
             parameters={parameters}
-            // @ts-ignore
             translations={translations}
         />,
         anselFieldEl,

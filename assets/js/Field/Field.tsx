@@ -103,7 +103,7 @@ const Field = (
                 </div>
                 <ul
                     role="list"
-                    className="ansel_grid ansel_grid-cols-1 ansel_gap-6 md:ansel_grid-cols-2 2xl:ansel_grid-cols-3 3xl:ansel_grid-cols-4"
+                    className="ansel_grid ansel_grid-cols-1 ansel_gap-6 md:ansel_grid-cols-2 2xl:ansel_grid-cols-3 3xl:ansel_grid-cols-4 ansel_p-4"
                 >
                     {images.map((image, index) => (
                         <li

@@ -3,6 +3,7 @@ import UploadJsonMessageReturn, { UploadJsonMessageReturnType } from './UploadJs
 import UploadErrorHandler from './UploadErrorHandler';
 import FieldSettingsType from '../../FieldSettingsType';
 import Translations from '../../Translations';
+import Image from '../../Image';
 
 const FileHandler = (
     file: File,
@@ -42,7 +43,14 @@ const FileHandler = (
                 return;
             }
 
-            console.log(json);
+            const image = {
+                imageUrl: json.base64Image,
+            } as Image;
+
+            setImages((prevState) => [
+                ...prevState,
+                image,
+            ]);
         }).catch(() => {
             UploadErrorHandler(
                 setErrorMessages,
