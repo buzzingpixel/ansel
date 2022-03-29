@@ -6,8 +6,14 @@ namespace BuzzingPixel\Ansel\Shared\Php;
 
 use function file_exists;
 use function file_get_contents;
+use function file_put_contents;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function scandir;
 use function strtotime;
 use function time;
+use function unlink;
 
 class InternalFunctions
 {
@@ -36,6 +42,59 @@ class InternalFunctions
     public function fileGetContents(string $filename): string
     {
         return (string) file_get_contents($filename);
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return int|false
+     */
+    public function filePutContents(
+        string $filename,
+        $data,
+        int $flags = 0
+    ) {
+        return file_put_contents(
+            $filename,
+            $data,
+            $flags,
+        );
+    }
+
+    public function mkdir(
+        string $directory,
+        int $permissions = 0777,
+        bool $recursive = true
+    ): bool {
+        return mkdir(
+            $directory,
+            $permissions,
+            $recursive,
+        );
+    }
+
+    public function isDir(string $path): bool
+    {
+        return is_dir($path);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function scanDir(string $path): array
+    {
+        /** @phpstan-ignore-next-line */
+        return scandir($path);
+    }
+
+    public function rmdir(string $path): bool
+    {
+        return rmdir($path);
+    }
+
+    public function unlink(string $path): bool
+    {
+        return unlink($path);
     }
 
     public function doExit(): void
