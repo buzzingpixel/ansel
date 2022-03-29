@@ -31,6 +31,7 @@ use BuzzingPixel\AnselConfig\Bindings\SiteMetaConfig;
 use BuzzingPixel\AnselConfig\Bindings\TranslatorBinding;
 use BuzzingPixel\AnselConfig\Bindings\TreasuryBindings;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
+use BuzzingPixel\AnselConfig\Bindings\UuidBinding;
 use BuzzingPixel\AnselConfig\Bindings\ValidateUploadKeyBinding;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\LicensePingConfig;
@@ -95,6 +96,7 @@ class ContainerManager
                 TranslatorBinding::get(),
                 TreasuryBindings::get(),
                 Twig::get(),
+                UuidBinding::get(),
                 ValidateUploadKeyBinding::get(),
             ),
             array_merge(
