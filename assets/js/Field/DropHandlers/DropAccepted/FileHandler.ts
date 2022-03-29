@@ -9,6 +9,20 @@ const FileHandler = (
     fieldData: FieldDataType,
     setFieldState: CallableFunction,
 ) => {
+    setFieldState((prevState: FieldStateType) => {
+        prevState.processes += 1;
+
+        return { ...prevState };
+    });
+
+    const removeProcess = () => {
+        setFieldState((prevState: FieldStateType) => {
+            prevState.processes -= 1;
+
+            return { ...prevState };
+        });
+    };
+
     const formData = new FormData();
 
     formData.append('uploadKey', fieldData.parameters.uploadKey);
@@ -36,6 +50,8 @@ const FileHandler = (
                     json.message,
                 );
 
+                removeProcess();
+
                 return;
             }
 
@@ -51,17 +67,23 @@ const FileHandler = (
 
                 return { ...prevState };
             });
+
+            removeProcess();
         }).catch(() => {
             UploadErrorHandler(
                 setFieldState,
                 fieldData.translations.imageUploadError,
             );
+
+            removeProcess();
         });
     }).catch(() => {
         UploadErrorHandler(
             setFieldState,
             fieldData.translations.imageUploadError,
         );
+
+        removeProcess();
     });
 };
 

@@ -6,7 +6,6 @@ import { ImCrop } from 'react-icons/im';
 import { FiEdit } from 'react-icons/fi';
 import { CgEditBlackPoint } from 'react-icons/cg';
 import { MdDelete } from 'react-icons/md';
-import { SpinningCircles } from 'react-loading-icons';
 import FieldUploadSelect from './FieldUploadSelect';
 import DragInProgress from './DragInProgress';
 import FieldError from './FieldError';
@@ -14,6 +13,7 @@ import OnDropRejected from './DropHandlers/DropRejected/OnDropRejected';
 import OnDropAccepted from './DropHandlers/DropAccepted/OnDropAccepted';
 import FieldStateType from './Types/FieldStateType';
 import FieldDataType from './Types/FieldDataType';
+import WorkingIndicator from './WorkingIndicator';
 
 const Field = (fieldData: FieldDataType) => {
     const [fieldState, setFieldState] = useState<FieldStateType>({
@@ -65,15 +65,7 @@ const Field = (fieldData: FieldDataType) => {
 
     return (
         <>
-            <div className={fieldState.processes > 0 ? 'ansel_opacity-1' : 'ansel_opacity-0'}>
-                <SpinningCircles
-                    fill="#000"
-                    stroke="#cdcdcd"
-                    speed={2}
-                    width={20}
-                    height={20}
-                />
-            </div>
+            <WorkingIndicator fieldState={fieldState} />
             <div
                 className="ansel_bg-gray-50 ansel_border ansel_border-gray-200 ansel_border-solid ansel_relative"
                 {...getRootProps()}
@@ -163,6 +155,11 @@ const Field = (fieldData: FieldDataType) => {
                     }
                 </div>
             </div>
+            {fieldState.images.length > 4
+                && <div className="ansel_pt-4">
+                    <WorkingIndicator fieldState={fieldState} />
+                </div>
+            }
         </>
     );
 };
