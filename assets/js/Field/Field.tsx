@@ -63,11 +63,17 @@ const Field = (fieldData: FieldDataType) => {
         uploaderClass = 'ansel_pb-4';
     }
 
+    let bgColorClass = 'ansel_bg-gray-50';
+
+    if (Object.keys(fieldState.errorMessages).length > 0) {
+        bgColorClass = 'ansel_bg-red-50';
+    }
+
     return (
         <>
             <WorkingIndicator fieldState={fieldState} />
             <div
-                className="ansel_bg-gray-50 ansel_border ansel_border-gray-200 ansel_border-solid ansel_relative"
+                className={`${bgColorClass} ansel_border ansel_border-gray-200 ansel_border-solid ansel_relative`}
                 {...getRootProps()}
             >
                 { isDragActive && <DragInProgress /> }
