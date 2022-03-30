@@ -18,22 +18,28 @@ class FieldRenderModel
     /** @var scalar[] */
     private array $translations;
 
+    /** @var scalar[] */
+    private array $platform;
+
     /**
      * @param scalar[] $fieldSettings
      * @param scalar[] $customFields
      * @param scalar[] $parameters
      * @param scalar[] $translations
+     * @param scalar[] $platform
      */
     public function __construct(
         array $fieldSettings,
         array $customFields,
         array $parameters,
-        array $translations
+        array $translations,
+        array $platform = []
     ) {
         $this->fieldSettings = $fieldSettings;
         $this->customFields  = $customFields;
         $this->parameters    = $parameters;
         $this->translations  = $translations;
+        $this->platform      = $platform;
     }
 
     /**
@@ -66,5 +72,13 @@ class FieldRenderModel
     public function translations(): array
     {
         return $this->translations;
+    }
+
+    /**
+     * @return scalar[]
+     */
+    public function platform(): array
+    {
+        return $this->platform;
     }
 }

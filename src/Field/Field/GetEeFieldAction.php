@@ -56,6 +56,8 @@ class GetEeFieldAction
                             'image_upload_error',
                         ),
                     ],
+                    // TODO: Get the fileChooserModalLink
+                    ['fileChooserModalLink' => 'todo'],
                 ),
             ],
         );

@@ -5,6 +5,7 @@ import CustomFieldType from './CustomFieldType';
 import Field from './Field';
 import FieldParametersType from './Types/FieldParametersType';
 import TranslationsType from './Types/TranslationsType';
+import PlatformType from './Types/PlatformType';
 
 export default (anselFieldEl: HTMLDivElement) => {
     const fieldSettingsElement = anselFieldEl.getElementsByClassName(
@@ -39,12 +40,21 @@ export default (anselFieldEl: HTMLDivElement) => {
         translationsElement.dataset.json,
     ) as TranslationsType;
 
+    const platformElement = anselFieldEl.getElementsByClassName(
+        'ansel_platform',
+    ).item(0) as HTMLSpanElement;
+
+    const platform = JSON.parse(
+        platformElement.dataset.json,
+    ) as PlatformType;
+
     ReactDOM.render(
         <Field
             fieldSettings={fieldSettings}
             customFields={customFields}
             parameters={parameters}
             translations={translations}
+            platform={platform}
         />,
         anselFieldEl,
     );

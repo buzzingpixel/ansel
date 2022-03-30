@@ -16,6 +16,8 @@ import FieldDataType from './Types/FieldDataType';
 import WorkingIndicator from './WorkingIndicator';
 
 const Field = (fieldData: FieldDataType) => {
+    console.log(fieldData.platform);
+
     const [fieldState, setFieldState] = useState<FieldStateType>({
         processes: 0,
         errorMessages: {},
