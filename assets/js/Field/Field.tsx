@@ -162,7 +162,7 @@ const Field = (fieldData: FieldDataType) => {
                     </ul>
                     {fieldState.images.length > 4
                         && <div className="ansel_pt-6">
-                            <FieldUploadSelect />
+                            <FieldUploadSelect dropZoneOpenDeviceDialog={open} />
                         </div>
                     }
                 </div>

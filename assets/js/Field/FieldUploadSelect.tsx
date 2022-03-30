@@ -55,15 +55,16 @@ const FieldUploadSelect = (
                             className="ansel_border ansel_border-dashed ansel_border-gray-300 ansel_inline-block ansel_mx-auto ansel_py-0.5 ansel_px-1.5 ansel_not-italic ansel_text-gray-700 hover:ansel_text-gray-700 hover:ansel_bg-gray-200"
                         >
                             <IconContext.Provider value={{ color: '#525252' }}>
-                        <span
-                            className="ansel_inline-block ansel_mx-auto ansel_align-middle ansel_pr-1"
-                            style={{ height: '18px' }}
-                        >
-                            <ImPlus/>
-                        </span>
+                                <span
+                                    className="ansel_inline-block ansel_mx-auto ansel_align-middle ansel_pr-1"
+                                    style={{ height: '18px' }}
+                                >
+                                    <ImPlus />
+                                </span>
+                                {/* TODO: Get this from lang */}
                                 <span className="ansel_inline-block ansel_mx-auto ansel_align-middle">
-                            Select an image to upload from your device
-                        </span>
+                                    Select an image to upload from your device
+                                </span>
                             </IconContext.Provider>
                         </a>
                     </div>
