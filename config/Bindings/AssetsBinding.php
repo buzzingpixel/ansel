@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BuzzingPixel\AnselConfig\Bindings;
 
 use Assets_lib;
+use Craft;
+use craft\services\Assets;
 
 class AssetsBinding
 {
@@ -14,6 +16,10 @@ class AssetsBinding
     public static function get(): array
     {
         return [
+            Assets::class => static function (): Assets {
+                /** @phpstan-ignore-next-line */
+                return Craft::$app->getAssets();
+            },
             /** @phpstan-ignore-next-line */
             Assets_lib::class => static function (): Assets_lib {
                 // Add assets libraries and paths
