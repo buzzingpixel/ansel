@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field;
 
+use BuzzingPixel\Ansel\Field\Field\FileChooserModalLink\FileChooserModalLinkFactory;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
+use BuzzingPixel\Ansel\Shared\Environment;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+
+use function base64_encode;
 
 class GetEeFieldAction
 {
@@ -18,20 +22,28 @@ class GetEeFieldAction
 
     private TwigEnvironment $twig;
 
+    private Environment $environment;
+
     private TranslatorContract $translator;
 
     private GetFieldParameters $getFieldParameters;
 
+    private FileChooserModalLinkFactory $fileChooserModalLinkFactory;
+
     public function __construct(
         EeCssJs $eeCssJs,
         TwigEnvironment $twig,
+        Environment $environment,
         TranslatorContract $translator,
-        GetFieldParameters $getFieldParameters
+        GetFieldParameters $getFieldParameters,
+        FileChooserModalLinkFactory $fileChooserModalLinkFactory
     ) {
-        $this->eeCssJs            = $eeCssJs;
-        $this->twig               = $twig;
-        $this->translator         = $translator;
-        $this->getFieldParameters = $getFieldParameters;
+        $this->eeCssJs                     = $eeCssJs;
+        $this->twig                        = $twig;
+        $this->environment                 = $environment;
+        $this->translator                  = $translator;
+        $this->getFieldParameters          = $getFieldParameters;
+        $this->fileChooserModalLinkFactory = $fileChooserModalLinkFactory;
     }
 
     /**
@@ -39,10 +51,13 @@ class GetEeFieldAction
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function render(
-        FieldSettingsCollection $fieldSettings
-    ): string {
+    public function render(FieldSettingsCollection $fieldSettings): string
+    {
         $this->eeCssJs->add();
+
+        $modalLink = base64_encode($this->fileChooserModalLinkFactory->getLink(
+            $fieldSettings,
+        ));
 
         return $this->twig->render(
             '@AnselSrc/Field/Field/Field.twig',
@@ -56,8 +71,10 @@ class GetEeFieldAction
                             'image_upload_error',
                         ),
                     ],
-                    // TODO: Get the fileChooserModalLink
-                    ['fileChooserModalLink' => 'todo'],
+                    [
+                        'environment' => $this->environment->toString(),
+                        'fileChooserModalLink' => $modalLink,
+                    ],
                 ),
             ],
         );

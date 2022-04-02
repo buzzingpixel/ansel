@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Settings;
 
+use function explode;
+
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 
 class FieldSettingItemDirectory implements FieldSettingItemContract
@@ -18,6 +20,10 @@ class FieldSettingItemDirectory implements FieldSettingItemContract
 
     private string $value;
 
+    private string $directoryType = '';
+
+    private string $directoryId = '';
+
     public function __construct(
         string $key,
         string $labelTranslationKey,
@@ -29,7 +35,8 @@ class FieldSettingItemDirectory implements FieldSettingItemContract
         $this->labelTranslationKey       = $labelTranslationKey;
         $this->descriptionTranslationKey = $descriptionTranslationKey;
         $this->required                  = $required;
-        $this->value                     = $value;
+
+        $this->setValue($value);
     }
 
     public function type(): string
@@ -69,16 +76,38 @@ class FieldSettingItemDirectory implements FieldSettingItemContract
      */
     public function setValue($value): void
     {
+        $split = explode(':', $value);
+
+        $this->directoryType = $split[0] ?? '';
+
+        $this->directoryId = $split[1] ?? '';
+
         $this->value = $value;
     }
 
     public function setValueFromString(string $value): void
     {
+        $split = explode(':', $value);
+
+        $this->directoryType = $split[0] ?? '';
+
+        $this->directoryId = $split[1] ?? '';
+
         $this->value = $value;
     }
 
     public function isEmpty(): bool
     {
         return $this->value === '';
+    }
+
+    public function directoryType(): string
+    {
+        return $this->directoryType;
+    }
+
+    public function directoryId(): string
+    {
+        return $this->directoryId;
     }
 }
