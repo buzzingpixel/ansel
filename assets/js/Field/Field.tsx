@@ -16,8 +16,6 @@ import FieldDataType from './Types/FieldDataType';
 import WorkingIndicator from './WorkingIndicator';
 
 const Field = (fieldData: FieldDataType) => {
-    console.log(fieldData.platform);
-
     const [fieldState, setFieldState] = useState<FieldStateType>({
         processes: 0,
         errorMessages: {},
@@ -93,7 +91,10 @@ const Field = (fieldData: FieldDataType) => {
                 <input {...getInputProps()} />
                 <div className="ansel_p-4">
                     <div className={uploaderClass}>
-                        <FieldUploadSelect dropZoneOpenDeviceDialog={open} />
+                        <FieldUploadSelect
+                            dropZoneOpenDeviceDialog={open}
+                            platform={fieldData.platform}
+                        />
                     </div>
                     <ul
                         role="list"
@@ -164,7 +165,10 @@ const Field = (fieldData: FieldDataType) => {
                     </ul>
                     {fieldState.images.length > 4
                         && <div className="ansel_pt-6">
-                            <FieldUploadSelect dropZoneOpenDeviceDialog={open} />
+                            <FieldUploadSelect
+                                dropZoneOpenDeviceDialog={open}
+                                platform={fieldData.platform}
+                            />
                         </div>
                     }
                 </div>

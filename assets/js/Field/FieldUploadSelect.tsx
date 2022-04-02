@@ -1,18 +1,80 @@
 import * as React from 'react';
 import { ImPlus } from 'react-icons/im';
 import { IconContext } from 'react-icons';
+import { useRef, useEffect } from 'react';
+import PlatformType from './Types/PlatformType';
 
 const FieldUploadSelect = (
     {
         dropZoneOpenDeviceDialog,
+        platform,
     }: {
         dropZoneOpenDeviceDialog?: () => void | null,
+        platform: PlatformType
     },
 ) => {
+    const buttonRef = useRef(document.createElement('div'));
+
+    let anchor = null;
+
+    useEffect(() => {
+        if (platform.environment === 'ee') {
+            const $button = $(buttonRef.current);
+
+            const html = document.createElement('html');
+            html.innerHTML = atob(platform.fileChooserModalLink);
+            anchor = html.getElementsByTagName('a')
+                .item(0);
+
+            const $anchor = $(anchor);
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            $anchor.FilePicker({
+                callback: (file, references) => {
+                    references.modal.find('.m-close').click();
+
+                    console.log(file);
+                },
+            });
+
+            $button.append($anchor);
+        }
+    });
+
     const openCmsDialog = (e: React.MouseEvent) => {
         e.preventDefault();
 
-        console.log('openCmsDialog');
+        // eslint-disable-next-line default-case
+        switch (platform.environment) {
+            case 'ee':
+                anchor.click();
+                return;
+            case 'craft':
+                // eslint-disable-next-line no-case-declarations
+                let modal = null;
+
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                modal = window.Craft.createElementSelectorModal('craft\\elements\\Asset', {
+                    criteria: {
+                        kind: 'image',
+                    },
+                    multiSelect: true,
+                    sources: [
+                        `folder:${platform.uploadLocationFolderId}`,
+                    ],
+                    onSelect (files) {
+                        $('.modal-shade').remove();
+
+                        modal.destroy();
+
+                        files.forEach((file) => {
+                            console.log(file);
+                        });
+                    },
+                });
+        }
     };
 
     const openDeviceDialog = (e: React.MouseEvent) => {
@@ -23,6 +85,7 @@ const FieldUploadSelect = (
 
     return (
         <>
+            <div className="ansel_hidden" ref={buttonRef} />
             <div className="ansel_text-gray-700 ansel_italic ansel_text-center ansel_pb-4">
                 Drag images here to upload
             </div>
