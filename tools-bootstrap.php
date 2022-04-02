@@ -95,3 +95,6 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Dependency/InjectionBindingDecorator.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Core/Provider.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Addon/Addon.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/Link.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/FilePicker.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/Factory.php';
