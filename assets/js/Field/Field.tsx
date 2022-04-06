@@ -6,7 +6,7 @@ import { ImCrop } from 'react-icons/im';
 import { FiEdit } from 'react-icons/fi';
 import { CgEditBlackPoint } from 'react-icons/cg';
 import { MdDelete } from 'react-icons/md';
-import FieldUploadSelect from './FieldUploadSelect';
+import FieldUploadSelect from './ExistingFile/FieldUploadSelect';
 import DragInProgress from './DragInProgress';
 import FieldError from './FieldError';
 import OnDropRejected from './DropHandlers/DropRejected/OnDropRejected';
