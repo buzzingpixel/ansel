@@ -94,6 +94,7 @@ const Field = (fieldData: FieldDataType) => {
                         <FieldUploadSelect
                             dropZoneOpenDeviceDialog={open}
                             platform={fieldData.platform}
+                            setFieldState={setFieldState}
                         />
                     </div>
                     <ul
@@ -168,6 +169,7 @@ const Field = (fieldData: FieldDataType) => {
                             <FieldUploadSelect
                                 dropZoneOpenDeviceDialog={open}
                                 platform={fieldData.platform}
+                                setFieldState={setFieldState}
                             />
                         </div>
                     }

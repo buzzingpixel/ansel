@@ -11,9 +11,11 @@ const FieldUploadSelect = (
     {
         dropZoneOpenDeviceDialog,
         platform,
+        setFieldState,
     }: {
         dropZoneOpenDeviceDialog?: () => void | null,
-        platform: PlatformType
+        platform: PlatformType,
+        setFieldState: CallableFunction,
     },
 ) => {
     const buttonRef = useRef(document.createElement('div'));
@@ -37,7 +39,7 @@ const FieldUploadSelect = (
                 callback: (file: EeFileType, references) => {
                     references.modal.find('.m-close').click();
 
-                    SelectedFileHandlerEe(file);
+                    SelectedFileHandlerEe(file, setFieldState);
                 },
             });
 
@@ -73,7 +75,7 @@ const FieldUploadSelect = (
                         modal.destroy();
 
                         files.forEach((file) => {
-                            SelectedFileHandlerCraft(file);
+                            SelectedFileHandlerCraft(file, setFieldState);
                         });
                     },
                 });
