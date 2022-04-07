@@ -5,6 +5,12 @@
     "compilerOptions": {
         "jsx": "react",
         "skipLibCheck": true,
-        "noEmit": true
+        "noEmit": true,
+      "lib": [
+        "dom",
+        "es5",
+        "scripthost",
+        "es2015.promise"
+      ]
     }
 }
