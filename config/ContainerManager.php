@@ -34,6 +34,7 @@ use BuzzingPixel\AnselConfig\Bindings\TreasuryBindings;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
 use BuzzingPixel\AnselConfig\Bindings\UuidBinding;
 use BuzzingPixel\AnselConfig\Bindings\ValidateUploadKeyBinding;
+use BuzzingPixel\AnselConfig\Bindings\VolumesBinding;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\FeedConfig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\LicensePingConfig;
 use BuzzingPixel\AnselConfig\ConstructorConfigs\PathsConfig;
@@ -100,6 +101,7 @@ class ContainerManager
                 Twig::get(),
                 UuidBinding::get(),
                 ValidateUploadKeyBinding::get(),
+                VolumesBinding::get(),
             ),
             array_merge(
                 FeedConfig::get(),

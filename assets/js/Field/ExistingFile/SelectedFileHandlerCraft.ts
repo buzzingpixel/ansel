@@ -10,7 +10,6 @@ const SelectedFileHandlerCraft = (
     setFieldState: CallableFunction,
     translations: TranslationsType,
 ) => {
-    // TODO: We seem to be getting images from the Ansel Save directory
     UrlIsImage(file.url)
         .then(() => {
             // TODO: Make sure image meets requirements

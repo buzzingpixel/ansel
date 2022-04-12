@@ -8,8 +8,10 @@ use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\Craft\AssetBundles\CraftRegisterAssetBundle;
 use BuzzingPixel\Ansel\Shared\Environment;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
+use craft\base\VolumeInterface;
 use craft\models\VolumeFolder;
 use craft\services\Assets;
+use craft\services\Volumes;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -24,6 +26,8 @@ class GetCraftFieldAction
 
     private TwigEnvironment $twig;
 
+    private Volumes $volumesService;
+
     private Environment $environment;
 
     private TranslatorContract $translator;
@@ -35,17 +39,19 @@ class GetCraftFieldAction
     public function __construct(
         Assets $assetsService,
         TwigEnvironment $twig,
+        Volumes $volumesService,
         Environment $environment,
         TranslatorContract $translator,
         GetFieldParameters $getFieldParameters,
         CraftRegisterAssetBundle $registerAssetBundle
     ) {
+        $this->assetsService       = $assetsService;
         $this->twig                = $twig;
+        $this->volumesService      = $volumesService;
         $this->environment         = $environment;
         $this->translator          = $translator;
         $this->getFieldParameters  = $getFieldParameters;
         $this->registerAssetBundle = $registerAssetBundle;
-        $this->assetsService       = $assetsService;
     }
 
     /**
@@ -59,8 +65,15 @@ class GetCraftFieldAction
     ): string {
         $this->registerAssetBundle->register();
 
+        $volume = $this->volumesService->getVolumeByUid(
+            $fieldSettings->uploadLocation()->directoryId(),
+        );
+
+        assert($volume instanceof VolumeInterface);
+
         $uploadLocationFolder = $this->assetsService->findFolder(
-            ['uid' => $fieldSettings->uploadLocation()->directoryId()],
+            /** @phpstan-ignore-next-line */
+            ['volumeId' => $volume->id],
         );
 
         assert($uploadLocationFolder instanceof VolumeFolder);

@@ -55,6 +55,8 @@ const FileHandler = (
                 return;
             }
 
+            // TODO: Make sure image meets requirements
+
             const image = {
                 imageUrl: json.base64Image,
             } as ImageType;

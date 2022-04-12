@@ -93,6 +93,12 @@ class FieldSettingItemDirectory implements FieldSettingItemContract
 
         $this->directoryId = $split[1] ?? '';
 
+        if ($this->directoryId === '') {
+            $this->directoryId = $this->directoryType;
+
+            $this->directoryType = 'n/a';
+        }
+
         $this->value = $value;
     }
 
