@@ -1,5 +1,6 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import FieldSettingsType from './Types/FieldSettingsType';
 import CustomFieldType from './CustomFieldType';
 import Field from './Field';
@@ -48,14 +49,17 @@ export default (anselFieldEl: HTMLDivElement) => {
         platformElement.dataset.json,
     ) as PlatformType;
 
-    ReactDOM.render(
-        <Field
-            fieldSettings={fieldSettings}
-            customFields={customFields}
-            parameters={parameters}
-            translations={translations}
-            platform={platform}
-        />,
-        anselFieldEl,
+    // Render field
+    const field = createRoot(anselFieldEl);
+    field.render(
+        <StrictMode>
+            <Field
+                fieldSettings={fieldSettings}
+                customFields={customFields}
+                parameters={parameters}
+                translations={translations}
+                platform={platform}
+            />
+        </StrictMode>,
     );
 };
