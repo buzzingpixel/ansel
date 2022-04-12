@@ -3,17 +3,18 @@ import ImageType from '../Types/ImageType';
 import FieldStateType from '../Types/FieldStateType';
 import UploadErrorHandler from '../DropHandlers/DropAccepted/UploadErrorHandler';
 import UrlIsImage from '../../Utility/UrlIsImage';
+import TranslationsType from '../Types/TranslationsType';
 
 const SelectedFileHandlerEe = (
     file: EeFileType,
     setFieldState: CallableFunction,
+    translations: TranslationsType,
 ) => {
     // Check if ExpressionEngine says this file is invalid for us
     if (!file.isImage || file.isSVG) {
         UploadErrorHandler(
             setFieldState,
-            // TODO: Get from translations
-            'The selected file is not a usable image',
+            translations.unusableImage,
         );
 
         return;
@@ -39,8 +40,7 @@ const SelectedFileHandlerEe = (
         .catch(() => {
             UploadErrorHandler(
                 setFieldState,
-                // TODO: Get from translations
-                'The selected file is not a usable image',
+                translations.unusableImage,
             );
         });
 };

@@ -137,4 +137,6 @@ return [
     'setting_required' => 'Diese Einstellung ist erforderlich',
     'invalid_upload_request' => 'Die Upload-Anfrage war ungültig',
     'image_upload_error' => 'Beim Hochladen Ihres Bildes ist ein Fehler aufgetreten',
+    'select_image_from_device' => 'Wählen Sie ein Bild aus, das Sie von Ihrem Gerät hochladen möchten',
+    'unusable_image' => 'Die ausgewählte Datei ist kein verwendbares Bild',
 ];

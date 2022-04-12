@@ -6,16 +6,19 @@ import PlatformType from '../Types/PlatformType';
 import EeFileType from './EeFileType';
 import SelectedFileHandlerEe from './SelectedFileHandlerEe';
 import SelectedFileHandlerCraft from './SelectedFileHandlerCraft';
+import TranslationsType from '../Types/TranslationsType';
 
 const FieldUploadSelect = (
     {
         dropZoneOpenDeviceDialog,
         platform,
         setFieldState,
+        translations,
     }: {
         dropZoneOpenDeviceDialog?: () => void | null,
         platform: PlatformType,
         setFieldState: CallableFunction,
+        translations: TranslationsType,
     },
 ) => {
     const buttonRef = useRef(document.createElement('div'));
@@ -39,7 +42,7 @@ const FieldUploadSelect = (
                 callback: (file: EeFileType, references) => {
                     references.modal.find('.m-close').click();
 
-                    SelectedFileHandlerEe(file, setFieldState);
+                    SelectedFileHandlerEe(file, setFieldState, translations);
                 },
             });
 
@@ -75,7 +78,11 @@ const FieldUploadSelect = (
                         modal.destroy();
 
                         files.forEach((file) => {
-                            SelectedFileHandlerCraft(file, setFieldState);
+                            SelectedFileHandlerCraft(
+                                file,
+                                setFieldState,
+                                translations,
+                            );
                         });
                     },
                 });
@@ -129,9 +136,8 @@ const FieldUploadSelect = (
                                 >
                                     <ImPlus />
                                 </span>
-                                {/* TODO: Get this from lang */}
                                 <span className="ansel_inline-block ansel_mx-auto ansel_align-middle">
-                                    Select an image to upload from your device
+                                    {translations.selectImageFromDevice}
                                 </span>
                             </IconContext.Provider>
                         </a>

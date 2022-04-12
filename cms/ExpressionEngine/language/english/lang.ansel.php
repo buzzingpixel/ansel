@@ -140,4 +140,6 @@ $lang = [
     'setting_required' => 'This setting is required',
     'invalid_upload_request' => 'The upload request was invalid',
     'image_upload_error' => 'There was an error uploading your image',
+    'select_image_from_device' => 'Select an image to upload from your device',
+    'unusable_image' => 'The selected file is not a usable image',
 ];

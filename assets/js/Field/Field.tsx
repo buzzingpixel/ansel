@@ -95,6 +95,7 @@ const Field = (fieldData: FieldDataType) => {
                             dropZoneOpenDeviceDialog={open}
                             platform={fieldData.platform}
                             setFieldState={setFieldState}
+                            translations={fieldData.translations}
                         />
                     </div>
                     <ul
@@ -170,6 +171,7 @@ const Field = (fieldData: FieldDataType) => {
                                 dropZoneOpenDeviceDialog={open}
                                 platform={fieldData.platform}
                                 setFieldState={setFieldState}
+                                translations={fieldData.translations}
                             />
                         </div>
                     }

@@ -70,6 +70,12 @@ class GetEeFieldAction
                         'imageUploadError' => $this->translator->getLine(
                             'image_upload_error',
                         ),
+                        'selectImageFromDevice' => $this->translator->getLine(
+                            'select_image_from_device'
+                        ),
+                        'unusableImage' => $this->translator->getLine(
+                            'unusable_image'
+                        ),
                     ],
                     [
                         'environment' => $this->environment->toString(),
