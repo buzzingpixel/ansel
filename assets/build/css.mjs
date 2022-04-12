@@ -4,10 +4,39 @@ import hexRGBA from 'postcss-hexrgba';
 import out from 'cli-output';
 import path from 'path';
 import postcss from 'postcss';
-import postcssClean from 'postcss-clean';
 import postcssPresetEnv from 'postcss-preset-env';
 import recursive from 'recursive-readdir-sync';
 import tailwindcss from 'tailwindcss';
+import CleanCss from 'clean-css';
+
+/**
+ * @see https://github.com/postcss/postcss/issues/1444#issuecomment-830675097
+ */
+const clean = (opts = {}) => {
+    const cleanCss = new CleanCss(opts);
+
+    return {
+        postcssPlugin: 'clean',
+        Once (css, { result }) {
+            return new Promise((resolve, reject) => {
+                // eslint-disable-next-line consistent-return
+                cleanCss.minify(css.toString(), (err, min) => {
+                    if (err) {
+                        return reject(new Error(err.join('\n')));
+                    }
+
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const w of min.warnings) {
+                        result.warn(w);
+                    }
+
+                    result.root = postcss.parse(min.styles);
+                    resolve();
+                });
+            });
+        },
+    };
+};
 
 const appDir = process.cwd();
 const cssLocation = `${appDir}/assets/css`;
@@ -115,7 +144,7 @@ export default () => {
             // Allow us to use hex in RGBA
             hexRGBA,
             // Minifier
-            postcssClean({
+            clean({
                 level: 2,
             }),
         ],
@@ -167,6 +196,7 @@ export default () => {
             out.success('CSS compiled');
         })
         .catch((error) => {
+            console.log(error);
             out.error('There was a PostCSS compile error');
             out.error(`Error: ${error.name}`);
             out.error(`Reason: ${error.reason}`);
