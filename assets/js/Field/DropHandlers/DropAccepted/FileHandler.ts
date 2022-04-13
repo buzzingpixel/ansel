@@ -3,6 +3,7 @@ import UploadErrorHandler from './UploadErrorHandler';
 import FieldDataType from '../../Types/FieldDataType';
 import FieldStateType from '../../Types/FieldStateType';
 import ImageType from '../../Types/ImageType';
+import ValidateImageConstraints from '../../../Utility/ValidateImageConstraints';
 
 const FileHandler = (
     file: File,
@@ -55,22 +56,46 @@ const FileHandler = (
                 return;
             }
 
-            // TODO: Make sure image meets requirements
+            ValidateImageConstraints(
+                json.base64Image,
+                fieldData.fieldSettings,
+            )
+                .then((validation) => {
+                    if (!validation.valid) {
+                        UploadErrorHandler(
+                            setFieldState,
+                            // TODO: get this from translations
+                            'Image must be at least Xpx wide by Xpx tall.',
+                        );
 
-            const image = {
-                imageUrl: json.base64Image,
-            } as ImageType;
+                        removeProcess();
 
-            setFieldState((prevState: FieldStateType) => {
-                prevState.images = [
-                    ...prevState.images,
-                    image,
-                ];
+                        return;
+                    }
 
-                return { ...prevState };
-            });
+                    const image = {
+                        imageUrl: json.base64Image,
+                    } as ImageType;
 
-            removeProcess();
+                    setFieldState((prevState: FieldStateType) => {
+                        prevState.images = [
+                            ...prevState.images,
+                            image,
+                        ];
+
+                        return { ...prevState };
+                    });
+
+                    removeProcess();
+                })
+                .catch((error) => {
+                    UploadErrorHandler(
+                        setFieldState,
+                        error.toString(),
+                    );
+
+                    removeProcess();
+                });
         }).catch(() => {
             UploadErrorHandler(
                 setFieldState,
