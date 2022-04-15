@@ -108,9 +108,9 @@ return [
     'remove_file' => 'Remove file',
     'you_cannot_upload_any_more_files' => "You can't upload any more files.",
     'min_image_dimensions_not_met' => 'Minimum image dimensions not met',
-    'min_image_dimensions_not_met_width_only' => ' Image must be at least {{minWidth}}px wide.',
-    'min_image_dimensions_not_met_height_only' => ' Image must be at least {{minHeight}}px tall.',
-    'min_image_dimensions_not_met_width_and_height' => ' Image must be at least {{minWidth}}px wide by {{minHeight}}px tall.',
+    'min_image_dimensions_not_met_width_only' => 'Image must be at least {{minWidth}}px wide',
+    'min_image_dimensions_not_met_height_only' => 'Image must be at least {{minHeight}}px tall',
+    'min_image_dimensions_not_met_width_and_height' => 'Image must be at least {{minWidth}}px wide by {{minHeight}}px tall',
     'image' => 'Image',
     'title' => 'Title',
     'caption' => 'Caption',
@@ -142,4 +142,5 @@ return [
     'image_upload_error' => 'There was an error uploading your image',
     'select_image_from_device' => 'Select an image to upload from your device',
     'unusable_image' => 'The selected file is not a usable image',
+    'error_loading_image' => 'There was an error loading the image',
 ];

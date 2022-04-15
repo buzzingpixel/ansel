@@ -23,8 +23,7 @@ const ValidateImageConstraints = async (
     const timer = setTimeout(() => {
         garbageCollect();
 
-        // TODO: Get this from translations
-        reject(new Error('There was an error loading the image.'));
+        reject(new Error('errorLoadingImage'));
     }, 15000);
 
     imgEl.onload = () => {
@@ -55,8 +54,7 @@ const ValidateImageConstraints = async (
     };
 
     imgEl.onerror = () => {
-        // TODO: Get this from translations
-        reject(new Error('There was an error loading the image.'));
+        reject(new Error('errorLoadingImage'));
 
         garbageCollect();
     };

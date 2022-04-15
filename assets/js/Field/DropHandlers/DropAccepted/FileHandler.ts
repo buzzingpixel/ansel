@@ -64,8 +64,7 @@ const FileHandler = (
                     if (!validation.valid) {
                         UploadErrorHandler(
                             setFieldState,
-                            // TODO: get this from translations
-                            'Image must be at least Xpx wide by Xpx tall.',
+                            fieldData.translations.dimensionsNotMet,
                         );
 
                         removeProcess();
@@ -91,7 +90,7 @@ const FileHandler = (
                 .catch((error) => {
                     UploadErrorHandler(
                         setFieldState,
-                        error.toString(),
+                        fieldData.translations[error.toString()],
                     );
 
                     removeProcess();

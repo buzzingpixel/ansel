@@ -108,6 +108,9 @@ $lang = [
     'remove_file' => 'Dokument entfernen',
     'you_cannot_upload_any_more_files' => 'Sie können keine Dokumente mehr hochladen.',
     'min_image_dimensions_not_met' => 'Minimale Bildabmessungen nicht erfüllt',
+    'min_image_dimensions_not_met_width_only' => 'Das Bild muss mindestens {{minWidth}}px breit sein',
+    'min_image_dimensions_not_met_height_only' => 'Das Bild muss mindestens {{minHeight}}px groß sein',
+    'min_image_dimensions_not_met_width_and_height' => 'Das Bild muss mindestens {{minWidth}}px breit und {{minHeight}}px hoch sein',
     'image' => 'Bild',
     'title' => 'Titel',
     'caption' => 'Bildunterschrift',
@@ -139,4 +142,5 @@ $lang = [
     'image_upload_error' => 'Beim Hochladen Ihres Bildes ist ein Fehler aufgetreten',
     'select_image_from_device' => 'Wählen Sie ein Bild aus, das Sie von Ihrem Gerät hochladen möchten',
     'unusable_image' => 'Die ausgewählte Datei ist kein verwendbares Bild',
+    'error_loading_image' => 'Beim Laden des Bildes ist ein Fehler aufgetreten',
 ];

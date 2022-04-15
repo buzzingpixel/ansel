@@ -36,6 +36,8 @@ class GetCraftFieldAction
 
     private CraftRegisterAssetBundle $registerAssetBundle;
 
+    private DimensionsNotMetTranslationFactory $dimensionsNotMetTranslationFactory;
+
     public function __construct(
         Assets $assetsService,
         TwigEnvironment $twig,
@@ -43,15 +45,17 @@ class GetCraftFieldAction
         Environment $environment,
         TranslatorContract $translator,
         GetFieldParameters $getFieldParameters,
-        CraftRegisterAssetBundle $registerAssetBundle
+        CraftRegisterAssetBundle $registerAssetBundle,
+        DimensionsNotMetTranslationFactory $dimensionsNotMetTranslationFactory
     ) {
-        $this->assetsService       = $assetsService;
-        $this->twig                = $twig;
-        $this->volumesService      = $volumesService;
-        $this->environment         = $environment;
-        $this->translator          = $translator;
-        $this->getFieldParameters  = $getFieldParameters;
-        $this->registerAssetBundle = $registerAssetBundle;
+        $this->assetsService                      = $assetsService;
+        $this->twig                               = $twig;
+        $this->volumesService                     = $volumesService;
+        $this->environment                        = $environment;
+        $this->translator                         = $translator;
+        $this->getFieldParameters                 = $getFieldParameters;
+        $this->registerAssetBundle                = $registerAssetBundle;
+        $this->dimensionsNotMetTranslationFactory = $dimensionsNotMetTranslationFactory;
     }
 
     /**
@@ -94,6 +98,12 @@ class GetCraftFieldAction
                         ),
                         'unusableImage' => $this->translator->getLine(
                             'unusable_image'
+                        ),
+                        'dimensionsNotMet' => $this
+                            ->dimensionsNotMetTranslationFactory
+                            ->get($fieldSettings),
+                        'errorLoadingImage' => $this->translator->getLine(
+                            'error_loading_image'
                         ),
                     ],
                     [

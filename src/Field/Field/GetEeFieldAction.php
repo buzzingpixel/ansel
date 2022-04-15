@@ -30,20 +30,24 @@ class GetEeFieldAction
 
     private FileChooserModalLinkFactory $fileChooserModalLinkFactory;
 
+    private DimensionsNotMetTranslationFactory $dimensionsNotMetTranslationFactory;
+
     public function __construct(
         EeCssJs $eeCssJs,
         TwigEnvironment $twig,
         Environment $environment,
         TranslatorContract $translator,
         GetFieldParameters $getFieldParameters,
-        FileChooserModalLinkFactory $fileChooserModalLinkFactory
+        FileChooserModalLinkFactory $fileChooserModalLinkFactory,
+        DimensionsNotMetTranslationFactory $dimensionsNotMetTranslationFactory
     ) {
-        $this->eeCssJs                     = $eeCssJs;
-        $this->twig                        = $twig;
-        $this->environment                 = $environment;
-        $this->translator                  = $translator;
-        $this->getFieldParameters          = $getFieldParameters;
-        $this->fileChooserModalLinkFactory = $fileChooserModalLinkFactory;
+        $this->eeCssJs                            = $eeCssJs;
+        $this->twig                               = $twig;
+        $this->environment                        = $environment;
+        $this->translator                         = $translator;
+        $this->getFieldParameters                 = $getFieldParameters;
+        $this->fileChooserModalLinkFactory        = $fileChooserModalLinkFactory;
+        $this->dimensionsNotMetTranslationFactory = $dimensionsNotMetTranslationFactory;
     }
 
     /**
@@ -75,6 +79,12 @@ class GetEeFieldAction
                         ),
                         'unusableImage' => $this->translator->getLine(
                             'unusable_image'
+                        ),
+                        'dimensionsNotMet' => $this
+                            ->dimensionsNotMetTranslationFactory
+                            ->get($fieldSettings),
+                        'errorLoadingImage' => $this->translator->getLine(
+                            'error_loading_image'
                         ),
                     ],
                     [
