@@ -44,12 +44,17 @@ const cssOutputPath = `${appDir}/assetsDist/css`;
 const cssOutputFileName = 'ansel.min.css';
 const startFile = `${appDir}/assets/css/start.pcss`;
 const libDir = `${appDir}/assets/css/lib`;
+const include = [
+    `${appDir}/node_modules/react-image-crop/dist/ReactCrop.css`,
+];
 
 export default () => {
     const mediaQueries = [];
     const mediaQueryCss = {};
     const files = {};
-    let cssString = '';
+    let cssString = include.map((filePath) => fs.readFileSync(
+        filePath,
+    ).toString()).join('\n');
 
     // Let the user know what we're doing
     out.info('Compiling CSS...');
