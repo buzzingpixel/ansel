@@ -3,19 +3,30 @@ import ImageType from '../Types/ImageType';
 import FieldStateType from '../Types/FieldStateType';
 import UploadErrorHandler from '../DropHandlers/DropAccepted/UploadErrorHandler';
 import UrlIsImage from '../../Utility/UrlIsImage';
-import TranslationsType from '../Types/TranslationsType';
+import ValidateImageConstraints from '../../Utility/ValidateImageConstraints';
+import FieldDataType from '../Types/FieldDataType';
 
 const SelectedFileHandlerEe = (
     file: EeFileType,
     setFieldState: CallableFunction,
-    translations: TranslationsType,
+    fieldData: FieldDataType,
 ) => {
+    const removeProcess = () => {
+        setFieldState((prevState: FieldStateType) => {
+            prevState.processes -= 1;
+
+            return { ...prevState };
+        });
+    };
+
     // Check if ExpressionEngine says this file is invalid for us
     if (!file.isImage || file.isSVG) {
         UploadErrorHandler(
             setFieldState,
-            translations.unusableImage,
+            fieldData.translations.unusableImage,
         );
+
+        removeProcess();
 
         return;
     }
@@ -23,25 +34,53 @@ const SelectedFileHandlerEe = (
     // Do our own check
     UrlIsImage(file.path)
         .then(() => {
-            // TODO: Make sure image meets requirements
-            const image = {
-                imageUrl: file.path,
-            } as ImageType;
+            ValidateImageConstraints(
+                file.path,
+                fieldData.fieldSettings,
+            )
+                .then((validation) => {
+                    if (!validation.valid) {
+                        UploadErrorHandler(
+                            setFieldState,
+                            fieldData.translations.dimensionsNotMet,
+                        );
 
-            setFieldState((prevState: FieldStateType) => {
-                prevState.images = [
-                    ...prevState.images,
-                    image,
-                ];
+                        removeProcess();
 
-                return { ...prevState };
-            });
+                        return;
+                    }
+
+                    const image = {
+                        imageUrl: file.path,
+                    } as ImageType;
+
+                    setFieldState((prevState: FieldStateType) => {
+                        prevState.images = [
+                            ...prevState.images,
+                            image,
+                        ];
+
+                        return { ...prevState };
+                    });
+
+                    removeProcess();
+                })
+                .catch((error) => {
+                    UploadErrorHandler(
+                        setFieldState,
+                        fieldData.translations[error.toString()],
+                    );
+
+                    removeProcess();
+                });
         })
         .catch(() => {
             UploadErrorHandler(
                 setFieldState,
-                translations.unusableImage,
+                fieldData.translations.unusableImage,
             );
+
+            removeProcess();
         });
 };
 

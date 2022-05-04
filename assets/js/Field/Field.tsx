@@ -93,9 +93,8 @@ const Field = (fieldData: FieldDataType) => {
                     <div className={uploaderClass}>
                         <FieldUploadSelect
                             dropZoneOpenDeviceDialog={open}
-                            platform={fieldData.platform}
                             setFieldState={setFieldState}
-                            translations={fieldData.translations}
+                            fieldData={fieldData}
                         />
                     </div>
                     <ul
@@ -169,9 +168,8 @@ const Field = (fieldData: FieldDataType) => {
                         && <div className="ansel_pt-6">
                             <FieldUploadSelect
                                 dropZoneOpenDeviceDialog={open}
-                                platform={fieldData.platform}
                                 setFieldState={setFieldState}
-                                translations={fieldData.translations}
+                                fieldData={fieldData}
                             />
                         </div>
                     }

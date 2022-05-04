@@ -2,23 +2,21 @@ import * as React from 'react';
 import { ImPlus } from 'react-icons/im';
 import { IconContext } from 'react-icons';
 import { useRef, useEffect } from 'react';
-import PlatformType from '../Types/PlatformType';
 import EeFileType from './EeFileType';
 import SelectedFileHandlerEe from './SelectedFileHandlerEe';
 import SelectedFileHandlerCraft from './SelectedFileHandlerCraft';
-import TranslationsType from '../Types/TranslationsType';
+import FieldDataType from '../Types/FieldDataType';
+import FieldStateType from '../Types/FieldStateType';
 
 const FieldUploadSelect = (
     {
         dropZoneOpenDeviceDialog,
-        platform,
         setFieldState,
-        translations,
+        fieldData,
     }: {
         dropZoneOpenDeviceDialog?: () => void | null,
-        platform: PlatformType,
         setFieldState: CallableFunction,
-        translations: TranslationsType,
+        fieldData: FieldDataType,
     },
 ) => {
     const buttonRef = useRef(document.createElement('div'));
@@ -26,11 +24,11 @@ const FieldUploadSelect = (
     let anchor = null;
 
     useEffect(() => {
-        if (platform.environment === 'ee') {
+        if (fieldData.platform.environment === 'ee') {
             const $button = $(buttonRef.current);
 
             const html = document.createElement('html');
-            html.innerHTML = atob(platform.fileChooserModalLink);
+            html.innerHTML = atob(fieldData.platform.fileChooserModalLink);
             anchor = html.getElementsByTagName('a')
                 .item(0);
 
@@ -42,7 +40,11 @@ const FieldUploadSelect = (
                 callback: (file: EeFileType, references) => {
                     references.modal.find('.m-close').click();
 
-                    SelectedFileHandlerEe(file, setFieldState, translations);
+                    SelectedFileHandlerEe(
+                        file,
+                        setFieldState,
+                        fieldData,
+                    );
                 },
             });
 
@@ -53,8 +55,14 @@ const FieldUploadSelect = (
     const openCmsDialog = (e: React.MouseEvent) => {
         e.preventDefault();
 
+        setFieldState((prevState: FieldStateType) => {
+            prevState.processes += 1;
+
+            return { ...prevState };
+        });
+
         // eslint-disable-next-line default-case
-        switch (platform.environment) {
+        switch (fieldData.platform.environment) {
             case 'ee':
                 anchor.click();
                 return;
@@ -70,7 +78,7 @@ const FieldUploadSelect = (
                     },
                     multiSelect: true,
                     sources: [
-                        `folder:${platform.uploadLocationFolderId}`,
+                        `folder:${fieldData.platform.uploadLocationFolderId}`,
                     ],
                     onSelect (files) {
                         $('.modal-shade').remove();
@@ -81,7 +89,7 @@ const FieldUploadSelect = (
                             SelectedFileHandlerCraft(
                                 file,
                                 setFieldState,
-                                translations,
+                                fieldData,
                             );
                         });
                     },
@@ -137,7 +145,7 @@ const FieldUploadSelect = (
                                     <ImPlus />
                                 </span>
                                 <span className="ansel_inline-block ansel_mx-auto ansel_align-middle">
-                                    {translations.selectImageFromDevice}
+                                    {fieldData.translations.selectImageFromDevice}
                                 </span>
                             </IconContext.Provider>
                         </a>
