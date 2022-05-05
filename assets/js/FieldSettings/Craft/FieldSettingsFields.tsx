@@ -155,6 +155,8 @@ const FieldSettingsFields = (
                             <th colSpan={2} />
                         </tr>
                     </thead>
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
                     <SortableCont
                         onSortStart={onSortStart}
                         onSortEnd={onSortEnd}
@@ -169,6 +171,8 @@ const FieldSettingsFields = (
                             <SortableItem
                                 key={`item-${index}`}
                                 index={index}
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
                                 rowIndex={index}
                                 field={field}
                                 inputNameBase={inputNameBase}

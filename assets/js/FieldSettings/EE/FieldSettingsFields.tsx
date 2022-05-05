@@ -165,6 +165,8 @@ const FieldSettingsFields = (
                                     <label>Required</label>
                                 </div>
                             </div>
+                            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                            {/* @ts-ignore */}
                             <SortableCont
                                 onSortEnd={onSortEnd}
                                 axis="y"
@@ -178,6 +180,8 @@ const FieldSettingsFields = (
                                     <SortableItem
                                         key={`item-${index}`}
                                         index={index}
+                                        // eslint-disable-next-line
+                                        // @ts-ignore
                                         rowIndex={index}
                                         field={field}
                                         inputNameBase={inputNameBase}
