@@ -1,4 +1,4 @@
-import { Crop } from 'react-image-crop';
+import { PercentCrop, PixelCrop } from 'react-image-crop';
 import { IconContext } from 'react-icons';
 import { FiEdit } from 'react-icons/fi';
 import { CgEditBlackPoint } from 'react-icons/cg';
@@ -8,6 +8,9 @@ import DeleteButton from './InteractionHandlers/DeleteButton';
 import ImageType from './Types/ImageType';
 import EditImageButton from './InteractionHandlers/EditImageButton';
 import CropImage from './InteractionHandlers/CropImage';
+import FieldImageDisplay from './FieldImageDisplay';
+import GetPixelCropFromPercentCrop from './Utility/GetPixelCropFromPercentCrop';
+import PixelCropPlusImageDimensions from './Types/PixelCropPlusImageDimensions';
 
 const FieldImage = ({
     setFieldState,
@@ -20,7 +23,7 @@ const FieldImage = ({
 }) => {
     const [cropIsOpen, setCropIsOpen] = useState<boolean>(false);
 
-    const [crop, setCrop] = useState<Crop>({
+    const [crop, setCrop] = useState<PercentCrop>({
         unit: '%',
         x: 0,
         y: 0,
@@ -28,7 +31,21 @@ const FieldImage = ({
         height: 100,
     });
 
-    const [acceptedCrop, setAcceptedCrop] = useState<Crop>({ ...crop });
+    const [acceptedCrop, setAcceptedCrop] = useState<PercentCrop>(
+        { ...crop },
+    );
+
+    const [pixelCropState, setPixelCropState] = useState<PixelCropPlusImageDimensions|null>(
+        null,
+    );
+
+    if (pixelCropState === null) {
+        GetPixelCropFromPercentCrop(image, acceptedCrop).then(
+            (incomingCrop) => {
+                setPixelCropState({ ...incomingCrop });
+            },
+        );
+    }
 
     return <li
         key={index}
@@ -41,13 +58,10 @@ const FieldImage = ({
             acceptedCrop={acceptedCrop}
             setCropIsOpen={setCropIsOpen}
             setAcceptedCrop={setAcceptedCrop}
+            setPixelCropState={setPixelCropState}
         />}
         <div className="ansel_flex-1 ansel_flex ansel_flex-col ansel_p-8">
-            <img
-                className="ansel_w-48 ansel_flex-shrink-0 ansel_mx-auto"
-                src={image.imageUrl}
-                alt=""
-            />
+            <FieldImageDisplay crop={pixelCropState} image={image} />
         </div>
         <div>
             <div className="ansel_-mt-px ansel_flex ansel_border-0 ansel_border-t ansel_border-gray-200 ansel_border-solid">

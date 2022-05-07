@@ -1,9 +1,10 @@
-import ReactCrop, { Crop } from 'react-image-crop';
+import ReactCrop, { PercentCrop } from 'react-image-crop';
 import { MdClose } from 'react-icons/md';
 import { BsCheck } from 'react-icons/bs';
 import * as React from 'react';
 import { useEffect } from 'react';
 import ImageType from '../Types/ImageType';
+import GetPixelCropFromPercentCrop from '../Utility/GetPixelCropFromPercentCrop';
 
 const CropImage = ({
     crop,
@@ -12,13 +13,15 @@ const CropImage = ({
     acceptedCrop,
     setCropIsOpen,
     setAcceptedCrop,
+    setPixelCropState,
 }: {
-    crop: Crop,
+    crop: PercentCrop,
     image: ImageType,
     setCrop: CallableFunction,
-    acceptedCrop: Crop,
+    acceptedCrop: PercentCrop,
     setCropIsOpen: CallableFunction,
     setAcceptedCrop: CallableFunction,
+    setPixelCropState: CallableFunction,
 }) => {
     const cancelCrop = (event: Event|React.MouseEvent) => {
         event.preventDefault();
@@ -31,7 +34,13 @@ const CropImage = ({
     const acceptCrop = (event: Event|React.MouseEvent) => {
         event.preventDefault();
 
-        setAcceptedCrop(crop);
+        setAcceptedCrop({ ...crop });
+
+        GetPixelCropFromPercentCrop(image, crop).then(
+            (incomingCrop) => {
+                setPixelCropState({ ...incomingCrop });
+            },
+        );
 
         setCropIsOpen(() => false);
     };
