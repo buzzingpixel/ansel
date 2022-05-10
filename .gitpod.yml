@@ -1,0 +1,8 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: yarn install && yarn run build
+    command: |
+      sudo chsh -s /usr/bin/fish;
+      exec fish;
