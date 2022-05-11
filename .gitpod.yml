@@ -1,6 +1,11 @@
 image:
   file: .gitpod.Dockerfile
 
+jetbrains:
+  phpstorm:
+    plugins:
+      - fr.adrienbrault.idea.symfony2plugin
+
 tasks:
   - init: |
       composer install;
