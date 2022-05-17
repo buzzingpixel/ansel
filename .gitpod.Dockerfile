@@ -17,3 +17,8 @@ COPY .config/fish /home/gitpod/.config/fish
 # Set PHP version to 7.4
 RUN sudo update-alternatives --set php $(which php7.4)
 RUN sudo ln -sf $(which php7.4) /usr/bin/php74
+
+# Set up PHP requirements
+RUN sudo apt-get install -y \
+    php-curl \
+    php-zip
