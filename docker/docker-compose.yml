@@ -1,101 +1,40 @@
 version: '3.7'
 
 services:
-  ansel-craft3-php74:
+  ansel-nginx:
     image: nginx:1.21.6
-    container_name: ansel-craft3-php74
+    container_name: ansel-nginx
     environment:
-      HOSTNAME: ansel-craft3-php74
-    expose:
-      - 80
+      HOSTNAME: ansel-nginx
     ports:
-      - "11374:80"
+      - "11374:11374"
+      - "11380:11380"
+      - "11381:11381"
+      - "33674:33674"
+      - "33680:33680"
+      - "33681:33681"
     volumes:
+      - ./nginx/ansel-craft3-php74.conf:/etc/nginx/conf.d/ansel-craft3-php74.conf
+      - ./nginx/ansel-craft3-php80.conf:/etc/nginx/conf.d/ansel-craft3-php80.conf
+      - ./nginx/ansel-craft3-php81.conf:/etc/nginx/conf.d/ansel-craft3-php81.conf
+      - ./nginx/ansel-ee6-php74.conf:/etc/nginx/conf.d/ansel-ee6-php74.conf
+      - ./nginx/ansel-ee6-php80.conf:/etc/nginx/conf.d/ansel-ee6-php80.conf
+      - ./nginx/ansel-ee6-php81.conf:/etc/nginx/conf.d/ansel-ee6-php81.conf
       - ./.profile:/root/.profile
       - ./.profile:/root/.bashrc
-      - ./nginx/ansel-craft3-php74.conf:/etc/nginx/conf.d/default.conf
       - ./environments/craft3:/var/www/craft3
-      - ../:/var/www/ansel
-
-  ansel-craft3-php80:
-    image: nginx:1.21.6
-    container_name: ansel-craft3-php80
-    environment:
-      HOSTNAME: ansel-craft3-php80
-    expose:
-      - 80
-    ports:
-      - "11380:80"
-    volumes:
-      - ./.profile:/root/.profile
-      - ./.profile:/root/.bashrc
-      - ./nginx/ansel-craft3-php80.conf:/etc/nginx/conf.d/default.conf
-      - ./environments/craft3:/var/www/craft3
-      - ../:/var/www/ansel
-
-  ansel-craft3-php81:
-    image: nginx:1.21.6
-    container_name: ansel-craft3-php81
-    environment:
-      HOSTNAME: ansel-craft3-php81
-    expose:
-      - 80
-    ports:
-      - "11381:80"
-    volumes:
-      - ./.profile:/root/.profile
-      - ./.profile:/root/.bashrc
-      - ./nginx/ansel-craft3-php81.conf:/etc/nginx/conf.d/default.conf
-      - ./environments/craft3:/var/www/craft3
-      - ../:/var/www/ansel
-
-  ansel-ee6-php74:
-    image: nginx:1.21.6
-    container_name: ansel-ee6-php74
-    environment:
-      HOSTNAME: ansel-ee6-php74
-    expose:
-      - 80
-    ports:
-      - "33674:80"
-    volumes:
-      - ./.profile:/root/.profile
-      - ./.profile:/root/.bashrc
-      - ./nginx/ansel-ee6-php74.conf:/etc/nginx/conf.d/default.conf
       - ./environments/ee6:/var/www/ee6
       - ../:/var/www/ansel
-
-  ansel-ee6-php80:
-    image: nginx:1.21.6
-    container_name: ansel-ee6-php80
-    environment:
-      HOSTNAME: ansel-ee6-php80
-    expose:
-      - 80
-    ports:
-      - "33680:80"
-    volumes:
-      - ./.profile:/root/.profile
-      - ./.profile:/root/.bashrc
-      - ./nginx/ansel-ee6-php80.conf:/etc/nginx/conf.d/default.conf
-      - ./environments/ee6:/var/www/ee6
-      - ../:/var/www/ansel
-
-  ansel-ee6-php81:
-    image: nginx:1.21.6
-    container_name: ansel-ee6-php81
-    environment:
-      HOSTNAME: ansel-ee6-php81
-    expose:
-      - 80
-    ports:
-      - "33681:80"
-    volumes:
-      - ./.profile:/root/.profile
-      - ./.profile:/root/.bashrc
-      - ./nginx/ansel-ee6-php81.conf:/etc/nginx/conf.d/default.conf
-      - ./environments/ee6:/var/www/ee6
-      - ../:/var/www/ansel
+      - ./environments/ee6/vendor/expressionengine/expressionengine/system/ee:/var/www/ee6/system/ee
+      - ./environments/ee6/vendor/expressionengine/expressionengine/images:/var/www/ee6/public/images
+      - ./environments/ee6/vendor/expressionengine/expressionengine/themes/ee:/var/www/ee6/public/themes/ee
+      - ../cms/ExpressionEngine:/var/www/ee6/system/user/addons/ansel
+      - ../assetsDist:/var/www/ee6/public/themes/user/ansel
+      - ../composer.json:/var/www/ee6/system/user/addons/ansel/composer.json
+      - ../composer.lock:/var/www/ee6/system/user/addons/ansel/composer.lock
+      - ../config:/var/www/ee6/system/user/addons/ansel/config
+      - ../src:/var/www/ee6/system/user/addons/ansel/src
+      - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
 
   ansel-php74:
     build:
@@ -105,9 +44,19 @@ services:
     environment:
       HOSTNAME: ansel-php74
       CRAFT_ALLOW_SUPERUSER: 1
-    volumes:
+    volumes: &phpVolumes
       - ./environments:/var/www
       - ../:/var/www/ansel
+      - ./environments/ee6/vendor/expressionengine/expressionengine/system/ee:/var/www/ee6/system/ee
+      - ./environments/ee6/vendor/expressionengine/expressionengine/images:/var/www/ee6/public/images
+      - ./environments/ee6/vendor/expressionengine/expressionengine/themes/ee:/var/www/ee6/public/themes/ee
+      - ../cms/ExpressionEngine:/var/www/ee6/system/user/addons/ansel
+      - ../assetsDist:/var/www/ee6/public/themes/user/ansel
+      - ../composer.json:/var/www/ee6/system/user/addons/ansel/composer.json
+      - ../composer.lock:/var/www/ee6/system/user/addons/ansel/composer.lock
+      - ../config:/var/www/ee6/system/user/addons/ansel/config
+      - ../src:/var/www/ee6/system/user/addons/ansel/src
+      - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
     networks:
       default:
         aliases:
@@ -121,9 +70,7 @@ services:
     environment:
       HOSTNAME: ansel-php80
       CRAFT_ALLOW_SUPERUSER: 1
-    volumes:
-      - ./environments:/var/www
-      - ../:/var/www/ansel
+    volumes: *phpVolumes
     networks:
       default:
         aliases:
@@ -137,9 +84,7 @@ services:
     environment:
       HOSTNAME: ansel-php81
       CRAFT_ALLOW_SUPERUSER: 1
-    volumes:
-      - ./environments:/var/www
-      - ../:/var/www/ansel
+    volumes: *phpVolumes
     networks:
       default:
         aliases:

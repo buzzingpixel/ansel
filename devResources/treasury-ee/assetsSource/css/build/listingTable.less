@@ -1,0 +1,90 @@
+/*------------------------------------*\
+	# Listing Table
+\*------------------------------------*/
+
+
+/**
+ * Table layout needs to be fixed
+ */
+.treasury-listing-table {
+	table-layout: fixed;
+}
+
+/**
+ * All columns should hide overflow and show an ellipsis if overflowing
+ */
+.treasury-listing-table td {
+	.crop();
+	.text-overflow(ellipsis);
+}
+
+/**
+ * Preview column should always be 74px wide
+ */
+.treasury-listing-table__preview-col {
+	.width(74px);
+}
+
+/**
+ * Initially we want to hide the title, type, and manage columns
+ */
+.treasury-listing-table__title-col,
+.treasury-listing-table__type-col,
+.treasury-listing-table__manage-col {
+	.hide();
+}
+
+/**
+ * Type column needs tob e 90px wide
+ */
+.treasury-listing-table__type-col {
+	.width(90px);
+}
+
+/**
+ * Date column needs to be 136px wide
+ */
+.treasury-listing-table__date-col {
+	.width(136px);
+}
+
+/**
+ * Manage column needs to be 108px wide
+ */
+.treasury-listing-table__manage-col {
+	.width(108px);
+}
+
+/**
+ * Select column should be 16px wide
+ */
+.treasury-listing-table__select-col {
+	.width(16px);
+}
+
+
+/**
+ * 500px window width adjustments
+ */
+@media (min-width: 500px) {
+	/**
+	 * Display the manage column
+	 */
+	.treasury-listing-table__manage-col {
+		.display(table-cell);
+	}
+}
+
+
+/**
+ * 1000px window width adjustments
+ */
+@media (min-width: 1000px) {
+	/**
+	 * Display the title and type columns
+	 */
+	.treasury-listing-table__title-col,
+	.treasury-listing-table__type-col {
+		.display(table-cell);
+	}
+}

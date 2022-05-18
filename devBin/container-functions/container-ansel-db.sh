@@ -15,7 +15,7 @@ function container-ansel-db() {
 
     if [[ -z "${allArgsExceptFirst}" ]]; then
         printf "${Yellow}Remember to 'exit' when you're done.${Reset}\n";
-        docker exec ${interactiveArgs} -e ansel-db bash;
+        docker exec ${interactiveArgs} ansel-db bash;
     else
         docker exec ${interactiveArgs} ansel-db bash -c "${allArgsExceptFirst}";
     fi

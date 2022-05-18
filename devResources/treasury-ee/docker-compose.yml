@@ -1,0 +1,125 @@
+version: '3.7'
+
+services:
+  web:
+    env_file: .env
+    build:
+      context: ./
+      dockerfile: ./docker/web/Dockerfile
+    container_name: treasuryee-web
+    ports:
+      - 23462:23462
+    environment:
+      HOSTNAME: treasuryee-web
+    volumes:
+      - .:/opt/project
+      - ./docker/web/conf.d:/etc/nginx/conf.d
+      - ./treasury:/opt/project/dev_envs/ee3/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee3/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee4/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee4/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee5/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee5/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee6/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee6/public/themes/user/treasury
+    networks:
+      default:
+        aliases:
+          - treasuryee3php56.localtest.me
+          - treasuryee3php73.localtest.me
+          - treasuryee4php56.localtest.me
+          - treasuryee4php73.localtest.me
+          - treasuryee5php56.localtest.me
+          - treasuryee5php73.localtest.me
+          - treasuryee6php56.localtest.me
+          - treasuryee6php73.localtest.me
+
+  php73:
+    env_file: .env
+    build:
+      context: ./
+      dockerfile: ./docker/php73/Dockerfile
+    container_name: treasuryee-php73
+    environment:
+      HOSTNAME: treasuryee-php73
+    volumes:
+      - .:/opt/project
+      - ./treasury:/opt/project/dev_envs/ee3/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee3/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee4/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee4/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee5/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee5/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee6/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee6/public/themes/user/treasury
+    networks:
+      default:
+        aliases:
+          - treasuryee-php73
+
+  php56:
+    env_file: .env
+    build:
+      context: ./
+      dockerfile: ./docker/php56/Dockerfile
+    container_name: treasuryee-php56
+    environment:
+      HOSTNAME: treasuryee-php56
+    volumes:
+      - .:/opt/project
+      - ./treasury:/opt/project/dev_envs/ee3/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee3/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee4/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee4/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee5/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee5/public/themes/user/treasury
+      - ./treasury:/opt/project/dev_envs/ee6/system/user/addons/treasury
+      - ./treasury_themes:/opt/project/dev_envs/ee6/public/themes/user/treasury
+    networks:
+      default:
+        aliases:
+          - treasuryee-php56
+
+  db:
+    env_file: .env
+    build:
+      context: ./
+      dockerfile: ./docker/db/Dockerfile
+    container_name: treasuryee-db
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      HOSTNAME: treasuryee-db
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .:/opt/project:delegated
+      - db-volume:/var/lib/mysql
+    ports:
+      - 23463:3306
+    networks:
+      default:
+        aliases:
+          - treasury-db
+
+  node:
+    container_name: treasuryee-node
+    build:
+      context: ./
+      dockerfile: ./docker/node/Dockerfile
+    command: /bin/true
+
+  bg-sync-node-modules:
+    container_name: treasuryee-bg-sync-node-modules
+    image: cweagans/bg-sync
+    volumes:
+      - node-modules-volume:/source
+      - ./node_modules:/destination:delegated
+    environment:
+      - SYNC_MAX_INOTIFY_WATCHES=40000
+      - SYNC_VERBOSE=1
+    privileged: true
+
+volumes:
+  db-volume:
+  dev_envs_volume:
+  node-modules-volume:
+  yarn-cache-volume:

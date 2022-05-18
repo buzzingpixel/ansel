@@ -1,0 +1,13 @@
+{
+	"author": "TJ Draper",
+	"authorUrl": "https://buzzingpixel.com",
+	"bugs": "http://support.buzzingpixel.com",
+	"description": "Amazon S3/FTP/SFTP File Management in ExpressionEngine",
+	"docsUrl": "https://buzzingpixel.com/software/treasury/documentation",
+	"homepage": "https://buzzingpixel.com/software/treasury",
+	"label": "Treasury",
+	"name": "treasury",
+	"namespace": "BuzzingPixel\\Treasury",
+	"settingsExist": true,
+	"version": "1.1.2"
+}
