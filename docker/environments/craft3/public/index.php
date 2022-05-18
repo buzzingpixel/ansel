@@ -1,3 +1,5 @@
 <?php
 
-phpinfo();
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/CraftFrontController.php';

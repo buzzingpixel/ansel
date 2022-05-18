@@ -1,0 +1,12 @@
+defaultPlacement: end
+enableVersioning: true
+handle: testSection
+name: 'Test Section'
+propagationMethod: all
+siteSettings:
+  d43f7743-c7cd-49e1-b82b-a9fe6512cffa: # Ansel Craft Testing
+    enabledByDefault: true
+    hasUrls: true
+    template: test-section/_entry
+    uriFormat: 'test-section/{slug}'
+type: channel
