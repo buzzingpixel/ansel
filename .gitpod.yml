@@ -19,7 +19,8 @@ ports:
 
 tasks:
   - init: |
-      composer install;
+      composer install --no-interaction --no-ansi --no-progress;
       yarn install;
       yarn run build;
-      ./dev docker-up
+      ./dev docker-build;
+      ./dev docker-up;
