@@ -65,10 +65,11 @@ function docker-up() {
     docker exec -w /var/www/craft3 ansel-php74 bash -c "chmod -R 0777 storage";
 
     # EE 6
-    docker exec -w /var/www/ee6/system/ee ansel-php74 bash -c "chmod -R 0777 uploads";
     docker exec -w /var/www/ee6/public ansel-php74 bash -c "chmod -R 0777 uploads";
     docker exec -w /var/www/ee6/system/user ansel-php74 bash -c "chmod -R 0777 cache";
     docker exec -w /var/www/ee6/system/user/config ansel-php74 bash -c "chmod 0666 config.php";
+
+    cd ${START_DIR};
 
     return 0;
 }
