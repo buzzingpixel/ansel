@@ -1,0 +1,60 @@
+/*------------------------------------*\
+	# Updates page
+\*------------------------------------*/
+
+.treasury-updates {
+	&,
+	* {
+		.border-box();
+	}
+	&__item {
+		.background(@white);
+		.spaced(30px);
+	}
+	&__download {
+		.margin(top; 15px);
+		.right();
+	}
+	&__title-area {
+		.background(darken(@white, 4%));
+		.padding(20px);
+	}
+	&__title {
+		.bold();
+		.font-size(22px);
+	}
+	&__released {
+		.bold();
+	}
+	&__notes {
+		.padding(20px);
+		h1 {
+			.background(none);
+			.black();
+			.bold();
+			.border(bottom; none);
+			.font-size(24px);
+			.padding(0);
+			.spaced(0);
+		}
+	}
+	&__status {
+		.color(@darkGray);
+		.italic();
+		&--new {
+			.bold();
+			.color(#f60);
+		}
+	}
+	code {
+		.background(#e6e6e6);
+		.color(#404040);
+		.font(monospace; 1.4em);
+		.font-size(14px);
+		.padding(.2em; .5em);
+		.rounded(3px);
+	}
+	p {
+		.line-height(1.4em);
+	}
+}

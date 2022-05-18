@@ -1,0 +1,14 @@
+{
+	"about-this-file": "This is your grunt configuration file. All keys are required so do not remove any of them, but you may change their values",
+	"assets": "treasury_themes",
+	"source": "assetsSource",
+	"proxy": false,
+	"disabledJsComponents": [
+		"FAB.screen.js",
+		"FAB.touch.js",
+		"FAB.video.js",
+		"FAB.widthAwareness.js",
+		"jquery.hasScrollBar.js",
+		"jquery.touchSwipe.js"
+	]
+}

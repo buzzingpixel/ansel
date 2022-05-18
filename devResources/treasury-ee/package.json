@@ -1,0 +1,34 @@
+{
+	"name": "buzzing-pixel-fabricator",
+	"version": "0.19.0",
+	"description": "Fabricator Build Process",
+	"homepage": "https://github.com/tjdraper/buzzing-pixel-fabricator",
+	"bugs": "https://github.com/tjdraper/buzzing-pixel-fabricator/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tjdraper/buzzing-pixel-fabricator.git"
+	},
+	"license": "MIT",
+	"author": "TJ Draper",
+	"contributors": [
+		{
+			"name": "TJ Draper",
+			"url": "https://buzzingpixel.com"
+		}
+	],
+	"devDependencies": {
+		"grunt": "1.0.0",
+		"grunt-browser-sync": "2.2.0",
+		"grunt-contrib-clean": "1.0.0",
+		"grunt-contrib-copy": "1.0.0",
+		"grunt-contrib-jshint": "1.0.0",
+		"grunt-contrib-less": "1.4.0",
+		"grunt-contrib-uglify": "2.0.0",
+		"grunt-contrib-watch": "1.0.0",
+		"grunt-curl": "2.2.0",
+		"grunt-http": "2.0.1",
+		"grunt-notify": "0.4.5",
+		"grunt-zip": "0.17.0",
+		"less-plugin-glob": "1.1.1"
+	}
+}

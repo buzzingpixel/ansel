@@ -1,0 +1,110 @@
+version: '3.7'
+
+services:
+  ansel-nginx:
+    image: nginx:1.21.6
+    container_name: ansel-nginx
+    environment:
+      HOSTNAME: ansel-nginx
+    ports:
+      - "11374:11374"
+      - "11380:11380"
+      - "11381:11381"
+      - "33674:33674"
+      - "33680:33680"
+      - "33681:33681"
+    volumes:
+      - ./nginx/ansel-craft3-php74.conf:/etc/nginx/conf.d/ansel-craft3-php74.conf
+      - ./nginx/ansel-craft3-php80.conf:/etc/nginx/conf.d/ansel-craft3-php80.conf
+      - ./nginx/ansel-craft3-php81.conf:/etc/nginx/conf.d/ansel-craft3-php81.conf
+      - ./nginx/ansel-ee6-php74.conf:/etc/nginx/conf.d/ansel-ee6-php74.conf
+      - ./nginx/ansel-ee6-php80.conf:/etc/nginx/conf.d/ansel-ee6-php80.conf
+      - ./nginx/ansel-ee6-php81.conf:/etc/nginx/conf.d/ansel-ee6-php81.conf
+      - ./.profile:/root/.profile
+      - ./.profile:/root/.bashrc
+      - ./environments/craft3:/var/www/craft3
+      - ./environments/ee6:/var/www/ee6
+      - ../:/var/www/ansel
+      - ./environments/ee6/vendor/expressionengine/expressionengine/system/ee:/var/www/ee6/system/ee
+      - ./environments/ee6/vendor/expressionengine/expressionengine/images:/var/www/ee6/public/images
+      - ./environments/ee6/vendor/expressionengine/expressionengine/themes/ee:/var/www/ee6/public/themes/ee
+      - ../cms/ExpressionEngine:/var/www/ee6/system/user/addons/ansel
+      - ../assetsDist:/var/www/ee6/public/themes/user/ansel
+      - ../composer.json:/var/www/ee6/system/user/addons/ansel/composer.json
+      - ../composer.lock:/var/www/ee6/system/user/addons/ansel/composer.lock
+      - ../config:/var/www/ee6/system/user/addons/ansel/config
+      - ../src:/var/www/ee6/system/user/addons/ansel/src
+      - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
+
+  ansel-php74:
+    build:
+      context: .
+      dockerfile: ./php74/Dockerfile
+    container_name: ansel-php74
+    environment:
+      HOSTNAME: ansel-php74
+      CRAFT_ALLOW_SUPERUSER: 1
+    volumes: &phpVolumes
+      - ./environments:/var/www
+      - ../:/var/www/ansel
+      - ./environments/ee6/vendor/expressionengine/expressionengine/system/ee:/var/www/ee6/system/ee
+      - ./environments/ee6/vendor/expressionengine/expressionengine/images:/var/www/ee6/public/images
+      - ./environments/ee6/vendor/expressionengine/expressionengine/themes/ee:/var/www/ee6/public/themes/ee
+      - ../cms/ExpressionEngine:/var/www/ee6/system/user/addons/ansel
+      - ../assetsDist:/var/www/ee6/public/themes/user/ansel
+      - ../composer.json:/var/www/ee6/system/user/addons/ansel/composer.json
+      - ../composer.lock:/var/www/ee6/system/user/addons/ansel/composer.lock
+      - ../config:/var/www/ee6/system/user/addons/ansel/config
+      - ../src:/var/www/ee6/system/user/addons/ansel/src
+      - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
+    networks:
+      default:
+        aliases:
+          - ansel-php74
+
+  ansel-php80:
+    build:
+      context: .
+      dockerfile: ./php80/Dockerfile
+    container_name: ansel-php80
+    environment:
+      HOSTNAME: ansel-php80
+      CRAFT_ALLOW_SUPERUSER: 1
+    volumes: *phpVolumes
+    networks:
+      default:
+        aliases:
+          - ansel-php80
+
+  ansel-php81:
+    build:
+      context: .
+      dockerfile: ./php81/Dockerfile
+    container_name: ansel-php81
+    environment:
+      HOSTNAME: ansel-php81
+      CRAFT_ALLOW_SUPERUSER: 1
+    volumes: *phpVolumes
+    networks:
+      default:
+        aliases:
+          - ansel-php81
+
+  db:
+    image: mariadb:10.7.1
+    container_name: ansel-db
+    environment:
+      HOSTNAME: ansel-db
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "11100:3306"
+    networks:
+      default:
+        aliases:
+          - ansel-db
+    volumes:
+      - db-volume:/var/lib/mysql
+
+volumes:
+  db-volume:

@@ -1,0 +1,83 @@
+columnSuffix: yrokgirz
+contentColumnType: text
+fieldGroup: 832a4c5d-36b3-49eb-bcde-113b57c0614e # Common
+handle: testAnselField
+instructions: ''
+name: 'Test Ansel Field'
+searchable: false
+settings:
+  fieldSettings:
+    __assoc__:
+      -
+        - uploadLocation
+        - 2bbada5a-1790-40cc-a54a-ae4225806432 # Local General
+      -
+        - saveLocation
+        - bc0172ce-1e92-4bc4-b654-bcdfa9571c75 # Local Ansel Save
+      -
+        - minQty
+        - ''
+      -
+        - maxQty
+        - ''
+      -
+        - preventUploadOverMax
+        - ''
+      -
+        - quality
+        - '90'
+      -
+        - forceJpg
+        - ''
+      -
+        - retinaMode
+        - '1'
+      -
+        - minWidth
+        - '1000'
+      -
+        - minHeight
+        - '1000'
+      -
+        - maxWidth
+        - ''
+      -
+        - maxHeight
+        - ''
+      -
+        - ratio
+        - ''
+      -
+        - customFields
+        -
+          -
+            __assoc__:
+              -
+                - label
+                - 'Field 1'
+              -
+                - handle
+                - field1
+              -
+                - type
+                - text
+              -
+                - required
+                - '1'
+          -
+            __assoc__:
+              -
+                - label
+                - 'Field 2'
+              -
+                - handle
+                - field2
+              -
+                - type
+                - bool
+              -
+                - required
+                - ''
+translationKeyFormat: null
+translationMethod: none
+type: BuzzingPixel\AnselCms\Craft\AnselCraftField

@@ -1,15 +1,25 @@
 image:
   file: .gitpod.Dockerfile
 
-jetbrains:
-  phpstorm:
-    plugins:
-      - fr.adrienbrault.idea.symfony2plugin
+ports:
+  - port: 11374
+    onOpen: open-browser
+  - port: 11380
+    onOpen: open-browser
+  - port: 11381
+    onOpen: open-browser
+  - port: 33674
+    onOpen: open-browser
+  - port: 33680
+    onOpen: open-browser
+  - port: 33681
+    onOpen: open-browser
+  - port: 11100
+    onOpen: notify
 
 tasks:
   - init: |
       composer install;
-      yarn install && yarn run build;
-    command: |
-      sudo chsh -s /usr/bin/fish;
-      exec fish;
+      yarn install;
+      yarn run build;
+      ./dev docker-up

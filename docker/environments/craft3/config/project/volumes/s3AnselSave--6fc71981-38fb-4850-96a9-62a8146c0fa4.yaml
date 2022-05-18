@@ -1,0 +1,52 @@
+fieldLayouts:
+  4d887851-ae20-413b-853c-568e423f6f44:
+    tabs:
+      -
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            disabled: false
+            id: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\AssetTitleField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+handle: s3AnselSave
+hasUrls: true
+name: 'S3 Ansel Save'
+settings:
+  addSubfolderToRootUrl: ''
+  autoFocalPoint: ''
+  bucket: bzpxltesting
+  bucketSelectionMode: choose
+  cfDistributionId: ''
+  cfPrefix: ''
+  expires: ''
+  keyId: AKIAXPAWVF46QVPDPJM5
+  makeUploadsPublic: '1'
+  region: us-east-1
+  secret: z+jefFWY7EMv7EpjjsZLqJ/8SC3WEPLDTdGFwMv/
+  storageClass: ''
+  subfolder: ansel/ansel-save
+sortOrder: 4
+titleTranslationKeyFormat: null
+titleTranslationMethod: null
+type: craft\awss3\Volume
+url: 'https://bzpxltesting.s3.amazonaws.com/ansel/ansel-save'

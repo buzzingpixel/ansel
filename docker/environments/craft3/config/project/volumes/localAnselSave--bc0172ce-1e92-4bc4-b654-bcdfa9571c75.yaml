@@ -1,0 +1,40 @@
+fieldLayouts:
+  1b1b7fba-2464-4ec5-8e5d-d2d89fc3a3b2:
+    tabs:
+      -
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            disabled: false
+            id: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\AssetTitleField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+handle: localAnselSave
+hasUrls: true
+name: 'Local Ansel Save'
+settings:
+  path: '@webroot/uploads/ansel-save'
+sortOrder: 2
+titleTranslationKeyFormat: null
+titleTranslationMethod: null
+type: craft\volumes\Local
+url: '@baseurl/uploads/ansel-save'
