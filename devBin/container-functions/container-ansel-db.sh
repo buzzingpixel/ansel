@@ -15,9 +15,9 @@ function container-ansel-db() {
 
     if [[ -z "${allArgsExceptFirst}" ]]; then
         printf "${Yellow}Remember to 'exit' when you're done.${Reset}\n";
-        docker exec ${interactiveArgs} -e XDEBUG_MODE=off ansel-db bash;
+        docker exec ${interactiveArgs} -e ansel-db bash;
     else
-        docker exec ${interactiveArgs} ansel-db bash -c "XDEBUG_MODE=off ${allArgsExceptFirst}";
+        docker exec ${interactiveArgs} ansel-db bash -c "${allArgsExceptFirst}";
     fi
 
     return 0;
