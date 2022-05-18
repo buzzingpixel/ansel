@@ -32,6 +32,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "expressionengine/expressionengine": "6.dev",
+        "symfony/console": "^5.4",
         "symfony/var-dumper": "^5.4"
     }
 }
