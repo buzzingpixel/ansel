@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import UploadJsonMessageReturn, { UploadJsonMessageReturnType } from './UploadJsonMessageReturn';
 import UploadErrorHandler from './UploadErrorHandler';
 import FieldDataType from '../../Types/FieldDataType';
@@ -73,6 +74,7 @@ const FileHandler = (
                     }
 
                     const image = {
+                        uid: uuid(),
                         imageUrl: json.base64Image,
                     } as ImageType;
 

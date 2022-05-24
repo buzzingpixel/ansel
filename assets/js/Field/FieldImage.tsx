@@ -1,9 +1,10 @@
-import { PercentCrop, PixelCrop } from 'react-image-crop';
+import { PercentCrop } from 'react-image-crop';
 import { IconContext } from 'react-icons';
 import { FiEdit } from 'react-icons/fi';
 import { CgEditBlackPoint } from 'react-icons/cg';
 import * as React from 'react';
 import { useState } from 'react';
+import { SortableHandle } from 'react-sortable-hoc';
 import DeleteButton from './InteractionHandlers/DeleteButton';
 import ImageType from './Types/ImageType';
 import EditImageButton from './InteractionHandlers/EditImageButton';
@@ -11,6 +12,8 @@ import CropImage from './InteractionHandlers/CropImage';
 import FieldImageDisplay from './FieldImageDisplay';
 import GetPixelCropFromPercentCrop from './Utility/GetPixelCropFromPercentCrop';
 import PixelCropPlusImageDimensions from './Types/PixelCropPlusImageDimensions';
+
+const SortHandle = SortableHandle(({ children }) => <>{children}</>);
 
 const FieldImage = ({
     setFieldState,
@@ -60,9 +63,11 @@ const FieldImage = ({
             setAcceptedCrop={setAcceptedCrop}
             setPixelCropState={setPixelCropState}
         />}
-        <div className="ansel_flex-1 ansel_flex ansel_flex-col ansel_p-8">
-            <FieldImageDisplay crop={pixelCropState} image={image} />
-        </div>
+        <SortHandle>
+            <div className="ansel_flex-1 ansel_flex ansel_flex-col ansel_p-8 ansel_cursor-grab">
+                <FieldImageDisplay crop={pixelCropState} image={image} />
+            </div>
+        </SortHandle>
         <div>
             <div className="ansel_-mt-px ansel_flex ansel_border-0 ansel_border-t ansel_border-gray-200 ansel_border-solid">
                 <div className="ansel_w-0 ansel_flex-1 ansel_flex">

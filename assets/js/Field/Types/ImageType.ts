@@ -1,5 +1,6 @@
 interface ImageType {
-    imageUrl: string,
+    uid: string;
+    imageUrl: string;
 }
 
 export default ImageType;

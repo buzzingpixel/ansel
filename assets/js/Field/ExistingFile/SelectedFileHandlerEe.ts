@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import EeFileType from './EeFileType';
 import ImageType from '../Types/ImageType';
 import FieldStateType from '../Types/FieldStateType';
@@ -51,6 +52,7 @@ const SelectedFileHandlerEe = (
                     }
 
                     const image = {
+                        uid: uuid(),
                         imageUrl: file.path,
                     } as ImageType;
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import FieldUploadSelect from './ExistingFile/FieldUploadSelect';
 import DragInProgress from './DragInProgress';
 import FieldError from './FieldError';
@@ -10,6 +11,22 @@ import FieldStateType from './Types/FieldStateType';
 import FieldDataType from './Types/FieldDataType';
 import WorkingIndicator from './WorkingIndicator';
 import FieldImage from './FieldImage';
+import ArrayMove from '../Utility/ArrayMove';
+
+const SortableFieldContainer = SortableContainer(
+    ({ children }) => (
+        <ul
+            role="list"
+            className="ansel_grid ansel_grid-cols-1 ansel_gap-6 md:ansel_grid-cols-2 2xl:ansel_grid-cols-3 3xl:ansel_grid-cols-4"
+        >
+            {children}
+        </ul>
+    ),
+);
+
+const SortableFieldItem = SortableElement(
+    (props) => <FieldImage {...props} />,
+);
 
 const Field = (fieldData: FieldDataType) => {
     const [fieldState, setFieldState] = useState<FieldStateType>({
@@ -71,6 +88,17 @@ const Field = (fieldData: FieldDataType) => {
         fieldWorkingClass = 'ansel-field-working';
     }
 
+    const onSortEnd = useCallback(({ oldIndex, newIndex }) => {
+        setFieldState((oldState) => {
+            const images = ArrayMove(oldState.images, oldIndex, newIndex);
+
+            return {
+                ...oldState,
+                images,
+            };
+        });
+    }, []);
+
     return (
         <>
             <div className="ansel_sr-only"></div>
@@ -86,7 +114,7 @@ const Field = (fieldData: FieldDataType) => {
                     ))
                 }
                 <input {...getInputProps()} />
-                <div className="ansel_p-4">
+                <div className="ansel_p-4 ansel_overflow-auto">
                     <div className={uploaderClass}>
                         <FieldUploadSelect
                             dropZoneOpenDeviceDialog={open}
@@ -94,18 +122,26 @@ const Field = (fieldData: FieldDataType) => {
                             fieldData={fieldData}
                         />
                     </div>
-                    <ul
-                        role="list"
-                        className="ansel_grid ansel_grid-cols-1 ansel_gap-6 md:ansel_grid-cols-2 2xl:ansel_grid-cols-3 3xl:ansel_grid-cols-4"
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
+                    <SortableFieldContainer
+                        onSortEnd={onSortEnd}
+                        axis="xy"
+                        helperClass="ansel_cursor-grabbing"
+                        useDragHandle={true}
                     >
                         {fieldState.images.map((image, index) => (
-                            <FieldImage
+                            <SortableFieldItem
+                                key={image.uid}
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
                                 setFieldState={setFieldState}
                                 image={image}
                                 index={index}
+                                rowIndex={index}
                             />
                         ))}
-                    </ul>
+                    </SortableFieldContainer>
                     {fieldState.images.length > 4
                         && <div className="ansel_pt-6">
                             <FieldUploadSelect

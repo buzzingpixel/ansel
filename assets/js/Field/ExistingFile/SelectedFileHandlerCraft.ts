@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import CraftFileType from './CraftFileType';
 import ImageType from '../Types/ImageType';
 import FieldStateType from '../Types/FieldStateType';
@@ -38,6 +39,7 @@ const SelectedFileHandlerCraft = (
                     }
 
                     const image = {
+                        uid: uuid(),
                         imageUrl: file.url,
                     } as ImageType;
 
