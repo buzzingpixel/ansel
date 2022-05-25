@@ -75,6 +75,11 @@ const FileHandler = (
 
                     const image = {
                         uid: uuid(),
+                        imageUpload: {
+                            cacheDirectory: json.cacheDirectory,
+                            cacheFilePath: json.cacheFilePath,
+                            fileName: json.fileName,
+                        },
                         imageUrl: json.base64Image,
                     } as ImageType;
 

@@ -49,6 +49,10 @@ export default (anselFieldEl: HTMLDivElement) => {
         platformElement.dataset.json,
     ) as PlatformType;
 
+    const inputPlaceholder = anselFieldEl.getElementsByClassName(
+        'ansel_field_input_placeholder',
+    ).item(0) as HTMLInputElement;
+
     // Render field
     const field = createRoot(anselFieldEl);
     field.render(
@@ -59,6 +63,7 @@ export default (anselFieldEl: HTMLDivElement) => {
                 parameters={parameters}
                 translations={translations}
                 platform={platform}
+                inputPlaceholder={inputPlaceholder}
             />
         </StrictMode>,
     );

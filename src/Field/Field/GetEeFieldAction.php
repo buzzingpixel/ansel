@@ -55,8 +55,10 @@ class GetEeFieldAction
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function render(FieldSettingsCollection $fieldSettings): string
-    {
+    public function render(
+        FieldSettingsCollection $fieldSettings,
+        string $fieldNameRoot
+    ): string {
         $this->eeCssJs->add();
 
         $modalLink = base64_encode($this->fileChooserModalLinkFactory->getLink(
@@ -66,6 +68,7 @@ class GetEeFieldAction
         return $this->twig->render(
             '@AnselSrc/Field/Field/Field.twig',
             [
+                'fieldNameRoot' => $fieldNameRoot,
                 'model' => new FieldRenderModel(
                     $fieldSettings->asScalarArray(),
                     $fieldSettings->customFields()->asScalarArray(),

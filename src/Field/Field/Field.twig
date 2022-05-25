@@ -1,6 +1,14 @@
 {# @var \BuzzingPixel\Ansel\Field\Field\FieldRenderModel model #}
 
+{% set fieldNameRoot = fieldNameRoot ?? '' %}
+
 <div class="ansel_field">
+    <input
+        type="hidden"
+        name="{{ fieldNameRoot }}[placeholder]"
+        class="ansel_field_input_placeholder"
+        data-field-name-root="{{ fieldNameRoot }}"
+    >
     <span
         class="ansel_field_settings"
         data-json='{{ model.fieldSettings|json_encode|raw }}'

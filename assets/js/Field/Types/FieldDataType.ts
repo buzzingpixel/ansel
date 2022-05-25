@@ -10,6 +10,7 @@ interface FieldDataType {
     parameters: FieldParametersType;
     translations: TranslationsType;
     platform: PlatformType;
+    inputPlaceholder: HTMLInputElement;
 }
 
 export default FieldDataType;

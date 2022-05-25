@@ -65,7 +65,8 @@ class GetCraftFieldAction
      * @throws InvalidConfigException
      */
     public function render(
-        FieldSettingsCollection $fieldSettings
+        FieldSettingsCollection $fieldSettings,
+        string $fieldNameRoot
     ): string {
         $this->registerAssetBundle->register();
 
@@ -85,6 +86,7 @@ class GetCraftFieldAction
         return $this->twig->render(
             '@AnselSrc/Field/Field/Field.twig',
             [
+                'fieldNameRoot' => $fieldNameRoot,
                 'model' => new FieldRenderModel(
                     $fieldSettings->asScalarArray(),
                     $fieldSettings->customFields()->asScalarArray(),

@@ -332,6 +332,7 @@ class Ansel_ft extends EE_Fieldtype
 
         return $this->getFieldAction->render(
             $fieldSettings,
+            'ansel[field]'
         );
     }
 

@@ -12,6 +12,7 @@ import FieldDataType from './Types/FieldDataType';
 import WorkingIndicator from './WorkingIndicator';
 import FieldImage from './FieldImage';
 import ArrayMove from '../Utility/ArrayMove';
+import FieldInputs from './FieldInputs';
 
 const SortableFieldContainer = SortableContainer(
     ({ children }) => (
@@ -101,7 +102,9 @@ const Field = (fieldData: FieldDataType) => {
 
     return (
         <>
-            <div className="ansel_sr-only"></div>
+            <div className="ansel_sr-only">
+                <FieldInputs fieldData={fieldData} fieldState={fieldState} />
+            </div>
             <WorkingIndicator fieldState={fieldState} />
             <div
                 className={`${bgColorClass} ${fieldWorkingClass} ansel_border ansel_border-gray-200 ansel_border-solid ansel_relative`}
