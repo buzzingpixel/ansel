@@ -2,20 +2,24 @@ import { IconContext } from 'react-icons';
 import { MdDelete } from 'react-icons/md';
 import * as React from 'react';
 import FieldStateType from '../Types/FieldStateType';
+import ImageType from '../Types/ImageType';
 
 const DeleteButton = ({
     index,
+    image,
     setFieldState,
 }: {
     index: number,
+    image: ImageType,
     setFieldState: CallableFunction,
 }) => {
-    // TODO: Add removal of image in post data if it already existed in field
     const remove = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
 
         setFieldState((prevState: FieldStateType) => {
             prevState.images.splice(index, 1);
+
+            prevState.delete.push(image.uid);
 
             return { ...prevState };
         });

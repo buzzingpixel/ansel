@@ -93,7 +93,11 @@ const FieldImage = ({
                         </IconContext.Provider>
                     </a>
                 </div>
-                <DeleteButton index={index} setFieldState={setFieldState} />
+                <DeleteButton
+                    index={index}
+                    image={image}
+                    setFieldState={setFieldState}
+                />
             </div>
         </div>
     </li>;

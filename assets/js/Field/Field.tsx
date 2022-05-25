@@ -34,6 +34,7 @@ const Field = (fieldData: FieldDataType) => {
         processes: 0,
         errorMessages: {},
         images: [],
+        delete: [],
     });
 
     const onDropAccepted = useCallback(

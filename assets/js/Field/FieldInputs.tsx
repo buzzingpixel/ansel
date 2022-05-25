@@ -20,6 +20,16 @@ const FieldInputs = (
                 name={`${inputBaseName}[images]`}
                 value=""
             />
+            <input
+                type="hidden"
+                name={`${inputBaseName}[delete]`}
+                value=""
+            />
+            {fieldState.delete.map((uid) => <input
+                type="hidden"
+                name={`${inputBaseName}[delete][${uid}]`}
+                value={uid}
+            />)}
             {fieldState.images.map((image) => {
                 const inputs = [
                     <input
