@@ -6,6 +6,8 @@ services:
     container_name: ansel-nginx
     environment:
       HOSTNAME: ansel-nginx
+    expose:
+      - 80
     ports:
       - "11374:11374"
       - "11380:11380"
@@ -34,7 +36,15 @@ services:
       - ../composer.lock:/var/www/ee6/system/user/addons/ansel/composer.lock
       - ../config:/var/www/ee6/system/user/addons/ansel/config
       - ../src:/var/www/ee6/system/user/addons/ansel/src
-      - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
+      - ../vendor:/var/www/ee6/system/u ser/addons/ansel/vendor
+    networks:
+      web:
+      default:
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-dev_default
+      - traefik.http.routers.ansel.entrypoints=web
+      - traefik.http.routers.ansel.rule=Host(`anseleephp74.localtest.me`,`anseleephp80.localtest.me`,`anseleephp81.localtest.me`,`anselcraftphp74.localtest.me`,`anselcraftphp80.localtest.me`,`anselcraftphp81.localtest.me`)
 
   ansel-php74:
     build:
@@ -108,3 +118,7 @@ services:
 
 volumes:
   db-volume:
+
+networks:
+  web:
+    name: traefik-dev_default

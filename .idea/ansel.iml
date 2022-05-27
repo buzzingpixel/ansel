@@ -7,8 +7,6 @@
       <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" packagePrefix="BuzzingPixel\AnselConfig\" />
       <sourceFolder url="file://$MODULE_DIR$/assetsDist" isTestSource="false" packagePrefix="BuzzingPixel\AssetsDist\" />
       <sourceFolder url="file://$MODULE_DIR$/devResources/treasury-ee/treasury" isTestSource="true" packagePrefix="BuzzingPixel\Treasury\" />
-      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/voku/portable-utf8" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/seld/jsonlint" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/voku/stringy" />
