@@ -13,6 +13,8 @@ import FieldImageDisplay from './FieldImageDisplay';
 import GetPixelCropFromPercentCrop from './Utility/GetPixelCropFromPercentCrop';
 import PixelCropPlusImageDimensions from './Types/PixelCropPlusImageDimensions';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const SortHandle = SortableHandle(({ children }) => <>{children}</>);
 
 const FieldImage = ({

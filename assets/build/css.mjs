@@ -41,7 +41,7 @@ const clean = (opts = {}) => {
 const appDir = process.cwd();
 const cssLocation = `${appDir}/assets/css`;
 const cssOutputPath = `${appDir}/assetsDist/css`;
-const cssOutputFileName = 'ansel.min.css';
+const cssOutputFileName = 'ansel.min';
 const startFile = `${appDir}/assets/css/start.pcss`;
 const libDir = `${appDir}/assets/css/lib`;
 const include = [
@@ -171,21 +171,18 @@ export default () => {
             const hash = `${md5.update(result.css).digest('hex')}`;
 
             // and insert it into the file path for cache breaking
-            cssOutputFile += `/${hash}`;
+            cssOutputFile += `/${cssOutputFileName}.${hash}.css`;
 
             // Update the manifest path
-            manifestPath = `${hash}/${manifestPath}`;
+            manifestPath = `${cssOutputFileName}.${hash}.css`;
 
             // Empty the path
             fs.emptyDirSync(cssOutputPath);
 
             // If the directory doesn't exist, create it
-            if (!fs.existsSync(cssOutputFile)) {
-                fs.mkdirSync(cssOutputFile, { recursive: true });
+            if (!fs.existsSync(cssOutputPath)) {
+                fs.mkdirSync(cssOutputPath, { recursive: true });
             }
-
-            // Now add the file name to the output filename
-            cssOutputFile += `/${cssOutputFileName}`;
 
             // Write the file to disk
             fs.writeFileSync(cssOutputFile, result.css);
@@ -193,7 +190,7 @@ export default () => {
             fs.writeFileSync(
                 `${cssOutputPath}/manifest.json`,
                 JSON.stringify({
-                    [cssOutputFileName]: manifestPath,
+                    [`${cssOutputFileName}.css`]: manifestPath,
                 }, null, 4),
             );
 

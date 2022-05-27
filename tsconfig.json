@@ -6,11 +6,11 @@
         "jsx": "react",
         "skipLibCheck": true,
         "noEmit": true,
-      "lib": [
-        "dom",
-        "es5",
-        "scripthost",
-        "es2015.promise"
-      ]
+        "lib": [
+            "dom",
+            "es5",
+            "scripthost",
+            "es2015.promise"
+        ]
     }
 }
