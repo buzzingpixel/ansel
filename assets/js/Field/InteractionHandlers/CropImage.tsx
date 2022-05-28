@@ -5,21 +5,26 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import ImageType from '../Types/ImageType';
 import GetPixelCropFromPercentCrop from '../Utility/GetPixelCropFromPercentCrop';
+import FieldStateType from '../Types/FieldStateType';
 
 const CropImage = ({
     crop,
+    index,
     image,
     setCrop,
     acceptedCrop,
     setCropIsOpen,
+    setFieldState,
     setAcceptedCrop,
     setPixelCropState,
 }: {
     crop: PercentCrop,
+    index: number,
     image: ImageType,
     setCrop: CallableFunction,
     acceptedCrop: PercentCrop,
     setCropIsOpen: CallableFunction,
+    setFieldState: CallableFunction,
     setAcceptedCrop: CallableFunction,
     setPixelCropState: CallableFunction,
 }) => {
@@ -39,6 +44,17 @@ const CropImage = ({
         GetPixelCropFromPercentCrop(image, crop).then(
             (incomingCrop) => {
                 setPixelCropState({ ...incomingCrop });
+
+                setFieldState((oldFieldState: FieldStateType) => {
+                    image.x = incomingCrop.x;
+                    image.y = incomingCrop.y;
+                    image.width = incomingCrop.width;
+                    image.height = incomingCrop.height;
+
+                    oldFieldState.images[index] = image;
+
+                    return { ...oldFieldState };
+                });
             },
         );
 

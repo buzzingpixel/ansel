@@ -12,6 +12,7 @@ import CropImage from './InteractionHandlers/CropImage';
 import FieldImageDisplay from './FieldImageDisplay';
 import GetPixelCropFromPercentCrop from './Utility/GetPixelCropFromPercentCrop';
 import PixelCropPlusImageDimensions from './Types/PixelCropPlusImageDimensions';
+import FieldStateType from './Types/FieldStateType';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -48,6 +49,17 @@ const FieldImage = ({
         GetPixelCropFromPercentCrop(image, acceptedCrop).then(
             (incomingCrop) => {
                 setPixelCropState({ ...incomingCrop });
+
+                setFieldState((oldFieldState: FieldStateType) => {
+                    image.x = incomingCrop.x;
+                    image.y = incomingCrop.y;
+                    image.width = incomingCrop.width;
+                    image.height = incomingCrop.height;
+
+                    oldFieldState.images[index] = image;
+
+                    return { ...oldFieldState };
+                });
             },
         );
     }
@@ -58,10 +70,12 @@ const FieldImage = ({
     >
         {cropIsOpen && <CropImage
             crop={crop}
+            index={index}
             image={image}
             setCrop={setCrop}
             acceptedCrop={acceptedCrop}
             setCropIsOpen={setCropIsOpen}
+            setFieldState={setFieldState}
             setAcceptedCrop={setAcceptedCrop}
             setPixelCropState={setPixelCropState}
         />}

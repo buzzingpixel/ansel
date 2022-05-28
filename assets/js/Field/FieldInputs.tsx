@@ -37,6 +37,26 @@ const FieldInputs = (
                         name={`${inputBaseName}[images][${image.uid}][uid]`}
                         value={image.uid}
                     />,
+                    <input
+                        type="hidden"
+                        name={`${inputBaseName}[images][${image.uid}][x]`}
+                        value={image.x}
+                    />,
+                    <input
+                        type="hidden"
+                        name={`${inputBaseName}[images][${image.uid}][y]`}
+                        value={image.y}
+                    />,
+                    <input
+                        type="hidden"
+                        name={`${inputBaseName}[images][${image.uid}][width]`}
+                        value={image.width}
+                    />,
+                    <input
+                        type="hidden"
+                        name={`${inputBaseName}[images][${image.uid}][height]`}
+                        value={image.height}
+                    />,
                 ];
 
                 if (image.imageUpload) {
