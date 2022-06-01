@@ -14,6 +14,7 @@ import GetPixelCropFromPercentCrop from './Utility/GetPixelCropFromPercentCrop';
 import PixelCropPlusImageDimensions from './Types/PixelCropPlusImageDimensions';
 import FieldStateType from './Types/FieldStateType';
 import FieldDataType from './Types/FieldDataType';
+import CalculateInitialRatioCrop from './Utility/CalculateInitialRatioCrop';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -32,21 +33,60 @@ const FieldImage = ({
 }) => {
     const [cropIsOpen, setCropIsOpen] = useState<boolean>(false);
 
-    const [crop, setCrop] = useState<PercentCrop>({
-        unit: '%',
-        x: 0,
-        y: 0,
-        width: 100,
-        height: 100,
-    });
+    const [crop, setCrop] = useState<PercentCrop | null>(null);
 
-    const [acceptedCrop, setAcceptedCrop] = useState<PercentCrop>(
+    const [acceptedCrop, setAcceptedCrop] = useState<PercentCrop | null>(
         { ...crop },
     );
 
     const [pixelCropState, setPixelCropState] = useState<PixelCropPlusImageDimensions|null>(
         null,
     );
+
+    if (crop === null) {
+        if (!fieldData.fieldSettings.ratioAsNumber) {
+            const coords = {
+                unit: '%',
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100,
+            };
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            setCrop(coords);
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            setAcceptedCrop(coords);
+        } else {
+            CalculateInitialRatioCrop({
+                image,
+                setCrop,
+                setAcceptedCrop,
+                fieldSettings: fieldData.fieldSettings,
+            });
+        }
+
+        return <li
+            key={index}
+            className="ansel-field-working ansel_col-span-1 ansel_flex ansel_flex-col ansel_text-center ansel_bg-white ansel_rounded-lg ansel_shadow ansel_divide-y ansel_divide-gray-200"
+        >
+            <SortHandle>
+                <div className="ansel_flex-1 ansel_flex ansel_flex-col ansel_p-8 ansel_cursor-grab">
+                    <div
+                        className="ansel_w-48 ansel_flex-shrink-0 ansel_mx-auto ansel_overflow-hidden ansel_relative"
+                        style={{
+                            height: '150px',
+                            position: 'relative',
+                        }}
+                    >
+                    </div>
+                </div>
+            </SortHandle>
+        </li>;
+    }
 
     if (pixelCropState === null) {
         GetPixelCropFromPercentCrop(image, acceptedCrop).then(

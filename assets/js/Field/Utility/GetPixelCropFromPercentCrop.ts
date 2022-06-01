@@ -8,8 +8,6 @@ const GetPixelCropFromPercentCrop = async (
 ) => new Promise<PixelCropPlusImageDimensions>((resolve, reject) => {
     const imageElement = new Image();
 
-    imageElement.src = image.imageUrl;
-
     imageElement.onload = () => {
         const xDecimal = crop.x / 100;
         const yDecimal = crop.y / 100;

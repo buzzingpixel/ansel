@@ -15,7 +15,7 @@ const ValidateImageConstraints = async (
 
         imgEl.onerror = null;
 
-        imgEl.src = '//!!!!/test.jpg';
+        imgEl.src = '';
 
         imgEl = null;
     };

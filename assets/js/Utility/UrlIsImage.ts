@@ -24,7 +24,7 @@ const UrlIsImage = async (url: string) => new Promise<void>((resolve, reject) =>
 
             setTimeout(() => {
                 // set src to an invalid URL so it stops trying to load
-                img.src = '//!!!!/test.jpg';
+                img.src = '';
             }, 10000);
         })
         .catch(() => {
