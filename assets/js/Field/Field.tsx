@@ -136,13 +136,14 @@ const Field = (fieldData: FieldDataType) => {
                     >
                         {fieldState.images.map((image, index) => (
                             <SortableFieldItem
-                                key={image.uid}
                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                 // @ts-ignore
-                                setFieldState={setFieldState}
                                 image={image}
                                 index={index}
+                                key={image.uid}
                                 rowIndex={index}
+                                fieldData={fieldData}
+                                setFieldState={setFieldState}
                             />
                         ))}
                     </SortableFieldContainer>

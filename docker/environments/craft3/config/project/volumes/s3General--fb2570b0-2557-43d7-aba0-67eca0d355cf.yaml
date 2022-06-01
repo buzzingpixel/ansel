@@ -47,6 +47,6 @@ settings:
   subfolder: ansel/general
 sortOrder: 3
 titleTranslationKeyFormat: null
-titleTranslationMethod: null
+titleTranslationMethod: site
 type: craft\awss3\Volume
 url: 'https://bzpxltesting.s3.amazonaws.com/ansel/general'

@@ -2,16 +2,18 @@ import ReactCrop, { PercentCrop } from 'react-image-crop';
 import { MdClose } from 'react-icons/md';
 import { BsCheck } from 'react-icons/bs';
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ImageType from '../Types/ImageType';
 import GetPixelCropFromPercentCrop from '../Utility/GetPixelCropFromPercentCrop';
 import FieldStateType from '../Types/FieldStateType';
+import FieldDataType from '../Types/FieldDataType';
 
 const CropImage = ({
     crop,
     index,
     image,
     setCrop,
+    fieldData,
     acceptedCrop,
     setCropIsOpen,
     setFieldState,
@@ -21,6 +23,7 @@ const CropImage = ({
     crop: PercentCrop,
     index: number,
     image: ImageType,
+    fieldData: FieldDataType,
     setCrop: CallableFunction,
     acceptedCrop: PercentCrop,
     setCropIsOpen: CallableFunction,
@@ -28,6 +31,14 @@ const CropImage = ({
     setAcceptedCrop: CallableFunction,
     setPixelCropState: CallableFunction,
 }) => {
+    const [imageIsLoaded, setImageIsLoaded] = useState<boolean>(false);
+
+    const [minWidth, setMinWidth] = useState<number | null>(null);
+
+    const [minHeight, setMinHeight] = useState<number | null>(null);
+
+    const imageEl = useRef<HTMLImageElement | null>(null);
+
     const cancelCrop = (event: Event|React.MouseEvent) => {
         event.preventDefault();
 
@@ -81,6 +92,42 @@ const CropImage = ({
         };
     });
 
+    const handleResize = () => {
+        if (!imageIsLoaded) {
+            return;
+        }
+
+        const imgTag = imageEl.current as HTMLImageElement;
+
+        const settingMinWidth = fieldData.fieldSettings.minWidth;
+
+        if (settingMinWidth) {
+            const widthReducer = imgTag.width / imgTag.naturalWidth;
+
+            setMinWidth(Math.ceil(settingMinWidth * widthReducer));
+        }
+
+        const settingMinHeight = fieldData.fieldSettings.minHeight;
+
+        if (settingMinHeight) {
+            const heightReducer = imgTag.height / imgTag.naturalHeight;
+
+            setMinHeight(Math.ceil(settingMinHeight * heightReducer));
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    });
+
+    useEffect(() => {
+        handleResize();
+    }, [imageIsLoaded]);
+
     const iconAnchorClasses = 'ansel_text-red-600 ansel_bg-gray-100 hover:ansel_bg-gray-200 ansel_h-40px ansel_w-70px ansel_flex ansel_flex-row ansel_items-center ansel_justify-center';
 
     return <div
@@ -93,8 +140,18 @@ const CropImage = ({
                         <ReactCrop
                             crop={crop}
                             onChange={(_, c) => setCrop(c)}
+                            aspect={fieldData.fieldSettings.ratioAsNumber}
+                            minWidth={minWidth}
+                            minHeight={minHeight}
                         >
-                            <img src={image.imageUrl} alt=""/>
+                            <img
+                                ref={imageEl}
+                                src={image.imageUrl}
+                                alt=""
+                                onLoad={() => {
+                                    setImageIsLoaded(true);
+                                }}
+                            />
                         </ReactCrop>
                     </div>
                 </div>

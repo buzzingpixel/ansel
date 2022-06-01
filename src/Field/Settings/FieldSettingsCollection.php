@@ -8,6 +8,7 @@ use function array_filter;
 use function array_map;
 use function array_walk;
 use function assert;
+use function explode;
 use function is_array;
 use function is_string;
 
@@ -203,10 +204,14 @@ class FieldSettingsCollection
      */
     public function asScalarArray(): array
     {
-        /** @phpstan-ignore-next-line */
-        return $this->map(
+        $array = $this->map(
             static fn (FieldSettingItemContract $s) => $s->value(),
         );
+
+        $array['ratioAsNumber'] = $this->ratioAsNumber();
+
+        /** @phpstan-ignore-next-line */
+        return $array;
     }
 
     /**
@@ -280,6 +285,21 @@ class FieldSettingsCollection
     public function ratio(): FieldSettingItemString
     {
         return $this->ratio;
+    }
+
+    public function ratioAsNumber(): ?float
+    {
+        if ($this->ratio->isEmpty()) {
+            return null;
+        }
+
+        $ratioParts = explode(':', $this->ratio->value());
+
+        $one = (float) $ratioParts[0];
+
+        $two = (float) $ratioParts[1];
+
+        return $one / $two;
     }
 
     public function customFields(): FieldSettingCustomFieldCollection

@@ -35,6 +35,6 @@ settings:
   path: '@webroot/uploads/general'
 sortOrder: 1
 titleTranslationKeyFormat: null
-titleTranslationMethod: null
+titleTranslationMethod: site
 type: craft\volumes\Local
 url: '@baseurl/uploads/general'

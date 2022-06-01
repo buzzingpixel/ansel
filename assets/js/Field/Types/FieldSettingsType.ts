@@ -1,17 +1,18 @@
 interface FieldSettingsType {
-    uploadLocation: string,
-    saveLocation: string,
-    minQty: number,
-    maxQty: number,
-    preventUploadOverMax: boolean,
-    quality: number,
-    forceJpg: boolean,
-    retinaMode: boolean,
-    minWidth: number,
-    minHeight: number,
-    maxWidth: number,
-    maxHeight: number,
-    ratio: string,
+    uploadLocation: string;
+    saveLocation: string;
+    minQty: number;
+    maxQty: number;
+    preventUploadOverMax: boolean;
+    quality: number;
+    forceJpg: boolean;
+    retinaMode: boolean;
+    minWidth: number;
+    minHeight: number;
+    maxWidth: number;
+    maxHeight: number;
+    ratio: string;
+    ratioAsNumber?: number;
 }
 
 export default FieldSettingsType;

@@ -13,19 +13,22 @@ import FieldImageDisplay from './FieldImageDisplay';
 import GetPixelCropFromPercentCrop from './Utility/GetPixelCropFromPercentCrop';
 import PixelCropPlusImageDimensions from './Types/PixelCropPlusImageDimensions';
 import FieldStateType from './Types/FieldStateType';
+import FieldDataType from './Types/FieldDataType';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const SortHandle = SortableHandle(({ children }) => <>{children}</>);
 
 const FieldImage = ({
-    setFieldState,
-    image,
     index,
+    image,
+    fieldData,
+    setFieldState,
 }: {
-    setFieldState: CallableFunction,
-    image: ImageType,
     index: number,
+    image: ImageType,
+    fieldData: FieldDataType,
+    setFieldState: CallableFunction,
 }) => {
     const [cropIsOpen, setCropIsOpen] = useState<boolean>(false);
 
@@ -73,6 +76,7 @@ const FieldImage = ({
             index={index}
             image={image}
             setCrop={setCrop}
+            fieldData={fieldData}
             acceptedCrop={acceptedCrop}
             setCropIsOpen={setCropIsOpen}
             setFieldState={setFieldState}
