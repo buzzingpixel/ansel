@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import FieldSettingsType from './Types/FieldSettingsType';
 import CustomFieldType from './CustomFieldType';
@@ -56,7 +55,11 @@ export default (anselFieldEl: HTMLDivElement) => {
     // Render field
     const field = createRoot(anselFieldEl);
     field.render(
-        <StrictMode>
+        // Disable strict mode for now. react-sortable-hoc violates strict-mode
+        // rules, and needs to be replaced with dnd-kit, but I don't have
+        // time to learn dnd-kit at this time
+        // import { StrictMode } from 'react';
+        /* <StrictMode> */
             <Field
                 fieldSettings={fieldSettings}
                 customFields={customFields}
@@ -65,6 +68,6 @@ export default (anselFieldEl: HTMLDivElement) => {
                 platform={platform}
                 inputPlaceholder={inputPlaceholder}
             />
-        </StrictMode>,
+        /* </StrictMode> */,
     );
 };
