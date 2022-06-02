@@ -2,7 +2,8 @@
     "scripts": {
         "build": "node assets/bin/css.mjs && webpack --mode production",
         "css": "node assets/bin/css.mjs",
-        "js": "webpack --mode production"
+        "js": "webpack --mode production",
+        "js-dev": "webpack --mode development"
     },
     "name": "ansel-build-process",
     "version": "1.0.0",
@@ -72,6 +73,7 @@
         "webpack": "^5.72.1",
         "webpack-cli": "^4.9.2",
         "webpack-manifest-plugin": "^5.0.0",
-        "webpack-nano": "^1.1.1"
+        "webpack-nano": "^1.1.1",
+        "yargs": "^17.5.1"
     }
 }

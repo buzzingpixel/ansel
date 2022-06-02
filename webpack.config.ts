@@ -6,6 +6,12 @@ import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import TerserPlugin from 'terser-webpack-plugin';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const { argv } = yargs(hideBin(process.argv));
+
+const mode = argv.mode || 'production';
 
 const config: Configuration = {
     cache: {
@@ -14,7 +20,6 @@ const config: Configuration = {
     entry: {
         'ansel.min': './assets/js/ansel.ts',
     },
-    devtool: 'source-map',
     module: {
         rules: [
             {
@@ -53,5 +58,9 @@ const config: Configuration = {
         maxAssetSize: 512000,
     },
 };
+
+if (mode === 'development') {
+    config.devtool = 'eval-source-map';
+}
 
 export default config;
