@@ -53,6 +53,9 @@ class EeCssJs
 
         assert(is_array($cssManifest));
 
+        // Remove mode
+        unset($cssManifest['mode']);
+
         // Make sure style.min (our main CSS) is last
         $mainCssLoc = $cssManifest['ansel.min.css'];
         unset($cssManifest['ansel.min.css']);
@@ -82,6 +85,9 @@ class EeCssJs
         );
 
         assert(is_array($jsManifest));
+
+        // Remove mode
+        unset($jsManifest['mode']);
 
         // Make sure main.js (our main JS) is last
         $mainJsLoc = $jsManifest['ansel.min.js'];

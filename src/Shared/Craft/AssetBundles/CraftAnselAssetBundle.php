@@ -66,6 +66,9 @@ class CraftAnselAssetBundle extends AssetBundle
 
         assert(is_array($cssManifest));
 
+        // Remove mode
+        unset($cssManifest['mode']);
+
         // Make sure style.min (our main CSS) is last
         $mainCssLoc = $cssManifest['ansel.min.css'];
         unset($cssManifest['ansel.min.css']);
@@ -89,6 +92,9 @@ class CraftAnselAssetBundle extends AssetBundle
         );
 
         assert(is_array($jsManifest));
+
+        // Remove mode
+        unset($jsManifest['mode']);
 
         // Make sure style.min (our main CSS) is last
         $mainJsLoc = $jsManifest['ansel.min.js'];

@@ -39,6 +39,10 @@ for f in $(find devBin -name '*.sh'); do
     source ${f};
 done
 
+# Add git hooks
+chmod +x ./commit-hooks/pre-commit.sh;
+cp ./commit-hooks/pre-commit.sh ./.git/hooks/pre-commit;
+
 # If no command/function name to run was provided, list out the functions available
 if [[ -z "${cmd}" || ${secondArg} == "help" ]]; then
     source devBin/.help;

@@ -50,6 +50,10 @@ const config: Configuration = {
     plugins: [
         new WebpackManifestPlugin({
             publicPath: '',
+            generate: (record, file) => ({
+                [file[0].name]: file[0].path,
+                mode,
+            }),
         }),
     ],
     performance: {
