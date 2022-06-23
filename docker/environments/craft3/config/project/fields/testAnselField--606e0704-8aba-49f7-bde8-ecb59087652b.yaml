@@ -34,10 +34,10 @@ settings:
         - '1'
       -
         - minWidth
-        - '1000'
+        - ''
       -
         - minHeight
-        - '1000'
+        - ''
       -
         - maxWidth
         - ''
@@ -46,7 +46,7 @@ settings:
         - ''
       -
         - ratio
-        - ''
+        - '1:1'
       -
         - customFields
         -

@@ -1,4 +1,4 @@
-baseUrl: 'http://anselcraftphp81.localtest.me'
+baseUrl: 'http://anselcraftphp81.test'
 enabled: true
 handle: default
 hasUrls: true

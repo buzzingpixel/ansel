@@ -10,6 +10,12 @@ require_once $projDir . '/dumper.php';
 
 $config ??= [];
 
+$config['enable_dock']               = 'y';
+$config['enable_frontedit']          = 'y';
+$config['automatic_frontedit_links'] = 'y';
+$config['enable_mfa']                = 'y';
+$config['autosave_interval_seconds'] = '10';
+
 $config['site_license_key'] = '';
 
 $config['app_version']       = '6.3.4';
