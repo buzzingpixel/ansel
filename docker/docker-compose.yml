@@ -36,7 +36,7 @@ services:
       - ../composer.lock:/var/www/ee6/system/user/addons/ansel/composer.lock
       - ../config:/var/www/ee6/system/user/addons/ansel/config
       - ../src:/var/www/ee6/system/user/addons/ansel/src
-      - ../vendor:/var/www/ee6/system/u ser/addons/ansel/vendor
+      - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
     networks:
       web:
       default:
