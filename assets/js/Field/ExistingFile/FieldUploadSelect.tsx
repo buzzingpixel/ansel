@@ -28,7 +28,7 @@ const FieldUploadSelect = (
             const $button = $(buttonRef.current);
 
             const html = document.createElement('html');
-            html.innerHTML = atob(fieldData.platform.fileChooserModalLink);
+            html.innerHTML = window.atob(fieldData.platform.fileChooserModalLink);
             anchor = html.getElementsByTagName('a')
                 .item(0);
 
@@ -54,12 +54,6 @@ const FieldUploadSelect = (
 
     const openCmsDialog = (e: React.MouseEvent) => {
         e.preventDefault();
-
-        setFieldState((prevState: FieldStateType) => {
-            prevState.processes += 1;
-
-            return { ...prevState };
-        });
 
         // eslint-disable-next-line default-case
         switch (fieldData.platform.environment) {

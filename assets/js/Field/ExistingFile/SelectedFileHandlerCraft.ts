@@ -12,6 +12,12 @@ const SelectedFileHandlerCraft = (
     setFieldState: CallableFunction,
     fieldData: FieldDataType,
 ) => {
+    setFieldState((prevState: FieldStateType) => {
+        prevState.processes += 1;
+
+        return { ...prevState };
+    });
+
     const removeProcess = () => {
         setFieldState((prevState: FieldStateType) => {
             prevState.processes -= 1;
