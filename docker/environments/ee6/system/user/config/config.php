@@ -45,6 +45,6 @@ $secure = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
 $protocol = $secure ? 'https://' : 'http://';
 
 $config['base_url']  = $protocol . $_SERVER['HTTP_HOST'] . '/';
-$config['base_path'] = dirname(__DIR__, 2) . '/';
+$config['base_path'] = dirname(__DIR__, 3) . '/';
 
 // EOF
