@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { v4 as uuid } from 'uuid';
 import FieldStateType from './Types/FieldStateType';
 import FieldDataType from './Types/FieldDataType';
 
@@ -26,6 +27,7 @@ const FieldInputs = (
                 value=""
             />
             {fieldState.delete.map((uid) => <input
+                key={uuid()}
                 type="hidden"
                 name={`${inputBaseName}[delete][${uid}]`}
                 value={uid}
@@ -33,26 +35,31 @@ const FieldInputs = (
             {fieldState.images.map((image) => {
                 const inputs = [
                     <input
+                        key={uuid()}
                         type="hidden"
                         name={`${inputBaseName}[images][${image.uid}][uid]`}
                         value={image.uid}
                     />,
                     <input
+                        key={uuid()}
                         type="hidden"
                         name={`${inputBaseName}[images][${image.uid}][x]`}
                         value={image.x}
                     />,
                     <input
+                        key={uuid()}
                         type="hidden"
                         name={`${inputBaseName}[images][${image.uid}][y]`}
                         value={image.y}
                     />,
                     <input
+                        key={uuid()}
                         type="hidden"
                         name={`${inputBaseName}[images][${image.uid}][width]`}
                         value={image.width}
                     />,
                     <input
+                        key={uuid()}
                         type="hidden"
                         name={`${inputBaseName}[images][${image.uid}][height]`}
                         value={image.height}
@@ -62,6 +69,7 @@ const FieldInputs = (
                 if (image.imageUpload) {
                     inputs.push(
                         <input
+                            key={uuid()}
                             type="hidden"
                             name={`${inputBaseName}[images][${image.uid}][cacheDirectory]`}
                             value={image.imageUpload.cacheDirectory}
@@ -70,6 +78,7 @@ const FieldInputs = (
 
                     inputs.push(
                         <input
+                            key={uuid()}
                             type="hidden"
                             name={`${inputBaseName}[images][${image.uid}][cacheFilePath]`}
                             value={image.imageUpload.cacheFilePath}
@@ -78,6 +87,7 @@ const FieldInputs = (
 
                     inputs.push(
                         <input
+                            key={uuid()}
                             type="hidden"
                             name={`${inputBaseName}[images][${image.uid}][fileName]`}
                             value={image.imageUpload.fileName}
@@ -85,7 +95,7 @@ const FieldInputs = (
                     );
                 }
 
-                return (<>{inputs}</>);
+                return (<div className="ansel_hidden" key={uuid()}>{inputs}</div>);
             })}
         </>
     );
