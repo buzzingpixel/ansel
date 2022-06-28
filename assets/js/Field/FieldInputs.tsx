@@ -43,6 +43,12 @@ const FieldInputs = (
                     <input
                         key={uuid()}
                         type="hidden"
+                        name={`${inputBaseName}[images][${image.uid}][sourceImageId]`}
+                        value={image.sourceImageId}
+                    />,
+                    <input
+                        key={uuid()}
+                        type="hidden"
                         name={`${inputBaseName}[images][${image.uid}][x]`}
                         value={image.x}
                     />,

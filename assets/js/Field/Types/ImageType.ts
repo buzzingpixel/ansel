@@ -4,6 +4,7 @@ interface ImageType {
     uid: string;
     imageUpload?: ImageUploadType;
     imageUrl: string;
+    sourceImageId?: string;
     x: number;
     y: number;
     width: number;

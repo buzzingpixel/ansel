@@ -47,6 +47,7 @@ const SelectedFileHandlerCraft = (
                     const image = {
                         uid: uuid(),
                         imageUrl: file.url,
+                        sourceImageId: file.id.toString(),
                     } as ImageType;
 
                     setFieldState((prevState: FieldStateType) => {

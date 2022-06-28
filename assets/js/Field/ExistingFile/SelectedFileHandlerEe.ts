@@ -60,6 +60,7 @@ const SelectedFileHandlerEe = (
                     const image = {
                         uid: uuid(),
                         imageUrl: file.path,
+                        sourceImageId: file.file_id.toString(),
                     } as ImageType;
 
                     setFieldState((prevState: FieldStateType) => {
