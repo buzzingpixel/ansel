@@ -20,6 +20,7 @@ use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
 use BuzzingPixel\AnselConfig\Bindings\FieldSettingsConfig;
 use BuzzingPixel\AnselConfig\Bindings\FilePickerConfig;
+use BuzzingPixel\AnselConfig\Bindings\GetProcessingUrlBinding;
 use BuzzingPixel\AnselConfig\Bindings\GetUploadKeyBinding;
 use BuzzingPixel\AnselConfig\Bindings\GetUploadUrlBinding;
 use BuzzingPixel\AnselConfig\Bindings\GuzzleConfig;
@@ -87,6 +88,7 @@ class ContainerManager
                 EEModelFacade::get(),
                 FieldSettingsConfig::get(),
                 FilePickerConfig::get(),
+                GetProcessingUrlBinding::get(),
                 GetUploadKeyBinding::get(),
                 GetUploadUrlBinding::get(),
                 GuzzleConfig::get(),

@@ -12,14 +12,18 @@ class FieldParametersCollection
 
     private string $uploadKey;
 
+    private string $processingUrl;
+
     public function __construct(
         string $environment,
         string $uploadUrl,
-        string $uploadKey
+        string $uploadKey,
+        string $processingUrl
     ) {
-        $this->environment = $environment;
-        $this->uploadUrl   = $uploadUrl;
-        $this->uploadKey   = $uploadKey;
+        $this->environment   = $environment;
+        $this->uploadUrl     = $uploadUrl;
+        $this->uploadKey     = $uploadKey;
+        $this->processingUrl = $processingUrl;
     }
 
     public function environment(): string
@@ -37,6 +41,11 @@ class FieldParametersCollection
         return $this->uploadKey;
     }
 
+    public function processingUrl(): string
+    {
+        return $this->processingUrl;
+    }
+
     /**
      * @return scalar[]
      */
@@ -46,6 +55,7 @@ class FieldParametersCollection
             'environment' => $this->environment(),
             'uploadUrl' => $this->uploadUrl(),
             'uploadKey' => $this->uploadKey(),
+            'processingUrl' => $this->processingUrl(),
         ];
     }
 }

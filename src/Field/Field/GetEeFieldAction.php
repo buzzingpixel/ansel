@@ -61,9 +61,11 @@ class GetEeFieldAction
     ): string {
         $this->eeCssJs->add();
 
-        $modalLink = base64_encode($this->fileChooserModalLinkFactory->getLink(
-            $fieldSettings,
-        ));
+        $modalLink = base64_encode(
+            $this->fileChooserModalLinkFactory->getLink(
+                $fieldSettings,
+            ),
+        );
 
         return $this->twig->render(
             '@AnselSrc/Field/Field/Field.twig',
