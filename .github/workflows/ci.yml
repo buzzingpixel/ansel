@@ -2,23 +2,142 @@ name: CI
 on: [push]
 jobs:
   code-quality:
-    runs-on: self-hosted
+    name: Code Quality
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: always()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.CI_SLACK_WEBHOOK }}
+          SLACK_USERNAME: Github
+          SLACK_ICON: https://www.buzzingpixel.com/files/slack-notifications-icon.png
+          SLACK_COLOR: '#1B7FBA'
+          SLACK_TITLE: ':large_blue_circle: Ansel Github CI has started running'
+          SLACK_FOOTER: '<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|View Run>'
+
+      - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: Build php74 image
+        run: >
+          docker build
+          --platform=linux/amd64
+          --file docker/php74/Dockerfile
+          --cache-from ghcr.io/buzzingpixel/ansel-php74
+          --build-arg BUILDKIT_INLINE_CACHE=1
+          --tag ghcr.io/buzzingpixel/ansel-php74
+          ./docker
+
+      - name: Push php74 image
+        run: docker push ghcr.io/buzzingpixel/ansel-php74
+
+      - name: Build node image
+        run: >
+          docker build
+          --platform=linux/amd64
+          --file docker/node/Dockerfile
+          --cache-from ghcr.io/buzzingpixel/ansel-node
+          --build-arg BUILDKIT_INLINE_CACHE=1
+          --tag ghcr.io/buzzingpixel/ansel-node
+          ./docker
+
+      - name: Push node image
+        run: docker push ghcr.io/buzzingpixel/ansel-node
+
       - name: Install composer dependencies
-        run: php74 /usr/local/bin/composer install --no-interaction --no-ansi --no-progress
-      - name: Install javascript dependencies
-        run: yarn install --production=false --frozen-lockfile
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-php74
+          bash -c "XDEBUG_MODE=off composer install --no-interaction --no-ansi --no-progress"
+
+      - name: Install node dependencies
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-node
+          sh -c "yarn install --production=false --frozen-lockfile"
+
       - name: Run PHP Unit Tests
-        run: XDEBUG_MODE=coverage php74 ./vendor/bin/phpunit
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-php74
+          bash -c "XDEBUG_MODE=coverage php ./vendor/bin/phpunit"
+
       - name: Run PHP Static Analysis
-        run: XDEBUG_MODE=off php74 -d memory_limit=4G ./vendor/bin/phpstan analyse cms src --no-progress
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-php74
+          bash -c "XDEBUG_MODE=off php -d memory_limit=4G ./vendor/bin/phpstan analyse cms src --no-progress"
+
       - name: Run PHP Code Sniffer
-        run: php74 -d memory_limit=4G ./vendor/bin/phpcs
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-php74
+          bash -c "XDEBUG_MODE=off php -d memory_limit=4G ./vendor/bin/phpcs"
+
       - name: Run JavaScript linting
-        run: yarn eslint --ext .js --ext .ts --ext .jsx --ext .tsx --ext .html --ext .vue --ext .mjs --no-error-on-unmatched-pattern assets/js assets/react/app --max-warnings=0
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-node
+          sh -c "yarn eslint --ext .js --ext .ts --ext .jsx --ext .tsx --ext .html --ext .vue --ext .mjs --no-error-on-unmatched-pattern assets/js assets/react/app --max-warnings=0"
+
       - name: Run TypeScript type checking
-        run: yarn tsc
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-node
+          sh -c "yarn tsc"
+
       - name: Run style linting
-        run: yarn stylelint --allow-empty-input "assets/**/*.{css,pcss}" "src/**/*.{css,pcss}" --fix
+        run: >
+          docker run
+          --rm
+          -v $(pwd):/app
+          -w /app
+          ghcr.io/buzzingpixel/ansel-node
+          sh -c "yarn stylelint --allow-empty-input "assets/**/*.{css,pcss}" "src/**/*.{css,pcss}" --fix"
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: failure()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.CI_SLACK_WEBHOOK }}
+          SLACK_USERNAME: Github
+          SLACK_ICON: https://www.buzzingpixel.com/files/slack-notifications-icon.png
+          SLACK_COLOR: '#A94442'
+          SLACK_TITLE: ':red_circle: Ansel Github CI has failed'
+          SLACK_FOOTER: '<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|View Run>'
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: success()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.CI_SLACK_WEBHOOK }}
+          SLACK_USERNAME: Github
+          SLACK_ICON: https://www.buzzingpixel.com/files/slack-notifications-icon.png
+          SLACK_COLOR: '#3B763D'
+          SLACK_TITLE: ':large_green_circle: Ansel Github CI succeeded'
+          SLACK_FOOTER: '<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|View Run>'
