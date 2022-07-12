@@ -6,7 +6,7 @@ import EeFileType from './EeFileType';
 import SelectedFileHandlerEe from './SelectedFileHandlerEe';
 import SelectedFileHandlerCraft from './SelectedFileHandlerCraft';
 import FieldDataType from '../Types/FieldDataType';
-import FieldStateType from '../Types/FieldStateType';
+// import FieldStateType from '../Types/FieldStateType';
 
 const FieldUploadSelect = (
     {
