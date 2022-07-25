@@ -4,6 +4,8 @@
 declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
+use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
+use BuzzingPixel\Ansel\Field\Field\ValidateEeFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
@@ -72,6 +74,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private GetEeFieldAction $getFieldAction;
 
+    private ValidateEeFieldAction $validateEeFieldAction;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -97,6 +101,9 @@ class Ansel_ft extends EE_Fieldtype
 
         /** @phpstan-ignore-next-line */
         $this->getFieldAction = $container->get(GetEeFieldAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->validateEeFieldAction = $container->get(ValidateEeFieldAction::class);
     }
 
     /**
@@ -332,7 +339,8 @@ class Ansel_ft extends EE_Fieldtype
 
         return $this->getFieldAction->render(
             $fieldSettings,
-            'ansel[field]'
+            // TODO: field_id_x is only valid if channel field type directly
+            'field_id_' . $this->field_id . '[field]'
         );
     }
 
@@ -348,6 +356,30 @@ class Ansel_ft extends EE_Fieldtype
     public function var_display_field($data): string
     {
         return $this->display_field($data);
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return bool|mixed|void
+     */
+    public function validate($data)
+    {
+        $fieldSettings = $this->getFieldSettingsCollection(
+            $this->settings
+        );
+
+        $data = is_array($data) ? $data : [];
+
+        return $this->validateEeFieldAction->validate(
+            $fieldSettings,
+            PostedData::fromArray($data)
+        );
+    }
+
+    public function save($data)
+    {
+        dd('foo', $data);
     }
 
     /**
