@@ -371,12 +371,17 @@ class Ansel_ft extends EE_Fieldtype
 
         $data = is_array($data) ? $data : [];
 
+        /** @phpstan-ignore-next-line */
         return $this->validateEeFieldAction->validate(
             $fieldSettings,
             PostedData::fromArray($data)
         );
     }
 
+    // phpcs:disable
+    /**
+     * @phpstan-ignore-next-line
+     */
     public function save($data)
     {
         dd('foo', $data);
@@ -384,10 +389,8 @@ class Ansel_ft extends EE_Fieldtype
 
     /**
      * @param mixed[] $data
-     *
-     * @phpstan-ignore-next-line
      */
-    public function var_save($data)
+    public function var_save(array $data): void
     {
         // TODO: Implement display_field() method.
         dd('TODO: Implement var_save() method.');
@@ -400,4 +403,5 @@ class Ansel_ft extends EE_Fieldtype
     {
         return;
     }
+    // phpcs:enable
 }
