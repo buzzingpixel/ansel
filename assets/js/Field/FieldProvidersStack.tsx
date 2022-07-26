@@ -3,17 +3,23 @@ import { FieldSettingsProvider } from './FieldSettings/FieldSettingsContext';
 import FieldSettingsFromRootEl from './FieldSettings/FieldSettingsFromRootEl';
 import { CustomFieldsProvider } from './CustomFields/CustomFieldsContext';
 import CustomFieldsFromRootEl from './CustomFields/CustomFieldsFromRootEl';
+import { FieldParametersProvider } from './Parameters/FieldParametersContext';
+import FieldParametersFromRootEl from './Parameters/FieldParametersFromRootEl';
 
 const FieldProvidersStack = (props) => {
-    const anselFieldEl = props.anselFieldEl as HTMLDivElement;
+    const root = props.anselFieldEl as HTMLDivElement;
 
     return <FieldSettingsProvider
-        fieldSettings={FieldSettingsFromRootEl(anselFieldEl)}
+        fieldSettings={FieldSettingsFromRootEl(root)}
     >
         <CustomFieldsProvider
-            customFields={CustomFieldsFromRootEl(anselFieldEl)}
+            customFields={CustomFieldsFromRootEl(root)}
         >
-            {props.children}
+            <FieldParametersProvider
+                fieldParameters={FieldParametersFromRootEl(root)}
+            >
+                {props.children}
+            </FieldParametersProvider>
         </CustomFieldsProvider>
     </FieldSettingsProvider>;
 };
