@@ -9,6 +9,8 @@ import { TranslationsProvider } from './Translations/TranslationsContext';
 import TranslationsFromRootEl from './Translations/TranslationsFromRootEl';
 import { PlatformProvider } from './Platform/PlatformContext';
 import PlatformFromRootEl from './Platform/PlatformFromRootEl';
+import { InputPlaceholderProvider } from './InputPlaceholder/InputPlaceholderContext';
+import InputPlaceholderFromRootEl from './InputPlaceholder/InputPlaceholderFromRootEl';
 
 const FieldProvidersStack = (props) => {
     const root = props.anselFieldEl as HTMLDivElement;
@@ -28,7 +30,11 @@ const FieldProvidersStack = (props) => {
                     <PlatformProvider
                         platform={PlatformFromRootEl(root)}
                     >
-                        {props.children}
+                        <InputPlaceholderProvider
+                            inputPlaceholder={InputPlaceholderFromRootEl(root)}
+                        >
+                            {props.children}
+                        </InputPlaceholderProvider>
                     </PlatformProvider>
                 </TranslationsProvider>
             </FieldParametersProvider>

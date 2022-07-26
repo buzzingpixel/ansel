@@ -11,7 +11,7 @@ const usePlatform = () => {
 
     if (!context) {
         throw new Error(
-            'useTranslations must be used within a TranslationsProvider',
+            'usePlatform must be used within a PlatformProvider',
         );
     }
 
