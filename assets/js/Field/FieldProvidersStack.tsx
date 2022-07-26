@@ -5,6 +5,8 @@ import { CustomFieldsProvider } from './CustomFields/CustomFieldsContext';
 import CustomFieldsFromRootEl from './CustomFields/CustomFieldsFromRootEl';
 import { FieldParametersProvider } from './Parameters/FieldParametersContext';
 import FieldParametersFromRootEl from './Parameters/FieldParametersFromRootEl';
+import { TranslationsProvider } from './Translations/TranslationsContext';
+import TranslationsFromRootEl from './Translations/TranslationsFromRootEl';
 
 const FieldProvidersStack = (props) => {
     const root = props.anselFieldEl as HTMLDivElement;
@@ -18,7 +20,11 @@ const FieldProvidersStack = (props) => {
             <FieldParametersProvider
                 fieldParameters={FieldParametersFromRootEl(root)}
             >
-                {props.children}
+                <TranslationsProvider
+                    translations={TranslationsFromRootEl(root)}
+                >
+                    {props.children}
+                </TranslationsProvider>
             </FieldParametersProvider>
         </CustomFieldsProvider>
     </FieldSettingsProvider>;
