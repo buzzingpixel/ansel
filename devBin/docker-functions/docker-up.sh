@@ -62,6 +62,7 @@ function docker-up() {
     docker exec -w /var/www/craft3/config ansel-php74 bash -c "chmod -R 0777 project";
     docker exec -w /var/www/craft3/public ansel-php74 bash -c "chmod -R 0777 cpresources";
     docker exec -w /var/www/craft3/public ansel-php74 bash -c "chmod -R 0777 uploads";
+    docker exec -w /var/www/craft3 ansel-php74 bash -c "mkdir storage/session";
     docker exec -w /var/www/craft3 ansel-php74 bash -c "chmod -R 0777 storage";
 
     # EE 6
