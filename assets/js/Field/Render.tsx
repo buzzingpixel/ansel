@@ -2,25 +2,16 @@ import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
 import * as React from 'react';
 import Field from './Field';
-import { FieldSettingsProvider } from './FieldSettings/FieldSettingsContext';
-import FieldSettingsFromRootEl from './FieldSettings/FieldSettingsFromRootEl';
-import { CustomFieldsProvider } from './CustomFields/CustomFieldsContext';
-import CustomFieldsFromRootEl from './CustomFields/CustomFieldsFromRootEl';
+import FieldProvidersStack from './FieldProvidersStack';
 
 export default (anselFieldEl: HTMLDivElement) => {
     const field = createRoot(anselFieldEl);
 
     field.render(
         <StrictMode>
-            <FieldSettingsProvider
-                fieldSettings={FieldSettingsFromRootEl(anselFieldEl)}
-            >
-                <CustomFieldsProvider
-                    customFields={CustomFieldsFromRootEl(anselFieldEl)}
-                >
-                    <Field />
-                </CustomFieldsProvider>
-            </FieldSettingsProvider>
+            <FieldProvidersStack anselFieldEl={anselFieldEl}>
+                <Field />
+            </FieldProvidersStack>
         </StrictMode>,
     );
 };
