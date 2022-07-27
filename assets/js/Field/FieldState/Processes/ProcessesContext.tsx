@@ -6,6 +6,7 @@ import {
 const ProcessesContext = createContext<{
     processes: number,
     setProcesses: CallableFunction,
+    hasProcesses: boolean,
 }>(null);
 
 const useProcesses = () => {
@@ -21,10 +22,20 @@ const useProcesses = () => {
 };
 
 const ProcessesProvider = (props) => {
+    let hasProcesses = false;
+
     const [processes, setProcesses] = useState<number>(0);
 
+    if (processes > 0) {
+        hasProcesses = true;
+    }
+
     const value = useMemo(
-        () => ({ processes, setProcesses }),
+        () => ({
+            processes,
+            setProcesses,
+            hasProcesses,
+        }),
         [processes],
     );
 

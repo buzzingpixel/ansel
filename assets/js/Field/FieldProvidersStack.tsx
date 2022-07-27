@@ -11,7 +11,7 @@ import { PlatformProvider } from './Platform/PlatformContext';
 import PlatformFromRootEl from './Platform/PlatformFromRootEl';
 import { InputPlaceholderProvider } from './InputPlaceholder/InputPlaceholderContext';
 import InputPlaceholderFromRootEl from './InputPlaceholder/InputPlaceholderFromRootEl';
-import { ProcessesProvider } from './FieldState/ProcessesContext';
+import { ProcessesProvider } from './FieldState/Processes/ProcessesContext';
 import { ErrorMessagesProvider } from './FieldState/ErrorMessages/ErrorMessagesContext';
 
 const FieldProvidersStack = (props) => {
