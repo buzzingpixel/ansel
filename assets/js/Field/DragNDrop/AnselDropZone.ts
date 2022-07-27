@@ -44,7 +44,7 @@ const useAnselDropZone = () => {
     return {
         getDropZoneRootProps: getRootProps,
         getDropZoneInputProps: getInputProps,
-        openDropZone: open,
+        openDropZoneDeviceDialog: open,
         isDropZoneDragActive: isDragActive,
     };
 };

@@ -5,6 +5,7 @@ import DragInProgress from './DragNDrop/DragInProgress';
 import { useErrorMessages } from './FieldState/ErrorMessages/ErrorMessagesContext';
 import { useProcesses } from './FieldState/Processes/ProcessesContext';
 import WorkingIndicator from './FieldState/Processes/WorkingIndicator';
+import Uploading from './DragNDrop/Uploading';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
@@ -14,6 +15,7 @@ const Field = () => {
     const {
         getDropZoneRootProps,
         getDropZoneInputProps,
+        openDropZoneDeviceDialog,
         isDropZoneDragActive,
     } = useAnselDropZone();
 
@@ -36,6 +38,10 @@ const Field = () => {
                 </div>
                 <DragInProgress isDropZoneDragActive={isDropZoneDragActive} />
                 <ErrorMessagesDisplay />
+                {/* Primary field elements */}
+                <div className="ansel_p-4 ansel_overflow-auto">
+                    <Uploading openDropZoneDeviceDialog={openDropZoneDeviceDialog} />
+                </div>
             </div>
         </>
     );
