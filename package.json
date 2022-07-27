@@ -1,6 +1,7 @@
 {
     "scripts": {
         "build": "node assets/bin/css.mjs && webpack --mode production",
+        "build-dev": "node assets/bin/css.mjs && webpack --mode development",
         "css": "node assets/bin/css.mjs",
         "js": "webpack --mode production",
         "js-dev": "webpack --mode development"

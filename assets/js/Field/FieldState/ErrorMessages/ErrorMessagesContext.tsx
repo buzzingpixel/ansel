@@ -8,6 +8,7 @@ import ObjectOfStringsType from '../../../Types/ObjectOfStringsType';
 interface ErrorMessagesContextType {
     errorMessages: ObjectOfStringsType,
     addErrorMessage:(message: string) => void,
+    hasErrors: boolean,
 }
 
 const ErrorMessagesContext = createContext<ErrorMessagesContextType>(
@@ -27,6 +28,8 @@ const useErrorMessages = () => {
 };
 
 const ErrorMessagesProvider = (props) => {
+    let hasErrors = false;
+
     const [errorMessages, setErrorMessages] = useState<ObjectOfStringsType>(
         {},
     );
@@ -49,8 +52,16 @@ const ErrorMessagesProvider = (props) => {
         }, 10000);
     };
 
+    if (Object.keys(errorMessages).length > 0) {
+        hasErrors = true;
+    }
+
     const value = useMemo(
-        () => ({ errorMessages, addErrorMessage }),
+        () => ({
+            errorMessages,
+            addErrorMessage,
+            hasErrors,
+        }),
         [errorMessages],
     );
 
