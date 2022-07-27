@@ -13,6 +13,7 @@ const Field = () => {
 
     const {
         getDropZoneRootProps,
+        getDropZoneInputProps,
         isDropZoneDragActive,
     } = useAnselDropZone();
 
@@ -29,6 +30,10 @@ const Field = () => {
                 style={{ minHeight: '100px' }}
                 {...getDropZoneRootProps()}
             >
+                {/* Dropzone input */}
+                <div className="ansel_hidden">
+                    <input {...getDropZoneInputProps()} />
+                </div>
                 <DragInProgress isDropZoneDragActive={isDropZoneDragActive} />
                 <ErrorMessagesDisplay />
             </div>
