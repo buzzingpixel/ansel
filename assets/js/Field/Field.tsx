@@ -1,25 +1,19 @@
 import * as React from 'react';
-import { useProcesses } from './FieldState/ProcessesContext';
+import ErrorMessagesDisplay from './FieldState/ErrorMessages/ErrorMessagesDisplay';
 
 const Field = () => {
-    const { processes, setProcesses } = useProcesses();
-
-    const increment = () => {
-        setProcesses(processes + 1);
-    };
+    const bgColorClass = '';
+    const fieldWorkingClass = '';
 
     return (
         <>
-            <div>
-                {processes}
+            {/* Main field container and dropzone */}
+            {/* TODO: {...getRootProps()} */}
+            <div
+                className={`${bgColorClass} ${fieldWorkingClass} ansel_border ansel_border-gray-200 ansel_border-solid ansel_relative`}
+            >
+                <ErrorMessagesDisplay />
             </div>
-            <div className="ansel_sr-only">
-                todo
-            </div>
-            <div>
-                <a href="#0" onClick={increment}>Increment</a>
-            </div>
-            foo
         </>
     );
 };

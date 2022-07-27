@@ -12,6 +12,7 @@ import PlatformFromRootEl from './Platform/PlatformFromRootEl';
 import { InputPlaceholderProvider } from './InputPlaceholder/InputPlaceholderContext';
 import InputPlaceholderFromRootEl from './InputPlaceholder/InputPlaceholderFromRootEl';
 import { ProcessesProvider } from './FieldState/ProcessesContext';
+import { ErrorMessagesProvider } from './FieldState/ErrorMessages/ErrorMessagesContext';
 
 const FieldProvidersStack = (props) => {
     const root = props.anselFieldEl as HTMLDivElement;
@@ -35,7 +36,9 @@ const FieldProvidersStack = (props) => {
                             inputPlaceholder={InputPlaceholderFromRootEl(root)}
                         >
                             <ProcessesProvider>
-                                {props.children}
+                                <ErrorMessagesProvider>
+                                    {props.children}
+                                </ErrorMessagesProvider>
                             </ProcessesProvider>
                         </InputPlaceholderProvider>
                     </PlatformProvider>
