@@ -13,6 +13,7 @@ import { InputPlaceholderProvider } from './InputPlaceholder/InputPlaceholderCon
 import InputPlaceholderFromRootEl from './InputPlaceholder/InputPlaceholderFromRootEl';
 import { ProcessesProvider } from './FieldState/Processes/ProcessesContext';
 import { ErrorMessagesProvider } from './FieldState/ErrorMessages/ErrorMessagesContext';
+import { ImagesProvider } from './FieldState/Images/ImagesContext';
 
 const FieldProvidersStack = (props) => {
     const root = props.anselFieldEl as HTMLDivElement;
@@ -37,7 +38,10 @@ const FieldProvidersStack = (props) => {
                         >
                             <ProcessesProvider>
                                 <ErrorMessagesProvider>
-                                    {props.children}
+                                    {/* TODO: set existing images here */}
+                                    <ImagesProvider images={[]}>
+                                        {props.children}
+                                    </ImagesProvider>
                                 </ErrorMessagesProvider>
                             </ProcessesProvider>
                         </InputPlaceholderProvider>

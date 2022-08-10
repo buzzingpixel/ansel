@@ -5,6 +5,7 @@ import { ImPlus } from 'react-icons/im';
 import { usePlatform } from '../Platform/PlatformContext';
 import EeFileType from '../Platform/EeFileType';
 import { useTranslations } from '../Translations/TranslationsContext';
+import { useImages } from '../FieldState/Images/ImagesContext';
 
 const Uploading = (
     { openDropZoneDeviceDialog }: { openDropZoneDeviceDialog: () => void },
@@ -18,6 +19,8 @@ const Uploading = (
     } = usePlatform();
 
     const buttonRef = useRef(document.createElement('div'));
+
+    const { hasImages } = useImages();
 
     let anchor = null;
 
@@ -90,8 +93,10 @@ const Uploading = (
         openDropZoneDeviceDialog();
     };
 
+    const paddingClass = hasImages ? 'ansel_pb-4' : '';
+
     return (
-        <>
+        <div className={paddingClass}>
             <div className="ansel_hidden" ref={buttonRef} />
             <div className="ansel_text-gray-700 ansel_italic ansel_text-center ansel_pb-4">
                 Drag images here to upload
@@ -139,7 +144,7 @@ const Uploading = (
                     </div>
                 </>
             }
-        </>
+        </div>
     );
 };
 

@@ -6,6 +6,7 @@ import { useErrorMessages } from './FieldState/ErrorMessages/ErrorMessagesContex
 import { useProcesses } from './FieldState/Processes/ProcessesContext';
 import WorkingIndicator from './FieldState/Processes/WorkingIndicator';
 import Uploading from './DragNDrop/Uploading';
+import RenderImages from './FieldState/Images/RenderImages';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
@@ -41,6 +42,7 @@ const Field = () => {
                 {/* Primary field elements */}
                 <div className="ansel_p-4 ansel_overflow-auto">
                     <Uploading openDropZoneDeviceDialog={openDropZoneDeviceDialog} />
+                    <RenderImages />
                 </div>
             </div>
         </>
