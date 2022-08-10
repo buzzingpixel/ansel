@@ -21,10 +21,6 @@ function docker-up() {
     docker exec -w /var/www ansel-php80 bash -c "chmod 0755 /var/www/ee6/system/ee";
     docker exec -w /var/www ansel-php81 bash -c "chmod 0755 /var/www/ee6/system/ee";
 
-    docker exec -w /var/www ansel-php74 bash -c "chmod 0755 /var/www/ee6/public/images";
-    docker exec -w /var/www ansel-php80 bash -c "chmod 0755 /var/www/ee6/public/images";
-    docker exec -w /var/www ansel-php81 bash -c "chmod 0755 /var/www/ee6/public/images";
-
     docker exec -w /var/www ansel-php74 bash -c "chmod 0755 /var/www/ee6/public/themes/ee";
     docker exec -w /var/www ansel-php80 bash -c "chmod 0755 /var/www/ee6/public/themes/ee";
     docker exec -w /var/www ansel-php81 bash -c "chmod 0755 /var/www/ee6/public/themes/ee";
@@ -62,7 +58,7 @@ function docker-up() {
     docker exec -w /var/www/craft3/config ansel-php74 bash -c "chmod -R 0777 project";
     docker exec -w /var/www/craft3/public ansel-php74 bash -c "chmod -R 0777 cpresources";
     docker exec -w /var/www/craft3/public ansel-php74 bash -c "chmod -R 0777 uploads";
-    docker exec -w /var/www/craft3 ansel-php74 bash -c "mkdir storage/session";
+    docker exec -w /var/www/craft3 ansel-php74 bash -c "mkdir -p storage/session";
     docker exec -w /var/www/craft3 ansel-php74 bash -c "chmod -R 0777 storage";
 
     # EE 6
