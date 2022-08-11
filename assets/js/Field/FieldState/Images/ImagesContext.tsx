@@ -45,7 +45,7 @@ const ImagesProvider = (props: {
                 image,
             ];
 
-            return { ...prevState };
+            return [...prevState];
         });
     };
 

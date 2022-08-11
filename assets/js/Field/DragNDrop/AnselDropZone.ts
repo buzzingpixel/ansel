@@ -1,30 +1,10 @@
-import { FileRejection, useDropzone } from 'react-dropzone';
-import { useCallback } from 'react';
-import { useErrorMessages } from '../FieldState/ErrorMessages/ErrorMessagesContext';
+import { useDropzone } from 'react-dropzone';
+import useOnDropAccepted from './OnDropAccepted';
+import useOnDropRejected from './OnDropRejected';
 
 const useAnselDropZone = () => {
-    const { errorMessages, addErrorMessage } = useErrorMessages();
-
-    const onDropAccepted = useCallback(
-        (files: Array<File>) => {
-            // eslint-disable-next-line no-console
-            console.log(files);
-        },
-        [],
-    );
-
-    const onDropRejected = useCallback(
-        (rejected: Array<FileRejection>) => {
-            rejected.forEach((rejectedItem) => {
-                rejectedItem.errors.forEach((error) => {
-                    addErrorMessage(
-                        `${rejectedItem.file.name} ${error.message}`,
-                    );
-                });
-            });
-        },
-        [errorMessages],
-    );
+    const { onDropAccepted } = useOnDropAccepted();
+    const { onDropRejected } = useOnDropRejected();
 
     const {
         getRootProps,
