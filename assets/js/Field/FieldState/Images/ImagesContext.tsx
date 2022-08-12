@@ -9,7 +9,10 @@ interface ImagesContextType {
     images: Array<ImageType>,
     addImage: (image: ImageType) => void,
     setImages: Dispatch<SetStateAction<Array<ImageType>>>,
-    removeImage: (index: number) => void,
+    removeImage: (index: string) => void,
+    deletedIds: Array<string>,
+    setDeletedIds: Dispatch<SetStateAction<Array<string>>>,
+    addDeletedId: (string) => void,
 }
 
 const ImagesContext = createContext<ImagesContextType>(null);
@@ -38,6 +41,19 @@ const ImagesProvider = (props: {
 
     const [images, setImages] = useState<Array<ImageType>>(initialImages);
 
+    const [deletedIds, setDeletedIds] = useState<Array<string>>([]);
+
+    const addDeletedId = (id: string) => {
+        setDeletedIds((prevState) => {
+            prevState = [
+                ...prevState,
+                id,
+            ];
+
+            return [...prevState];
+        });
+    };
+
     const addImage = (image: ImageType) => {
         setImages((prevState) => {
             prevState = [
@@ -49,11 +65,19 @@ const ImagesProvider = (props: {
         });
     };
 
-    const removeImage = (index: number) => {
+    const removeImage = (id: string) => {
         setImages((prevState) => {
+            const index = images.findIndex(
+                (image: ImageType) => image.id === id,
+            );
+
+            if (index === -1) {
+                return [...prevState];
+            }
+
             prevState.splice(index, 1);
 
-            return { ...prevState };
+            return [...prevState];
         });
     };
 
@@ -68,8 +92,11 @@ const ImagesProvider = (props: {
             hasImages,
             setImages,
             removeImage,
+            deletedIds,
+            setDeletedIds,
+            addDeletedId,
         }),
-        [images],
+        [images, hasImages, deletedIds],
     );
 
     return <ImagesContext.Provider

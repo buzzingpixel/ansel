@@ -29,10 +29,9 @@ const RenderImages = () => {
         animation={200}
         handle='.ansel-drag-handle'
     >
-        {images.map((image, index) => <RenderImage
-            image={image}
-            index={index}
+        {images.map((image) => <RenderImage
             key={image.id}
+            image={image}
         />)}
     </ReactSortable>;
 };
