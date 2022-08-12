@@ -6,11 +6,18 @@ import { usePlatform } from '../Platform/PlatformContext';
 import EeFileType from '../Platform/EeFileType';
 import { useTranslations } from '../Translations/TranslationsContext';
 import { useImages } from '../FieldState/Images/ImagesContext';
+import CraftFileType from '../Platform/CraftFileType';
+import useSelectedFileHandler from './SelectedFileHandler';
 
 const Uploading = (
     { openDropZoneDeviceDialog }: { openDropZoneDeviceDialog: () => void },
 ) => {
     const { selectImageFromDevice } = useTranslations();
+
+    const {
+        selectedFileHandlerEe,
+        selectedFileHandlerCraft,
+    } = useSelectedFileHandler();
 
     const {
         environment,
@@ -43,8 +50,7 @@ const Uploading = (
             callback: (file: EeFileType, references) => {
                 references.modal.find('.m-close').click();
 
-                // eslint-disable-next-line no-console
-                console.log(file);
+                selectedFileHandlerEe(file);
             },
         });
 
@@ -73,14 +79,13 @@ const Uploading = (
                     sources: [
                         `folder:${uploadLocationFolderId}`,
                     ],
-                    onSelect (files) {
+                    onSelect (files: Array<CraftFileType>) {
                         $('.modal-shade').remove();
 
                         modal.destroy();
 
                         files.forEach((file) => {
-                            // eslint-disable-next-line no-console
-                            console.log(file);
+                            selectedFileHandlerCraft(file);
                         });
                     },
                 });
