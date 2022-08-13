@@ -3,6 +3,7 @@ import ReactCrop from 'react-image-crop';
 import { useEffect, useRef, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { BsCheck } from 'react-icons/bs';
+import { Portal } from 'react-portal';
 import { useRenderImageContext } from './RenderImageContext';
 import { useFieldSettings } from '../../FieldSettings/FieldSettingsContext';
 
@@ -103,51 +104,51 @@ const RenderImageCropInner = () => {
 
     const iconAnchorClasses = 'ansel_text-red-600 ansel_bg-gray-100 hover:ansel_bg-gray-200 ansel_h-40px ansel_w-70px ansel_flex ansel_flex-row ansel_items-center ansel_justify-center';
 
-    return <div
-        className="ansel_fixed ansel_top-0 ansel_left-0 ansel_w-full ansel_h-full ansel_z-max ansel_bg-black-opacity-60">
-        <div
-            className="ansel_absolute ansel_top-0 ansel_left-0 ansel_w-full ansel_h-full ansel_flex ansel_items-center ansel_justify-center">
-            <div>
-                <div className="ansel_relative">
-                    <div>
-                        <ReactCrop
-                            crop={crop}
-                            onChange={(_, c) => setCrop(c)}
-                            aspect={ratioAsNumber}
-                            minWidth={minWidth}
-                            minHeight={minHeight}
-                        >
-                            <img
-                                ref={imageEl}
-                                src={image.imageUrl}
-                                alt=""
-                                onLoad={() => {
-                                    setImageIsLoaded(true);
-                                }}
-                            />
-                        </ReactCrop>
+    return <Portal>
+        <div className="ansel_fixed ansel_top-0 ansel_left-0 ansel_w-full ansel_h-full ansel_z-max ansel_bg-black-opacity-60">
+            <div className="ansel_absolute ansel_top-0 ansel_left-0 ansel_w-full ansel_h-full ansel_flex ansel_items-center ansel_justify-center">
+                <div>
+                    <div className="ansel_relative">
+                        <div>
+                            <ReactCrop
+                                crop={crop}
+                                onChange={(_, c) => setCrop(c)}
+                                aspect={ratioAsNumber}
+                                minWidth={minWidth}
+                                minHeight={minHeight}
+                            >
+                                <img
+                                    ref={imageEl}
+                                    src={image.imageUrl}
+                                    alt=""
+                                    onLoad={() => {
+                                        setImageIsLoaded(true);
+                                    }}
+                                />
+                            </ReactCrop>
+                        </div>
                     </div>
-                </div>
-                <div className="ansel_flex ansel_flex-row ansel_items-center ansel_justify-center">
-                    <a
-                        onClick={cancelCrop}
-                        href="#0"
-                        className={`ansel_text-red-600 hover:ansel_text-red-600 ansel_rounded-l-lg ${iconAnchorClasses}`}
-                    >
-                        <MdClose size="22px" />
-                    </a>
-                    <div className="ansel_bg-gray-300 ansel_h-40px ansel_w-1px"></div>
-                    <a
-                        onClick={acceptCrop}
-                        href="#0"
-                        className={`ansel_text-green-500 hover:ansel_text-green-500 ansel_rounded-r-lg ${iconAnchorClasses}`}
-                    >
-                        <BsCheck size="30px" />
-                    </a>
+                    <div className="ansel_flex ansel_flex-row ansel_items-center ansel_justify-center">
+                        <a
+                            onClick={cancelCrop}
+                            href="#0"
+                            className={`ansel_text-red-600 hover:ansel_text-red-600 ansel_rounded-l-lg ${iconAnchorClasses}`}
+                        >
+                            <MdClose size="22px" />
+                        </a>
+                        <div className="ansel_bg-gray-300 ansel_h-40px ansel_w-1px"></div>
+                        <a
+                            onClick={acceptCrop}
+                            href="#0"
+                            className={`ansel_text-green-500 hover:ansel_text-green-500 ansel_rounded-r-lg ${iconAnchorClasses}`}
+                        >
+                            <BsCheck size="30px" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>;
+    </Portal>;
 };
 
 const RenderImageCrop = () => {
