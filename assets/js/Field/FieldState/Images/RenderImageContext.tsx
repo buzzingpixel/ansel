@@ -9,6 +9,11 @@ import { useFieldSettings } from '../../FieldSettings/FieldSettingsContext';
 import GetPixelCropFromPercentCrop from './GetPixelCropFromPercentCrop';
 import { useImages } from './ImagesContext';
 
+interface FocalPoint {
+    x: number,
+    y: number,
+}
+
 interface RenderImageContextType {
     image: ImageType,
     cropIsOpen: boolean,
@@ -19,6 +24,10 @@ interface RenderImageContextType {
     acceptedCrop: PercentCrop,
     setAcceptedCrop: Dispatch<SetStateAction<PercentCrop | null>>,
     pixelCropState: PixelCropPlusImageDimensionsContract,
+    setFocalPoint: (focalPoint: FocalPoint) => void,
+    focalPointIsOpen: boolean,
+    setFocalPointIsOpen: Dispatch<SetStateAction<boolean>>,
+    toggleFocalPointIsOpen: () => void,
 }
 
 const RenderImageContext = createContext<RenderImageContextType>(
@@ -51,6 +60,10 @@ const RenderImageProvider = ({
     const { ratio, ratioAsNumber } = useFieldSettings();
 
     const [cropIsOpen, setCropIsOpen] = useState<boolean>(false);
+
+    const [focalPointIsOpen, setFocalPointIsOpen] = useState<boolean>(
+        false,
+    );
 
     const [crop, setCrop] = useState<PercentCrop | null>(null);
 
@@ -94,6 +107,21 @@ const RenderImageProvider = ({
 
     const toggleCropIsOpen = () => {
         setCropIsOpen((prevState) => !prevState);
+    };
+
+    const setFocalPoint = (focalPoint: FocalPoint) => {
+        setImages((oldImagesState) => {
+            const index = images.findIndex(
+                (mappedImage) => mappedImage.id === image.id,
+            );
+
+            image.focalX = focalPoint.x;
+            image.focalY = focalPoint.y;
+
+            oldImagesState[index] = image;
+
+            return [...oldImagesState];
+        });
     };
 
     useEffect(
@@ -168,9 +196,20 @@ const RenderImageProvider = ({
                     imageElement.src = image.imageUrl;
                 }
             }
+
+            if (!image.focalX || !image.focalY) {
+                setFocalPoint({
+                    x: 50,
+                    y: 50,
+                });
+            }
         },
         [],
     );
+
+    const toggleFocalPointIsOpen = () => {
+        setFocalPointIsOpen((prevState) => !prevState);
+    };
 
     const value = useMemo(
         () => ({
@@ -183,8 +222,20 @@ const RenderImageProvider = ({
             acceptedCrop,
             setAcceptedCrop,
             pixelCropState,
+            setFocalPoint,
+            focalPointIsOpen,
+            setFocalPointIsOpen,
+            toggleFocalPointIsOpen,
         }),
-        [image, images, cropIsOpen, crop, acceptedCrop, pixelCropState],
+        [
+            image,
+            images,
+            cropIsOpen,
+            crop,
+            acceptedCrop,
+            pixelCropState,
+            focalPointIsOpen,
+        ],
     );
 
     return <RenderImageContext.Provider

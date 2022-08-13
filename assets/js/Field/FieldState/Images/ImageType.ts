@@ -11,6 +11,8 @@ interface ImageType extends ItemInterface {
     y: number;
     width: number;
     height: number;
+    focalX: number;
+    focalY: number;
 }
 
 export default ImageType;
