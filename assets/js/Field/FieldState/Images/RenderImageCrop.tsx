@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRenderImageContext } from './RenderImageContext';
 import { useFieldSettings } from '../../FieldSettings/FieldSettingsContext';
 import AnselPortal from '../../Utility/AnselPortal';
+import useWindowResize from '../../../Hooks/useWindowResize';
 
 const RenderImageCropInner = () => {
     const [
@@ -68,12 +69,8 @@ const RenderImageCropInner = () => {
         }
     };
 
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+    useWindowResize(() => {
+        handleResize();
     });
 
     useEffect(() => {

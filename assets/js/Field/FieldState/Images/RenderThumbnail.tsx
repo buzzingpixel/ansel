@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRenderImageContext } from './RenderImageContext';
+import useWindowResize from '../../../Hooks/useWindowResize';
 
 const RenderThumbnail = () => {
     // TODO: lock if source file is missing
@@ -15,22 +16,13 @@ const RenderThumbnail = () => {
         192,
     );
 
-    useEffect(
-        () => {
-            const handler = () => {
-                if (!containerRef || !containerRef.current) {
-                    return;
-                }
+    useWindowResize(() => {
+        if (!containerRef || !containerRef.current) {
+            return;
+        }
 
-                setContainerWidth(containerRef.current.clientWidth);
-            };
-
-            window.addEventListener('resize', handler);
-
-            return () => window.removeEventListener('resize', handler);
-        },
-        [containerWidth],
-    );
+        setContainerWidth(containerRef.current.clientWidth);
+    });
 
     if (pixelCropState === null) {
         return (
