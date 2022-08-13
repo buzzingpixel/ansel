@@ -3,6 +3,7 @@ import { ReactSortable } from 'react-sortablejs';
 import { ForwardedRef, forwardRef } from 'react';
 import { useImages } from './ImagesContext';
 import RenderImage from './RenderImage';
+import { RenderImageProvider } from './RenderImageContext';
 
 const UlComponent = forwardRef((
     props: {
@@ -29,10 +30,12 @@ const RenderImages = () => {
         animation={200}
         handle='.ansel-drag-handle'
     >
-        {images.map((image) => <RenderImage
+        {images.map((image) => <RenderImageProvider
             key={image.id}
             image={image}
-        />)}
+        >
+            <RenderImage />
+        </RenderImageProvider>)}
     </ReactSortable>;
 };
 

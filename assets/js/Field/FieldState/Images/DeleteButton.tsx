@@ -2,14 +2,17 @@ import * as React from 'react';
 import { IconContext } from 'react-icons';
 import { MdDelete } from 'react-icons/md';
 import { useImages } from './ImagesContext';
+import { useRenderImageContext } from './RenderImageContext';
 
-const DeleteButton = ({ id }: {id: string}) => {
+const DeleteButton = () => {
+    const { image } = useRenderImageContext();
+
     const { removeImage } = useImages();
 
     const remove = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
 
-        removeImage(id);
+        removeImage(String(image.id).toString());
     };
 
     return (
