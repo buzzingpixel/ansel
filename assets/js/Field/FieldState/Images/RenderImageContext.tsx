@@ -1,5 +1,5 @@
 import {
-    createContext, Dispatch, SetStateAction, useCallback, useContext, useEffect, useMemo, useState,
+    createContext, Dispatch, SetStateAction, useContext, useEffect, useMemo, useState,
 } from 'react';
 import * as React from 'react';
 import { PercentCrop } from 'react-image-crop';
@@ -13,6 +13,7 @@ interface RenderImageContextType {
     image: ImageType,
     cropIsOpen: boolean,
     setCropIsOpen: Dispatch<SetStateAction<boolean>>,
+    toggleCropIsOpen: () => void,
     crop: PercentCrop,
     setCrop: Dispatch<SetStateAction<PercentCrop | null>>,
     acceptedCrop: PercentCrop,
@@ -89,6 +90,10 @@ const RenderImageProvider = ({
                 });
             },
         );
+    };
+
+    const toggleCropIsOpen = () => {
+        setCropIsOpen((prevState) => !prevState);
     };
 
     useEffect(
@@ -172,6 +177,7 @@ const RenderImageProvider = ({
             image,
             cropIsOpen,
             setCropIsOpen,
+            toggleCropIsOpen,
             crop,
             setCrop,
             acceptedCrop,
