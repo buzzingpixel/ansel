@@ -66,7 +66,7 @@ const RenderImageProvider = ({
         GetPixelCropFromPercentCrop(image.imageUrl, cropToSet).then(
             (incomingCrop) => {
                 setAcceptedCropState(cropToSet);
-                console.log(incomingCrop);
+
                 setPixelCropState({ ...incomingCrop });
 
                 const index = images.findIndex(
