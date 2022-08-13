@@ -3,6 +3,7 @@ import { useRenderImageContext } from './RenderImageContext';
 
 const RenderThumbnail = () => {
     const { image } = useRenderImageContext();
+
     return <div
         className="ansel_w-48 ansel_flex-shrink-0 ansel_mx-auto ansel_overflow-hidden ansel_relative"
         style={{
