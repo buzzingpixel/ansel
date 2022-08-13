@@ -33,13 +33,14 @@ const RenderThumbnail = () => {
     );
 
     if (pixelCropState === null) {
-        return <div
-            className="ansel_w-48 ansel_flex-shrink-0 ansel_mx-auto ansel_overflow-hidden ansel_relative"
-            style={{
-                height: '90px',
-                position: 'relative',
-            }}
-        ></div>;
+        return (
+            <div className="ansel_w-48 ansel_flex-shrink-0 ansel_mx-auto ansel_overflow-hidden ansel_relative"
+                 style={{
+                     height: '90px',
+                     position: 'relative',
+                 }}
+            />
+        );
     }
 
     const ratio = pixelCropState.width / pixelCropState.height;
@@ -53,27 +54,29 @@ const RenderThumbnail = () => {
     const thumbX = Math.round(widthPercent * pixelCropState.x) * -1;
     const thumbY = Math.round(heightPercent * pixelCropState.y) * -1;
 
-    return <div
-        ref={containerRef}
-        className="ansel_w-48 ansel_flex-shrink-0 ansel_mx-auto ansel_overflow-hidden ansel_relative"
-        style={{
-            height: `${containerHeight}px`,
-            position: 'relative',
-        }}
-    >
-        <img
-            src={image.imageUrl}
+    return (
+        <div
+            ref={containerRef}
+            className="ansel_w-48 ansel_flex-shrink-0 ansel_mx-auto ansel_overflow-hidden ansel_relative"
             style={{
-                position: 'absolute',
-                width: `${thumbWidth}px`,
-                height: `${thumbHeight}px`,
-                left: `${thumbX}px`,
-                top: `${thumbY}px`,
-                maxWidth: 'none',
+                height: `${containerHeight}px`,
+                position: 'relative',
             }}
-            alt=""
-        />
-    </div>;
+        >
+            <img
+                src={image.imageUrl}
+                style={{
+                    position: 'absolute',
+                    width: `${thumbWidth}px`,
+                    height: `${thumbHeight}px`,
+                    left: `${thumbX}px`,
+                    top: `${thumbY}px`,
+                    maxWidth: 'none',
+                }}
+                alt=""
+            />
+        </div>
+    );
 };
 
 export default RenderThumbnail;

@@ -1,10 +1,40 @@
 import * as React from 'react';
-import { useRenderImageContext } from './RenderImageContext';
+import { useState } from 'react';
+import { FocalPoint, useRenderImageContext } from './RenderImageContext';
+import AnselPortal from '../../Utility/AnselPortal';
 
 const RenderEditFocalPointInner = () => {
-    console.log('todo: edit focal point');
+    const { image, setFocalPoint, setFocalPointIsOpen } = useRenderImageContext();
 
-    return <>todo: edit focal point</>;
+    const [localFocal, setLocalFocal] = useState<FocalPoint>({
+        x: image.focalX,
+        y: image.focalY,
+    });
+
+    const accept = (event: Event|React.MouseEvent) => {
+        event.preventDefault();
+
+        setFocalPoint({ ...localFocal });
+
+        setFocalPointIsOpen(false);
+    };
+
+    const cancel = (event: Event|React.MouseEvent) => {
+        event.preventDefault();
+
+        setLocalFocal(() => ({
+            x: image.focalX,
+            y: image.focalY,
+        }));
+
+        setFocalPointIsOpen(false);
+    };
+
+    return (
+        <AnselPortal accept={accept} cancel={cancel}>
+            todo: edit focal point
+        </AnselPortal>
+    );
 };
 
 const RenderEditFocalPoint = () => {

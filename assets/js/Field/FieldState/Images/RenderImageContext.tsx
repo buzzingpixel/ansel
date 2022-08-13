@@ -244,4 +244,4 @@ const RenderImageProvider = ({
     />;
 };
 
-export { RenderImageProvider, useRenderImageContext };
+export { RenderImageProvider, useRenderImageContext, FocalPoint };
