@@ -3,9 +3,15 @@ import { useState } from 'react';
 import { FocalPoint, useRenderImageContext } from './RenderImageContext';
 import AnselPortal from '../../Utility/AnselPortal';
 import useWindowResize from '../../../Hooks/useWindowResize';
+import useContainerMouseCoords from '../../../Hooks/useContainerMouseCoords';
 
 const RenderEditFocalPointInner = () => {
     const windowDimensions = useWindowResize();
+
+    const { coords, handleMouseMove } = useContainerMouseCoords({
+        x: 50,
+        y: 50,
+    });
 
     const { image, setFocalPoint, setFocalPointIsOpen } = useRenderImageContext();
 
@@ -71,7 +77,11 @@ const RenderEditFocalPointInner = () => {
     return (
         <AnselPortal accept={accept} cancel={cancel}>
             <div
-                className='ansel_mb-2 ansel_overflow-hidden'
+                onMouseMove={handleMouseMove}
+                onClick={() => {
+                    setLocalFocal(coords);
+                }}
+                className='ansel_mb-2 ansel_overflow-hidden ansel_cursor-crosshair'
                 style={{
                     backgroundColor: '#d5d5d5',
                     width: finalWidth,
@@ -79,6 +89,27 @@ const RenderEditFocalPointInner = () => {
                     position: 'relative',
                 }}
             >
+                <div
+                    className="ansel_absolute ansel_rounded-full ansel_border-white ansel_border-solid ansel_opacity-75 ansel_bg-black ansel_z-50 ansel_border-2"
+                    style={{
+                        width: '18px',
+                        height: '18px',
+                        left: `${localFocal.x}%`,
+                        top: `${localFocal.y}%`,
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                >
+                    <div
+                        className="ansel_absolute ansel_rounded-full ansel_bg-white"
+                        style={{
+                            width: '5px',
+                            height: '5px',
+                            left: '50%',
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
+                        }}
+                    ></div>
+                </div>
                 <img
                     src={image.imageUrl}
                     style={{
