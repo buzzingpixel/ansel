@@ -4,6 +4,7 @@ import { ForwardedRef, forwardRef } from 'react';
 import { useImages } from './ImagesContext';
 import RenderImage from './RenderImage';
 import { RenderImageProvider } from './RenderImageContext';
+import { RenderImagesFieldsProvider } from './RenderImagesFieldsContext';
 
 const UlComponent = forwardRef((
     props: {
@@ -30,12 +31,14 @@ const RenderImages = () => {
         animation={200}
         handle='.ansel-drag-handle'
     >
-        {images.map((image) => <RenderImageProvider
-            key={image.id}
-            image={image}
-        >
-            <RenderImage />
-        </RenderImageProvider>)}
+        <RenderImagesFieldsProvider>
+            {images.map((image) => <RenderImageProvider
+                key={image.id}
+                image={image}
+            >
+                <RenderImage />
+            </RenderImageProvider>)}
+        </RenderImagesFieldsProvider>
     </ReactSortable>;
 };
 
