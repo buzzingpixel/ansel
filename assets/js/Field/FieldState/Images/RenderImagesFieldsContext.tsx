@@ -4,8 +4,8 @@ import {
 import * as React from 'react';
 
 interface RenderImagesFieldsContext {
-    activeFieldIndex: number|null,
-    setActiveFieldIndex: Dispatch<SetStateAction<number|null>>,
+    activeFieldImageId: string|null,
+    setActiveFieldImageId: Dispatch<SetStateAction<string|null>>,
 }
 
 const RenderImagesFieldsContext = createContext<RenderImagesFieldsContext>(
@@ -32,16 +32,16 @@ const RenderImagesFieldsProvider = ({
         | React.ReactChild[],
 }) => {
     const [
-        activeFieldIndex,
-        setActiveFieldIndex,
-    ] = useState<number|null>(null);
+        activeFieldImageId,
+        setActiveFieldImageId,
+    ] = useState<string|null>(null);
 
     const value = useMemo(
         () => ({
-            activeFieldIndex,
-            setActiveFieldIndex,
+            activeFieldImageId,
+            setActiveFieldImageId,
         }),
-        [activeFieldIndex],
+        [activeFieldImageId],
     );
 
     return <RenderImagesFieldsContext.Provider
