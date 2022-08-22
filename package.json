@@ -14,13 +14,25 @@
         "topicSeparator": " ",
         "topics": {
             "docker": {
-                "description": "Docker commands for this project"
+                "description": "Docker commands"
             },
-            "container": {
-                "description": "Container commands for this project"
+            "docker:container": {
+                "description": "Docker container"
+            },
+            "lint": {
+                "description": "Linting commands"
+            },
+            "provision": {
+                "description": "Provisioning commands"
             }
         }
     },
+    "files": [
+        "/bin",
+        "/dist",
+        "/npm-shrinkwrap.json",
+        "/oclif.manifest.json"
+    ],
     "main": "dev-cli/index.js",
     "scripts": {
         "build-cli": "rm -rf dev-cli/dist && yarn tsc --project dev-cli",

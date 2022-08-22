@@ -7,7 +7,7 @@ const phpcs_1 = require("./phpcs");
 const eslint_1 = require("./eslint");
 const tsc_1 = require("./tsc");
 const stylelint_1 = require("./stylelint");
-class LintAll extends core_1.Command {
+class All extends core_1.Command {
     // eslint-disable-next-line class-methods-use-this
     async run() {
         await phpunit_1.default.run();
@@ -18,5 +18,5 @@ class LintAll extends core_1.Command {
         await stylelint_1.default.runStandAlone(this.config.root);
     }
 }
-exports.default = LintAll;
-LintAll.summary = 'Run All linting';
+exports.default = All;
+All.summary = 'Run All linting';

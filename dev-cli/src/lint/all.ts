@@ -6,7 +6,7 @@ import eslint from './eslint';
 import tsc from './tsc';
 import stylelint from './stylelint';
 
-export default class LintAll extends Command {
+export default class All extends Command {
     static summary = 'Run All linting';
 
     // eslint-disable-next-line class-methods-use-this
