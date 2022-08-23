@@ -74,8 +74,13 @@ const RenderEditFocalPointInner = () => {
     const imgX = Math.round(imgWidthPercent * pixelCropState.x) * -1;
     const imgY = Math.round(imgHeightPercent * pixelCropState.y) * -1;
 
+    // TODO: Move heading to lang files
     return (
-        <AnselPortal accept={accept} cancel={cancel}>
+        <AnselPortal
+            heading='Click on the image to place focal point. Press red button (or escape) to cancel. Press green button (or enter) to accept changes.'
+            cancelAction={cancel}
+            acceptAction={accept}
+        >
             <div
                 onMouseMove={handleMouseMove}
                 onClick={() => {

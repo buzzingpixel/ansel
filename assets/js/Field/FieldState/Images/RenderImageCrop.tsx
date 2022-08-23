@@ -77,8 +77,13 @@ const RenderImageCropInner = () => {
         handleResize();
     }, [imageIsLoaded]);
 
+    // TODO: Move heading to lang files
     return (
-        <AnselPortal accept={accept} cancel={cancel}>
+        <AnselPortal
+            heading='Edit image crop. Press red button (or escape) to cancel. Press green button (or enter) to accept changes.'
+            cancelAction={cancel}
+            acceptAction={accept}
+        >
             <ReactCrop
                 crop={crop}
                 onChange={(_, c) => setCrop(c)}
