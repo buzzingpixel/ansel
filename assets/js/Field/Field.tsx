@@ -25,7 +25,7 @@ const Field = () => {
     const fieldWorkingClass = hasProcesses ? 'ansel-field-working' : '';
 
     return (
-        <>
+        <div className="ansel_box-border">
             <WorkingIndicator />
             {/* Main field container and dropzone */}
             <div
@@ -45,7 +45,7 @@ const Field = () => {
                     <RenderImages />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

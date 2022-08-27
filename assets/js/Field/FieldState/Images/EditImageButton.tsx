@@ -7,7 +7,7 @@ const EditImageButton = () => {
     const { toggleCropIsOpen } = useRenderImageContext();
 
     return <div
-        className="ansel_-ml-px ansel_w-0 ansel_flex-1 ansel_flex ansel_border-0 ansel_border-l ansel_border-gray-200 ansel_border-solid">
+        className="ansel_w-0 ansel_flex-1 ansel_flex">
         <a
             onClick={(event: React.MouseEvent) => {
                 event.preventDefault();
@@ -15,7 +15,7 @@ const EditImageButton = () => {
                 toggleCropIsOpen();
             }}
             href="#0"
-            className="ansel_relative ansel_w-0 ansel_flex-1 ansel_inline-flex ansel_items-center ansel_justify-center ansel_py-4 ansel_text-sm ansel_text-gray-700 ansel_font-medium ansel_border ansel_border-transparent hover:ansel_text-gray-500 hover:ansel_bg-gray-200"
+            className="ansel_relative ansel_w-0 ansel_flex-1 ansel_inline-flex ansel_items-center ansel_justify-center ansel_py-4 ansel_text-sm ansel_text-gray-700 ansel_font-medium ansel_border ansel_border-transparent hover:ansel_text-gray-500 hover:ansel_bg-gray-200 ansel_rounded-bl-lg"
         >
             <IconContext.Provider value={{ color: '#525252' }}>
                 <ImCrop className="ansel_w-5 ansel_h-5 ansel_text-gray-400" aria-hidden="true"/>

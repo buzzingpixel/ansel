@@ -110,7 +110,7 @@ const AnselPortal = ({
 
     return (
         <Portal>
-            <div className="ansel_fixed ansel_top-0 ansel_left-0 ansel_w-full ansel_h-full ansel_z-max ansel_bg-black-opacity-60">
+            <div className="ansel_box-border ansel_fixed ansel_top-0 ansel_left-0 ansel_w-full ansel_h-full ansel_z-max ansel_bg-black-opacity-60">
                 <div className="ansel_absolute ansel_top-0 ansel_left-0 ansel_w-full ansel_h-full ansel_flex ansel_items-center ansel_justify-center">
                     <div>
                         <div className="ansel_relative">
