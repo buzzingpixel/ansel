@@ -8,20 +8,34 @@ function classNames (...classes) {
 }
 
 const LightSwitch = ({
-    defaultState,
+    checked,
+    onChange,
 }: {
-    defaultState?: boolean,
+    checked?: boolean,
+    onChange?: (isChecked: boolean) => void,
 }) => {
     const { environment } = usePlatform();
 
-    const [enabled, setEnabled] = useState(defaultState || false);
+    const [checkedState, setCheckedState] = useState(
+        checked || false,
+    );
+
+    const changeHandler = (isChecked: boolean) => {
+        setCheckedState(isChecked);
+
+        if (!onChange) {
+            return;
+        }
+
+        onChange(isChecked);
+    };
 
     return (
         <Switch
-            checked={enabled}
-            onChange={setEnabled}
+            checked={checkedState}
+            onChange={changeHandler}
             className={classNames(
-                enabled ? 'ansel_bg-green-500' : 'ansel_bg-gray-200',
+                checkedState ? 'ansel_bg-green-500' : 'ansel_bg-gray-200',
                 'ansel_relative ansel_inline-flex ansel_flex-shrink-0 ansel_h-24px ansel_w-44px ansel_border-2 ansel_border-transparent ansel_rounded-full ansel_cursor-pointer ansel_transition-colors ansel_ease-in-out ansel_duration-200 focus:ansel_outline-none focus:ansel_ring-2 focus:ansel_ring-offset-2 focus:ansel_ring-green-500 ansel_font-size-16px ansel_p-0 ansel_line-height-24px ansel_items-center',
                 // This is so gross
                 environment === 'craft' ? 'ansel_pl-2px' : '',
@@ -29,13 +43,13 @@ const LightSwitch = ({
         >
             <span
                 className={classNames(
-                    enabled ? 'ansel_translate-x-20px' : 'ansel_translate-x-0',
+                    checkedState ? 'ansel_translate-x-20px' : 'ansel_translate-x-0',
                     'ansel_pointer-events-none ansel_relative ansel_inline-block ansel_h-20px ansel_w-20px ansel_rounded-full ansel_bg-white ansel_shadow ansel_transform ansel_ring-0 ansel_transition ansel_ease-in-out ansel_duration-200',
                 )}
             >
                 <span
                     className={classNames(
-                        enabled ? 'ansel_opacity-0 ansel_ease-out ansel_duration-100' : 'ansel_opacity-100 ansel_ease-in ansel_duration-200',
+                        checkedState ? 'ansel_opacity-0 ansel_ease-out ansel_duration-100' : 'ansel_opacity-100 ansel_ease-in ansel_duration-200',
                         'ansel_absolute ansel_inset-0 ansel_h-full ansel_w-full ansel_flex ansel_items-center ansel_justify-center ansel_transition-opacity',
                     )}
                     aria-hidden="true"
@@ -52,7 +66,7 @@ const LightSwitch = ({
                 </span>
                 <span
                     className={classNames(
-                        enabled ? 'ansel_opacity-100 ansel_ease-in ansel_duration-200' : 'ansel_opacity-0 ansel_ease-out ansel_duration-100',
+                        checkedState ? 'ansel_opacity-100 ansel_ease-in ansel_duration-200' : 'ansel_opacity-0 ansel_ease-out ansel_duration-100',
                         'ansel_absolute ansel_inset-0 ansel_h-full ansel_w-full ansel_flex ansel_items-center ansel_justify-center ansel_transition-opacity',
                     )}
                     aria-hidden="true"

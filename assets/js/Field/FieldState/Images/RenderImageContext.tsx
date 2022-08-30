@@ -15,19 +15,22 @@ interface FocalPoint {
 }
 
 interface RenderImageContextType {
-    image: ImageType,
-    cropIsOpen: boolean,
-    setCropIsOpen: Dispatch<SetStateAction<boolean>>,
-    toggleCropIsOpen: () => void,
-    crop: PercentCrop,
-    setCrop: Dispatch<SetStateAction<PercentCrop | null>>,
-    acceptedCrop: PercentCrop,
-    setAcceptedCrop: Dispatch<SetStateAction<PercentCrop | null>>,
-    pixelCropState: PixelCropPlusImageDimensionsContract,
-    setFocalPoint: (focalPoint: FocalPoint) => void,
-    focalPointIsOpen: boolean,
-    setFocalPointIsOpen: Dispatch<SetStateAction<boolean>>,
-    toggleFocalPointIsOpen: () => void,
+    image: ImageType;
+    cropIsOpen: boolean;
+    setCropIsOpen: Dispatch<SetStateAction<boolean>>;
+    toggleCropIsOpen: () => void;
+    crop: PercentCrop;
+    setCrop: Dispatch<SetStateAction<PercentCrop | null>>;
+    acceptedCrop: PercentCrop;
+    setAcceptedCrop: Dispatch<SetStateAction<PercentCrop | null>>;
+    pixelCropState: PixelCropPlusImageDimensionsContract;
+    setFocalPoint: (focalPoint: FocalPoint) => void;
+    focalPointIsOpen: boolean;
+    setFocalPointIsOpen: Dispatch<SetStateAction<boolean>>;
+    toggleFocalPointIsOpen: () => void;
+    setImage: (image: ImageType) => void;
+    getFieldValue: (fieldHandle: string) => string | boolean;
+    setFieldValue: (fieldHandle: string, value: string | boolean) => void;
 }
 
 const RenderImageContext = createContext<RenderImageContextType>(
@@ -211,6 +214,41 @@ const RenderImageProvider = ({
         setFocalPointIsOpen((prevState) => !prevState);
     };
 
+    const setImage = (imageToSet: ImageType) => {
+        const index = images.findIndex(
+            (mappedImage) => mappedImage.id === imageToSet.id,
+        );
+
+        if (index === -1) {
+            return;
+        }
+
+        setImages((oldImagesState) => {
+            oldImagesState[index] = imageToSet;
+
+            return [...oldImagesState];
+        });
+    };
+
+    const getFieldValue = (fieldHandle: string) => {
+        const fieldData = image.fieldData || {};
+
+        const thisField = fieldData[fieldHandle];
+
+        return thisField?.value;
+    };
+
+    const setFieldValue = (fieldHandle: string, value: string | boolean) => {
+        image.fieldData = image.fieldData || {};
+
+        image.fieldData[fieldHandle] = {
+            handle: fieldHandle,
+            value,
+        };
+
+        setImage(image);
+    };
+
     const value = useMemo(
         () => ({
             image,
@@ -226,6 +264,9 @@ const RenderImageProvider = ({
             focalPointIsOpen,
             setFocalPointIsOpen,
             toggleFocalPointIsOpen,
+            setImage,
+            getFieldValue,
+            setFieldValue,
         }),
         [
             image,

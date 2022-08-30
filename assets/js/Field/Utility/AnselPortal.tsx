@@ -28,16 +28,20 @@ const RenderHeading = ({ heading }: {heading?: string}) => {
 const AnselPortal = ({
     heading,
     prevAction,
+    prevActionDisabled,
     cancelAction,
     acceptAction,
     nextAction,
+    nextActionDisabled,
     children,
 }: {
     heading?: string,
     prevAction?: (event: Event|React.MouseEvent) => void,
+    prevActionDisabled?: boolean,
     cancelAction?: (event: Event|React.MouseEvent) => void,
     acceptAction?: (event: Event|React.MouseEvent) => void,
     nextAction?: (event: Event|React.MouseEvent) => void,
+    nextActionDisabled?: boolean,
     children?:
         | React.ReactChild
         | React.ReactChild[],
@@ -77,9 +81,14 @@ const AnselPortal = ({
     const actions = [] as Array<ActionInterface>;
 
     if (prevAction) {
+        let prevActionClasses = 'ansel_text-gray-500 hover:ansel_text-gray-500';
+
+        if (prevActionDisabled) {
+            prevActionClasses = 'ansel_bg-gray-300 hover:ansel_bg-gray-300 hover:ansel_cursor-default ansel_text-gray-400 hover:ansel_text-gray-400';
+        }
         actions.push({
             action: prevAction,
-            prependClasses: 'ansel_text-gray-500 hover:ansel_text-gray-500',
+            prependClasses: prevActionClasses,
             icon: <BsChevronLeft size="22px" />,
         });
     }
@@ -101,9 +110,15 @@ const AnselPortal = ({
     }
 
     if (nextAction) {
+        let nextActionClasses = 'ansel_text-gray-500 hover:ansel_text-gray-500';
+
+        if (nextActionDisabled) {
+            nextActionClasses = 'ansel_bg-gray-300 hover:ansel_bg-gray-300 hover:ansel_cursor-default ansel_text-gray-400 hover:ansel_text-gray-400';
+        }
+
         actions.push({
             action: nextAction,
-            prependClasses: 'ansel_text-gray-500 hover:ansel_text-gray-500',
+            prependClasses: nextActionClasses,
             icon: <BsChevronRight size="22px" />,
         });
     }

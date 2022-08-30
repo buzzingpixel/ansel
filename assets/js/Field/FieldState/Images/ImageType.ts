@@ -1,6 +1,7 @@
 import { ItemInterface } from 'react-sortablejs';
 import ImageUploadType from './ImageUploadType';
 import ImageManipulationCacheType from './ImageManipulationCacheType';
+import ImageFieldType from './ImageFieldType';
 
 interface ImageType extends ItemInterface {
     imageUpload?: ImageUploadType;
@@ -13,6 +14,7 @@ interface ImageType extends ItemInterface {
     height: number;
     focalX: number;
     focalY: number;
+    fieldData?: { [key: string]: ImageFieldType };
 }
 
 export default ImageType;
