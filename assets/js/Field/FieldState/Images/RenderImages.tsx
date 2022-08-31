@@ -33,7 +33,7 @@ const RenderImages = () => {
     >
         <RenderImagesFieldsProvider>
             {images.map((image) => <RenderImageProvider
-                key={image.id}
+                key={`image-provider-${image.id}`}
                 image={image}
             >
                 <RenderImage />

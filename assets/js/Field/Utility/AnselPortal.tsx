@@ -3,12 +3,12 @@ import { MdClose } from 'react-icons/md';
 import { BsCheck, BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { Portal } from 'react-portal';
 import { useEffect } from 'react';
-import { v4 as uuid } from 'uuid';
 
 interface ActionInterface {
-    action: (event: Event|React.MouseEvent) => void,
-    prependClasses?: string,
-    icon: | React.ReactChild | React.ReactChild[],
+    id: string;
+    action: (event: Event|React.MouseEvent) => void;
+    prependClasses?: string;
+    icon: | React.ReactChild | React.ReactChild[];
 }
 
 const iconAnchorClasses = 'ansel_bg-gray-100 hover:ansel_bg-gray-200 ansel_h-40px ansel_w-70px ansel_flex ansel_flex-row ansel_items-center ansel_justify-center';
@@ -86,7 +86,9 @@ const AnselPortal = ({
         if (prevActionDisabled) {
             prevActionClasses = 'ansel_bg-gray-300 hover:ansel_bg-gray-300 hover:ansel_cursor-default ansel_text-gray-400 hover:ansel_text-gray-400';
         }
+
         actions.push({
+            id: 'portal-prev-action',
             action: prevAction,
             prependClasses: prevActionClasses,
             icon: <BsChevronLeft size="22px" />,
@@ -95,6 +97,7 @@ const AnselPortal = ({
 
     if (cancelAction) {
         actions.push({
+            id: 'portal-cancel-action',
             action: cancelAction,
             prependClasses: 'ansel_text-red-600 hover:ansel_text-red-600',
             icon: <MdClose size="22px" />,
@@ -103,6 +106,7 @@ const AnselPortal = ({
 
     if (acceptAction) {
         actions.push({
+            id: 'portal-accept-action',
             action: acceptAction,
             prependClasses: 'ansel_text-green-500 hover:ansel_text-green-500',
             icon: <BsCheck size="30px" />,
@@ -117,6 +121,7 @@ const AnselPortal = ({
         }
 
         actions.push({
+            id: 'portal-next-action',
             action: nextAction,
             prependClasses: nextActionClasses,
             icon: <BsChevronRight size="22px" />,
@@ -135,7 +140,12 @@ const AnselPortal = ({
                             </div>
                         </div>
                         <div className="ansel_flex ansel_flex-row ansel_items-center ansel_justify-center ansel_pb-2">
-                            {actions.map(({ action, prependClasses, icon }, index) => {
+                            {actions.map(({
+                                id: actionId,
+                                action,
+                                prependClasses,
+                                icon,
+                            }, index) => {
                                 prependClasses = prependClasses || '';
 
                                 if (index === 0) {
@@ -152,7 +162,7 @@ const AnselPortal = ({
 
                                 return (
                                     <div
-                                        key={uuid()}
+                                        key={actionId}
                                         className={classes}
                                     >
                                         { isNotFirst && <div className="ansel_bg-gray-300 ansel_h-40px ansel_w-1px" /> }
