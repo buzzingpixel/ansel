@@ -34,22 +34,32 @@ const ErrorMessagesProvider = (props) => {
         {},
     );
 
-    const addErrorMessage = (message: string) => {
-        const id = uuid();
+    const [timers, setTimers] = useState({});
 
+    const addErrorMessage = (message: string) => {
         setErrorMessages((prevState) => {
-            prevState[id] = message;
+            prevState[message] = message;
 
             return { ...prevState };
         });
 
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             setErrorMessages((prevState) => {
-                delete prevState[id];
+                delete prevState[message];
 
                 return { ...prevState };
             });
         }, 10000);
+
+        setTimers((oldTimers) => {
+            if (timers[message]) {
+                clearTimeout(timers[message]);
+            }
+
+            oldTimers[message] = timer;
+
+            return { ...oldTimers };
+        });
     };
 
     if (Object.keys(errorMessages).length > 0) {
