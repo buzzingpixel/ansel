@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\PostedFieldData;
 
+use function is_array;
+
 class PostedImage
 {
-    private string $uid;
+    private string $id;
 
     private string $sourceImageId;
+
+    private string $focalX;
+
+    private string $focalY;
 
     private string $x;
 
@@ -18,69 +24,89 @@ class PostedImage
 
     private string $height;
 
-    private string $cacheDirectory;
+    private PostedFieldDataCollection $postedFieldDataCollection;
 
-    private string $cacheFilePath;
-
-    private string $fileName;
+    private ?PostedImageUpload $postedImageUpload;
 
     /**
-     * @param mixed[] $postedImage
+     * @param mixed[] $arrayData
      */
-    public static function fromArray(array $postedImage): self
+    public static function fromArray(array $arrayData): self
     {
+        $fieldData = $arrayData['fieldData'] ?? [];
+
+        $fieldData = is_array($fieldData) ? $fieldData : [];
+
+        $imageUploadData = $arrayData['imageUpload'] ?? null;
+
         return new self(
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['uid'] ?? ''),
+            (string) ($arrayData['id'] ?? ''),
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['sourceImageId'] ?? ''),
+            (string) ($arrayData['sourceImageId'] ?? ''),
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['x'] ?? ''),
+            (string) ($arrayData['focalX'] ?? ''),
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['y'] ?? ''),
+            (string) ($arrayData['focalY'] ?? ''),
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['width'] ?? ''),
+            (string) ($arrayData['x'] ?? ''),
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['height'] ?? ''),
+            (string) ($arrayData['y'] ?? ''),
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['cacheDirectory'] ?? ''),
+            (string) ($arrayData['width'] ?? ''),
             /** @phpstan-ignore-next-line */
-            (string) ($postedImage['cacheFilePath'] ?? ''),
-            /** @phpstan-ignore-next-line */
-            (string) ($postedImage['fileName'] ?? ''),
+            (string) ($arrayData['height'] ?? ''),
+            PostedFieldDataCollection::fromArray(
+                $fieldData
+            ),
+            is_array($imageUploadData) ?
+                PostedImageUpload::fromArray($imageUploadData) :
+                null,
         );
     }
 
     public function __construct(
-        string $uid,
+        string $id,
         string $sourceImageId,
+        string $focalX,
+        string $focalY,
         string $x,
         string $y,
         string $width,
         string $height,
-        string $cacheDirectory,
-        string $cacheFilePath,
-        string $fileName
+        PostedFieldDataCollection $postedFieldDataCollection,
+        ?PostedImageUpload $postedImageUpload
     ) {
-        $this->uid            = $uid;
-        $this->sourceImageId  = $sourceImageId;
-        $this->x              = $x;
-        $this->y              = $y;
-        $this->width          = $width;
-        $this->height         = $height;
-        $this->cacheDirectory = $cacheDirectory;
-        $this->cacheFilePath  = $cacheFilePath;
-        $this->fileName       = $fileName;
+        $this->id                        = $id;
+        $this->sourceImageId             = $sourceImageId;
+        $this->focalX                    = $focalX;
+        $this->focalY                    = $focalY;
+        $this->x                         = $x;
+        $this->y                         = $y;
+        $this->width                     = $width;
+        $this->height                    = $height;
+        $this->postedFieldDataCollection = $postedFieldDataCollection;
+        $this->postedImageUpload         = $postedImageUpload;
     }
 
-    public function uid(): string
+    public function id(): string
     {
-        return $this->uid;
+        return $this->id;
     }
 
     public function sourceImageId(): string
     {
         return $this->sourceImageId;
+    }
+
+    public function focalX(): string
+    {
+        return $this->focalX;
+    }
+
+    public function focalY(): string
+    {
+        return $this->focalY;
     }
 
     public function x(): string
@@ -103,18 +129,13 @@ class PostedImage
         return $this->height;
     }
 
-    public function cacheDirectory(): string
+    public function postedFieldDataCollection(): PostedFieldDataCollection
     {
-        return $this->cacheDirectory;
+        return $this->postedFieldDataCollection;
     }
 
-    public function cacheFilePath(): string
+    public function postedImageUpload(): ?PostedImageUpload
     {
-        return $this->cacheFilePath;
-    }
-
-    public function fileName(): string
-    {
-        return $this->fileName;
+        return $this->postedImageUpload;
     }
 }

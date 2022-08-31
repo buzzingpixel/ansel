@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
-use BuzzingPixel\Ansel\Field\Field\ValidateEeFieldAction;
+use BuzzingPixel\Ansel\Field\Field\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
@@ -74,7 +74,7 @@ class Ansel_ft extends EE_Fieldtype
 
     private GetEeFieldAction $getFieldAction;
 
-    private ValidateEeFieldAction $validateEeFieldAction;
+    private ValidateFieldAction $validateFieldAction;
 
     /**
      * @throws ContainerExceptionInterface
@@ -103,7 +103,9 @@ class Ansel_ft extends EE_Fieldtype
         $this->getFieldAction = $container->get(GetEeFieldAction::class);
 
         /** @phpstan-ignore-next-line */
-        $this->validateEeFieldAction = $container->get(ValidateEeFieldAction::class);
+        $this->validateFieldAction = $container->get(
+            ValidateFieldAction::class
+        );
     }
 
     /**
@@ -372,7 +374,7 @@ class Ansel_ft extends EE_Fieldtype
         $data = is_array($data) ? $data : [];
 
         /** @phpstan-ignore-next-line */
-        return $this->validateEeFieldAction->validate(
+        return $this->validateFieldAction->validate(
             $fieldSettings,
             PostedData::fromArray($data)
         );
@@ -392,7 +394,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function var_save(array $data): void
     {
-        // TODO: Implement display_field() method.
+        // TODO: Implement var_save() method.
         dd('TODO: Implement var_save() method.');
     }
 

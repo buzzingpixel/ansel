@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\PostedFieldData;
 
+use function array_map;
+use function array_values;
 use function is_array;
+use function json_decode;
 
 class PostedData
 {
@@ -17,6 +20,22 @@ class PostedData
      */
     public static function fromArray(array $postedFieldData): self
     {
+        return new self(
+            self::imageCollectionFromArray(
+                $postedFieldData
+            ),
+            self::deletionsCollectionFromArray(
+                $postedFieldData
+            ),
+        );
+    }
+
+    /**
+     * @param mixed[] $postedFieldData
+     */
+    private static function imageCollectionFromArray(
+        array $postedFieldData
+    ): PostedImageCollection {
         /** @phpstan-ignore-next-line */
         $postedImagesArrayData = $postedFieldData['field']['images'] ?? [];
 
@@ -24,8 +43,33 @@ class PostedData
             $postedImagesArrayData :
             [];
 
+        $postedImagesArray = array_values(array_map(
+            static fn (string $json) => json_decode(
+                $json,
+                true
+            ),
+            $postedImagesArrayData
+        ));
+
+        return PostedImageCollection::fromArray(
+            $postedImagesArray,
+        );
+    }
+
+    /**
+     * @param mixed[] $postedFieldData
+     */
+    private static function deletionsCollectionFromArray(
+        array $postedFieldData
+    ): PostedDeletionsCollection {
         /** @phpstan-ignore-next-line */
-        $postedDeletionsArray = $postedFieldData['field']['delete'] ?? [];
+        $postedDeletionsRaw = $postedFieldData['field']['delete_images'] ?? '[]';
+
+        $postedDeletionsArray = json_decode(
+        /** @phpstan-ignore-next-line */
+            (string) $postedDeletionsRaw,
+            true
+        );
 
         $postedDeletionsArray = is_array($postedDeletionsArray) ?
             $postedDeletionsArray :
@@ -33,17 +77,12 @@ class PostedData
 
         $postedDeletionsMapped = [];
 
-        foreach ($postedDeletionsArray as $uid) {
-            $postedDeletionsMapped[]['uid'] = $uid;
+        foreach ($postedDeletionsArray as $id) {
+            $postedDeletionsMapped[]['id'] = $id;
         }
 
-        return new self(
-            PostedImageCollection::fromArray(
-                $postedImagesArrayData,
-            ),
-            PostedDeletionsCollection::fromArray(
-                $postedDeletionsMapped,
-            ),
+        return PostedDeletionsCollection::fromArray(
+            $postedDeletionsMapped,
         );
     }
 

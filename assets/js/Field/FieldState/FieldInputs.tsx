@@ -7,7 +7,7 @@ const FieldInputs = () => {
 
     const inputPlaceholder = useInputPlaceholder();
 
-    const inputBaseName = inputPlaceholder.dataset.fieldNameRoot;
+    const inputBaseName = inputPlaceholder.name;
 
     return <>
         {images.map((image) => {

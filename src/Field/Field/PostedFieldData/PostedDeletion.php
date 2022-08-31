@@ -6,26 +6,26 @@ namespace BuzzingPixel\Ansel\Field\Field\PostedFieldData;
 
 class PostedDeletion
 {
-    private string $uid;
+    private string $id;
 
     /**
-     * @param mixed[] $postedDeletion
+     * @param mixed[] $arrayData
      */
-    public static function fromArray(array $postedDeletion): self
+    public static function fromArray(array $arrayData): self
     {
         return new self(
             /** @phpstan-ignore-next-line */
-            (string) ($postedDeletion['uid'] ?? ''),
+            (string) ($arrayData['id'] ?? ''),
         );
     }
 
-    public function __construct(string $uid)
+    public function __construct(string $id)
     {
-        $this->uid = $uid;
+        $this->id = $id;
     }
 
     public function uid(): string
     {
-        return $this->uid;
+        return $this->id;
     }
 }

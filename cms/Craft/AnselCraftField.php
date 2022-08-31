@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BuzzingPixel\AnselCms\Craft;
 
 use BuzzingPixel\Ansel\Field\Field\GetCraftFieldAction;
+use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
+use BuzzingPixel\Ansel\Field\Field\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
@@ -13,6 +15,7 @@ use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use craft\base\ElementInterface;
 use craft\base\Field;
+use craft\errors\InvalidFieldException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Twig\Error\LoaderError;
@@ -23,6 +26,8 @@ use yii\db\Schema;
 
 use function assert;
 use function count;
+use function dd;
+use function is_array;
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 
@@ -78,6 +83,8 @@ class AnselCraftField extends Field
 
     private GetCraftFieldAction $getFieldAction;
 
+    private ValidateFieldAction $validateFieldAction;
+
     /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
@@ -101,6 +108,11 @@ class AnselCraftField extends Field
 
         /** @phpstan-ignore-next-line */
         $this->getFieldAction = $container->get(GetCraftFieldAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->validateFieldAction = $container->get(
+            ValidateFieldAction::class
+        );
     }
 
     public function getContentColumnType(): string
@@ -170,5 +182,69 @@ class AnselCraftField extends Field
             $this->getFieldSettingsCollection(),
             (string) $this->handle
         );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function normalizeValue($value, ?ElementInterface $element = null)
+    {
+        // If there is no value, we can return null
+        /** @phpstan-ignore-next-line */
+        if (empty($value)) {
+            return null;
+        }
+
+        // If the value is an array, this is post data and we can return as is
+        if (is_array($value)) {
+            return $value;
+        }
+
+        // TODO
+        dd('normalizeValue', $value);
+    }
+
+    // public function isValueEmpty($value, ElementInterface $element): bool
+    // {
+    //     if (empty($_POST)) {
+    //         return true;
+    //     }
+    //
+    //     dd('isValueEmpty', $value);
+    // }
+
+    /**
+     * @inheritdoc
+     * @phpstan-ignore-next-line
+     */
+    public function getElementValidationRules(): array
+    {
+        $rules = parent::getElementValidationRules();
+
+        /** Calls the validateField on this class */
+        $rules[] = 'validateField';
+
+        return $rules;
+    }
+
+    /**
+     * @return mixed
+     *
+     * @throws InvalidFieldException
+     */
+    public function validateField(ElementInterface $element)
+    {
+        $fieldSettings = $this->getFieldSettingsCollection();
+
+        $data = $element->getFieldValue((string) $this->handle);
+
+        $data = is_array($data) ? $data : [];
+
+        $this->validateFieldAction->validate(
+            $fieldSettings,
+            PostedData::fromArray($data)
+        );
+
+        dd('todo: finish method');
     }
 }

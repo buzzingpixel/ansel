@@ -47,4 +47,8 @@ $protocol = $secure ? 'https://' : 'http://';
 $config['base_url']  = $protocol . $_SERVER['HTTP_HOST'] . '/';
 $config['base_path'] = dirname(__DIR__, 3) . '/';
 
+// if (! empty($_POST)) {
+//     dd($_POST);
+// }
+
 // EOF

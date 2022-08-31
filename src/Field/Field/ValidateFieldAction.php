@@ -9,7 +9,7 @@ use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 
 use function dd;
 
-class ValidateEeFieldAction
+class ValidateFieldAction
 {
     public function validate(
         FieldSettingsCollection $fieldSettings,

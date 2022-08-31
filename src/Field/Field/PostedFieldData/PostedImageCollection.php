@@ -9,22 +9,22 @@ use function array_values;
 
 class PostedImageCollection
 {
+    /** @var PostedImage[] */
+    private array $postedImages;
+
     /**
-     * @param mixed[] $postedImages
+     * @param mixed[] $arrayData
      */
-    public static function fromArray(array $postedImages): self
+    public static function fromArray(array $arrayData): self
     {
         return new self(array_values(array_map(
             /** @phpstan-ignore-next-line */
-            static function (array $postedImage) {
-                return PostedImage::fromArray($postedImage);
-            },
-            $postedImages,
+            static fn (array $data) => PostedImage::fromArray(
+                $data
+            ),
+            $arrayData,
         )));
     }
-
-    /** @var PostedImage[] */
-    private array $postedImages;
 
     /**
      * @param PostedImage[] $postedImages
@@ -32,9 +32,7 @@ class PostedImageCollection
     public function __construct(array $postedImages)
     {
         $this->postedImages = array_values(array_map(
-            static function (PostedImage $postedImage) {
-                return $postedImage;
-            },
+            static fn (PostedImage $data) => $data,
             $postedImages,
         ));
     }
