@@ -7,12 +7,16 @@ import { useRenderImageContext } from './RenderImageContext';
 const DeleteButton = () => {
     const { image } = useRenderImageContext();
 
-    const { removeImage } = useImages();
+    const { removeImage, addDeletedId } = useImages();
 
     const remove = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
 
-        removeImage(String(image.id).toString());
+        const id = String(image.id).toString();
+
+        removeImage(id);
+
+        addDeletedId(id);
     };
 
     return (

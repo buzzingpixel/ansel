@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
     createContext, useContext, useMemo, useState,
 } from 'react';
-import { v4 as uuid } from 'uuid';
 import ObjectOfStringsType from '../../../Types/ObjectOfStringsType';
 
 interface ErrorMessagesContextType {
