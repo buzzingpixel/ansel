@@ -1,4 +1,4 @@
-import React = require('react');
+import * as React from 'react';
 import { FieldSettingsProvider } from './FieldSettings/FieldSettingsContext';
 import FieldSettingsFromRootEl from './FieldSettings/FieldSettingsFromRootEl';
 import { CustomFieldsProvider } from './CustomFields/CustomFieldsContext';

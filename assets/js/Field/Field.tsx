@@ -7,6 +7,7 @@ import { useProcesses } from './FieldState/Processes/ProcessesContext';
 import WorkingIndicator from './FieldState/Processes/WorkingIndicator';
 import Uploading from './DragNDrop/Uploading';
 import RenderImages from './FieldState/Images/RenderImages';
+import FieldInputs from './FieldState/FieldInputs';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
@@ -26,6 +27,9 @@ const Field = () => {
 
     return (
         <div className="ansel_box-border">
+            <div className="ansel_sr-only">
+                <FieldInputs />
+            </div>
             <WorkingIndicator />
             {/* Main field container and dropzone */}
             <div
