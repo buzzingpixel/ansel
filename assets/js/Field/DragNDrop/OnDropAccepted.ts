@@ -11,7 +11,8 @@ import useValidateImageConstraints from '../ValidateImageConstraints';
 import ImageType from '../FieldState/Images/ImageType';
 
 const useOnDropAccepted = () => {
-    const { addImage } = useImages();
+    const settings = useFieldSettings();
+    const { images, addImage } = useImages();
     const { addErrorMessage } = useErrorMessages();
     const { minWidth, minHeight } = useFieldSettings();
     const { validate } = useValidateImageConstraints();
@@ -83,9 +84,26 @@ const useOnDropAccepted = () => {
 
     const onDropAccepted = useCallback(
         (files: Array<File>) => {
+            const projectedTotal = images.length + files.length;
+
+            if (
+                settings.maxQty > 0
+                && settings.preventUploadOverMax
+                && projectedTotal > settings.maxQty
+            ) {
+                // TODO: lang
+                addErrorMessage(
+                    'Cannot upload more than x images to this field',
+                );
+
+                const deleteCount = projectedTotal - settings.maxQty;
+
+                files.splice(0, deleteCount);
+            }
+
             files.forEach(fileHandler);
         },
-        [],
+        [images],
     );
 
     return ({
