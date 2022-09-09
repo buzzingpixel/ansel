@@ -8,6 +8,8 @@ import { useTranslations } from '../Translations/TranslationsContext';
 import { useImages } from '../FieldState/Images/ImagesContext';
 import CraftFileType from '../Platform/CraftFileType';
 import useSelectedFileHandler from './SelectedFileHandler';
+import { useFieldSettings } from '../FieldSettings/FieldSettingsContext';
+import { useErrorMessages } from '../FieldState/ErrorMessages/ErrorMessagesContext';
 
 const Uploading = (
     { openDropZoneDeviceDialog }: { openDropZoneDeviceDialog: () => void },
@@ -27,7 +29,11 @@ const Uploading = (
 
     const buttonRef = useRef(document.createElement('div'));
 
-    const { hasImages } = useImages();
+    const { images, hasImages } = useImages();
+
+    const { addErrorMessage } = useErrorMessages();
+
+    const settings = useFieldSettings();
 
     let anchor = null;
 
@@ -49,6 +55,19 @@ const Uploading = (
         $anchor.FilePicker({
             callback: (file: EeFileType, references) => {
                 references.modal.find('.m-close').click();
+
+                if (
+                    settings.maxQty > 0
+                    && settings.preventUploadOverMax
+                    && images.length >= settings.maxQty
+                ) {
+                    // TODO: lang
+                    addErrorMessage(
+                        'Cannot upload more than x images to this field',
+                    );
+
+                    return;
+                }
 
                 selectedFileHandlerEe(file);
             },
@@ -80,6 +99,23 @@ const Uploading = (
                         `folder:${uploadLocationFolderId}`,
                     ],
                     onSelect (files: Array<CraftFileType>) {
+                        const projectedTotal = images.length + files.length;
+
+                        if (
+                            settings.maxQty > 0
+                            && settings.preventUploadOverMax
+                            && projectedTotal > settings.maxQty
+                        ) {
+                            // TODO: lang
+                            addErrorMessage(
+                                'Cannot upload more than x images to this field',
+                            );
+
+                            const deleteCount = projectedTotal - settings.maxQty;
+
+                            files.splice(0, deleteCount);
+                        }
+
                         $('.modal-shade').remove();
 
                         modal.destroy();
