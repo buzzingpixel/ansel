@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
+use BuzzingPixel\Ansel\Field\Field\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
@@ -112,8 +113,26 @@ class Ansel_ft extends EE_Fieldtype
      * @param mixed[] $rawEeFieldSettings
      */
     private function getFieldSettingsCollection(
-        array $rawEeFieldSettings
+        array $rawEeFieldSettings,
+        bool $useRequired = false
     ): FieldSettingsCollection {
+        if ($useRequired) {
+            $fieldRequiredString = $rawEeFieldSettings['field_required'] ?? 'n';
+
+            $fieldRequired = $fieldRequiredString === 'y';
+
+            /** @phpstan-ignore-next-line */
+            $minQty = (int) (
+                /** @phpstan-ignore-next-line */
+                $rawEeFieldSettings['ansel']['fieldSettings']['minQty'] ?? ''
+            );
+
+            if ($fieldRequired && $minQty < 1) {
+                /** @phpstan-ignore-next-line */
+                $rawEeFieldSettings['ansel']['fieldSettings']['minQty'] = '1';
+            }
+        }
+
         /** @phpstan-ignore-next-line */
         $fieldSettingsArray = $rawEeFieldSettings['ansel']['fieldSettings'] ?? [];
 
@@ -121,7 +140,7 @@ class Ansel_ft extends EE_Fieldtype
         unset($fieldSettingsArray['placeholder']);
 
         return FieldSettingsCollection::fromFieldArray(
-        /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line */
             $fieldSettingsArray,
         );
     }
@@ -148,11 +167,15 @@ class Ansel_ft extends EE_Fieldtype
 
     /**
      * @param mixed $data
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     private function getDisplaySettings($data, string $fieldNameRoot): string
     {
         $fieldSettings = $this->getFieldSettingsCollection(
-        /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line */
             $this->postedSettings ?? $data,
         );
 
@@ -183,6 +206,10 @@ class Ansel_ft extends EE_Fieldtype
      *
      * @return mixed[]
      *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     *
      * @phpstan-ignore-next-line
      */
     public function display_settings($data): array
@@ -205,6 +232,10 @@ class Ansel_ft extends EE_Fieldtype
      * @param mixed $data
      *
      * @return mixed[]
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function grid_display_settings($data): array
     {
@@ -222,6 +253,10 @@ class Ansel_ft extends EE_Fieldtype
      * @param mixed $data
      *
      * @return mixed[]
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function var_display_settings($data): array
     {
@@ -261,6 +296,7 @@ class Ansel_ft extends EE_Fieldtype
                     $data
                 ),
             );
+
             if (count($errors) > 0) {
                 $msg = 'Some settings did not validate<br><br><ul>';
                 foreach ($errors as $key => $val) {
@@ -336,7 +372,8 @@ class Ansel_ft extends EE_Fieldtype
         // TODO: License check
 
         $fieldSettings = $this->getFieldSettingsCollection(
-            $this->settings
+            $this->settings,
+            true
         );
 
         return $this->getFieldAction->render(
@@ -363,30 +400,45 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * @param mixed $data
      *
-     * @return bool|mixed|void
+     * @return bool|string
      */
     public function validate($data)
     {
         $fieldSettings = $this->getFieldSettingsCollection(
-            $this->settings
+            $this->settings,
+            true
         );
 
         $data = is_array($data) ? $data : [];
 
-        /** @phpstan-ignore-next-line */
-        return $this->validateFieldAction->validate(
+        $validatedFieldResult = $this->validateFieldAction->validate(
             $fieldSettings,
             PostedData::fromArray($data)
         );
+
+        if ($validatedFieldResult->hasNoErrors()) {
+            return true;
+        }
+
+        return implode(
+            '<br>',
+            $validatedFieldResult->map(static fn (
+                ValidatedFieldError $error
+            ) => $error->errorMsg())
+        );
     }
 
-    // phpcs:disable
     /**
-     * @phpstan-ignore-next-line
+     * @param mixed $data
      */
-    public function save($data)
+    public function save($data): string
     {
-        dd('foo', $data);
+        if (! is_array($data)) {
+            return '';
+        }
+
+        // Save the json encoded data for use in the post_save method
+        return (string) json_encode($data);
     }
 
     /**
@@ -405,5 +457,6 @@ class Ansel_ft extends EE_Fieldtype
     {
         return;
     }
+
     // phpcs:enable
 }

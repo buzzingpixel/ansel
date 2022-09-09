@@ -10,6 +10,11 @@ const FieldInputs = () => {
     const inputBaseName = inputPlaceholder.name;
 
     return <>
+        <input
+            type="hidden"
+            name={`${inputBaseName}[placeholder]`}
+            value="placeholder"
+        />
         {images.map((image) => {
             const localImage = { ...image };
 

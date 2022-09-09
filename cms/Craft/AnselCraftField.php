@@ -6,6 +6,7 @@ namespace BuzzingPixel\AnselCms\Craft;
 
 use BuzzingPixel\Ansel\Field\Field\GetCraftFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
+use BuzzingPixel\Ansel\Field\Field\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
@@ -120,12 +121,23 @@ class AnselCraftField extends Field
         return Schema::TYPE_TEXT;
     }
 
-    private function getFieldSettingsCollection(): FieldSettingsCollection
-    {
+    private function getFieldSettingsCollection(
+        bool $useRequired = false
+    ): FieldSettingsCollection {
         unset($this->fieldSettings['placeholder']);
 
+        $fieldSettings = $this->fieldSettings;
+
+        if ($useRequired && $this->required === '1') {
+            $minQty = (int) $fieldSettings['minQty'] ?? '';
+
+            if ($minQty < 1) {
+                $fieldSettings['minQty'] = '1';
+            }
+        }
+
         return FieldSettingsCollection::fromFieldArray(
-            $this->fieldSettings,
+            $fieldSettings,
         );
     }
 
@@ -179,7 +191,7 @@ class AnselCraftField extends Field
         ?ElementInterface $element = null
     ): string {
         return $this->getFieldAction->render(
-            $this->getFieldSettingsCollection(),
+            $this->getFieldSettingsCollection(true),
             (string) $this->handle
         );
     }
@@ -201,7 +213,9 @@ class AnselCraftField extends Field
         }
 
         // TODO
-        dd('normalizeValue', $value);
+        // dd('normalizeValue', $value);
+
+        return null;
     }
 
     // public function isValueEmpty($value, ElementInterface $element): bool
@@ -228,23 +242,28 @@ class AnselCraftField extends Field
     }
 
     /**
-     * @return mixed
-     *
      * @throws InvalidFieldException
      */
-    public function validateField(ElementInterface $element)
+    public function validateField(ElementInterface $element): void
     {
-        $fieldSettings = $this->getFieldSettingsCollection();
-
         $data = $element->getFieldValue((string) $this->handle);
 
-        $data = is_array($data) ? $data : [];
+        if (! is_array($data)) {
+            dd('not array', $data);
+        }
 
-        $this->validateFieldAction->validate(
+        $fieldSettings = $this->getFieldSettingsCollection(true);
+
+        $validatedFieldResult = $this->validateFieldAction->validate(
             $fieldSettings,
             PostedData::fromArray($data)
         );
 
-        dd('todo: finish method');
+        $validatedFieldResult->map(fn (
+            ValidatedFieldError $error
+        ) => $element->addError(
+            $this->handle,
+            $error->errorMsg(),
+        ));
     }
 }

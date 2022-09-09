@@ -6,6 +6,7 @@ namespace BuzzingPixel\Ansel\Field\Field\PostedFieldData;
 
 use function array_map;
 use function array_values;
+use function count;
 
 class PostedImageCollection
 {
@@ -43,5 +44,10 @@ class PostedImageCollection
     public function postedImages(): array
     {
         return $this->postedImages;
+    }
+
+    public function count(): int
+    {
+        return count($this->postedImages);
     }
 }
