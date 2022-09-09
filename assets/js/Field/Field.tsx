@@ -8,11 +8,14 @@ import WorkingIndicator from './FieldState/Processes/WorkingIndicator';
 import Uploading from './DragNDrop/Uploading';
 import RenderImages from './FieldState/Images/RenderImages';
 import FieldInputs from './FieldState/FieldInputs';
+import { useImages } from './FieldState/Images/ImagesContext';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
 
     const { hasProcesses } = useProcesses();
+
+    const { images } = useImages();
 
     const {
         getDropZoneRootProps,
@@ -45,8 +48,17 @@ const Field = () => {
                 <ErrorMessagesDisplay />
                 {/* Primary field elements */}
                 <div className="ansel_p-4 ansel_overflow-auto">
-                    <Uploading openDropZoneDeviceDialog={openDropZoneDeviceDialog} />
+                    <Uploading
+                        openDropZoneDeviceDialog={openDropZoneDeviceDialog}
+                    />
                     <RenderImages />
+                    {images.length > 3 && (
+                        <div className="ansel_pt-6">
+                            <Uploading
+                                openDropZoneDeviceDialog={openDropZoneDeviceDialog}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
