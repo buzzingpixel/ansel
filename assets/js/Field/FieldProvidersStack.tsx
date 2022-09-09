@@ -14,42 +14,45 @@ import InputPlaceholderFromRootEl from './InputPlaceholder/InputPlaceholderFromR
 import { ProcessesProvider } from './FieldState/Processes/ProcessesContext';
 import { ErrorMessagesProvider } from './FieldState/ErrorMessages/ErrorMessagesContext';
 import { ImagesProvider } from './FieldState/Images/ImagesContext';
+import { RootElProvider } from './RootElProvider';
 
 const FieldProvidersStack = (props) => {
     const root = props.anselFieldEl as HTMLDivElement;
 
-    return <FieldSettingsProvider
-        fieldSettings={FieldSettingsFromRootEl(root)}
-    >
-        <CustomFieldsProvider
-            customFields={CustomFieldsFromRootEl(root)}
+    return <RootElProvider rootEl={root}>
+        <FieldSettingsProvider
+            fieldSettings={FieldSettingsFromRootEl(root)}
         >
-            <FieldParametersProvider
-                fieldParameters={FieldParametersFromRootEl(root)}
+            <CustomFieldsProvider
+                customFields={CustomFieldsFromRootEl(root)}
             >
-                <TranslationsProvider
-                    translations={TranslationsFromRootEl(root)}
+                <FieldParametersProvider
+                    fieldParameters={FieldParametersFromRootEl(root)}
                 >
-                    <PlatformProvider
-                        platform={PlatformFromRootEl(root)}
+                    <TranslationsProvider
+                        translations={TranslationsFromRootEl(root)}
                     >
-                        <InputPlaceholderProvider
-                            inputPlaceholder={InputPlaceholderFromRootEl(root)}
+                        <PlatformProvider
+                            platform={PlatformFromRootEl(root)}
                         >
-                            <ProcessesProvider>
-                                <ErrorMessagesProvider>
-                                    {/* TODO: set existing images here */}
-                                    <ImagesProvider images={[]}>
-                                        {props.children}
-                                    </ImagesProvider>
-                                </ErrorMessagesProvider>
-                            </ProcessesProvider>
-                        </InputPlaceholderProvider>
-                    </PlatformProvider>
-                </TranslationsProvider>
-            </FieldParametersProvider>
-        </CustomFieldsProvider>
-    </FieldSettingsProvider>;
+                            <InputPlaceholderProvider
+                                inputPlaceholder={InputPlaceholderFromRootEl(root)}
+                            >
+                                <ProcessesProvider>
+                                    <ErrorMessagesProvider>
+                                        {/* TODO: set existing images here */}
+                                        <ImagesProvider images={[]}>
+                                            {props.children}
+                                        </ImagesProvider>
+                                    </ErrorMessagesProvider>
+                                </ProcessesProvider>
+                            </InputPlaceholderProvider>
+                        </PlatformProvider>
+                    </TranslationsProvider>
+                </FieldParametersProvider>
+            </CustomFieldsProvider>
+        </FieldSettingsProvider>
+    </RootElProvider>;
 };
 
 export default FieldProvidersStack;
