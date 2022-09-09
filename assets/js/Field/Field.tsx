@@ -9,6 +9,7 @@ import Uploading from './DragNDrop/Uploading';
 import RenderImages from './FieldState/Images/RenderImages';
 import FieldInputs from './FieldState/FieldInputs';
 import { useImages } from './FieldState/Images/ImagesContext';
+import { useFieldSettings } from './FieldSettings/FieldSettingsContext';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
@@ -16,6 +17,8 @@ const Field = () => {
     const { hasProcesses } = useProcesses();
 
     const { images } = useImages();
+
+    const settings = useFieldSettings();
 
     const {
         getDropZoneRootProps,
@@ -27,6 +30,16 @@ const Field = () => {
     const bgColorClass = hasErrors ? 'ansel_bg-red-50' : 'ansel_bg-gray-50';
 
     const fieldWorkingClass = hasProcesses ? 'ansel-field-working' : '';
+
+    let showUploader = true;
+
+    if (
+        settings.maxQty > 0
+        && settings.preventUploadOverMax
+        && images.length >= settings.maxQty
+    ) {
+        showUploader = false;
+    }
 
     return (
         <div className="ansel_box-border">
@@ -48,11 +61,13 @@ const Field = () => {
                 <ErrorMessagesDisplay />
                 {/* Primary field elements */}
                 <div className="ansel_p-4 ansel_overflow-auto">
-                    <Uploading
-                        openDropZoneDeviceDialog={openDropZoneDeviceDialog}
-                    />
+                    {showUploader && (
+                        <Uploading
+                            openDropZoneDeviceDialog={openDropZoneDeviceDialog}
+                        />
+                    )}
                     <RenderImages />
-                    {images.length > 3 && (
+                    {showUploader && images.length > 3 && (
                         <div className="ansel_pt-6">
                             <Uploading
                                 openDropZoneDeviceDialog={openDropZoneDeviceDialog}
