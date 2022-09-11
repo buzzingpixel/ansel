@@ -13,8 +13,11 @@ services:
       - "11380:11380"
       - "11381:11381"
       - "33674:33674"
+      - "33774:33774"
       - "33680:33680"
+      - "33780:33780"
       - "33681:33681"
+      - "33781:33781"
     volumes:
       - ./nginx/anselcraftphp74.conf:/etc/nginx/conf.d/anselcraftphp74.conf
       - ./nginx/anselcraftphp80.conf:/etc/nginx/conf.d/anselcraftphp80.conf
@@ -22,10 +25,14 @@ services:
       - ./nginx/anseleephp74.conf:/etc/nginx/conf.d/anseleephp74.conf
       - ./nginx/anseleephp80.conf:/etc/nginx/conf.d/anseleephp80.conf
       - ./nginx/anseleephp81.conf:/etc/nginx/conf.d/anseleephp81.conf
+      - ./nginx/anselee7php74.conf:/etc/nginx/conf.d/anselee7php74.conf
+      - ./nginx/anselee7php80.conf:/etc/nginx/conf.d/anselee7php80.conf
+      - ./nginx/anselee7php81.conf:/etc/nginx/conf.d/anselee7php81.conf
       - ./.profile:/root/.profile
       - ./.profile:/root/.bashrc
       - ./environments/craft3:/var/www/craft3
       - ./environments/ee6:/var/www/ee6
+      - ./environments/ee7:/var/www/ee7
       - ../:/var/www/ansel
 #      - ./environments/ee6/vendor/expressionengine/expressionengine/system/ee:/var/www/ee6/system/ee
 #      - ./environments/ee6/vendor/expressionengine/expressionengine/images:/var/www/ee6/public/images
@@ -37,6 +44,13 @@ services:
       - ../config:/var/www/ee6/system/user/addons/ansel/config
       - ../src:/var/www/ee6/system/user/addons/ansel/src
       - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
+      - ../cms/ExpressionEngine:/var/www/ee7/system/user/addons/ansel
+      - ../assetsDist:/var/www/ee7/public/themes/user/ansel
+      - ../composer.json:/var/www/ee7/system/user/addons/ansel/composer.json
+      - ../composer.lock:/var/www/ee7/system/user/addons/ansel/composer.lock
+      - ../config:/var/www/ee7/system/user/addons/ansel/config
+      - ../src:/var/www/ee7/system/user/addons/ansel/src
+      - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
     networks:
       web:
       default:
@@ -44,7 +58,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=traefik-dev_default
       - traefik.http.routers.ansel.entrypoints=web
-      - traefik.http.routers.ansel.rule=Host(`anseleephp74.localtest.me`, `anseleephp74.test`,`anseleephp80.localtest.me`, `anseleephp80.test`,`anseleephp81.localtest.me`, `anseleephp81.test`,`anselcraftphp74.localtest.me`, `anselcraftphp74.test`,`anselcraftphp80.localtest.me`, `anselcraftphp80.test`,`anselcraftphp81.localtest.me`, `anselcraftphp81.test`)
+      - traefik.http.routers.ansel.rule=Host(`anseleephp74.localtest.me`,`anseleephp74.test`,`anseleephp80.localtest.me`,`anseleephp80.test`,`anseleephp81.localtest.me`,`anseleephp81.test`,`anselcraftphp74.localtest.me`,`anselcraftphp74.test`,`anselcraftphp80.localtest.me`,`anselcraftphp80.test`,`anselcraftphp81.localtest.me`,`anselcraftphp81.test`,`anselee7php74.localtest.me`,`anselee7php74.test`,`anselee7php80.localtest.me`,`anselee7php80.test`,`anselee7php81.localtest.me`,`anselee7php81.test`)
 
   ansel-php74:
     build:
@@ -67,6 +81,13 @@ services:
       - ../config:/var/www/ee6/system/user/addons/ansel/config
       - ../src:/var/www/ee6/system/user/addons/ansel/src
       - ../vendor:/var/www/ee6/system/user/addons/ansel/vendor
+      - ../cms/ExpressionEngine:/var/www/ee7/system/user/addons/ansel
+      - ../assetsDist:/var/www/ee7/public/themes/user/ansel
+      - ../composer.json:/var/www/ee7/system/user/addons/ansel/composer.json
+      - ../composer.lock:/var/www/ee7/system/user/addons/ansel/composer.lock
+      - ../config:/var/www/ee7/system/user/addons/ansel/config
+      - ../src:/var/www/ee7/system/user/addons/ansel/src
+      - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
     networks:
       default:
         aliases:

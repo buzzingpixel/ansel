@@ -18,14 +18,14 @@ $config['autosave_interval_seconds'] = '10';
 
 $config['site_license_key'] = '';
 
-$config['app_version']       = '6.3.4';
-$config['encryption_key']    = '2372db8ab84dff9c4f63f5d06908947a678e4dff';
-$config['session_crypt_key'] = 'be41b9fc80c5a8013b6eee4f526a7868188f5987';
+$config['app_version']       = '7.1.4';
+$config['encryption_key']    = '4f9116ecc15c486c52548e0cb7c5c6ad8ae23f2b';
+$config['session_crypt_key'] = '99817a5a9d1dfdb9157bcff97cc5d106a689eaac';
 $config['database']          = [
     'expressionengine' => [
         'hostname' => 'ansel-db',
-        'database' => 'anselee',
-        'username' => 'anselee',
+        'database' => 'anselee7',
+        'username' => 'anselee7',
         'password' => 'secret',
         'dbprefix' => 'exp_',
         'char_set' => 'utf8mb4',
