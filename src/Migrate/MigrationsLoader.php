@@ -18,8 +18,6 @@ use function in_array;
 use function is_array;
 use function ksort;
 
-use const SORT_NUMERIC;
-
 /**
  * @codeCoverageIgnore
  */
@@ -57,7 +55,7 @@ class MigrationsLoader
             }
         }
 
-        $migrationClasses = array_filter(
+        $migrationClassesUnsorted = array_filter(
             get_declared_classes(),
             static function ($className) {
                 $implements = class_implements($className);
@@ -74,7 +72,13 @@ class MigrationsLoader
             }
         );
 
-        ksort($migrationClasses, SORT_NUMERIC);
+        $migrationClasses = [];
+
+        foreach ($migrationClassesUnsorted as $migrationClass) {
+            $migrationClasses[$migrationClass] = $migrationClass;
+        }
+
+        ksort($migrationClasses);
 
         $migrations = array_map(
             function (string $className): ?MigrationContract {
