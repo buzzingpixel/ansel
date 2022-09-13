@@ -26,7 +26,7 @@ require_once CRAFT_VENDOR_PATH . '/autoload.php';
 
 if (class_exists(VarDumper::class)) {
     /** @psalm-suppress UnresolvableInclude */
-    require APP_ROOT . '/dumper.php';
+    require dirname(APP_ROOT) . '/dumper.php';
 }
 
 // if ($_SERVER['REQUEST_METHOD'] === 'POST') {

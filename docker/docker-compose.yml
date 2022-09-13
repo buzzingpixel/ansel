@@ -51,6 +51,7 @@ services:
       - ../config:/var/www/ee7/system/user/addons/ansel/config
       - ../src:/var/www/ee7/system/user/addons/ansel/src
       - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
+      - ./environments/dumper.php:/var/www/dumper.php
     networks:
       web:
       default:
@@ -88,6 +89,7 @@ services:
       - ../config:/var/www/ee7/system/user/addons/ansel/config
       - ../src:/var/www/ee7/system/user/addons/ansel/src
       - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
+      - ./environments/dumper.php:/var/www/dumper.php
     networks:
       default:
         aliases:

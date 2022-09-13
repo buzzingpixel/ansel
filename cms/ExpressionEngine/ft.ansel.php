@@ -36,18 +36,14 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * Var ID for Low Variables (so PHPStorm doesn’t show errors)
      *
-     * @param mixed
-     *
-     * @phpstan-ignore-next-line
+     * @var mixed
      */
     public $var_id;
 
     /**
      * Error Message for Low Variables (so PHPStorm doesn’t show errors)
      *
-     * @param mixed
-     *
-     * @phpstan-ignore-next-line
+     * @var mixed
      */
     public $error_msg;
 

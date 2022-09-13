@@ -6,7 +6,7 @@ $projDir = dirname(__DIR__, 3);
 
 require_once $projDir . '/vendor/autoload.php';
 
-require_once $projDir . '/dumper.php';
+require_once dirname($projDir) . '/dumper.php';
 
 $config ??= [];
 
