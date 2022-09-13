@@ -141,6 +141,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cocur/slugify" />
       <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee6/system/user/addons/treasury/Vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee6" />
+      <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee7" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

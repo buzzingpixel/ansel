@@ -306,7 +306,9 @@ class Ansel_ft extends EE_Fieldtype
 
         $this->postedSettings = $data;
 
-        return $data;
+        $anselData = $data['ansel'] ?? [];
+
+        return ['ansel' => $anselData];
     }
 
     /**
