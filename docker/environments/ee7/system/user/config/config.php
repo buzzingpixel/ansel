@@ -18,7 +18,7 @@ $config['autosave_interval_seconds'] = '10';
 
 $config['site_license_key'] = '';
 
-$config['app_version']       = '7.1.4';
+$config['app_version']       = '7.1.5';
 $config['encryption_key']    = '4f9116ecc15c486c52548e0cb7c5c6ad8ae23f2b';
 $config['session_crypt_key'] = '99817a5a9d1dfdb9157bcff97cc5d106a689eaac';
 $config['database']          = [
