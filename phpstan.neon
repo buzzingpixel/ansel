@@ -2,7 +2,8 @@ parameters:
     level: max
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
-    excludes_analyse:
+    excludePaths:
+        - cms/Craft/AnselCraftField.php
     bootstrapFiles:
         - tools-bootstrap.php
 
