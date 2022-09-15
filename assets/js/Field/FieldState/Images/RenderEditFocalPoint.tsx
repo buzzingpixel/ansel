@@ -86,7 +86,7 @@ const RenderEditFocalPointInner = () => {
                 onClick={() => {
                     setLocalFocal(coords);
                 }}
-                className='ansel_mb-2 ansel_overflow-hidden ansel_cursor-crosshair'
+                className='ansel_inline-block ansel_mb-2 ansel_overflow-hidden ansel_cursor-crosshair'
                 style={{
                     backgroundColor: '#d5d5d5',
                     width: finalWidth,
