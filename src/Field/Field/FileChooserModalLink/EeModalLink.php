@@ -17,6 +17,7 @@ class EeModalLink
     private Factory $filePickerFactory;
 
     private RecordService $recordService;
+
     private TranslatorContract $translator;
 
     public function __construct(
