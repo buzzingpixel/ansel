@@ -78,6 +78,7 @@ class GetFieldRenderContext
                     'dragImagesToUpload' => $this->translator->getLine(
                         'drag_images_to_upload'
                     ),
+                    'or' => $this->translator->getLine('or'),
                 ],
                 $platform,
             ),

@@ -19,6 +19,7 @@ const Uploading = (
         limitedToXImages,
         selectExistingImage,
         dragImagesToUpload,
+        or,
     } = useTranslations();
 
     const {
@@ -162,8 +163,9 @@ const Uploading = (
             </div>
             {openDropZoneDeviceDialog !== null
                 && <>
-                    {/* TODO: Lang */}
-                    <div className="ansel_italic ansel_py-2 ansel_text-center">or</div>
+                    <div className="ansel_italic ansel_py-2 ansel_text-center">
+                        {or}
+                    </div>
                     <div className="ansel_text-gray-700 ansel_italic ansel_text-center">
                         <a
                             onClick={openDeviceDialog}

@@ -146,4 +146,5 @@ return [
     'limited_to_1_image' => 'This field has been limited to 1 image',
     'limited_to_x_images' => 'This field has been limited to {{qty}} images',
     'select_existing_image' => 'Select existing image',
+    'or' => 'or',
 ];

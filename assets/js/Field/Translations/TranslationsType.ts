@@ -7,6 +7,7 @@ interface TranslationsType {
     limitedToXImages: string;
     selectExistingImage: string;
     dragImagesToUpload: string;
+    or: string;
 }
 
 export default TranslationsType;
