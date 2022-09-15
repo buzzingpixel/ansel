@@ -33,8 +33,6 @@ const ErrorMessagesProvider = (props) => {
         {},
     );
 
-    const [timers, setTimers] = useState({});
-
     const addErrorMessage = (message: string) => {
         setErrorMessages((prevState) => {
             prevState[message] = message;
@@ -42,23 +40,13 @@ const ErrorMessagesProvider = (props) => {
             return { ...prevState };
         });
 
-        const timer = setTimeout(() => {
+        setTimeout(() => {
             setErrorMessages((prevState) => {
                 delete prevState[message];
 
                 return { ...prevState };
             });
         }, 10000);
-
-        setTimers((oldTimers) => {
-            if (timers[message]) {
-                clearTimeout(timers[message]);
-            }
-
-            oldTimers[message] = timer;
-
-            return { ...oldTimers };
-        });
     };
 
     if (Object.keys(errorMessages).length > 0) {
