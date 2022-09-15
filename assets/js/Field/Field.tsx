@@ -10,8 +10,8 @@ import RenderImages from './FieldState/Images/RenderImages';
 import FieldInputs from './FieldState/FieldInputs';
 import { useImages } from './FieldState/Images/ImagesContext';
 import { useFieldSettings } from './FieldSettings/FieldSettingsContext';
-import UploadOverQty from './FieldState/UploadOverQty';
-import UploadUnderQty from './FieldState/UploadUnderQty';
+import OverLimit from './FieldState/OverLimit';
+import UnderLimit from './FieldState/UnderLimit';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
@@ -60,8 +60,8 @@ const Field = () => {
                     <input {...getDropZoneInputProps()} />
                 </div>
                 <DragInProgress isDropZoneDragActive={isDropZoneDragActive} />
-                <UploadUnderQty />
-                <UploadOverQty />
+                <UnderLimit />
+                <OverLimit />
                 <ErrorMessagesDisplay />
                 {/* Primary field elements */}
                 <div className="ansel_p-4 ansel_overflow-auto">

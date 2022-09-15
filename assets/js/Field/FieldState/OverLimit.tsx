@@ -4,7 +4,7 @@ import { useTranslations } from '../Translations/TranslationsContext';
 import { useImages } from './Images/ImagesContext';
 import { useFieldSettings } from '../FieldSettings/FieldSettingsContext';
 
-const UploadOverQty = () => {
+const OverLimit = () => {
     const { images } = useImages();
     const { maxQty } = useFieldSettings();
     const { fieldOverLimit } = useTranslations();
@@ -32,4 +32,4 @@ const UploadOverQty = () => {
     </div>;
 };
 
-export default UploadOverQty;
+export default OverLimit;

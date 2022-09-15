@@ -4,7 +4,7 @@ import { useImages } from './Images/ImagesContext';
 import { useFieldSettings } from '../FieldSettings/FieldSettingsContext';
 import { useTranslations } from '../Translations/TranslationsContext';
 
-const UploadUnderQty = () => {
+const UnderLimit = () => {
     const { images } = useImages();
     const { minQty } = useFieldSettings();
     const { fieldUnderLimit } = useTranslations();
@@ -32,4 +32,4 @@ const UploadUnderQty = () => {
     </div>;
 };
 
-export default UploadUnderQty;
+export default UnderLimit;
