@@ -14,7 +14,11 @@ import { useErrorMessages } from '../FieldState/ErrorMessages/ErrorMessagesConte
 const Uploading = (
     { openDropZoneDeviceDialog }: { openDropZoneDeviceDialog: () => void },
 ) => {
-    const { selectImageFromDevice, limitedToXImages } = useTranslations();
+    const {
+        selectImageFromDevice,
+        limitedToXImages,
+        selectExistingImage,
+    } = useTranslations();
 
     const {
         selectedFileHandlerEe,
@@ -134,6 +138,7 @@ const Uploading = (
         <div className={paddingClass}>
             <div className="ansel_hidden" ref={buttonRef} />
             <div className="ansel_text-gray-700 ansel_italic ansel_text-center ansel_pb-4">
+                {/* TODO: Lang */}
                 Drag images here to upload
             </div>
             <div className="ansel_text-gray-700 ansel_italic ansel_text-center">
@@ -150,8 +155,7 @@ const Uploading = (
                             <ImPlus/>
                         </span>
                         <span className="ansel_inline-block ansel_mx-auto ansel_align-middle">
-                            {/* TODO: Lang */}
-                            Select existing image
+                            {selectExistingImage}
                         </span>
                     </IconContext.Provider>
                 </a>

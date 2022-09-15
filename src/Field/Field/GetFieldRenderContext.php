@@ -72,6 +72,9 @@ class GetFieldRenderContext
                         'error_loading_image'
                     ),
                     'limitedToXImages' => $limitedToXImages,
+                    'selectExistingImage' => $this->translator->getLine(
+                        'select_existing_image'
+                    ),
                 ],
                 $platform,
             ),

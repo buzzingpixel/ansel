@@ -145,4 +145,5 @@ $lang = [
     'error_loading_image' => 'Beim Laden des Bildes ist ein Fehler aufgetreten',
     'limited_to_1_image' => 'Dieses Feld wurde auf 1 Bild begrenzt',
     'limited_to_x_images' => 'Dieses Feld wurde auf {{qty}} Bilder begrenzt',
+    'select_existing_image' => 'Vorhandenes Bild auswählen',
 ];

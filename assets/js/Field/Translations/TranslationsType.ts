@@ -5,6 +5,7 @@ interface TranslationsType {
     dimensionsNotMet: string;
     errorLoadingImage: string;
     limitedToXImages: string;
+    selectExistingImage: string;
 }
 
 export default TranslationsType;
