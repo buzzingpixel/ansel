@@ -28,6 +28,7 @@ const DeleteButton = () => {
             >
                 <IconContext.Provider value={{ color: '#525252' }}>
                     <MdDelete className="ansel_w-5 ansel_h-5 ansel_text-gray-400" aria-hidden="true" />
+                    {/* TODO: Lang */}
                     <span className="ansel_sr-only">Remove Image</span>
                 </IconContext.Provider>
             </a>

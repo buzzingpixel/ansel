@@ -19,6 +19,7 @@ const EditImageButton = () => {
         >
             <IconContext.Provider value={{ color: '#525252' }}>
                 <ImCrop className="ansel_w-5 ansel_h-5 ansel_text-gray-400" aria-hidden="true"/>
+                {/* TODO: lang */}
                 <span className="ansel_sr-only">Edit Image</span>
             </IconContext.Provider>
         </a>

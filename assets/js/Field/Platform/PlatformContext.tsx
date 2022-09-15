@@ -2,9 +2,7 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 import PlatformType from './PlatformType';
 
-const PlatformContext = createContext<PlatformType>({
-    environment: '',
-});
+const PlatformContext = createContext<PlatformType>(undefined);
 
 const usePlatform = () => {
     const context = useContext(PlatformContext);

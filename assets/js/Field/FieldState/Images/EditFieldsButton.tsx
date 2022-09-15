@@ -26,6 +26,7 @@ const EditFieldsButton = () => {
         >
             <IconContext.Provider value={{ color: '#525252' }}>
                 <FiEdit className="ansel_w-5 ansel_h-5 ansel_text-gray-400" aria-hidden="true"/>
+                {/* TODO: Lang */}
                 <span className="ansel_sr-only">Edit Fields</span>
             </IconContext.Provider>
         </a>
