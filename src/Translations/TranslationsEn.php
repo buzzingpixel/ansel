@@ -128,7 +128,7 @@ class TranslationsEn
         'field_over_limit_qty' => 'This field is limited to {{qty}} images. All images uploaded beyond that will not be displayed.',
         'file_is_not_an_image' => 'The selected file is not an image',
         'field_requires_at_least_1_image' => 'This field requires at least 1 image',
-        'field_requires_at_least_x_images' => 'This field requires at least {{amount}} images',
+        'field_requires_at_least_x_images' => 'This field requires at least {{qty}} images',
         'x_field_required_for_each_image' => 'The {{field}} field is required for each image',
         'field_requires_cover' => 'The {{field}} field must be selected on one image',
         'source_image_missing' => 'The source image that was uploaded for this crop has gone missing. It may have been deleted in the file manager. Because of that, this image is no longer editable.',

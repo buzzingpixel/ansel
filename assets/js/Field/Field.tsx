@@ -11,6 +11,7 @@ import FieldInputs from './FieldState/FieldInputs';
 import { useImages } from './FieldState/Images/ImagesContext';
 import { useFieldSettings } from './FieldSettings/FieldSettingsContext';
 import UploadOverQty from './FieldState/UploadOverQty';
+import UploadUnderQty from './FieldState/UploadUnderQty';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
@@ -59,6 +60,7 @@ const Field = () => {
                     <input {...getDropZoneInputProps()} />
                 </div>
                 <DragInProgress isDropZoneDragActive={isDropZoneDragActive} />
+                <UploadUnderQty />
                 <UploadOverQty />
                 <ErrorMessagesDisplay />
                 {/* Primary field elements */}

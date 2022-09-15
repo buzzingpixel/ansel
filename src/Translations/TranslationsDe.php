@@ -128,7 +128,7 @@ class TranslationsDe
         'field_over_limit_qty' => 'Dieses Feld ist kann maximal {{qty}} Bilder enthalten. Zusätzliche Bilder werden nicht angezeigt.',
         'file_is_not_an_image' => 'Die ausgewählte Datei ist kein Bild',
         'field_requires_at_least_1_image' => 'Dieses Feld muss mindestens ein Bild enthalten',
-        'field_requires_at_least_x_images' => 'Dieses Feld muss mindestens {{amount}} Bilder enthalten',
+        'field_requires_at_least_x_images' => 'Dieses Feld muss mindestens {{qty}} Bilder enthalten',
         'x_field_required_for_each_image' => 'Das Feld {{field}} wird für jedes Bild benötigt',
         'field_requires_cover' => 'Das Feld {{field}} wird für ein Bild benötigt',
         'source_image_missing' => 'Die Quelldatei dieses Bildes ist nicht mehr verfügbar. Möglicherweise wurde sie im Dateimanager gelöscht. Deshalb ist dieses Bild nicht mehr editierbar.',
