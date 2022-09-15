@@ -38,16 +38,24 @@ class GetFieldRenderContext
         $maxQty = $fieldSettings->maxQty()->value();
 
         $limitedToXImages = $maxQty > 1 ?
-            $this->translator
-                ->getLineWithReplacements(
-                    'limited_to_x_images',
-                    [
-                        '{{qty}}' => (string) $maxQty,
-                    ]
-                ) :
+            $this->translator->getLineWithReplacements(
+                'limited_to_x_images',
+                [
+                    '{{qty}}' => (string) $maxQty,
+                ]
+            ) :
             $this->translator->getLine(
                 'limited_to_1_image',
             );
+
+        $fieldOverLimit = $maxQty > 1 ?
+            $this->translator->getLineWithReplacements(
+                'field_over_limit_qty',
+                [
+                    '{{qty}}' => (string) $maxQty,
+                ]
+            ) :
+            $this->translator->getLine('field_over_limit_1');
 
         return [
             'fieldNameRoot' => $fieldNameRoot,
@@ -97,6 +105,7 @@ class GetFieldRenderContext
                     'editImageCrop' => $this->translator->getLine(
                         'edit_image_crop'
                     ),
+                    'fieldOverLimit' => $fieldOverLimit,
                 ],
                 $platform,
             ),

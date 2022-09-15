@@ -10,6 +10,7 @@ import RenderImages from './FieldState/Images/RenderImages';
 import FieldInputs from './FieldState/FieldInputs';
 import { useImages } from './FieldState/Images/ImagesContext';
 import { useFieldSettings } from './FieldSettings/FieldSettingsContext';
+import UploadOverQty from './FieldState/UploadOverQty';
 
 const Field = () => {
     const { hasErrors } = useErrorMessages();
@@ -58,7 +59,7 @@ const Field = () => {
                     <input {...getDropZoneInputProps()} />
                 </div>
                 <DragInProgress isDropZoneDragActive={isDropZoneDragActive} />
-                {/* TODO: Display message when we've uploaded more than we can use */}
+                <UploadOverQty />
                 <ErrorMessagesDisplay />
                 {/* Primary field elements */}
                 <div className="ansel_p-4 ansel_overflow-auto">

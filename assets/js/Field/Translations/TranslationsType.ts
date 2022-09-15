@@ -14,6 +14,7 @@ interface TranslationsType {
     editImage: string;
     placeFocalPoint: string;
     editImageCrop: string;
+    fieldOverLimit: string;
 }
 
 export default TranslationsType;
