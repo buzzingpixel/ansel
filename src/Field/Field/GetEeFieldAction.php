@@ -8,7 +8,6 @@ use BuzzingPixel\Ansel\Field\Field\FileChooserModalLink\FileChooserModalLinkFact
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Environment;
-use BuzzingPixel\Ansel\Translations\TranslatorContract;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -24,30 +23,22 @@ class GetEeFieldAction
 
     private Environment $environment;
 
-    private TranslatorContract $translator;
-
-    private GetFieldParameters $getFieldParameters;
+    private GetFieldRenderContext $getFieldRenderContext;
 
     private FileChooserModalLinkFactory $fileChooserModalLinkFactory;
-
-    private DimensionsNotMetTranslationFactory $dimensionsNotMetTranslationFactory;
 
     public function __construct(
         EeCssJs $eeCssJs,
         TwigEnvironment $twig,
         Environment $environment,
-        TranslatorContract $translator,
-        GetFieldParameters $getFieldParameters,
-        FileChooserModalLinkFactory $fileChooserModalLinkFactory,
-        DimensionsNotMetTranslationFactory $dimensionsNotMetTranslationFactory
+        GetFieldRenderContext $getFieldRenderContext,
+        FileChooserModalLinkFactory $fileChooserModalLinkFactory
     ) {
-        $this->eeCssJs                            = $eeCssJs;
-        $this->twig                               = $twig;
-        $this->environment                        = $environment;
-        $this->translator                         = $translator;
-        $this->getFieldParameters                 = $getFieldParameters;
-        $this->fileChooserModalLinkFactory        = $fileChooserModalLinkFactory;
-        $this->dimensionsNotMetTranslationFactory = $dimensionsNotMetTranslationFactory;
+        $this->eeCssJs                     = $eeCssJs;
+        $this->twig                        = $twig;
+        $this->environment                 = $environment;
+        $this->getFieldRenderContext       = $getFieldRenderContext;
+        $this->fileChooserModalLinkFactory = $fileChooserModalLinkFactory;
     }
 
     /**
@@ -69,35 +60,14 @@ class GetEeFieldAction
 
         return $this->twig->render(
             '@AnselSrc/Field/Field/Field.twig',
-            [
-                'fieldNameRoot' => $fieldNameRoot,
-                'model' => new FieldRenderModel(
-                    $fieldSettings->asScalarArray(),
-                    $fieldSettings->customFields()->asScalarArray(),
-                    $this->getFieldParameters->get()->asArray(),
-                    [
-                        'imageUploadError' => $this->translator->getLine(
-                            'image_upload_error',
-                        ),
-                        'selectImageFromDevice' => $this->translator->getLine(
-                            'select_image_from_device'
-                        ),
-                        'unusableImage' => $this->translator->getLine(
-                            'unusable_image'
-                        ),
-                        'dimensionsNotMet' => $this
-                            ->dimensionsNotMetTranslationFactory
-                            ->get($fieldSettings),
-                        'errorLoadingImage' => $this->translator->getLine(
-                            'error_loading_image'
-                        ),
-                    ],
-                    [
-                        'environment' => $this->environment->toString(),
-                        'fileChooserModalLink' => $modalLink,
-                    ],
-                ),
-            ],
+            $this->getFieldRenderContext->get(
+                $fieldSettings,
+                $fieldNameRoot,
+                [
+                    'environment' => $this->environment->toString(),
+                    'fileChooserModalLink' => $modalLink,
+                ]
+            ),
         );
     }
 }
