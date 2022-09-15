@@ -143,4 +143,6 @@ $lang = [
     'select_image_from_device' => 'Wählen Sie ein Bild aus, das Sie von Ihrem Gerät hochladen möchten',
     'unusable_image' => 'Die ausgewählte Datei ist kein verwendbares Bild',
     'error_loading_image' => 'Beim Laden des Bildes ist ein Fehler aufgetreten',
+    'limited_to_1_image' => 'Dieses Feld wurde auf 1 Bild begrenzt',
+    'limited_to_x_images' => 'Dieses Feld wurde auf {{qty}} Bilder begrenzt',
 ];

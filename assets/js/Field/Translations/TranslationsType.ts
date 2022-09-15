@@ -4,6 +4,7 @@ interface TranslationsType {
     unusableImage: string;
     dimensionsNotMet: string;
     errorLoadingImage: string;
+    limitedToXImages: string;
 }
 
 export default TranslationsType;

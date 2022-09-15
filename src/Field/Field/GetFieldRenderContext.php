@@ -35,6 +35,20 @@ class GetFieldRenderContext
         string $fieldNameRoot,
         array $platform
     ): array {
+        $maxQty = $fieldSettings->maxQty()->value();
+
+        $limitedToXImages = $maxQty > 1 ?
+            $this->translator
+                ->getLineWithReplacements(
+                    'limited_to_x_images',
+                    [
+                        '{{qty}}' => (string) $maxQty,
+                    ]
+                ) :
+            $this->translator->getLine(
+                'limited_to_1_image',
+            );
+
         return [
             'fieldNameRoot' => $fieldNameRoot,
             'model' => new FieldRenderModel(
@@ -57,6 +71,7 @@ class GetFieldRenderContext
                     'errorLoadingImage' => $this->translator->getLine(
                         'error_loading_image'
                     ),
+                    'limitedToXImages' => $limitedToXImages,
                 ],
                 $platform,
             ),

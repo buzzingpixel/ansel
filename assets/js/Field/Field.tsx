@@ -58,6 +58,7 @@ const Field = () => {
                     <input {...getDropZoneInputProps()} />
                 </div>
                 <DragInProgress isDropZoneDragActive={isDropZoneDragActive} />
+                {/* TODO: Display message when we've uploaded more than we can use */}
                 <ErrorMessagesDisplay />
                 {/* Primary field elements */}
                 <div className="ansel_p-4 ansel_overflow-auto">

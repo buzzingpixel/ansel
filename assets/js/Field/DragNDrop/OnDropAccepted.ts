@@ -18,7 +18,11 @@ const useOnDropAccepted = () => {
     const { validate } = useValidateImageConstraints();
     const { addProcess, removeProcess } = useProcesses();
     const { uploadKey, uploadUrl } = useFieldParameters();
-    const { imageUploadError, dimensionsNotMet } = useTranslations();
+    const {
+        imageUploadError,
+        dimensionsNotMet,
+        limitedToXImages,
+    } = useTranslations();
 
     const uploadCatch = (errorMsg?: string) => {
         addErrorMessage(errorMsg || imageUploadError);
@@ -91,10 +95,7 @@ const useOnDropAccepted = () => {
                 && settings.preventUploadOverMax
                 && projectedTotal > settings.maxQty
             ) {
-                // TODO: lang
-                addErrorMessage(
-                    'Cannot upload more than x images to this field',
-                );
+                addErrorMessage(limitedToXImages);
 
                 const deleteCount = projectedTotal - settings.maxQty;
 

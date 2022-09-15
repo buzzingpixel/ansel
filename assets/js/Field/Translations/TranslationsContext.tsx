@@ -2,13 +2,9 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 import TranslationsType from './TranslationsType';
 
-const TranslationsContext = createContext<TranslationsType>({
-    imageUploadError: '',
-    selectImageFromDevice: '',
-    unusableImage: '',
-    dimensionsNotMet: '',
-    errorLoadingImage: '',
-});
+const TranslationsContext = createContext<TranslationsType>(
+    undefined,
+);
 
 const useTranslations = () => {
     const context = useContext(TranslationsContext);

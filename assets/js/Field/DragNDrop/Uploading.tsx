@@ -14,7 +14,7 @@ import { useErrorMessages } from '../FieldState/ErrorMessages/ErrorMessagesConte
 const Uploading = (
     { openDropZoneDeviceDialog }: { openDropZoneDeviceDialog: () => void },
 ) => {
-    const { selectImageFromDevice } = useTranslations();
+    const { selectImageFromDevice, limitedToXImages } = useTranslations();
 
     const {
         selectedFileHandlerEe,
@@ -61,10 +61,7 @@ const Uploading = (
                     && settings.preventUploadOverMax
                     && images.length >= settings.maxQty
                 ) {
-                    // TODO: lang
-                    addErrorMessage(
-                        'Cannot upload more than x images to this field',
-                    );
+                    addErrorMessage(limitedToXImages);
 
                     return;
                 }
@@ -106,10 +103,7 @@ const Uploading = (
                             && settings.preventUploadOverMax
                             && projectedTotal > settings.maxQty
                         ) {
-                            // TODO: lang
-                            addErrorMessage(
-                                'Cannot upload more than x images to this field',
-                            );
+                            addErrorMessage(limitedToXImages);
 
                             const deleteCount = projectedTotal - settings.maxQty;
 
