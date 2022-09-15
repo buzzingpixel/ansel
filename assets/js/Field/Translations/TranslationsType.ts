@@ -8,6 +8,12 @@ interface TranslationsType {
     selectExistingImage: string;
     dragImagesToUpload: string;
     or: string;
+    removeImage: string;
+    editFields: string;
+    editFocalPoint: string;
+    editImage: string;
+    placeFocalPoint: string;
+    editImageCrop: string;
 }
 
 export default TranslationsType;

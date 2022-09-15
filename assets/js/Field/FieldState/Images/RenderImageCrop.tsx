@@ -5,8 +5,11 @@ import { useRenderImageContext } from './RenderImageContext';
 import { useFieldSettings } from '../../FieldSettings/FieldSettingsContext';
 import AnselPortal from '../../Utility/AnselPortal';
 import useWindowResize from '../../../Hooks/useWindowResize';
+import { useTranslations } from '../../Translations/TranslationsContext';
 
 const RenderImageCropInner = () => {
+    const { editImageCrop } = useTranslations();
+
     const [
         imageIsLoaded,
         setImageIsLoaded,
@@ -77,10 +80,9 @@ const RenderImageCropInner = () => {
         handleResize();
     }, [imageIsLoaded]);
 
-    // TODO: Move heading to lang files
     return (
         <AnselPortal
-            heading='Edit image crop. Press red button (or escape) to cancel. Press green button (or enter) to accept changes.'
+            heading={editImageCrop}
             cancelAction={cancel}
             acceptAction={accept}
         >

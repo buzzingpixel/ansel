@@ -152,5 +152,9 @@ class TranslationsDe
         'or' => 'oder',
         'remove_image' => 'Entferne Bild',
         'edit_fields' => 'Felder bearbeiten',
+        'edit_focal_point' => 'Fokuspunkt bearbeiten',
+        'edit_image' => 'Bild bearbeiten',
+        'place_focal_point' => 'Klicken Sie auf das Bild, um den Brennpunkt zu platzieren. Drücken Sie die rote Taste (oder Escape), um abzubrechen. Drücken Sie die grüne Taste (oder Enter), um die Änderungen zu akzeptieren.',
+        'edit_image_crop' => 'Bildausschnitt bearbeiten. Drücken Sie die rote Taste (oder Escape), um abzubrechen. Drücken Sie die grüne Taste (oder Enter), um die Änderungen zu akzeptieren.',
     ];
 }

@@ -4,11 +4,13 @@ import * as React from 'react';
 import { useRenderImageContext } from './RenderImageContext';
 import { useRenderImagesFieldsContext } from './RenderImagesFieldsContext';
 import { useCustomFields } from '../../CustomFields/CustomFieldsContext';
+import { useTranslations } from '../../Translations/TranslationsContext';
 
 const EditFieldsButton = () => {
+    const customFields = useCustomFields();
+    const { editFields } = useTranslations();
     const { image } = useRenderImageContext();
     const { setActiveFieldImageId } = useRenderImagesFieldsContext();
-    const customFields = useCustomFields();
 
     if (customFields.length < 1) {
         return <></>;
@@ -23,11 +25,11 @@ const EditFieldsButton = () => {
             }}
             href="#0"
             className="ansel_relative ansel_-mr-px w-0 ansel_flex-1 ansel_inline-flex ansel_items-center ansel_justify-center ansel_py-4 ansel_text-sm ansel_text-gray-700 ansel_font-medium border ansel_border-transparent hover:ansel_bg-gray-200"
+            title={editFields}
         >
             <IconContext.Provider value={{ color: '#525252' }}>
                 <FiEdit className="ansel_w-5 ansel_h-5 ansel_text-gray-400" aria-hidden="true"/>
-                {/* TODO: Lang */}
-                <span className="ansel_sr-only">Edit Fields</span>
+                <span className="ansel_sr-only">{editFields}</span>
             </IconContext.Provider>
         </a>
     </div>;

@@ -4,9 +4,12 @@ import { FocalPoint, useRenderImageContext } from './RenderImageContext';
 import AnselPortal from '../../Utility/AnselPortal';
 import useWindowResize from '../../../Hooks/useWindowResize';
 import useContainerMouseCoords from '../../../Hooks/useContainerMouseCoords';
+import { useTranslations } from '../../Translations/TranslationsContext';
 
 const RenderEditFocalPointInner = () => {
     const windowDimensions = useWindowResize();
+
+    const { placeFocalPoint } = useTranslations();
 
     const { coords, handleMouseMove } = useContainerMouseCoords({
         x: 50,
@@ -74,10 +77,9 @@ const RenderEditFocalPointInner = () => {
     const imgX = Math.round(imgWidthPercent * pixelCropState.x) * -1;
     const imgY = Math.round(imgHeightPercent * pixelCropState.y) * -1;
 
-    // TODO: Move heading to lang files
     return (
         <AnselPortal
-            heading='Click on the image to place focal point. Press red button (or escape) to cancel. Press green button (or enter) to accept changes.'
+            heading={placeFocalPoint}
             cancelAction={cancel}
             acceptAction={accept}
         >

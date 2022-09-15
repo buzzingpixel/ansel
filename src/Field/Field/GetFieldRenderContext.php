@@ -79,6 +79,24 @@ class GetFieldRenderContext
                         'drag_images_to_upload'
                     ),
                     'or' => $this->translator->getLine('or'),
+                    'removeImage' => $this->translator->getLine(
+                        'remove_image'
+                    ),
+                    'editFields' => $this->translator->getLine(
+                        'edit_fields'
+                    ),
+                    'editFocalPoint' => $this->translator->getLine(
+                        'edit_focal_point'
+                    ),
+                    'editImage' => $this->translator->getLine(
+                        'edit_image'
+                    ),
+                    'placeFocalPoint' => $this->translator->getLine(
+                        'place_focal_point'
+                    ),
+                    'editImageCrop' => $this->translator->getLine(
+                        'edit_image_crop'
+                    ),
                 ],
                 $platform,
             ),

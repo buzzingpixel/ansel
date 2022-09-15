@@ -152,5 +152,9 @@ class TranslationsEn
         'or' => 'or',
         'remove_image' => 'Remove Image',
         'edit_fields' => 'Edit Fields',
+        'edit_focal_point' => 'Edit Focal Point',
+        'edit_image' => 'Edit Image',
+        'place_focal_point' => 'Click on the image to place focal point. Press red button (or escape) to cancel. Press green button (or enter) to accept changes.',
+        'edit_image_crop' => 'Edit image crop. Press red button (or escape) to cancel. Press green button (or enter) to accept changes.',
     ];
 }
