@@ -6,6 +6,7 @@ interface TranslationsType {
     errorLoadingImage: string;
     limitedToXImages: string;
     selectExistingImage: string;
+    dragImagesToUpload: string;
 }
 
 export default TranslationsType;

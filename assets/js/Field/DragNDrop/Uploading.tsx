@@ -18,6 +18,7 @@ const Uploading = (
         selectImageFromDevice,
         limitedToXImages,
         selectExistingImage,
+        dragImagesToUpload,
     } = useTranslations();
 
     const {
@@ -138,8 +139,7 @@ const Uploading = (
         <div className={paddingClass}>
             <div className="ansel_hidden" ref={buttonRef} />
             <div className="ansel_text-gray-700 ansel_italic ansel_text-center ansel_pb-4">
-                {/* TODO: Lang */}
-                Drag images here to upload
+                {dragImagesToUpload}
             </div>
             <div className="ansel_text-gray-700 ansel_italic ansel_text-center">
                 <a

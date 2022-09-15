@@ -75,6 +75,9 @@ class GetFieldRenderContext
                     'selectExistingImage' => $this->translator->getLine(
                         'select_existing_image'
                     ),
+                    'dragImagesToUpload' => $this->translator->getLine(
+                        'drag_images_to_upload'
+                    ),
                 ],
                 $platform,
             ),
