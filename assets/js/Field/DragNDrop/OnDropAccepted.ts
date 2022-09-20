@@ -39,6 +39,7 @@ const useOnDropAccepted = () => {
                 fileName: json.fileName,
             },
             imageUrl: json.base64Image,
+            imageFileName: json.fileName,
         } as ImageType;
 
         addImage(image);

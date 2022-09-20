@@ -50,6 +50,7 @@ const useSelectedFileHandler = () => {
         const image = {
             id: uuid(),
             imageUrl: file.path,
+            imageFileName: file.file_name,
             sourceImageId: file.file_id.toString(),
         } as ImageType;
 
@@ -59,9 +60,12 @@ const useSelectedFileHandler = () => {
     const selectedFileHandlerCraft = (file: CraftFileType) => {
         addProcess();
 
+        const urlArr = file.url.split('/');
+
         const image = {
             id: uuid(),
             imageUrl: file.url,
+            imageFileName: urlArr[urlArr.length - 1],
             sourceImageId: file.id.toString(),
         } as ImageType;
 

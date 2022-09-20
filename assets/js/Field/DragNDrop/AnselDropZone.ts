@@ -17,7 +17,11 @@ const useAnselDropZone = () => {
             onDropRejected,
             noClick: true,
             noKeyboard: true,
-            accept: 'image/jpeg, image/png, image/gif',
+            accept: {
+                'image/jpeg': ['.jpg', '.jpeg'],
+                'image/png': ['.png'],
+                'image/gif': ['.gif'],
+            },
         },
     );
 

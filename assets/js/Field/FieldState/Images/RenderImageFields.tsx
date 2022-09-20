@@ -8,6 +8,7 @@ import useWindowResize from '../../../Hooks/useWindowResize';
 import CustomFieldType from '../../CustomFields/CustomFieldType';
 import LightSwitch from '../../../Shared/LightSwitch';
 import { useImages } from './ImagesContext';
+import { useKeyboard } from '../../Keyboard/KeyboardContext';
 
 function RenderBooleanFieldType ({
     checked,
@@ -140,6 +141,8 @@ const Thumbnail = () => {
 const RenderImageFieldsInner = () => {
     const { images } = useImages();
 
+    const { altDown, altDoubleClickActive } = useKeyboard();
+
     const { setActiveFieldImageId } = useRenderImagesFieldsContext();
 
     const { getFieldValue, setFieldValue } = useRenderImageContext();
@@ -227,6 +230,9 @@ const RenderImageFieldsInner = () => {
         >
             <div className="ansel_w-screen-40px ansel_max-w-xl ansel_m-4">
                 <div className="ansel_bg-gray-50 ansel_w-full ansel_p-4 ansel_rounded-lg ansel_max-height-inner-portal ansel_overflow-y-auto ansel_webkit-overflow-scrolling-touch">
+                    {(altDown || altDoubleClickActive)
+                        && <div className="ansel_text-gray-700 ansel_pb-2 ansel_px-3 ansel_pt-0 ansel_break-words">{image.imageFileName}</div>
+                    }
                     <div className="ansel_pb-4">
                         <Thumbnail />
                     </div>

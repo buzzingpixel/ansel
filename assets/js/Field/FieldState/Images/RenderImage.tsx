@@ -8,9 +8,11 @@ import RenderImageCrop from './RenderImageCrop';
 import RenderEditFocalPoint from './RenderEditFocalPoint';
 import RenderImageFields from './RenderImageFields';
 import { useKeyboard } from '../../Keyboard/KeyboardContext';
+import { useRenderImageContext } from './RenderImageContext';
 
 // ansel-field-working
 const RenderImage = () => {
+    const { image } = useRenderImageContext();
     const { altDown, altDoubleClickActive } = useKeyboard();
 
     return <li
@@ -19,7 +21,7 @@ const RenderImage = () => {
         <RenderEditFocalPoint/>
         <RenderImageFields/>
         {(altDown || altDoubleClickActive)
-            && <div>todo file name</div>
+            && <div className="ansel_text-gray-700 ansel_pt-2 ansel_px-3 ansel_pb-0 ansel_break-words">{image.imageFileName}</div>
         }
         <div className="ansel-drag-handle ansel_flex-1 ansel_flex ansel_flex-col ansel_p-8 ansel_cursor-grab">
             <RenderThumbnail/>

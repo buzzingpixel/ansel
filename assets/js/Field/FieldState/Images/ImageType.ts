@@ -7,6 +7,7 @@ interface ImageType extends ItemInterface {
     imageUpload?: ImageUploadType;
     imageManipulationCache?: ImageManipulationCacheType;
     imageUrl: string;
+    imageFileName: string;
     sourceImageId?: string;
     x: number;
     y: number;
