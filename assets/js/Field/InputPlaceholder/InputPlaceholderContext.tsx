@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 
 const InputPlaceholderContext = createContext<HTMLInputElement>(
-    document.createElement('input'),
+    undefined,
 );
 
 const useInputPlaceholder = () => {
