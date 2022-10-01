@@ -213,7 +213,7 @@
             "dist": {
                 "type": "path",
                 "url": "/var/www/ansel",
-                "reference": "16459e1482e57a74b306595f894d8dcda9452c20"
+                "reference": "19915f8a1aa916e373ad248f08ff1f5d877be021"
             },
             "require": {
                 "buzzingpixel/container": "^1.1",
@@ -223,6 +223,7 @@
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.5.5|^7.2.0",
                 "league/mime-type-detection": "^1.9",
+                "league/pipeline": "^1.0",
                 "marc1706/fast-image-size": "^1.1",
                 "php": "^7.4|^8.0",
                 "ramsey/uuid": "^4.2",
@@ -2766,6 +2767,63 @@
                 "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.1"
             },
             "time": "2021-12-22T16:42:49+00:00"
+        },
+        {
+            "name": "league/pipeline",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/pipeline.git",
+                "reference": "aa14b0e3133121f8be39e9a3b6ddd011fc5bb9a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/pipeline/zipball/aa14b0e3133121f8be39e9a3b6ddd011fc5bb9a8",
+                "reference": "aa14b0e3133121f8be39e9a3b6ddd011fc5bb9a8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "leanphp/phpspec-code-coverage": "^4.2",
+                "phpspec/phpspec": "^4.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Pipeline\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net",
+                    "role": "Author"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "email": "woody.gilk@gmail.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A plug and play pipeline implementation.",
+            "keywords": [
+                "composition",
+                "design pattern",
+                "pattern",
+                "pipeline",
+                "sequential"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/pipeline/issues",
+                "source": "https://github.com/thephpleague/pipeline/tree/master"
+            },
+            "time": "2018-06-05T21:06:51+00:00"
         },
         {
             "name": "lucidtaz/yii2-whoops",

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Field;
+namespace BuzzingPixel\Ansel\Field\Field\Validate;
 
 class ValidatedFieldError
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
-use BuzzingPixel\Ansel\Field\Field\ValidatedFieldError;
-use BuzzingPixel\Ansel\Field\Field\ValidateFieldAction;
+use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
+use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;

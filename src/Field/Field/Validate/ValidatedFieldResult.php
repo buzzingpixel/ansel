@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Field;
+namespace BuzzingPixel\Ansel\Field\Field\Validate;
 
 use function array_map;
 use function array_values;
@@ -16,7 +16,7 @@ class ValidatedFieldResult
     /**
      * @param ValidatedFieldError[] $errors
      */
-    public function __construct(array $errors)
+    public function __construct(array $errors = [])
     {
         $this->errors = array_values(array_map(
             static fn (ValidatedFieldError $error) => $error,
@@ -48,5 +48,17 @@ class ValidatedFieldResult
     public function map(callable $callback): array
     {
         return array_map($callback, $this->errors);
+    }
+
+    public function addError(ValidatedFieldError $error): self
+    {
+        $this->errors[] = $error;
+
+        return $this;
+    }
+
+    public function addErrorMessage(string $msg): self
+    {
+        return $this->addError(new ValidatedFieldError($msg));
     }
 }

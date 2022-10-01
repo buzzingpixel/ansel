@@ -6,8 +6,8 @@ namespace BuzzingPixel\AnselCms\Craft;
 
 use BuzzingPixel\Ansel\Field\Field\GetCraftFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
-use BuzzingPixel\Ansel\Field\Field\ValidatedFieldError;
-use BuzzingPixel\Ansel\Field\Field\ValidateFieldAction;
+use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
+use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
