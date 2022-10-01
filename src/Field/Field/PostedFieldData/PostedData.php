@@ -36,8 +36,7 @@ class PostedData
     private static function imageCollectionFromArray(
         array $postedFieldData
     ): PostedImageCollection {
-        /** @phpstan-ignore-next-line */
-        $postedImagesArrayData = $postedFieldData['field']['images'] ?? [];
+        $postedImagesArrayData = $postedFieldData['images'] ?? [];
 
         $postedImagesArrayData = is_array($postedImagesArrayData) ?
             $postedImagesArrayData :
@@ -62,8 +61,7 @@ class PostedData
     private static function deletionsCollectionFromArray(
         array $postedFieldData
     ): PostedDeletionsCollection {
-        /** @phpstan-ignore-next-line */
-        $postedDeletionsRaw = $postedFieldData['field']['delete_images'] ?? '[]';
+        $postedDeletionsRaw = $postedFieldData['delete_images'] ?? '[]';
 
         $postedDeletionsArray = json_decode(
         /** @phpstan-ignore-next-line */
