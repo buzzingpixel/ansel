@@ -377,7 +377,7 @@ class Ansel_ft extends EE_Fieldtype
         return $this->getFieldAction->render(
             $fieldSettings,
             // TODO: field_id_x is only valid if channel field type directly
-            'field_id_' . $this->field_id . '[field]'
+            'field_id_' . $this->field_id
         );
     }
 
