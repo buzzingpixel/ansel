@@ -156,5 +156,7 @@ class TranslationsDe
         'edit_image' => 'Bild bearbeiten',
         'place_focal_point' => 'Klicken Sie auf das Bild, um den Brennpunkt zu platzieren. Drücken Sie die rote Taste (oder Escape), um abzubrechen. Drücken Sie die grüne Taste (oder Enter), um die Änderungen zu akzeptieren.',
         'edit_image_crop' => 'Bildausschnitt bearbeiten. Drücken Sie die rote Taste (oder Escape), um abzubrechen. Drücken Sie die grüne Taste (oder Enter), um die Änderungen zu akzeptieren.',
+        'must_not_add_more_than_1_image' => 'Sie dürfen diesem Feld nicht mehr als 1 Bild hinzufügen',
+        'must_not_add_more_than_x_images' => 'Sie dürfen diesem Feld nicht mehr als {{qty}} Bilder hinzufügen',
     ];
 }
