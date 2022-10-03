@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\Validate;
 
+use function array_filter;
 use function array_map;
 use function array_values;
 use function count;
@@ -57,8 +58,20 @@ class ValidatedFieldResult
         return $this;
     }
 
-    public function addErrorMessage(string $msg): self
+    public function addErrorMessage(string $message): self
     {
-        return $this->addError(new ValidatedFieldError($msg));
+        return $this->addError(new ValidatedFieldError($message));
+    }
+
+    public function hasErrorMessage(string $message): bool
+    {
+        $items = array_values(array_filter(
+            $this->errors,
+            static function ($loopMessage) use ($message) {
+                return $loopMessage->errorMsg() === $message;
+            }
+        ));
+
+        return count($items) > 0;
     }
 }

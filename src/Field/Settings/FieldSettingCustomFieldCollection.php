@@ -60,4 +60,16 @@ class FieldSettingCustomFieldCollection
     {
         $this->fields[] = $field;
     }
+
+    /**
+     * @param callable(FieldSettingCustomField $customField): ReturnType $callback
+     *
+     * @return ReturnType[]
+     *
+     * @template ReturnType
+     */
+    public function map(callable $callback): array
+    {
+        return array_map($callback, $this->asArray());
+    }
 }

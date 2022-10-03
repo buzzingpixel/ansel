@@ -158,5 +158,6 @@ class TranslationsEn
         'edit_image_crop' => 'Edit image crop. Press red button (or escape) to cancel. Press green button (or enter) to accept changes.',
         'must_not_add_more_than_1_image' => 'You must not add more than 1 image to this field',
         'must_not_add_more_than_x_images' => 'You must not add more than {{qty}} images to this field',
+        'custom_field_x_required' => 'The field "{{fieldLabel}}" is required',
     ];
 }

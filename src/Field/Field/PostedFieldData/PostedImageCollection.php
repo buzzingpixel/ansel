@@ -41,7 +41,7 @@ class PostedImageCollection
     /**
      * @return PostedImage[]
      */
-    public function postedImages(): array
+    public function asArray(): array
     {
         return $this->postedImages;
     }
@@ -49,5 +49,17 @@ class PostedImageCollection
     public function count(): int
     {
         return count($this->postedImages);
+    }
+
+    /**
+     * @param callable(PostedImage $image): ReturnType $callback
+     *
+     * @return ReturnType[]
+     *
+     * @template ReturnType
+     */
+    public function map(callable $callback): array
+    {
+        return array_map($callback, $this->asArray());
     }
 }

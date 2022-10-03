@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\PostedFieldData;
 
+use function array_filter;
 use function array_map;
 use function array_values;
 
@@ -43,5 +44,17 @@ class PostedFieldDataCollection
     public function postedFieldData(): array
     {
         return $this->postedFieldData;
+    }
+
+    public function findByHandle(string $handle): ?PostedFieldData
+    {
+        return array_values(array_filter(
+            $this->postedFieldData,
+            static function (PostedFieldData $fieldData) use (
+                $handle
+            ): bool {
+                return $fieldData->handle() === $handle;
+            }
+        ))[0] ?? null;
     }
 }
