@@ -67,15 +67,6 @@ class AnselCraftField extends Field
         return $meta;
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public static function displayName(): string
-    {
-        return self::getMeta()->name();
-    }
-
     private GetFieldSettings $getFieldSettings;
 
     private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
@@ -114,6 +105,15 @@ class AnselCraftField extends Field
         $this->validateFieldAction = $container->get(
             ValidateFieldAction::class
         );
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public static function displayName(): string
+    {
+        return self::getMeta()->name();
     }
 
     public function getContentColumnType(): string
@@ -272,4 +272,8 @@ class AnselCraftField extends Field
             $error->errorMsg(),
         ));
     }
+
+    // public function afterElementSave()
+
+    // public function beforeElementDelete()
 }

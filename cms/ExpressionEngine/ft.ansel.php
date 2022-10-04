@@ -385,6 +385,8 @@ class Ansel_ft extends EE_Fieldtype
         );
     }
 
+    // public function grid_display_field()
+
     /**
      * @param mixed[] $data
      *
@@ -397,6 +399,11 @@ class Ansel_ft extends EE_Fieldtype
     public function var_display_field($data): string
     {
         return $this->display_field($data);
+    }
+
+    public function var_wide(): bool
+    {
+        return true;
     }
 
     /**
@@ -452,6 +459,8 @@ class Ansel_ft extends EE_Fieldtype
         dd('TODO: Implement var_save() method.');
     }
 
+    // public function grid_post_save()
+
     /**
      * Prevent Low Vars from doing anything on post save
      */
@@ -459,6 +468,18 @@ class Ansel_ft extends EE_Fieldtype
     {
         return;
     }
+
+    // public function delete()
+
+    // public function grid_delete()
+
+    // public function var_delete()
+
+    // public function replace_tag()
+
+    // public function grid_replace_tag()
+
+    // public function var_replace_tag()
 
     // phpcs:enable
 }
