@@ -3,6 +3,7 @@
 
 declare(strict_types=1);
 
+use BuzzingPixel\Ansel\Field\Field\EeContentType;
 use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
@@ -148,17 +149,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function accepts_content_type($name): bool
     {
-        return in_array(
-            $name,
-            [
-                'blocks/1',
-                'channel',
-                'grid',
-                'low_variables',
-                'fluid_field',
-            ],
-            true,
-        );
+        return EeContentType::isValid($name);
     }
 
     /**
