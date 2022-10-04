@@ -190,33 +190,39 @@ class AnselCraftField extends Field
         $value,
         ?ElementInterface $element = null
     ): string {
+        // $value should either be an array of post-back data, or an empty array
+        $value = is_array($value) ? $value : [];
+
         return $this->getFieldAction->render(
             $this->getFieldSettingsCollection(true),
-            (string) $this->handle
+            (string) $this->handle,
+            PostedData::fromArray($value),
         );
     }
 
     /**
      * @return mixed
      */
-    public function normalizeValue($value, ?ElementInterface $element = null)
-    {
-        // If there is no value, we can return null
-        /** @phpstan-ignore-next-line */
-        if (empty($value)) {
-            return null;
-        }
-
-        // If the value is an array, this is post data and we can return as is
-        if (is_array($value)) {
-            return $value;
-        }
-
-        // TODO: Normalize value
-        // dd('normalizeValue', $value);
-
-        return null;
-    }
+    // public function normalizeValue($value, ?ElementInterface $element = null)
+    // {
+    //     // If there is no value, we can return null
+    //     /** @phpstan-ignore-next-line */
+    //     if (empty($value)) {
+    //         return null;
+    //     }
+    //
+    //     return $value;
+    //
+    //     // If the value is an array, this is post data and we can return as is
+    //     if (is_array($value)) {
+    //         return $value;
+    //     }
+    //
+    //     // TODO: Normalize value
+    //     // dd('normalizeValue', $value);
+    //
+    //     return $value;
+    // }
 
     // public function isValueEmpty($value, ElementInterface $element): bool
     // {

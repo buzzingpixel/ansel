@@ -57,4 +57,39 @@ class PostedFieldDataCollection
             }
         ))[0] ?? null;
     }
+
+    /**
+     * @param callable(PostedFieldData $fieldData): ReturnType $callback
+     *
+     * @return ReturnType[]
+     *
+     * @template ReturnType
+     */
+    public function map(callable $callback): array
+    {
+        return array_values(array_map(
+            $callback,
+            $this->asArray()
+        ));
+    }
+
+    /**
+     * @return PostedFieldData[]
+     */
+    public function asArray(): array
+    {
+        return $this->postedFieldData;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        return $this->map(static function (
+            PostedFieldData $fieldData
+        ): array {
+            return $fieldData->asScalarArray();
+        });
+    }
 }

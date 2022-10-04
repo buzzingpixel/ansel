@@ -28,4 +28,14 @@ class PostedDeletion
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        return [
+            'uuid' => $this->id,
+        ];
+    }
 }

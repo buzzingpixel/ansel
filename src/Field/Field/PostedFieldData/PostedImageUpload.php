@@ -51,4 +51,16 @@ class PostedImageUpload
     {
         return $this->fileName;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        return [
+            'cacheDirectory' => $this->cacheDirectory(),
+            'cacheFilePath' => $this->cacheFilePath(),
+            'fileName' => $this->fileName(),
+        ];
+    }
 }

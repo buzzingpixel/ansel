@@ -357,7 +357,7 @@ class Ansel_ft extends EE_Fieldtype
     }
 
     /**
-     * @param mixed[] $data
+     * @param mixed[] $value
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -365,8 +365,11 @@ class Ansel_ft extends EE_Fieldtype
      *
      * @phpstan-ignore-next-line
      */
-    public function display_field($data): string
+    public function display_field($value): string
     {
+        // $value should either be an array of post-back data, or an empty array
+        $value = is_array($value) ? $value : [];
+
         // TODO: License check
 
         $fieldSettings = $this->getFieldSettingsCollection(
@@ -377,7 +380,8 @@ class Ansel_ft extends EE_Fieldtype
         return $this->getFieldAction->render(
             $fieldSettings,
             // TODO: field_id_x is only valid if channel field type directly
-            'field_id_' . $this->field_id
+            'field_id_' . $this->field_id,
+            PostedData::fromArray($value),
         );
     }
 

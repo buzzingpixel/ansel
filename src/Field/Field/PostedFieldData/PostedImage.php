@@ -10,6 +10,10 @@ class PostedImage
 {
     private string $id;
 
+    private string $imageUrl;
+
+    private string $imageFileName;
+
     private string $sourceImageId;
 
     private string $focalX;
@@ -37,17 +41,17 @@ class PostedImage
 
         $fieldData = is_array($fieldData) ? $fieldData : [];
 
-        $imageUploadData = $arrayData['imageUpload'] ?? null;
+        $imageUpload = $arrayData['imageUpload'] ?? null;
 
         return new self(
             /** @phpstan-ignore-next-line */
             (string) ($arrayData['id'] ?? ''),
             /** @phpstan-ignore-next-line */
+            (string) ($arrayData['imageUrl'] ?? ''),
+            /** @phpstan-ignore-next-line */
+            (string) ($arrayData['imageFileName'] ?? ''),
+            /** @phpstan-ignore-next-line */
             (string) ($arrayData['sourceImageId'] ?? ''),
-            /** @phpstan-ignore-next-line */
-            (string) ($arrayData['focalX'] ?? ''),
-            /** @phpstan-ignore-next-line */
-            (string) ($arrayData['focalY'] ?? ''),
             /** @phpstan-ignore-next-line */
             (string) ($arrayData['x'] ?? ''),
             /** @phpstan-ignore-next-line */
@@ -56,28 +60,36 @@ class PostedImage
             (string) ($arrayData['width'] ?? ''),
             /** @phpstan-ignore-next-line */
             (string) ($arrayData['height'] ?? ''),
+            /** @phpstan-ignore-next-line */
+            (string) ($arrayData['focalX'] ?? ''),
+            /** @phpstan-ignore-next-line */
+            (string) ($arrayData['focalY'] ?? ''),
             PostedFieldDataCollection::fromArray(
                 $fieldData
             ),
-            is_array($imageUploadData) ?
-                PostedImageUpload::fromArray($imageUploadData) :
+            is_array($imageUpload) ?
+                PostedImageUpload::fromArray($imageUpload) :
                 null,
         );
     }
 
     public function __construct(
         string $id,
+        string $imageUrl,
+        string $imageFileName,
         string $sourceImageId,
-        string $focalX,
-        string $focalY,
         string $x,
         string $y,
         string $width,
         string $height,
-        PostedFieldDataCollection $postedFieldDataCollection,
-        ?PostedImageUpload $postedImageUpload
+        string $focalX,
+        string $focalY,
+        PostedFieldDataCollection $fieldData,
+        ?PostedImageUpload $imageUpload
     ) {
         $this->id                        = $id;
+        $this->imageUrl                  = $imageUrl;
+        $this->imageFileName             = $imageFileName;
         $this->sourceImageId             = $sourceImageId;
         $this->focalX                    = $focalX;
         $this->focalY                    = $focalY;
@@ -85,13 +97,23 @@ class PostedImage
         $this->y                         = $y;
         $this->width                     = $width;
         $this->height                    = $height;
-        $this->postedFieldDataCollection = $postedFieldDataCollection;
-        $this->postedImageUpload         = $postedImageUpload;
+        $this->postedFieldDataCollection = $fieldData;
+        $this->postedImageUpload         = $imageUpload;
     }
 
     public function id(): string
     {
         return $this->id;
+    }
+
+    public function imageUrl(): string
+    {
+        return $this->imageUrl;
+    }
+
+    public function imageFileName(): string
+    {
+        return $this->imageFileName;
     }
 
     public function sourceImageId(): string
@@ -137,5 +159,31 @@ class PostedImage
     public function postedImageUpload(): ?PostedImageUpload
     {
         return $this->postedImageUpload;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        $postedImageUpload = $this->postedImageUpload();
+
+        return [
+            'id' => $this->id(),
+            'imageUrl' => $this->imageUrl(),
+            'imageFileName' => $this->imageFileName(),
+            'sourceImageId' => $this->sourceImageId(),
+            'x' => $this->x(),
+            'y' => $this->y(),
+            'width' => $this->width(),
+            'height' => $this->height(),
+            'focalX' => $this->focalX(),
+            'focalY' => $this->focalY(),
+            'fieldData' => $this->postedFieldDataCollection()
+                ->asScalarArray(),
+            'imageUpload' => $postedImageUpload !== null ?
+                $postedImageUpload->asScalarArray() :
+                null,
+        ];
     }
 }

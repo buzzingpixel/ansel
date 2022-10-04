@@ -101,4 +101,15 @@ class PostedData
     {
         return $this->postedDeletions;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        return [
+            'images' => $this->postedImages()->asScalarArray(),
+            'deletions' =>  $this->postedDeletions()->asScalarArray(),
+        ];
+    }
 }

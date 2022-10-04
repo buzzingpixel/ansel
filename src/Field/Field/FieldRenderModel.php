@@ -21,25 +21,31 @@ class FieldRenderModel
     /** @var scalar[] */
     private array $platform;
 
+    /** @var mixed[] */
+    private array $data;
+
     /**
      * @param scalar[] $fieldSettings
      * @param scalar[] $customFields
      * @param scalar[] $parameters
      * @param scalar[] $translations
      * @param scalar[] $platform
+     * @param mixed[]  $data
      */
     public function __construct(
         array $fieldSettings,
         array $customFields,
         array $parameters,
         array $translations,
-        array $platform = []
+        array $platform = [],
+        array $data = []
     ) {
         $this->fieldSettings = $fieldSettings;
         $this->customFields  = $customFields;
         $this->parameters    = $parameters;
         $this->translations  = $translations;
         $this->platform      = $platform;
+        $this->data          = $data;
     }
 
     /**
@@ -80,5 +86,13 @@ class FieldRenderModel
     public function platform(): array
     {
         return $this->platform;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function data(): array
+    {
+        return $this->data;
     }
 }

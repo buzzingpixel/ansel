@@ -38,14 +38,6 @@ class PostedImageCollection
         ));
     }
 
-    /**
-     * @return PostedImage[]
-     */
-    public function asArray(): array
-    {
-        return $this->postedImages;
-    }
-
     public function count(): int
     {
         return count($this->postedImages);
@@ -60,6 +52,27 @@ class PostedImageCollection
      */
     public function map(callable $callback): array
     {
-        return array_map($callback, $this->asArray());
+        return array_values(array_map(
+            $callback,
+            $this->asArray()
+        ));
+    }
+
+    /**
+     * @return PostedImage[]
+     */
+    public function asArray(): array
+    {
+        return $this->postedImages;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        return $this->map(static function (PostedImage $image): array {
+            return $image->asScalarArray();
+        });
     }
 }

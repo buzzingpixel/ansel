@@ -46,4 +46,15 @@ class PostedFieldData
     {
         return $this->value;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        return [
+            'handle' => $this->handle(),
+            'value' => $this->value(),
+        ];
+    }
 }

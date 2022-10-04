@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field;
 
+use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 
@@ -33,7 +34,8 @@ class GetFieldRenderContext
     public function get(
         FieldSettingsCollection $fieldSettings,
         string $fieldNameRoot,
-        array $platform
+        array $platform,
+        PostedData $data
     ): array {
         $maxQty = $fieldSettings->maxQty()->value();
 
@@ -118,6 +120,7 @@ class GetFieldRenderContext
                     'fieldUnderLimit' => $fieldUnderLimit,
                 ],
                 $platform,
+                $data->asScalarArray(),
             ),
         ];
     }

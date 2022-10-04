@@ -46,4 +46,39 @@ class PostedDeletionsCollection
     {
         return $this->postedDeletions;
     }
+
+    /**
+     * @param callable(PostedDeletion $image): ReturnType $callback
+     *
+     * @return ReturnType[]
+     *
+     * @template ReturnType
+     */
+    public function map(callable $callback): array
+    {
+        return array_values(array_map(
+            $callback,
+            $this->asArray()
+        ));
+    }
+
+    /**
+     * @return PostedDeletion[]
+     */
+    public function asArray(): array
+    {
+        return $this->postedDeletions;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function asScalarArray(): array
+    {
+        return $this->map(static function (
+            PostedDeletion $deletion
+        ): string {
+            return $deletion->uid();
+        });
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field;
 
+use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\Craft\AssetBundles\CraftRegisterAssetBundle;
 use BuzzingPixel\Ansel\Shared\Environment;
@@ -57,7 +58,8 @@ class GetCraftFieldAction
      */
     public function render(
         FieldSettingsCollection $fieldSettings,
-        string $fieldNameRoot
+        string $fieldNameRoot,
+        PostedData $data
     ): string {
         $this->registerAssetBundle->register();
 
@@ -82,7 +84,8 @@ class GetCraftFieldAction
                 [
                     'environment' => $this->environment->toString(),
                     'uploadLocationFolderId' => (string) $uploadLocationFolder->uid,
-                ]
+                ],
+                $data,
             ),
         );
     }

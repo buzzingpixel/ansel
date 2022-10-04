@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\Field\Field;
 
 use BuzzingPixel\Ansel\Field\Field\FileChooserModalLink\FileChooserModalLinkFactory;
+use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Environment;
@@ -48,7 +49,8 @@ class GetEeFieldAction
      */
     public function render(
         FieldSettingsCollection $fieldSettings,
-        string $fieldNameRoot
+        string $fieldNameRoot,
+        PostedData $data
     ): string {
         $this->eeCssJs->add();
 
@@ -66,7 +68,8 @@ class GetEeFieldAction
                 [
                     'environment' => $this->environment->toString(),
                     'fileChooserModalLink' => $modalLink,
-                ]
+                ],
+                $data,
             ),
         );
     }
