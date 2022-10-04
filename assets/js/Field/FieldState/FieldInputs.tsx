@@ -54,6 +54,8 @@ const FieldInputs = () => {
         {images.map((image) => {
             const localImage = { ...image };
 
+            localImage.fieldData = { ...image.fieldData };
+
             return <input
                 key={`image-input-${image.id}`}
                 type="hidden"
