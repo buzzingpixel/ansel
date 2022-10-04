@@ -31,6 +31,7 @@ const useImages = () => {
 
 const ImagesProvider = (props: {
     images?: Array<ImageType>,
+    deletions?: Array<string>,
     children?:
         | React.ReactChild
         | React.ReactChild[],
@@ -39,9 +40,13 @@ const ImagesProvider = (props: {
 
     const initialImages = props.images || [];
 
+    const initialDeletions = props.deletions || [];
+
     const [images, setImages] = useState<Array<ImageType>>(initialImages);
 
-    const [deletedIds, setDeletedIds] = useState<Array<string>>([]);
+    const [deletedIds, setDeletedIds] = useState<Array<string>>(
+        initialDeletions,
+    );
 
     const addDeletedId = (id: string) => {
         setDeletedIds((prevState) => {

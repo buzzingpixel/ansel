@@ -16,9 +16,12 @@ import { ErrorMessagesProvider } from './FieldState/ErrorMessages/ErrorMessagesC
 import { ImagesProvider } from './FieldState/Images/ImagesContext';
 import { RootElProvider } from './RootElProvider';
 import { KeyboardProvider } from './Keyboard/KeyboardContext';
+import DataFromRootEl from './Data/DataFromRootEl';
 
 const FieldProvidersStack = (props) => {
     const root = props.anselFieldEl as HTMLDivElement;
+
+    const data = DataFromRootEl(root);
 
     return <RootElProvider rootEl={root}>
         <FieldSettingsProvider
@@ -42,7 +45,10 @@ const FieldProvidersStack = (props) => {
                                 <ProcessesProvider>
                                     <ErrorMessagesProvider>
                                         {/* TODO: set existing images here */}
-                                        <ImagesProvider images={[]}>
+                                        <ImagesProvider
+                                            images={data.images}
+                                            deletions={data.deletions}
+                                        >
                                             <KeyboardProvider>
                                                 {props.children}
                                             </KeyboardProvider>

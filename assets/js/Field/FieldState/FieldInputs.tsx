@@ -54,8 +54,6 @@ const FieldInputs = () => {
         {images.map((image) => {
             const localImage = { ...image };
 
-            delete localImage.imageUrl;
-
             return <input
                 key={`image-input-${image.id}`}
                 type="hidden"

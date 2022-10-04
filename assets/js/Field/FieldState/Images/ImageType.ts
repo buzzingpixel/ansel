@@ -4,8 +4,6 @@ import ImageManipulationCacheType from './ImageManipulationCacheType';
 import ImageFieldType from './ImageFieldType';
 
 interface ImageType extends ItemInterface {
-    imageUpload?: ImageUploadType;
-    imageManipulationCache?: ImageManipulationCacheType;
     imageUrl: string;
     imageFileName: string;
     sourceImageId?: string;
@@ -16,6 +14,8 @@ interface ImageType extends ItemInterface {
     focalX: number;
     focalY: number;
     fieldData?: { [key: string]: ImageFieldType };
+    imageUpload?: ImageUploadType;
+    imageManipulationCache?: ImageManipulationCacheType;
 }
 
 export default ImageType;
