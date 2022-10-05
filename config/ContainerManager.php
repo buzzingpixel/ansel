@@ -16,6 +16,7 @@ use BuzzingPixel\AnselConfig\Bindings\EECPURLFactory;
 use BuzzingPixel\AnselConfig\Bindings\EECsrf;
 use BuzzingPixel\AnselConfig\Bindings\EeCssJsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EEFunctionsBinding;
+use BuzzingPixel\AnselConfig\Bindings\EEInput;
 use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
 use BuzzingPixel\AnselConfig\Bindings\FieldSettingsConfig;
@@ -84,6 +85,7 @@ class ContainerManager
                 EECsrf::get(),
                 EeCssJsBinding::get(),
                 EEFunctionsBinding::get(),
+                EEInput::get(),
                 EELang::get(),
                 EEModelFacade::get(),
                 FieldSettingsConfig::get(),
