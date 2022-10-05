@@ -37,31 +37,31 @@ class C0008AddImagesTable implements MigrationContract
             '{{%ansel_images}}',
             [
                 'id' => new ColumnSchemaBuilder(Schema::TYPE_PK),
-                'elementId' => (new ColumnSchemaBuilder(
+                'element_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,
                 ))->notNull(),
-                'fieldId' => (new ColumnSchemaBuilder(
+                'field_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,
                 ))->notNull(),
-                'userId' => (new ColumnSchemaBuilder(
+                'user_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,
                 ))->notNull(),
-                'assetId' => (new ColumnSchemaBuilder(
+                'asset_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,
                 ))->notNull(),
-                'highQualAssetId' => (new ColumnSchemaBuilder(
+                'high_qual_asset_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,
                 )),
-                'thumbAssetId' => (new ColumnSchemaBuilder(
+                'thumb_asset_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,
                 )),
-                'originalAssetId' => (new ColumnSchemaBuilder(
+                'original_asset_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,
                 )),
@@ -112,7 +112,7 @@ class C0008AddImagesTable implements MigrationContract
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
             '{{%ansel_images}}',
-            ['elementId'],
+            ['element_id'],
             '{{%elements}}',
             ['id'],
             'RESTRICT',
@@ -121,8 +121,8 @@ class C0008AddImagesTable implements MigrationContract
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
-            '{{%anselImages}}',
-            ['fieldId'],
+            '{{%ansel_images}}',
+            ['field_id'],
             '{{%fields}}',
             ['id'],
             'RESTRICT',
@@ -131,8 +131,8 @@ class C0008AddImagesTable implements MigrationContract
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
-            '{{%anselImages}}',
-            ['userId'],
+            '{{%ansel_images}}',
+            ['user_id'],
             '{{%users}}',
             ['id'],
             'RESTRICT',
@@ -141,8 +141,8 @@ class C0008AddImagesTable implements MigrationContract
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
-            '{{%anselImages}}',
-            ['assetId'],
+            '{{%ansel_images}}',
+            ['asset_id'],
             '{{%assets}}',
             ['id'],
             'SET NULL',
@@ -151,8 +151,8 @@ class C0008AddImagesTable implements MigrationContract
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
-            '{{%anselImages}}',
-            ['highQualAssetId'],
+            '{{%ansel_images}}',
+            ['high_qual_asset_id'],
             '{{%assets}}',
             ['id'],
             'SET NULL',
@@ -161,8 +161,8 @@ class C0008AddImagesTable implements MigrationContract
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
-            '{{%anselImages}}',
-            ['thumbAssetId'],
+            '{{%ansel_images}}',
+            ['thumb_asset_id'],
             '{{%assets}}',
             ['id'],
             'SET NULL',
@@ -171,8 +171,8 @@ class C0008AddImagesTable implements MigrationContract
 
         $this->db->createCommand()->addForeignKey(
             $this->db->getForeignKeyName(),
-            '{{%anselImages}}',
-            ['originalAssetId'],
+            '{{%ansel_images}}',
+            ['original_asset_id'],
             '{{%assets}}',
             ['id'],
             'SET NULL',

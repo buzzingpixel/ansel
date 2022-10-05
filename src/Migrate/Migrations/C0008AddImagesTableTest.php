@@ -209,49 +209,49 @@ class C0008AddImagesTableTest extends TestCase
         assert($schemaId instanceof ColumnSchemaBuilder);
         self::assertSame('pk', (string) $schemaId);
 
-        $schemaElementId = $columns['elementId'];
+        $schemaElementId = $columns['element_id'];
         assert($schemaElementId instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer(11) NOT NULL',
             (string) $schemaElementId,
         );
 
-        $schemaFieldId = $columns['fieldId'];
+        $schemaFieldId = $columns['field_id'];
         assert($schemaFieldId instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer(11) NOT NULL',
             (string) $schemaFieldId,
         );
 
-        $schemaUserId = $columns['userId'];
+        $schemaUserId = $columns['user_id'];
         assert($schemaUserId instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer(11) NOT NULL',
             (string) $schemaUserId,
         );
 
-        $schemaAssetId = $columns['assetId'];
+        $schemaAssetId = $columns['asset_id'];
         assert($schemaAssetId instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer(11) NOT NULL',
             (string) $schemaAssetId,
         );
 
-        $schemaHighQualAssetId = $columns['highQualAssetId'];
+        $schemaHighQualAssetId = $columns['high_qual_asset_id'];
         assert($schemaHighQualAssetId instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer(11)',
             (string) $schemaHighQualAssetId,
         );
 
-        $schemaThumbAssetId = $columns['thumbAssetId'];
+        $schemaThumbAssetId = $columns['thumb_asset_id'];
         assert($schemaThumbAssetId instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer(11)',
             (string) $schemaThumbAssetId,
         );
 
-        $schemaOrigAssetId = $columns['originalAssetId'];
+        $schemaOrigAssetId = $columns['original_asset_id'];
         assert($schemaOrigAssetId instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer(11)',
@@ -356,7 +356,7 @@ class C0008AddImagesTableTest extends TestCase
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
                 'table' => '{{%ansel_images}}',
-                'columns' => ['elementId'],
+                'columns' => ['element_id'],
                 'refTable' => '{{%elements}}',
                 'refColumns' => ['id'],
                 'delete' => 'RESTRICT',
@@ -378,8 +378,8 @@ class C0008AddImagesTableTest extends TestCase
                 'object' => 'Command',
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
-                'table' => '{{%anselImages}}',
-                'columns' => ['fieldId'],
+                'table' => '{{%ansel_images}}',
+                'columns' => ['field_id'],
                 'refTable' => '{{%fields}}',
                 'refColumns' => ['id'],
                 'delete' => 'RESTRICT',
@@ -401,8 +401,8 @@ class C0008AddImagesTableTest extends TestCase
                 'object' => 'Command',
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
-                'table' => '{{%anselImages}}',
-                'columns' => ['userId'],
+                'table' => '{{%ansel_images}}',
+                'columns' => ['user_id'],
                 'refTable' => '{{%users}}',
                 'refColumns' => ['id'],
                 'delete' => 'RESTRICT',
@@ -424,8 +424,8 @@ class C0008AddImagesTableTest extends TestCase
                 'object' => 'Command',
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
-                'table' => '{{%anselImages}}',
-                'columns' => ['assetId'],
+                'table' => '{{%ansel_images}}',
+                'columns' => ['asset_id'],
                 'refTable' => '{{%assets}}',
                 'refColumns' => ['id'],
                 'delete' => 'SET NULL',
@@ -447,8 +447,8 @@ class C0008AddImagesTableTest extends TestCase
                 'object' => 'Command',
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
-                'table' => '{{%anselImages}}',
-                'columns' => ['highQualAssetId'],
+                'table' => '{{%ansel_images}}',
+                'columns' => ['high_qual_asset_id'],
                 'refTable' => '{{%assets}}',
                 'refColumns' => ['id'],
                 'delete' => 'SET NULL',
@@ -470,8 +470,8 @@ class C0008AddImagesTableTest extends TestCase
                 'object' => 'Command',
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
-                'table' => '{{%anselImages}}',
-                'columns' => ['thumbAssetId'],
+                'table' => '{{%ansel_images}}',
+                'columns' => ['thumb_asset_id'],
                 'refTable' => '{{%assets}}',
                 'refColumns' => ['id'],
                 'delete' => 'SET NULL',
@@ -493,8 +493,8 @@ class C0008AddImagesTableTest extends TestCase
                 'object' => 'Command',
                 'method' => 'createTable',
                 'name' => 'fooBarForeign',
-                'table' => '{{%anselImages}}',
-                'columns' => ['originalAssetId'],
+                'table' => '{{%ansel_images}}',
+                'columns' => ['original_asset_id'],
                 'refTable' => '{{%assets}}',
                 'refColumns' => ['id'],
                 'delete' => 'SET NULL',
