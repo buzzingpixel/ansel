@@ -203,11 +203,18 @@ class C0008AddImagesTableTest extends TestCase
 
         assert(is_array($columns));
 
-        self::assertCount(22, $columns);
+        self::assertCount(23, $columns);
 
         $schemaId = $columns['id'];
         assert($schemaId instanceof ColumnSchemaBuilder);
         self::assertSame('pk', (string) $schemaId);
+
+        $schemaAnselId = $columns['ansel_id'];
+        assert($schemaAnselId instanceof ColumnSchemaBuilder);
+        self::assertSame(
+            'string(255)',
+            (string) $schemaAnselId,
+        );
 
         $schemaElementId = $columns['element_id'];
         assert($schemaElementId instanceof ColumnSchemaBuilder);

@@ -37,6 +37,10 @@ class C0008AddImagesTable implements MigrationContract
             '{{%ansel_images}}',
             [
                 'id' => new ColumnSchemaBuilder(Schema::TYPE_PK),
+                'ansel_id' => (new ColumnSchemaBuilder(
+                    Schema::TYPE_STRING,
+                    255
+                )),
                 'element_id' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                     11,

@@ -137,6 +137,11 @@ class E0008AddImagesTableTest extends TestCase
                             'unsigned' => true,
                             'auto_increment' => true,
                         ],
+                        'ansel_id' => [
+                            'default' => '',
+                            'type' => 'VARCHAR',
+                            'constraint' => 255,
+                        ],
                         'site_id' => [
                             'default' => 1,
                             'type' => 'TINYINT',
