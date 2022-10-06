@@ -203,7 +203,7 @@ class C0008AddImagesTableTest extends TestCase
 
         assert(is_array($columns));
 
-        self::assertCount(20, $columns);
+        self::assertCount(22, $columns);
 
         $schemaId = $columns['id'];
         assert($schemaId instanceof ColumnSchemaBuilder);
@@ -280,6 +280,20 @@ class C0008AddImagesTableTest extends TestCase
         );
 
         $schemaY = $columns['y'];
+        assert($schemaY instanceof ColumnSchemaBuilder);
+        self::assertSame(
+            'integer NOT NULL',
+            (string) $schemaY,
+        );
+
+        $schemaY = $columns['focal_x'];
+        assert($schemaY instanceof ColumnSchemaBuilder);
+        self::assertSame(
+            'integer NOT NULL',
+            (string) $schemaY,
+        );
+
+        $schemaY = $columns['focal_y'];
         assert($schemaY instanceof ColumnSchemaBuilder);
         self::assertSame(
             'integer NOT NULL',

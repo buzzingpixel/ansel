@@ -237,6 +237,16 @@ class E0008AddImagesTableTest extends TestCase
                             'type' => 'INT',
                             'unsigned' => true,
                         ],
+                        'focal_x' => [
+                            'default' => 0,
+                            'type' => 'INT',
+                            'unsigned' => true,
+                        ],
+                        'focal_y' => [
+                            'default' => 0,
+                            'type' => 'INT',
+                            'unsigned' => true,
+                        ],
                         'title' => [
                             'default' => '',
                             'type' => 'VARCHAR',

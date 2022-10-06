@@ -77,6 +77,12 @@ class C0008AddImagesTable implements MigrationContract
                 'y' => (new ColumnSchemaBuilder(
                     Schema::TYPE_INTEGER,
                 ))->notNull(),
+                'focal_x' => (new ColumnSchemaBuilder(
+                    Schema::TYPE_INTEGER,
+                ))->notNull(),
+                'focal_y' => (new ColumnSchemaBuilder(
+                    Schema::TYPE_INTEGER,
+                ))->notNull(),
                 'title' => (new ColumnSchemaBuilder(
                     Schema::TYPE_STRING,
                     255
