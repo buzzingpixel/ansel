@@ -89,12 +89,12 @@ class E0008AddImagesTable implements MigrationContract
                 'type' => 'INT',
                 'unsigned' => true,
             ],
-            'upload_location_type' => [
+            'save_location_type' => [
                 'default' => 'ee',
                 'type' => 'VARCHAR',
                 'constraint' => 10,
             ],
-            'upload_location_id' => [
+            'save_location_id' => [
                 'default' => '',
                 'type' => 'VARCHAR',
                 'constraint' => 255,
