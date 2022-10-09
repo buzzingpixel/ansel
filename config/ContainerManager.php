@@ -11,6 +11,7 @@ use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
 use BuzzingPixel\AnselConfig\Bindings\CraftWebView;
 use BuzzingPixel\AnselConfig\Bindings\EEAlertCollectionBinding;
 use BuzzingPixel\AnselConfig\Bindings\EECIDBForge;
+use BuzzingPixel\AnselConfig\Bindings\EEConfigBinding;
 use BuzzingPixel\AnselConfig\Bindings\EECP;
 use BuzzingPixel\AnselConfig\Bindings\EECPURLFactory;
 use BuzzingPixel\AnselConfig\Bindings\EECsrf;
@@ -81,6 +82,7 @@ class ContainerManager
                 CraftWebView::get(),
                 EEAlertCollectionBinding::get(),
                 EECIDBForge::get(),
+                EEConfigBinding::get(),
                 EECP::get(),
                 EECPURLFactory::get(),
                 EECsrf::get(),
