@@ -74,6 +74,22 @@ class InternalFunctions
         );
     }
 
+    public function mkdirIfNotExists(
+        string $directory,
+        int $permissions = 0777,
+        bool $recursive = true
+    ): bool {
+        if (is_dir($directory)) {
+            return true;
+        }
+
+        return $this->mkdir(
+            $directory,
+            $permissions,
+            $recursive,
+        );
+    }
+
     public function isDir(string $path): bool
     {
         return is_dir($path);
