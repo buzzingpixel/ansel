@@ -99,3 +99,4 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/Link.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/FilePicker.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/Factory.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/core/Config.php';
