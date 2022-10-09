@@ -7,6 +7,7 @@ namespace BuzzingPixel\Ansel\Shared\Php;
 use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
+use function getimagesize;
 use function is_dir;
 use function mkdir;
 use function rmdir;
@@ -100,5 +101,16 @@ class InternalFunctions
     public function doExit(): void
     {
         exit;
+    }
+
+    /**
+     * @param mixed[] $imageInfo
+     *
+     * @return array{0: int, 1: int}|false
+     */
+    public function getImageSize(string $filename, array &$imageInfo = [])
+    {
+        /** @phpstan-ignore-next-line */
+        return getimagesize($filename, $imageInfo);
     }
 }
