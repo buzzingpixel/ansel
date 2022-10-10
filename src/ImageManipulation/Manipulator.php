@@ -84,7 +84,7 @@ class Manipulator
 
         $image->save(
             $targetPath . '/' . $targetBasename . '.' . $ext,
-            90,
+            $parameters->getQuality() ?? 90,
         );
 
         return new SplFileInfo($fullSavePath);
