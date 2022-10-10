@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Settings;
 
-use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetAllLocations;
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetAllLocationSelections;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
 
 use function array_filter;
@@ -13,11 +13,11 @@ use function array_keys;
 class FieldSettingsCollectionValidatorEe implements FieldSettingsCollectionValidatorContract
 {
     private TranslatorContract $translator;
-    private GetAllLocations $getAllLocations;
+    private GetAllLocationSelections $getAllLocations;
 
     public function __construct(
         TranslatorContract $translator,
-        GetAllLocations $getAllLocations
+        GetAllLocationSelections $getAllLocations
     ) {
         $this->translator      = $translator;
         $this->getAllLocations = $getAllLocations;

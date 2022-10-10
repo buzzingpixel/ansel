@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field;
 
-use BuzzingPixel\Ansel\Field\Field\FileChooserModalLink\FileChooserModalLinkFactory;
+use BuzzingPixel\Ansel\EeSourceHandling\SourceAdapterFactory;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Environment;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -26,26 +28,28 @@ class GetEeFieldAction
 
     private GetFieldRenderContext $getFieldRenderContext;
 
-    private FileChooserModalLinkFactory $fileChooserModalLinkFactory;
+    private SourceAdapterFactory $sourceAdapterFactory;
 
     public function __construct(
         EeCssJs $eeCssJs,
         TwigEnvironment $twig,
         Environment $environment,
         GetFieldRenderContext $getFieldRenderContext,
-        FileChooserModalLinkFactory $fileChooserModalLinkFactory
+        SourceAdapterFactory $sourceAdapterFactory
     ) {
-        $this->eeCssJs                     = $eeCssJs;
-        $this->twig                        = $twig;
-        $this->environment                 = $environment;
-        $this->getFieldRenderContext       = $getFieldRenderContext;
-        $this->fileChooserModalLinkFactory = $fileChooserModalLinkFactory;
+        $this->eeCssJs               = $eeCssJs;
+        $this->twig                  = $twig;
+        $this->environment           = $environment;
+        $this->getFieldRenderContext = $getFieldRenderContext;
+        $this->sourceAdapterFactory  = $sourceAdapterFactory;
     }
 
     /**
-     * @throws SyntaxError
-     * @throws RuntimeError
      * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function render(
         FieldSettingsCollection $fieldSettings,
@@ -54,10 +58,12 @@ class GetEeFieldAction
     ): string {
         $this->eeCssJs->add();
 
+        $sourceAdapter = $this->sourceAdapterFactory->createInstanceByShortName(
+            $fieldSettings->uploadLocation()->directoryType()
+        );
+
         $modalLink = base64_encode(
-            $this->fileChooserModalLinkFactory->getLink(
-                $fieldSettings,
-            ),
+            $sourceAdapter->getModalLink($fieldSettings),
         );
 
         return $this->twig->render(

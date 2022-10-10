@@ -20,14 +20,14 @@ class GetFieldSettings
     private EeCssJs $eeCssJs;
     private TwigEnvironment $twig;
     private TranslatorContract $translator;
-    private GetAllLocations $getAllLocations;
+    private GetAllLocationSelections $getAllLocations;
     private SettingsRepositoryContract $settingsRepository;
 
     public function __construct(
         EeCssJs $eeCssJs,
         TwigEnvironment $twig,
         TranslatorContract $translator,
-        GetAllLocations $getAllLocations,
+        GetAllLocationSelections $getAllLocations,
         SettingsRepositoryContract $settingsRepository
     ) {
         $this->eeCssJs            = $eeCssJs;

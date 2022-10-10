@@ -20,9 +20,7 @@ class LocationSelectionCollection
     public function __construct(array $items = [])
     {
         $this->items = array_values(array_map(
-            static function (LocationSelectionItem $item) {
-                return $item;
-            },
+            static fn (LocationSelectionItem $item) => $item,
             $items,
         ));
     }

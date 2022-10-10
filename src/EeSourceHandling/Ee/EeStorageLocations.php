@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Settings\ExpressionEngine;
+namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
 
-use BuzzingPixel\Ansel\Field\Settings\LocationSelectionCollection;
-use BuzzingPixel\Ansel\Field\Settings\LocationSelectionItem;
+use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
+use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItem;
+use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItemCollection;
 use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
 use ExpressionEngine\Model\File\UploadDestination;
 use ExpressionEngine\Service\Model\Collection;
@@ -13,9 +14,10 @@ use ExpressionEngine\Service\Model\Facade as RecordService;
 
 use function assert;
 
-class GetLocationsEe implements GetLocationsContract
+class EeStorageLocations
 {
     private SiteMeta $siteMeta;
+
     private RecordService $recordService;
 
     public function __construct(
@@ -26,7 +28,7 @@ class GetLocationsEe implements GetLocationsContract
         $this->recordService = $recordService;
     }
 
-    public function get(): LocationSelectionCollection
+    public function getAll(): StorageLocationCollection
     {
         $eeLocations = $this->recordService->get('UploadDestination')
             // Only get upload directories for the current site
@@ -39,18 +41,14 @@ class GetLocationsEe implements GetLocationsContract
 
         assert($eeLocations instanceof Collection);
 
-        $locationItems = $eeLocations->map(
-            static function (
-                UploadDestination $location
-            ): LocationSelectionItem {
-                return new LocationSelectionItem(
-                    /** @phpstan-ignore-next-line */
-                    'EE: ' . $location->getProperty('name'),
-                    'ee:' . (string) $location->getId(),
-                );
-            }
+        $items = $eeLocations->map(
+            static fn (UploadDestination $location) => new StorageLocationItem(
+                (string) $location->getId(),
+                /** @phpstan-ignore-next-line */
+                (string) $location->getProperty('name'),
+            ),
         );
 
-        return new LocationSelectionCollection($locationItems);
+        return new StorageLocationItemCollection($items);
     }
 }

@@ -16,6 +16,8 @@ interface AnselSourceAdapter
 
     public static function getDisplayName(): string;
 
+    public function getAllStorageLocations(): StorageLocationCollection;
+
     public function getModalLink(
         FieldSettingsCollection $fieldSettings
     ): string;

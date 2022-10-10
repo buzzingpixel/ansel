@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Settings\ExpressionEngine;
+namespace BuzzingPixel\Ansel\EeSourceHandling\Treasury;
 
-use BuzzingPixel\Ansel\Field\Settings\LocationSelectionCollection;
-use BuzzingPixel\Ansel\Field\Settings\LocationSelectionItem;
+use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
+use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItem;
+use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItemCollection;
 use BuzzingPixel\Treasury\API\Locations as LocationsApi;
 use BuzzingPixel\Treasury\Model\Locations as LocationsModel;
 use BuzzingPixel\Treasury\Service\Data\Collection;
 
 use function assert;
 
-class GetLocationsTreasury implements GetLocationsContract
+class TreasuryStorageLocations
 {
     private LocationsApi $treasuryLocationsApi;
 
@@ -21,14 +22,14 @@ class GetLocationsTreasury implements GetLocationsContract
         $this->treasuryLocationsApi = $treasuryLocationsApi;
     }
 
-    public function get(): LocationSelectionCollection
+    public function getAll(): StorageLocationCollection
     {
         $treasuryLocations = $this->treasuryLocationsApi->getAllLocations();
 
         assert($treasuryLocations instanceof Collection);
 
         if ($treasuryLocations->count() < 1) {
-            return new LocationSelectionCollection();
+            return new StorageLocationItemCollection();
         }
 
         $locationItems = [];
@@ -36,14 +37,14 @@ class GetLocationsTreasury implements GetLocationsContract
         foreach ($treasuryLocations as $location) {
             assert($location instanceof LocationsModel);
 
-            $locationItems[] = new LocationSelectionItem(
+            $locationItems[] = new StorageLocationItem(
                 /** @phpstan-ignore-next-line */
-                'Treasury: ' . $location->name,
+                (string) $location->handle,
                 /** @phpstan-ignore-next-line */
-                'treasury:' . $location->handle,
+                (string) $location->name
             );
         }
 
-        return new LocationSelectionCollection($locationItems);
+        return new StorageLocationItemCollection($locationItems);
     }
 }

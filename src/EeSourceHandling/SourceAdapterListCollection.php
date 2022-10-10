@@ -32,7 +32,7 @@ class SourceAdapterListCollection
     }
 
     /**
-     * @param callable(SourceAdapterListItem $image, int $index): ReturnType $callback
+     * @param callable(SourceAdapterListItem $adapterItem, int $index): ReturnType $callback
      *
      * @return ReturnType[]
      *
