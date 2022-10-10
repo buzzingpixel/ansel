@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use BuzzingPixel\Ansel\EeSourceHandling\Assets\AssetsSourceAdapter;
+use BuzzingPixel\Ansel\EeSourceHandling\Ee\EeSourceAdapter;
+use BuzzingPixel\Ansel\EeSourceHandling\Treasury\TreasurySourceAdapter;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
 
@@ -34,4 +37,11 @@ return [
         'ansel' => ['name' => $meta->name()],
     ],
     'services' => [],
+    'ansel' => [
+        'sourceAdapters' => [
+            EeSourceAdapter::class,
+            TreasurySourceAdapter::class,
+            AssetsSourceAdapter::class,
+        ],
+    ],
 ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\FileChooserModalLink;
 
+use BuzzingPixel\Ansel\EeSourceHandling\Ee\EeModalLink;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 
 class FileChooserModalLinkFactory

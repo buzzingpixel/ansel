@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Field\FileChooserModalLink;
+namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
 
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Translations\TranslatorContract;
