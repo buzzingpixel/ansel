@@ -12,6 +12,7 @@ use function is_dir;
 use function mkdir;
 use function rmdir;
 use function scandir;
+use function stream_context_create;
 use function strtotime;
 use function time;
 use function unlink;
@@ -43,6 +44,19 @@ class InternalFunctions
     public function fileGetContents(string $filename): string
     {
         return (string) file_get_contents($filename);
+    }
+
+    /**
+     * @return resource
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function streamContextCreate(
+        ?array $options = null,
+        ?array $params = null
+    ) {
+        /** @phpstan-ignore-next-line */
+        return stream_context_create($options, $params);
     }
 
     /**

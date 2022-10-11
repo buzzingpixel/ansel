@@ -8,13 +8,23 @@ class Paths
 {
     private string $anselCachePath;
 
-    public function __construct(string $anselCachePath)
-    {
-        $this->anselCachePath = $anselCachePath;
+    private string $anselCachePathPersistent;
+
+    public function __construct(
+        string $anselCachePath,
+        string $anselCachePathPersistent
+    ) {
+        $this->anselCachePath           = $anselCachePath;
+        $this->anselCachePathPersistent = $anselCachePathPersistent;
     }
 
     public function anselCachePath(): string
     {
         return $this->anselCachePath;
+    }
+
+    public function anselCachePathPersistent(): string
+    {
+        return $this->anselCachePathPersistent;
     }
 }

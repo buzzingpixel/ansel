@@ -76,6 +76,7 @@
         "league/pipeline": "^1.0",
         "marc1706/fast-image-size": "^1.1",
         "myclabs/php-enum": "^1.8",
+        "psr/cache": "^1.0",
         "ramsey/uuid": "^4.2",
         "slim/psr7": "^1.5",
         "slim/slim": "^4.9",

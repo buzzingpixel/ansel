@@ -54,6 +54,7 @@ class PathsConfig
                 $anselCachePath = $storagePath .
                     DIRECTORY_SEPARATOR .
                     'ansel';
+
                 break;
 
             default:
@@ -62,11 +63,18 @@ class PathsConfig
                 throw new RuntimeException($msg . ANSEL_ENV);
         }
 
+        $anselCachePathPersistent = $anselCachePath . '_persistent';
+
         return [
             new ConstructorParamConfig(
                 Paths::class,
                 'anselCachePath',
                 $anselCachePath,
+            ),
+            new ConstructorParamConfig(
+                Paths::class,
+                'anselCachePathPersistent',
+                $anselCachePathPersistent,
             ),
         ];
     }
