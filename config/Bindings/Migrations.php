@@ -39,9 +39,7 @@ class Migrations
                     default:
                         $msg = 'Class is not implemented for platform ';
 
-                        throw new RuntimeException(
-                            $msg . ANSEL_ENV,
-                        );
+                        throw new RuntimeException($msg . ANSEL_ENV);
                 }
             },
         ];

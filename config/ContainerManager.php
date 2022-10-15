@@ -31,6 +31,7 @@ use BuzzingPixel\AnselConfig\Bindings\GetUploadUrlBinding;
 use BuzzingPixel\AnselConfig\Bindings\GuzzleConfig;
 use BuzzingPixel\AnselConfig\Bindings\ImageManagerBinding;
 use BuzzingPixel\AnselConfig\Bindings\Migrations;
+use BuzzingPixel\AnselConfig\Bindings\RecordServiceBinding;
 use BuzzingPixel\AnselConfig\Bindings\SaveUploadKeyBinding;
 use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
 use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
@@ -104,6 +105,7 @@ class ContainerManager
                 GuzzleConfig::get(),
                 ImageManagerBinding::get(),
                 Migrations::get(),
+                RecordServiceBinding::get(),
                 SaveUploadKeyBinding::get(),
                 ServerRequest::get(),
                 SettingsRepository::get(),
