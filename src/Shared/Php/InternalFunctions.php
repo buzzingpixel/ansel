@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Shared\Php;
 
+use function copy;
 use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
@@ -15,6 +16,8 @@ use function scandir;
 use function stream_context_create;
 use function strtotime;
 use function time;
+use function umask;
+use function uniqid;
 use function unlink;
 
 class InternalFunctions
@@ -55,7 +58,6 @@ class InternalFunctions
         ?array $options = null,
         ?array $params = null
     ) {
-        /** @phpstan-ignore-next-line */
         return stream_context_create($options, $params);
     }
 
@@ -142,5 +144,31 @@ class InternalFunctions
     {
         /** @phpstan-ignore-next-line */
         return getimagesize($filename, $imageInfo);
+    }
+
+    public function uniqid(): string
+    {
+        return uniqid();
+    }
+
+    public function umask(?int $mask = null): int
+    {
+        if ($mask === null) {
+            return umask();
+        }
+
+        return umask($mask);
+    }
+
+    /**
+     * @param ?resource $context
+     */
+    public function copy(string $from, string $to, $context = null): bool
+    {
+        return copy(
+            $from,
+            $to,
+            $context
+        );
     }
 }
