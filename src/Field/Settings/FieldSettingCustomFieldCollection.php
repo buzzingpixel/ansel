@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Settings;
 
+use function array_filter;
 use function array_map;
 use function array_values;
 use function json_encode;
@@ -71,5 +72,51 @@ class FieldSettingCustomFieldCollection
     public function map(callable $callback): array
     {
         return array_map($callback, $this->asArray());
+    }
+
+    /**
+     * @param callable(FieldSettingCustomField $customField): bool $callback
+     */
+    public function filter(
+        callable $callback
+    ): FieldSettingCustomFieldCollection {
+        return new FieldSettingCustomFieldCollection(
+            array_values(array_filter(
+                $this->asArray(),
+                $callback,
+            )),
+        );
+    }
+
+    public function first(): FieldSettingCustomField
+    {
+        return $this->asArray()[0];
+    }
+
+    public function firstOrNull(): ?FieldSettingCustomField
+    {
+        return $this->asArray()[0] ?? null;
+    }
+
+    private function filterByHandle(
+        string $handle
+    ): FieldSettingCustomFieldCollection {
+        return $this->filter(
+            static function (
+                FieldSettingCustomField $customField
+            ) use ($handle) {
+                return $customField->handle() === $handle;
+            }
+        );
+    }
+
+    public function getByHandle(string $handle): FieldSettingCustomField
+    {
+        return $this->filterByHandle($handle)->first();
+    }
+
+    public function getByHandleOrNull(string $handle): ?FieldSettingCustomField
+    {
+        return $this->filterByHandle($handle)->firstOrNull();
     }
 }

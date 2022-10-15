@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\PostedFieldData;
 
+use function array_keys;
 use function array_map;
 use function array_values;
 use function count;
@@ -44,7 +45,7 @@ class PostedImageCollection
     }
 
     /**
-     * @param callable(PostedImage $image): ReturnType $callback
+     * @param callable(PostedImage $image, int $index): ReturnType $callback
      *
      * @return ReturnType[]
      *
@@ -52,9 +53,12 @@ class PostedImageCollection
      */
     public function map(callable $callback): array
     {
+        $asArray = $this->asArray();
+
         return array_values(array_map(
             $callback,
-            $this->asArray()
+            $asArray,
+            array_keys($asArray),
         ));
     }
 

@@ -4,8 +4,11 @@
 declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\EeContentType;
+use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
 use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
+use BuzzingPixel\Ansel\Field\Field\SaveEeField\Payload;
+use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
@@ -74,6 +77,10 @@ class Ansel_ft extends EE_Fieldtype
 
     private ValidateFieldAction $validateFieldAction;
 
+    private SaveFieldAction $saveEeFieldAction;
+
+    private EE_Input $input;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -104,12 +111,18 @@ class Ansel_ft extends EE_Fieldtype
         $this->validateFieldAction = $container->get(
             ValidateFieldAction::class
         );
+
+        /** @phpstan-ignore-next-line */
+        $this->saveEeFieldAction = $container->get(SaveFieldAction::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->input = $container->get(EE_Input::class);
     }
 
     /**
      * @param mixed[] $rawEeFieldSettings
      */
-    private function getFieldSettingsCollection(
+    private static function getFieldSettingsCollection(
         array $rawEeFieldSettings,
         bool $useRequired = false
     ): FieldSettingsCollection {
@@ -161,7 +174,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     private function getDisplaySettings($data, string $fieldNameRoot): string
     {
-        $fieldSettings = $this->getFieldSettingsCollection(
+        $fieldSettings = self::getFieldSettingsCollection(
             /** @phpstan-ignore-next-line */
             $this->postedSettings ?? $data,
         );
@@ -279,7 +292,7 @@ class Ansel_ft extends EE_Fieldtype
             $this->content_type() === 'low_variables'
         ) {
             $errors = $this->fieldSettingsValidator->validate(
-                $this->getFieldSettingsCollection(
+                self::getFieldSettingsCollection(
                     $data
                 ),
             );
@@ -324,7 +337,7 @@ class Ansel_ft extends EE_Fieldtype
     public function validate_settings($data): Result
     {
         $errors = $this->fieldSettingsValidator->validate(
-            $this->getFieldSettingsCollection(
+            self::getFieldSettingsCollection(
                 $data
             ),
         );
@@ -350,7 +363,9 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * @param mixed[] $value
      *
+     * @throws ContainerExceptionInterface
      * @throws LoaderError
+     * @throws NotFoundExceptionInterface
      * @throws RuntimeError
      * @throws SyntaxError
      *
@@ -363,7 +378,7 @@ class Ansel_ft extends EE_Fieldtype
 
         // TODO: License check
 
-        $fieldSettings = $this->getFieldSettingsCollection(
+        $fieldSettings = self::getFieldSettingsCollection(
             $this->settings,
             true
         );
@@ -404,7 +419,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function validate($data)
     {
-        $fieldSettings = $this->getFieldSettingsCollection(
+        $fieldSettings = self::getFieldSettingsCollection(
             $this->settings,
             true
         );
@@ -442,6 +457,38 @@ class Ansel_ft extends EE_Fieldtype
     }
 
     /**
+     * @param string $data
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function post_save($data): void
+    {
+        $data = json_decode($data, true);
+
+        $data = is_array($data) ? $data : [];
+
+        $fieldSettings = self::getFieldSettingsCollection(
+            $this->settings,
+            true
+        );
+
+        $this->saveEeFieldAction->save(
+            new Payload(
+                PostedData::fromArray($data),
+                $fieldSettings,
+                new FieldMetaEe(
+                    (int) $this->field_id,
+                    (string) $this->field_name,
+                    new EeContentType($this->content_type()),
+                    (int) $this->input->get_post('channel_id'),
+                    /** @phpstan-ignore-next-line */
+                    (int) $this->content_id(),
+                ),
+            ),
+        );
+    }
+
+    /**
      * @param mixed[] $data
      */
     public function var_save(array $data): void
@@ -471,6 +518,4 @@ class Ansel_ft extends EE_Fieldtype
     // public function grid_replace_tag()
 
     // public function var_replace_tag()
-
-    // phpcs:enable
 }

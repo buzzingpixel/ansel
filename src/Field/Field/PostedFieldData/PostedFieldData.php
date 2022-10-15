@@ -19,12 +19,13 @@ class PostedFieldData
         return new self(
             /** @phpstan-ignore-next-line */
             (string) ($arrayData['handle'] ?? ''),
+            /** @phpstan-ignore-next-line */
             $arrayData['value'] ?? ''
         );
     }
 
     /**
-     * @param mixed $value
+     * @param scalar $value
      */
     public function __construct(
         string $handle,
@@ -40,7 +41,7 @@ class PostedFieldData
     }
 
     /**
-     * @return mixed
+     * @return scalar
      */
     public function value()
     {

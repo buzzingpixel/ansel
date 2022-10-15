@@ -50,6 +50,11 @@ class FieldSettingCustomField
         return $this->type;
     }
 
+    public function isType(string $type): bool
+    {
+        return $type === $this->type();
+    }
+
     public function required(): bool
     {
         return $this->required;
