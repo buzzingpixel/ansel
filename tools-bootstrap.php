@@ -100,3 +100,8 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/FilePicker.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Addons/filepicker/Service/FilePicker/Factory.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/core/Config.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/File/File.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Session.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/core/Model.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/models/file_model.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/legacy/libraries/Filemanager.php';
