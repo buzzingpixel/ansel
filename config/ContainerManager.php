@@ -16,10 +16,13 @@ use BuzzingPixel\AnselConfig\Bindings\EECP;
 use BuzzingPixel\AnselConfig\Bindings\EECPURLFactory;
 use BuzzingPixel\AnselConfig\Bindings\EECsrf;
 use BuzzingPixel\AnselConfig\Bindings\EeCssJsBinding;
+use BuzzingPixel\AnselConfig\Bindings\EEFileManager;
+use BuzzingPixel\AnselConfig\Bindings\EEFileModel;
 use BuzzingPixel\AnselConfig\Bindings\EEFunctionsBinding;
 use BuzzingPixel\AnselConfig\Bindings\EEInput;
 use BuzzingPixel\AnselConfig\Bindings\EELang;
 use BuzzingPixel\AnselConfig\Bindings\EEModelFacade;
+use BuzzingPixel\AnselConfig\Bindings\EESession;
 use BuzzingPixel\AnselConfig\Bindings\FieldSettingsConfig;
 use BuzzingPixel\AnselConfig\Bindings\FilePickerConfig;
 use BuzzingPixel\AnselConfig\Bindings\GetProcessingUrlBinding;
@@ -86,10 +89,13 @@ class ContainerManager
                 EECPURLFactory::get(),
                 EECsrf::get(),
                 EeCssJsBinding::get(),
+                EEFileManager::get(),
+                EEFileModel::get(),
                 EEFunctionsBinding::get(),
                 EEInput::get(),
                 EELang::get(),
                 EEModelFacade::get(),
+                EESession::get(),
                 FieldSettingsConfig::get(),
                 FilePickerConfig::get(),
                 GetProcessingUrlBinding::get(),
