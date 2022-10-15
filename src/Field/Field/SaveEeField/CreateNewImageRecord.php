@@ -38,7 +38,7 @@ class CreateNewImageRecord
 
         $imageRecord->site_id = $siteMeta->siteId();
 
-        $imageRecord->source_id = (int) $savedFile->sourceIdentifier();
+        $imageRecord->source_id = $payload->fieldMetaEe()->sourceId();
 
         $imageRecord->content_id = $meta->contentId();
 
