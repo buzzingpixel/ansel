@@ -8,11 +8,12 @@ use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use BuzzingPixel\Ansel\Shared\Php\Server;
 use BuzzingPixel\AnselConfig\Paths;
+use Exception;
 use SplFileInfo;
 use Throwable;
 
+use function copy;
 use function explode;
-use function file_get_contents;
 use function implode;
 use function json_encode;
 use function rawurlencode;
@@ -40,18 +41,13 @@ class SaveItem
         $this->functions = $functions;
     }
 
+    /**
+     * @throws Exception
+     */
     public function save(
         FileCacheItem $item,
         CacheDirectory $directory
     ): bool {
-        $content = '';
-
-        if ($item->getFilePathOrUrl() !== null) {
-            $content = $this->getFileContents($item->getFilePathOrUrl());
-        } elseif ($item->getFileContent() !== null) {
-            $content = $item->getFileContent();
-        }
-
         $keyParts = explode('/', $item->getKey());
 
         $id = $keyParts[0];
@@ -80,149 +76,187 @@ class SaveItem
             ]),
         );
 
-        $this->functions->filePutContents(
-            $fullPath,
-            $content
-        );
+        if ($item->getFileContent() !== null) {
+            $this->functions->filePutContents(
+                $fullPath,
+                $item->getFileContent(),
+            );
 
+            return $this->finish($item, $fullPath);
+        }
+
+        if ($item->getFilePathOrUrl() !== null) {
+            $this->copyFile(
+                $item->getFilePathOrUrl(),
+                $fullPath,
+            );
+
+            return $this->finish($item, $fullPath);
+        }
+
+        $this->functions->filePutContents($fullPath, '');
+
+        return $this->finish($item, $fullPath);
+    }
+
+    private function finish(
+        FileCacheItem $item,
+        string $fullPath
+    ): bool {
         $item->set(new SplFileInfo($fullPath));
+
+        $item->setFileContent('');
+
+        $item->setFilePathOrUrl('');
 
         return true;
     }
 
-    private function getFileContents(string $pathOrUrl): string
+    /**
+     * @throws Exception
+     */
+    private function copyFile(string $sourcePathOrUrl, string $destPath): void
     {
-        // Try the file as is and return it if applicable
-        $content = $this->tryFileGetContents($pathOrUrl);
+        // Try to copy the file as is and return it if applicable
+        $result = $this->tryCopy(
+            $sourcePathOrUrl,
+            $destPath
+        );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
-        // Try with a url safe filename
-        $pathOrUrlArray = explode('/', $pathOrUrl);
-        foreach ($pathOrUrlArray as $key => $val) {
+        // Try with an url safe filename
+        $sourcePathOrUrlArray = explode('/', $sourcePathOrUrl);
+        foreach ($sourcePathOrUrlArray as $key => $val) {
             if (strpos($val, 'http') !== false) {
                 continue;
             }
 
-            $pathOrUrlArray[$key] = rawurlencode($val);
+            $sourcePathOrUrlArray[$key] = rawurlencode($val);
         }
 
-        $pathOrUrlSafe = implode('/', $pathOrUrlArray);
+        $sourcePathOrUrlSafe = implode(
+            '/',
+            $sourcePathOrUrlArray,
+        );
 
-        $content = $this->tryFileGetContents($pathOrUrlSafe);
+        $result = $this->tryCopy(
+            $sourcePathOrUrlSafe,
+            $destPath
+        );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
         // Try with the configured site URL
         $siteUrl = $this->siteMeta->frontEndUrl();
 
-        $content = $this->tryFileGetContents(
-            $siteUrl . $pathOrUrl
+        $result = $this->tryCopy(
+            $siteUrl . $sourcePathOrUrl,
+            $destPath
         );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
         // Try adding a slash after configured site URL
-        $siteUrl = $this->siteMeta->frontEndUrl();
-
-        $content = $this->tryFileGetContents(
-            $siteUrl . '/' . $pathOrUrl
+        $result = $this->tryCopy(
+            $siteUrl . '/' . $sourcePathOrUrl,
+            $destPath
         );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
         // Try with the configured site URL and URL Safe path
-        $siteUrl = $this->siteMeta->frontEndUrl();
-
-        $content = $this->tryFileGetContents(
-            $siteUrl . $pathOrUrlSafe
+        $result = $this->tryCopy(
+            $siteUrl . $sourcePathOrUrlSafe,
+            $destPath
         );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
         // Try adding a slash after configured site URL and URL Safe path
-        $siteUrl = $this->siteMeta->frontEndUrl();
-
-        $content = $this->tryFileGetContents(
-            $siteUrl . '/' . $pathOrUrlSafe
+        $result = $this->tryCopy(
+            $siteUrl . '/' . $sourcePathOrUrlSafe,
+            $destPath
         );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
         // Try with server site URL
         $siteUrl = $this->server->serverSiteUrl();
 
-        $content = $this->tryFileGetContents(
-            $siteUrl . $pathOrUrl
+        $result = $this->tryCopy(
+            $siteUrl . $sourcePathOrUrl,
+            $destPath
         );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
         // Try adding a slash after server site URL
-        $siteUrl = $this->siteMeta->frontEndUrl();
-
-        $content = $this->tryFileGetContents(
-            $siteUrl . '/' . $pathOrUrl
+        $result = $this->tryCopy(
+            $siteUrl . '/' . $sourcePathOrUrl,
+            $destPath
         );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
+        // end try
 
         // Try with server site URL and URL Safe path
-        $siteUrl = $this->siteMeta->frontEndUrl();
-
-        $content = $this->tryFileGetContents(
-            $siteUrl . $pathOrUrlSafe
+        $result = $this->tryCopy(
+            $siteUrl . $sourcePathOrUrlSafe,
+            $destPath
         );
 
-        if ($content !== '') {
-            return $content;
+        if ($result) {
+            return;
         }
 
-        // end
-
-        // Last hurrah
+        // end try
 
         // Try adding a slash after server site URL and URL Safe path
-        $siteUrl = $this->siteMeta->frontEndUrl();
-
-        return $this->tryFileGetContents(
-            $siteUrl . '/' . $pathOrUrlSafe
+        $result = $this->tryCopy(
+            $siteUrl . '/' . $sourcePathOrUrlSafe,
+            $destPath
         );
+
+        if ($result) {
+            return;
+        }
+
+        throw new Exception('Unable to create cache file');
     }
 
-    private function tryFileGetContents(string $pathOrUrl): string
+    private function tryCopy(string $sourcePathOrUrl, string $destPath): bool
     {
         $context = $this->functions->streamContextCreate([
             'ssl' => [
@@ -232,18 +266,17 @@ class SaveItem
         ]);
 
         try {
-            $content = file_get_contents(
-                $pathOrUrl,
-                false,
+            /**
+             * Hate using the @ symbol but this older PHP function leaves us
+             * little choice
+             */
+            return @copy(
+                $sourcePathOrUrl,
+                $destPath,
                 $context,
             );
-
-            if ($content !== '' && $content !== false) {
-                return $content;
-            }
-        } catch (Throwable $e) {
+        } catch (Throwable $exception) {
+            return false;
         }
-
-        return '';
     }
 }

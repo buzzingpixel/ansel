@@ -22,10 +22,6 @@ class DeleteItem
 
     public function delete(FileCacheItem $item): bool
     {
-        if (! $item->isHit()) {
-            return false;
-        }
-
         $dirPath = $item->get()->getPath();
 
         $this->clearCacheDirectory->handleDirectoryPath($dirPath);

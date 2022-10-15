@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\FileCache;
 
+use DateInterval;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Exception;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -103,6 +106,8 @@ abstract class FileCachePool implements CacheItemPoolInterface
     /**
      * @param FileCacheItem $item
      *
+     * @throws Exception
+     *
      * @phpstan-ignore-next-line
      */
     public function save(CacheItemInterface $item): bool
@@ -134,8 +139,16 @@ abstract class FileCachePool implements CacheItemPoolInterface
         return $this->uuidFactory->uuid4()->toString() . '/' . $fileName;
     }
 
-    public function createItem(string $fileName): FileCacheItem
-    {
+    public function createItem(
+        string $fileName,
+        ?DateTimeInterface $expires = null
+    ): FileCacheItem {
+        if ($expires === null) {
+            $expires = (new DateTimeImmutable())->add(
+                new DateInterval('P1D')
+            );
+        }
+
         /**
          * @noinspection PhpUnhandledExceptionInspection
          *
@@ -144,6 +157,9 @@ abstract class FileCachePool implements CacheItemPoolInterface
          */
         return new FileCacheItem(
             $this->createKey($fileName),
+            null,
+            null,
+            $expires,
         );
     }
 }
