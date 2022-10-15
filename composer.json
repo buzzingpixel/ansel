@@ -72,7 +72,7 @@
         "cocur/slugify": "^4.1",
         "guzzlehttp/guzzle": "^6.5.5|^7.2.0",
         "intervention/image": "^2.7",
-        "league/mime-type-detection": "^1.9",
+        "league/mime-type-detection": "^1.11",
         "league/pipeline": "^1.0",
         "marc1706/fast-image-size": "^1.1",
         "myclabs/php-enum": "^1.8",
