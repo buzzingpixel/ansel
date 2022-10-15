@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
 
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
 use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItem;
 use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItemCollection;
 use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
@@ -28,7 +27,7 @@ class EeStorageLocations
         $this->recordService = $recordService;
     }
 
-    public function getAll(): StorageLocationCollection
+    public function getAll(): StorageLocationItemCollection
     {
         $eeLocations = $this->recordService->get('UploadDestination')
             // Only get upload directories for the current site
