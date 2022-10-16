@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Field;
+namespace BuzzingPixel\Ansel\Field\Field\GetEeField;
 
 use BuzzingPixel\Ansel\EeSourceHandling\SourceAdapterFactory;
-use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
+use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
+use BuzzingPixel\Ansel\Field\Field\GetFieldRenderContext;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Environment;
@@ -30,21 +31,27 @@ class GetEeFieldAction
 
     private SourceAdapterFactory $sourceAdapterFactory;
 
+    private EeDataFactory $eeDataFactory;
+
     public function __construct(
         EeCssJs $eeCssJs,
         TwigEnvironment $twig,
         Environment $environment,
         GetFieldRenderContext $getFieldRenderContext,
-        SourceAdapterFactory $sourceAdapterFactory
+        SourceAdapterFactory $sourceAdapterFactory,
+        EeDataFactory $eeDataFactory
     ) {
         $this->eeCssJs               = $eeCssJs;
         $this->twig                  = $twig;
         $this->environment           = $environment;
         $this->getFieldRenderContext = $getFieldRenderContext;
         $this->sourceAdapterFactory  = $sourceAdapterFactory;
+        $this->eeDataFactory         = $eeDataFactory;
     }
 
     /**
+     * @param mixed $value
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -53,8 +60,8 @@ class GetEeFieldAction
      */
     public function render(
         FieldSettingsCollection $fieldSettings,
-        string $fieldNameRoot,
-        PostedData $data
+        FieldMetaEe $fieldMeta,
+        $value
     ): string {
         $this->eeCssJs->add();
 
@@ -70,12 +77,15 @@ class GetEeFieldAction
             '@AnselSrc/Field/Field/Field.twig',
             $this->getFieldRenderContext->get(
                 $fieldSettings,
-                $fieldNameRoot,
+                $fieldMeta->fieldName(),
                 [
                     'environment' => $this->environment->toString(),
                     'fileChooserModalLink' => $modalLink,
                 ],
-                $data,
+                $this->eeDataFactory->create(
+                    $fieldMeta,
+                    $value,
+                ),
             ),
         );
     }

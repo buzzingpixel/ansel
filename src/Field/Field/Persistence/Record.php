@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\Persistence;
 
+use Exception;
+use ReflectionClass;
+use ReflectionException;
 use ReflectionObject;
 use ReflectionProperty;
 use RuntimeException;
@@ -13,9 +16,17 @@ use function in_array;
 
 abstract class Record
 {
+    /** @var ReflectionClass<Record> */
+    private ReflectionClass $ref;
+
     public int $id;
 
     abstract public static function tableName(): string;
+
+    public function __construct()
+    {
+        $this->ref = new ReflectionClass($this);
+    }
 
     /**
      * Ensure all columns are explicitly declared on the record. If we change
@@ -64,5 +75,43 @@ abstract class Record
 
         /** @phpstan-ignore-next-line */
         return $array;
+    }
+
+    /**
+     * @param scalar $value
+     *
+     * @throws ReflectionException
+     * @throws Exception
+     */
+    public function setProperty(string $property, $value): self
+    {
+        $refProp = $this->ref->getProperty($property);
+
+        /** @phpstan-ignore-next-line */
+        $type = $refProp->getType()->getName();
+
+        switch ($type) {
+            case 'int':
+                $value = (int) $value;
+                break;
+            case 'string':
+                $value = (string) $value;
+                break;
+            case 'float':
+                $value = (float) $value;
+                break;
+            case 'bool':
+                $value = (bool) $value;
+                break;
+            default:
+                throw new Exception(
+                    'Type ' . $type . ' not implemented'
+                );
+        }
+
+        /** @phpstan-ignore-next-line */
+        $this->{$property} = $value;
+
+        return $this;
     }
 }

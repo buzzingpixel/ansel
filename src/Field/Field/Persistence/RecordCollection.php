@@ -12,17 +12,20 @@ use function array_map;
 use function array_values;
 use function count;
 
+/**
+ * @template T of Record
+ */
 class RecordCollection
 {
-    /** @var Record[] $items */
+    /** @var T[] $items */
     private array $items;
 
     private string $tableName;
 
     /**
-     * @param Record[] $items
+     * @param T[] $items
      */
-    public function __construct(array $items)
+    public function __construct(array $items = [])
     {
         $this->items = array_values(array_map(
             static fn (Record $item) => $item,
@@ -61,7 +64,7 @@ class RecordCollection
     }
 
     /**
-     * @param callable(Record $adapterItem, int $index): ReturnType $callback
+     * @param callable(T $adapterItem, int $index): ReturnType $callback
      *
      * @return ReturnType[]
      *
@@ -79,7 +82,7 @@ class RecordCollection
     }
 
     /**
-     * @return Record[]
+     * @return T[]
      */
     public function asArray(): array
     {
@@ -87,9 +90,9 @@ class RecordCollection
     }
 
     /**
-     * @param callable(Record $adapterItem): ReturnType $callable
+     * @param callable(T $adapterItem): ReturnType $callable
      *
-     * @return RecordCollection
+     * @return RecordCollection<T>
      *
      * @template ReturnType
      */
@@ -101,11 +104,17 @@ class RecordCollection
         )));
     }
 
+    /**
+     * @return T
+     */
     public function first(): Record
     {
         return $this->items[0];
     }
 
+    /**
+     * @return T|null
+     */
     public function firstOrNull(): ?Record
     {
         return $this->items[0] ?? null;

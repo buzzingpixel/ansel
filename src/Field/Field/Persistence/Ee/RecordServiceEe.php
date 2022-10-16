@@ -4,21 +4,25 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\Persistence\Ee;
 
-use BuzzingPixel\Ansel\Field\Field\Persistence\FetchParameters;
+use BuzzingPixel\Ansel\Field\Field\Persistence\Fetching\FetchParameters;
 use BuzzingPixel\Ansel\Field\Field\Persistence\Record;
 use BuzzingPixel\Ansel\Field\Field\Persistence\RecordCollection;
 use BuzzingPixel\Ansel\Field\Field\Persistence\RecordService;
 use BuzzingPixel\Ansel\Field\Field\Persistence\SaveResult;
-
-use function dd;
+use ReflectionException;
 
 class RecordServiceEe implements RecordService
 {
     private SaveRecords $saveRecords;
 
-    public function __construct(SaveRecords $saveRecords)
-    {
-        $this->saveRecords = $saveRecords;
+    private FetchRecords $fetchRecords;
+
+    public function __construct(
+        SaveRecords $saveRecords,
+        FetchRecords $fetchRecords
+    ) {
+        $this->saveRecords  = $saveRecords;
+        $this->fetchRecords = $fetchRecords;
     }
 
     public function saveRecord(Record $record): SaveResult
@@ -33,15 +37,46 @@ class RecordServiceEe implements RecordService
         return $this->saveRecords->save($records);
     }
 
-    public function fetchRecord(FetchParameters $parameters): ?Record
-    {
-        // TODO: Implement fetchRecord() method.
-        dd('TODO: Implement fetchRecord() method.');
+    /**
+     * @throws ReflectionException
+     */
+    public function fetchRecord(
+        FetchParameters $parameters,
+        string $recordClass
+    ): Record {
+        $parameters = $parameters->withLimit(1);
+
+        return $this->fetchRecords->fetch(
+            $parameters,
+            $recordClass,
+        )->first();
     }
 
-    public function fetchRecords(FetchParameters $parameters): RecordCollection
-    {
-        // TODO: Implement fetchRecords() method.
-        dd('TODO: Implement fetchRecords() method.');
+    /**
+     * @throws ReflectionException
+     */
+    public function fetchRecordOrNull(
+        FetchParameters $parameters,
+        string $recordClass
+    ): ?Record {
+        $parameters = $parameters->withLimit(1);
+
+        return $this->fetchRecords->fetch(
+            $parameters,
+            $recordClass,
+        )->firstOrNull();
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function fetchRecords(
+        FetchParameters $parameters,
+        string $recordClass
+    ): RecordCollection {
+        return $this->fetchRecords->fetch(
+            $parameters,
+            $recordClass,
+        );
     }
 }

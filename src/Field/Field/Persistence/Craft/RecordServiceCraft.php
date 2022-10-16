@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\Persistence\Craft;
 
-use BuzzingPixel\Ansel\Field\Field\Persistence\FetchParameters;
+use BuzzingPixel\Ansel\Field\Field\Persistence\Fetching\FetchParameters;
 use BuzzingPixel\Ansel\Field\Field\Persistence\Record;
 use BuzzingPixel\Ansel\Field\Field\Persistence\RecordCollection;
 use BuzzingPixel\Ansel\Field\Field\Persistence\RecordService;
@@ -26,14 +26,26 @@ class RecordServiceCraft implements RecordService
         dd('TODO: Implement saveRecords() method.');
     }
 
-    public function fetchRecord(FetchParameters $parameters): ?Record
-    {
+    public function fetchRecord(
+        FetchParameters $parameters,
+        string $recordClass
+    ): Record {
         // TODO: Implement fetchRecord() method.
         dd('TODO: Implement fetchRecord() method.');
     }
 
-    public function fetchRecords(FetchParameters $parameters): RecordCollection
-    {
+    public function fetchRecordOrNull(
+        FetchParameters $parameters,
+        string $recordClass
+    ): ?Record {
+        // TODO: Implement fetchRecord() method.
+        dd('TODO: Implement fetchRecordOrNull() method.');
+    }
+
+    public function fetchRecords(
+        FetchParameters $parameters,
+        string $recordClass
+    ): RecordCollection {
         // TODO: Implement fetchRecords() method.
         dd('TODO: Implement fetchRecords() method.');
     }

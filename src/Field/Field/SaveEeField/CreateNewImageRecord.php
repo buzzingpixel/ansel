@@ -23,7 +23,7 @@ class CreateNewImageRecord
 
     public function create(
         PostedImage $image,
-        Payload $payload,
+        SavePayload $payload,
         int $index,
         File $sourceFile,
         File $savedFile,

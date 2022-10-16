@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\EeContentType;
 use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
-use BuzzingPixel\Ansel\Field\Field\GetEeFieldAction;
+use BuzzingPixel\Ansel\Field\Field\GetEeField\GetEeFieldAction;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
-use BuzzingPixel\Ansel\Field\Field\SaveEeField\Payload;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
+use BuzzingPixel\Ansel\Field\Field\SaveEeField\SavePayload;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
@@ -361,21 +361,16 @@ class Ansel_ft extends EE_Fieldtype
     }
 
     /**
-     * @param mixed[] $value
+     * @param mixed $value
      *
      * @throws ContainerExceptionInterface
      * @throws LoaderError
      * @throws NotFoundExceptionInterface
      * @throws RuntimeError
      * @throws SyntaxError
-     *
-     * @phpstan-ignore-next-line
      */
     public function display_field($value): string
     {
-        // $value should either be an array of post-back data, or an empty array
-        $value = is_array($value) ? $value : [];
-
         // TODO: License check
 
         $fieldSettings = self::getFieldSettingsCollection(
@@ -385,9 +380,17 @@ class Ansel_ft extends EE_Fieldtype
 
         return $this->getFieldAction->render(
             $fieldSettings,
-            // TODO: field_id_x is only valid if channel field type directly
-            'field_id_' . $this->field_id,
-            PostedData::fromArray($value),
+            new FieldMetaEe(
+                (int) $this->field_id,
+                (string) $this->field_name,
+                new EeContentType($this->content_type()),
+                // We don't have enough info to get this here (thanks EE) and we
+                // don't need it (thankfully)
+                0,
+                /** @phpstan-ignore-next-line */
+                (int) $this->content_id(),
+            ),
+            $value,
         );
     }
 
@@ -473,7 +476,7 @@ class Ansel_ft extends EE_Fieldtype
         );
 
         $this->saveEeFieldAction->save(
-            new Payload(
+            new SavePayload(
                 PostedData::fromArray($data),
                 $fieldSettings,
                 new FieldMetaEe(

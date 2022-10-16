@@ -8,7 +8,7 @@ use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 
-class Payload
+class SavePayload
 {
     private PostedData $data;
 

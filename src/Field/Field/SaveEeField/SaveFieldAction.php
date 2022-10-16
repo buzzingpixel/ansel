@@ -7,6 +7,7 @@ namespace BuzzingPixel\Ansel\Field\Field\SaveEeField;
 use BuzzingPixel\Ansel\EeSourceHandling\SourceAdapterFactory;
 use BuzzingPixel\Ansel\Field\Field\Persistence\AnselFieldEeRecord;
 use BuzzingPixel\Ansel\Field\Field\Persistence\AnselImageEeRecord;
+use BuzzingPixel\Ansel\Field\Field\Persistence\Record;
 use BuzzingPixel\Ansel\Field\Field\Persistence\RecordCollection;
 use BuzzingPixel\Ansel\Field\Field\Persistence\RecordService;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedFieldData;
@@ -64,7 +65,7 @@ class SaveFieldAction
         $this->ephemeralFileCachePool = $ephemeralFileCachePool;
     }
 
-    public function save(Payload $payload): void
+    public function save(SavePayload $payload): void
     {
         $imageRecords = $payload->data()->postedImages()->map(
             function (
@@ -105,13 +106,15 @@ class SaveFieldAction
             }
         );
 
-        $this->recordService->saveRecords(
-            new RecordCollection($imageRecords),
-        );
+        /** @var RecordCollection<Record> $imageRecordCollection */
+        $imageRecordCollection = new RecordCollection($imageRecords);
 
-        $this->recordService->saveRecords(
-            new RecordCollection($fieldRecords),
-        );
+        $this->recordService->saveRecords($imageRecordCollection);
+
+        /** @var RecordCollection<Record> $fieldRecordCollection */
+        $fieldRecordCollection = new RecordCollection($fieldRecords);
+
+        $this->recordService->saveRecords($fieldRecordCollection);
     }
 
     /**
@@ -121,7 +124,7 @@ class SaveFieldAction
      */
     private function createImageRecord(
         PostedImage $image,
-        Payload $payload,
+        SavePayload $payload,
         int $index
     ): AnselImageEeRecord {
         $maxWidth  = $payload->fieldSettings()->maxWidth()->value();
