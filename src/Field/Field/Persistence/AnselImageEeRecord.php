@@ -62,13 +62,13 @@ class AnselImageEeRecord extends Record
     public int $focal_y;
 
     /** Deprecated — using fields now */
-    public string $title;
+    public string $title = '';
 
     /** Deprecated — using fields now */
-    public string $caption;
+    public string $caption = '';
 
     /** Deprecated — using fields now */
-    public int $cover;
+    public int $cover = 0;
 
     public int $member_id;
 
