@@ -31,7 +31,7 @@ class PostedImageCollection
     /**
      * @param PostedImage[] $postedImages
      */
-    public function __construct(array $postedImages)
+    public function __construct(array $postedImages = [])
     {
         $this->postedImages = array_values(array_map(
             static fn (PostedImage $data) => $data,

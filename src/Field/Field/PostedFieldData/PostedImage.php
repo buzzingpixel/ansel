@@ -85,7 +85,7 @@ class PostedImage
         string $focalX,
         string $focalY,
         PostedFieldDataCollection $fieldData,
-        ?PostedImageUpload $imageUpload
+        ?PostedImageUpload $imageUpload = null
     ) {
         $this->id                        = $id;
         $this->imageUrl                  = $imageUrl;

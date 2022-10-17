@@ -6,6 +6,7 @@ namespace BuzzingPixel\Ansel\EeSourceHandling\Assets;
 
 use BuzzingPixel\Ansel\EeSourceHandling\AnselSourceAdapter;
 use BuzzingPixel\Ansel\EeSourceHandling\File;
+use BuzzingPixel\Ansel\EeSourceHandling\FileCollection;
 use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\AnselConfig\ContainerManager;
@@ -78,6 +79,15 @@ class AssetsSourceAdapter implements AnselSourceAdapter
     {
         // TODO: Implement getFileByIdentifier() method.
         dd('TODO: Implement getFileByIdentifier() method.');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFilesByIdentifiers(array $identifiers): FileCollection
+    {
+        // TODO: Implement getFilesByIdentifiers() method.
+        dd('TODO: Implement getFilesByIdentifiers() method.');
     }
 
     public function addFile(

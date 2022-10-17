@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
 
 use BuzzingPixel\Ansel\EeSourceHandling\FileInstance;
+use BuzzingPixel\Ansel\EeSourceHandling\FileInstanceCollection;
 use ExpressionEngine\Model\File\File;
 use ExpressionEngine\Service\Model\Facade as RecordService;
 
-use function assert;
-
-class EeGetFileByIdentifier
+class EeGetFilesByIdentifiers
 {
     private RecordService $recordService;
 
@@ -24,18 +23,21 @@ class EeGetFileByIdentifier
         $this->createFileInstance = $createFileInstance;
     }
 
-    public function get(string $identifier): ?FileInstance
+    /**
+     * @param string[] $identifiers
+     */
+    public function get(array $identifiers): FileInstanceCollection
     {
-        $record = $this->recordService->get('File')
-            ->filter('file_id', $identifier)
-            ->first();
+        $records = $this->recordService->get('File')
+            ->filter('file_id', 'IN', $identifiers)
+            ->all();
 
-        assert($record instanceof File || $record === null);
-
-        if ($record === null) {
-            return null;
-        }
-
-        return $this->createFileInstance->create($record);
+        return new FileInstanceCollection(
+            $records->map(
+                function (File $record): FileInstance {
+                    return $this->createFileInstance->create($record);
+                },
+            ),
+        );
     }
 }

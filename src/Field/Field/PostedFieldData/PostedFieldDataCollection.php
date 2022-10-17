@@ -30,7 +30,7 @@ class PostedFieldDataCollection
     /**
      * @param PostedFieldData[] $postedFieldData
      */
-    public function __construct(array $postedFieldData)
+    public function __construct(array $postedFieldData = [])
     {
         $this->postedFieldData = array_values(array_map(
             static fn (PostedFieldData $data) => $data,

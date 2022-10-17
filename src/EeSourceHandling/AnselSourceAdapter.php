@@ -26,6 +26,11 @@ interface AnselSourceAdapter
     public function getFileByIdentifier(string $identifier): ?File;
 
     /**
+     * @param string[] $identifiers
+     */
+    public function getFilesByIdentifiers(array $identifiers): FileCollection;
+
+    /**
      * Adds a file to the implementer's file manager and records a record of it
      */
     public function addFile(

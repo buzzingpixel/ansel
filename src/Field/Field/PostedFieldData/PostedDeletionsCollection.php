@@ -29,7 +29,7 @@ class PostedDeletionsCollection
     /**
      * @param PostedDeletion[] $postedDeletions
      */
-    public function __construct(array $postedDeletions)
+    public function __construct(array $postedDeletions = [])
     {
         $this->postedDeletions = array_values(array_map(
             static function (PostedDeletion $postedDeletion) {

@@ -6,6 +6,8 @@ namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
 
 use BuzzingPixel\Ansel\EeSourceHandling\AnselSourceAdapter;
 use BuzzingPixel\Ansel\EeSourceHandling\File;
+use BuzzingPixel\Ansel\EeSourceHandling\FileCollection;
+use BuzzingPixel\Ansel\EeSourceHandling\FileInstanceCollection;
 use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use Exception;
@@ -23,18 +25,22 @@ class EeSourceAdapter implements AnselSourceAdapter
 
     private EeUploadFile $uploadFile;
 
+    private EeGetFilesByIdentifiers $getFilesByIdentifiers;
+
     public function __construct(
         EeStorageLocations $eeStorageLocations,
         EeModalLink $eeModalLink,
         EeGetFileByIdentifier $getFileByIdentifier,
         EeAddFile $addFile,
-        EeUploadFile $uploadFile
+        EeUploadFile $uploadFile,
+        EeGetFilesByIdentifiers $getFilesByIdentifiers
     ) {
-        $this->eeStorageLocations  = $eeStorageLocations;
-        $this->eeModalLink         = $eeModalLink;
-        $this->getFileByIdentifier = $getFileByIdentifier;
-        $this->addFile             = $addFile;
-        $this->uploadFile          = $uploadFile;
+        $this->eeStorageLocations    = $eeStorageLocations;
+        $this->eeModalLink           = $eeModalLink;
+        $this->getFileByIdentifier   = $getFileByIdentifier;
+        $this->addFile               = $addFile;
+        $this->uploadFile            = $uploadFile;
+        $this->getFilesByIdentifiers = $getFilesByIdentifiers;
     }
 
     public static function createInstance(): ?self
@@ -70,6 +76,16 @@ class EeSourceAdapter implements AnselSourceAdapter
     public function getFileByIdentifier(string $identifier): ?File
     {
         return $this->getFileByIdentifier->get($identifier);
+    }
+
+    /**
+     * @return FileInstanceCollection
+     *
+     * @inheritDoc
+     */
+    public function getFilesByIdentifiers(array $identifiers): FileCollection
+    {
+        return $this->getFilesByIdentifiers->get($identifiers);
     }
 
     /**

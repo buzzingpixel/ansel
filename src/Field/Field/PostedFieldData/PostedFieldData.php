@@ -8,7 +8,7 @@ class PostedFieldData
 {
     private string $handle;
 
-    /** @var mixed */
+    /** @var scalar */
     private $value;
 
     /**
