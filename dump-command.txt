@@ -1,6 +1,6 @@
 # PHP Container
-./dev container-ansel-php74
-cd ee6
+./dev docker container php74
+cd ee7
 ./vendor/bin/var-dump-server --format=html > /var/www/dump/dump.html
 
 # Locally

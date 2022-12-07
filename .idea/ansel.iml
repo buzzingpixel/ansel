@@ -142,7 +142,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/cocur/slugify" />
       <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee6/system/user/addons/treasury/Vendor" />
       <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee6" />
-      <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee7" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/pipeline" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/php-enum" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image" />
