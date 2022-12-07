@@ -2,21 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@oclif/core");
 const node_child_process_1 = require("node:child_process");
+const craft3_1 = require("../provision/craft3");
+const copy_treasury_dev_1 = require("../provision/copy-treasury-dev");
+const ee7_1 = require("../provision/ee7");
+const database_setup_1 = require("../provision/database-setup");
+const ee_coilpack_1 = require("../provision/ee-coilpack");
+const ensure_dot_env_1 = require("../pre-flight/ensure-dot-env");
 class Up extends core_1.Command {
     async run() {
-        // EE 7 Pre-flight
-        (0, node_child_process_1.execSync)(`
-                docker run --rm --entrypoint "" -v ${this.config.root}/docker/environments/ee7:/var/www/ee7 -w /var/www/ee7 ansel_ansel-php74 bash -c "XDEBUG_MODE=off composer install --no-interaction --no-ansi --no-progress";
-            `, { stdio: 'inherit' });
-        // Up the env
+        const EnsureDotEnvPreFlight = new ensure_dot_env_1.default(this.argv, this.config);
+        await EnsureDotEnvPreFlight.run();
+        const CopyTreasuryDevProvision = new copy_treasury_dev_1.default(this.argv, this.config);
+        await CopyTreasuryDevProvision.run();
         (0, node_child_process_1.execSync)(`
                 cd ${this.config.root}/docker;
                 docker compose -f docker-compose.yml -p ansel up -d;
-            `, { stdio: 'inherit' });
-        // Database setup
-        (0, node_child_process_1.execSync)(`
-                chmod +x ${this.config.root}/dev-cli/scripts/database-setup.sh;
-                ${this.config.root}/dev-cli/scripts/database-setup.sh;
             `, { stdio: 'inherit' });
         // Set permissions on mounts
         (0, node_child_process_1.execSync)(`
@@ -25,7 +25,6 @@ class Up extends core_1.Command {
                 docker exec -w /var/www ansel-php81 bash -c "chmod 0755 ansel";
 
                 # Craft 3
-                docker exec -w /var/www/craft3 ansel-php74 bash -c "composer install";
                 docker exec -w /var/www/craft3/config ansel-php74 bash -c "chmod -R 0777 project";
                 docker exec -w /var/www/craft3/public ansel-php74 bash -c "chmod -R 0777 cpresources";
                 docker exec -w /var/www/craft3/public ansel-php74 bash -c "chmod -R 0777 uploads";
@@ -73,6 +72,14 @@ class Up extends core_1.Command {
                 docker exec -w /var/www/ee7/system/user ansel-php74 bash -c "chmod -R 0777 cache";
                 docker exec -w /var/www/ee7/system/user/config ansel-php74 bash -c "chmod 0666 config.php";
             `, { stdio: 'inherit' });
+        const Craft3Provision = new craft3_1.default(this.argv, this.config);
+        await Craft3Provision.run();
+        const Ee7Provision = new ee7_1.default(this.argv, this.config);
+        await Ee7Provision.run();
+        const EeCoilpackProvision = new ee_coilpack_1.default(this.argv, this.config);
+        await EeCoilpackProvision.run();
+        const DatabaseSetupProvision = new database_setup_1.default(this.argv, this.config);
+        await DatabaseSetupProvision.run();
     }
 }
 exports.default = Up;

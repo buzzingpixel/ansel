@@ -18,6 +18,7 @@ RUN apt-get update && \
     apt-get install -my --no-install-recommends libjpeg-dev && \
     apt-get install -my --no-install-recommends libpng-dev && \
     apt-get install -my --no-install-recommends git && \
+    apt-get install -my --no-install-recommends openssh-client && \
     apt-get clean && \
     docker-php-ext-configure gd --with-jpeg --with-freetype --with-xpm --with-webp && \
     docker-php-ext-install -j$(nproc) gd && \

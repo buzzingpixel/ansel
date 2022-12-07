@@ -23,12 +23,7 @@ export default class Php74 extends Command {
         ));
 
         if (args.cmd) {
-            execSync(
-                `
-                docker exec -it -w /var/www ansel-php74 bash -c "XDEBUG_MODE=off ${args.cmd}";
-            `,
-                { stdio: 'inherit' },
-            );
+            await this.runCommand(args.cmd);
 
             return;
         }
@@ -40,6 +35,16 @@ export default class Php74 extends Command {
         execSync(
             `
                 docker exec -it -e XDEBUG_MODE=off -w /var/www ansel-php74 bash;
+            `,
+            { stdio: 'inherit' },
+        );
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    async runCommand (cmd: string): Promise<void> {
+        execSync(
+            `
+                docker exec -it -w /var/www ansel-php74 bash -c "XDEBUG_MODE=off ${cmd}";
             `,
             { stdio: 'inherit' },
         );

@@ -9,14 +9,18 @@ class Php74 extends core_1.Command {
         const { args } = await this.parse(Php74);
         this.log(style.yellow("You're working inside the 'php74' container of this project."));
         if (args.cmd) {
-            (0, node_child_process_1.execSync)(`
-                docker exec -it -w /var/www ansel-php74 bash -c "XDEBUG_MODE=off ${args.cmd}";
-            `, { stdio: 'inherit' });
+            await this.runCommand(args.cmd);
             return;
         }
         this.log(style.yellow("Remember to exit when you're done"));
         (0, node_child_process_1.execSync)(`
                 docker exec -it -e XDEBUG_MODE=off -w /var/www ansel-php74 bash;
+            `, { stdio: 'inherit' });
+    }
+    // eslint-disable-next-line class-methods-use-this
+    async runCommand(cmd) {
+        (0, node_child_process_1.execSync)(`
+                docker exec -it -w /var/www ansel-php74 bash -c "XDEBUG_MODE=off ${cmd}";
             `, { stdio: 'inherit' });
     }
 }

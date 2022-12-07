@@ -7,4 +7,5 @@ export default class Php74 extends Command {
         default: null;
     }[];
     run(): Promise<void>;
+    runCommand(cmd: string): Promise<void>;
 }

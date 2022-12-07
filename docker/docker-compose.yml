@@ -2,6 +2,8 @@ version: '3.7'
 
 services:
   ansel-nginx:
+    env_file:
+      - .env
     image: nginx:1.21.6
     container_name: ansel-nginx
     environment:
@@ -15,12 +17,12 @@ services:
       - "33774:33774"
       - "33780:33780"
       - "33781:33781"
-    volumes:
+      - "9981:9981"
+    volumes: &customVolumes
       - ./nginx:/etc/nginx/conf.d
       - ./.profile:/root/.profile
       - ./.profile:/root/.bashrc
-      - ./environments/craft3:/var/www/craft3
-      - ./environments/ee7:/var/www/ee7
+      - ./environments:/var/www
       - ../:/var/www/ansel
       - ../cms/ExpressionEngine:/var/www/ee7/system/user/addons/ansel
       - ../assetsDist:/var/www/ee7/public/themes/user/ansel
@@ -35,6 +37,8 @@ services:
       default:
 
   ansel-php74:
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: ./php74/Dockerfile
@@ -42,23 +46,15 @@ services:
     environment:
       HOSTNAME: ansel-php74
       CRAFT_ALLOW_SUPERUSER: 1
-    volumes: &phpVolumes
-      - ./environments:/var/www
-      - ../:/var/www/ansel
-      - ../cms/ExpressionEngine:/var/www/ee7/system/user/addons/ansel
-      - ../assetsDist:/var/www/ee7/public/themes/user/ansel
-      - ../composer.json:/var/www/ee7/system/user/addons/ansel/composer.json
-      - ../composer.lock:/var/www/ee7/system/user/addons/ansel/composer.lock
-      - ../config:/var/www/ee7/system/user/addons/ansel/config
-      - ../src:/var/www/ee7/system/user/addons/ansel/src
-      - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
-      - ./environments/dumper.php:/var/www/dumper.php
+    volumes: *customVolumes
     networks:
       default:
         aliases:
           - ansel-php74
 
   ansel-php80:
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: ./php80/Dockerfile
@@ -66,13 +62,15 @@ services:
     environment:
       HOSTNAME: ansel-php80
       CRAFT_ALLOW_SUPERUSER: 1
-    volumes: *phpVolumes
+    volumes: *customVolumes
     networks:
       default:
         aliases:
           - ansel-php80
 
   ansel-php81:
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: ./php81/Dockerfile
@@ -80,13 +78,15 @@ services:
     environment:
       HOSTNAME: ansel-php81
       CRAFT_ALLOW_SUPERUSER: 1
-    volumes: *phpVolumes
+    volumes: *customVolumes
     networks:
       default:
         aliases:
           - ansel-php81
 
   db:
+    env_file:
+      - .env
     image: mariadb:10.7.1
     container_name: ansel-db
     environment:
