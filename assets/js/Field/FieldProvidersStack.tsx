@@ -44,7 +44,6 @@ const FieldProvidersStack = (props) => {
                             >
                                 <ProcessesProvider>
                                     <ErrorMessagesProvider>
-                                        {/* TODO: set existing images here */}
                                         <ImagesProvider
                                             images={data.images}
                                             deletions={data.deletions}
