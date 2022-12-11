@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Project PHP Files" pattern="file[ansel]:cms//*.php||file[ansel]:src//*.php||file:dev.php" />
+</component>

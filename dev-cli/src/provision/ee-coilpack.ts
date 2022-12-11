@@ -1,5 +1,5 @@
 import { Command } from '@oclif/core';
-import Php81 from '../docker/container/php81';
+import Php80 from '../docker/container/php80';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const style = require('cli-color');
@@ -10,9 +10,9 @@ export default class EeCoilpack extends Command {
     async run (): Promise<void> {
         this.log(style.yellow('Running provisioning for EE Coilpack...'));
 
-        const Php81Container = new Php81(this.argv, this.config);
+        const Php80Container = new Php80(this.argv, this.config);
 
-        await Php81Container.runCommand(
+        await Php80Container.runCommand(
             'cd /var/www/eecoilpack && composer install --no-interaction --no-ansi --no-progress',
         );
 

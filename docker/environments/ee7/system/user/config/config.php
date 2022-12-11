@@ -49,5 +49,3 @@ $config['base_path'] = dirname(__DIR__, 3) . '/';
 // if (! empty($_POST)) {
 //     dd($_POST);
 // }
-
-// EOF

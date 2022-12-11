@@ -4,6 +4,7 @@ parameters:
     ignoreErrors:
     excludePaths:
         - cms/Craft/AnselCraftField.php
+        - docker/environments/eecoilpack
     bootstrapFiles:
         - tools-bootstrap.php
 

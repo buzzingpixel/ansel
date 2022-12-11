@@ -7,7 +7,13 @@
       <scope name="Project React" level="WARNING" enabled="false" />
     </inspection_tool>
     <inspection_tool class="JSXNamespaceValidation" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="PhpCSValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+    <inspection_tool class="PhpCSValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="false">
+      <scope name="Project PHP Files" level="WEAK WARNING" enabled="true">
+        <option name="CODING_STANDARD" value="Custom" />
+        <option name="CUSTOM_RULESET_PATH" value="$PROJECT_DIR$/phpcs.xml" />
+        <option name="SHOW_SNIFF_NAMES" value="true" />
+        <option name="EXTENSIONS" value="php" />
+      </scope>
       <option name="CODING_STANDARD" value="Custom" />
       <option name="CUSTOM_RULESET_PATH" value="$PROJECT_DIR$/phpcs.xml" />
       <option name="SHOW_SNIFF_NAMES" value="true" />
@@ -17,7 +23,11 @@
     <inspection_tool class="PhpParameterNameChangedDuringInheritanceInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpPluralMixedCanBeReplacedWithArrayInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpRedundantVariableDocTypeInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+    <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="false">
+      <scope name="Project PHP Files" level="WEAK WARNING" enabled="true">
+        <option name="memoryLimit" value="4G" />
+        <option name="config" value="$PROJECT_DIR$/phpstan.neon" />
+      </scope>
       <option name="memoryLimit" value="4G" />
       <option name="config" value="$PROJECT_DIR$/phpstan.neon" />
     </inspection_tool>

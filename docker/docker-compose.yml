@@ -17,6 +17,7 @@ services:
       - "33774:33774"
       - "33780:33780"
       - "33781:33781"
+      - "9980:9980"
       - "9981:9981"
     volumes: &customVolumes
       - ./nginx:/etc/nginx/conf.d
@@ -32,6 +33,9 @@ services:
       - ../src:/var/www/ee7/system/user/addons/ansel/src
       - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
       - ./environments/dumper.php:/var/www/dumper.php
+      # Coilpack
+      - ./environments/ee7/public/themes/ee:/var/www/eecoilpack/ee/themes/ee
+      - ./environments/ee7/system/ee:/var/www/eecoilpack/ee/system/ee
     networks:
       web:
       default:
