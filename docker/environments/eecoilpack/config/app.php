@@ -2,6 +2,21 @@
 
 use Illuminate\Support\Facades\Facade;
 
+if (isset($_SERVER['HTTP_HOST'])) {
+    // For ease of different URLs in dev, we'll dynamically get the app url
+    $secure = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+        (
+            isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+            $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https'
+        );
+
+    $protocol = $secure ? 'https://' : 'http://';
+
+    $appUrl  = $protocol . $_SERVER['HTTP_HOST'] . '/';
+} else {
+    $appUrl = env('APP_URL', 'http://localhost');
+}
+
 return [
 
     /*
@@ -15,7 +30,7 @@ return [
     |
     */
 
-    'name' => env('COILPACK_APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +43,7 @@ return [
     |
     */
 
-    'env' => env('COILPACK_APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +56,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('COILPACK_APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +69,8 @@ return [
     |
     */
 
-    'url' => env('COILPACK_APP_URL', 'http://localhost'),
+    // 'url' => env('APP_URL', 'http://localhost'),
+    'url' => $appUrl,
 
     'asset_url' => env('ASSET_URL'),
 
@@ -121,7 +137,7 @@ return [
     |
     */
 
-    'key' => env('COILPACK_APP_KEY'),
+    'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 

@@ -33,9 +33,6 @@ services:
       - ../src:/var/www/ee7/system/user/addons/ansel/src
       - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
       - ./environments/dumper.php:/var/www/dumper.php
-      # Coilpack
-      - ./environments/ee7/public/themes/ee:/var/www/eecoilpack/ee/themes/ee
-      - ./environments/ee7/system/ee:/var/www/eecoilpack/ee/system/ee
     networks:
       web:
       default:

@@ -79,6 +79,12 @@ export default class Up extends Command {
                 docker exec -w /var/www/ee7/public ansel-php74 bash -c "chmod -R 0777 uploads";
                 docker exec -w /var/www/ee7/system/user ansel-php74 bash -c "chmod -R 0777 cache";
                 docker exec -w /var/www/ee7/system/user/config ansel-php74 bash -c "chmod 0666 config.php";
+
+                # Coilpack
+                docker exec -w /var/www/coilpack/public ansel-php74 bash -c "chmod -R 0777 uploads";
+                docker exec -w /var/www/coilpack ansel-php74 bash -c "chmod -R 0777 storage";
+                docker exec -w /var/www/coilpack/ee/system/user ansel-php74 bash -c "chmod -R 0777 cache";
+                docker exec -w /var/www/coilpack/ee/system/user/config ansel-php74 bash -c "chmod 0666 config.php";
             `,
             { stdio: 'inherit' },
         );
