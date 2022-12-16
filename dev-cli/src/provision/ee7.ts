@@ -16,6 +16,10 @@ export default class Ee7 extends Command {
             'cd /var/www/ee7 && composer install --no-interaction --no-ansi --no-progress',
         );
 
+        await Php74Container.runCommand(
+            'cd /var/www/ee7/system/user/addons/ansel && composer install --no-interaction --no-ansi --no-progress --no-dev',
+        );
+
         this.log(style.cyan('Done.'));
     }
 }

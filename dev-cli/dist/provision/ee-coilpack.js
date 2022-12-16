@@ -9,6 +9,7 @@ class EeCoilpack extends core_1.Command {
         this.log(style.yellow('Running provisioning for EE Coilpack...'));
         const Php80Container = new php80_1.default(this.argv, this.config);
         await Php80Container.runCommand('cd /var/www/eecoilpack && composer install --no-interaction --no-ansi --no-progress');
+        await Php80Container.runCommand('cd /var/www/eecoilpack/ee/system/user/addons/ansel && composer install --no-interaction --no-ansi --no-progress --no-dev');
         this.log(style.cyan('Done.'));
     }
 }

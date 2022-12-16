@@ -16,6 +16,10 @@ export default class EeCoilpack extends Command {
             'cd /var/www/eecoilpack && composer install --no-interaction --no-ansi --no-progress',
         );
 
+        await Php80Container.runCommand(
+            'cd /var/www/eecoilpack/ee/system/user/addons/ansel && composer install --no-interaction --no-ansi --no-progress --no-dev',
+        );
+
         this.log(style.cyan('Done.'));
     }
 }

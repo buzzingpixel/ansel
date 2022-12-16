@@ -25,7 +25,6 @@ services:
       - ./.profile:/root/.bashrc
       - ./environments:/var/www
       - ../:/var/www/ansel
-      - ./environments/dumper.php:/var/www/dumper.php
       ## EE 7 Mounts
       - ../cms/ExpressionEngine:/var/www/ee7/system/user/addons/ansel
       - ../assetsDist:/var/www/ee7/public/themes/user/ansel
@@ -33,7 +32,7 @@ services:
       - ../composer.lock:/var/www/ee7/system/user/addons/ansel/composer.lock
       - ../config:/var/www/ee7/system/user/addons/ansel/config
       - ../src:/var/www/ee7/system/user/addons/ansel/src
-      - ../vendor:/var/www/ee7/system/user/addons/ansel/vendor
+      - ee7-ansel-vendor:/var/www/ee7/system/user/addons/ansel/vendor
       ## Coilpack Mounts
       - ../cms/ExpressionEngine:/var/www/eecoilpack/ee/system/user/addons/ansel
       - ../assetsDist:/var/www/eecoilpack/ee/themes/user/ansel
@@ -41,7 +40,7 @@ services:
       - ../composer.lock:/var/www/eecoilpack/ee/system/user/addons/ansel/composer.lock
       - ../config:/var/www/eecoilpack/ee/system/user/addons/ansel/config
       - ../src:/var/www/eecoilpack/ee/system/user/addons/ansel/src
-      - ../vendor:/var/www/eecoilpack/ee/system/user/addons/ansel/vendor
+      - coilpack-ansel-vendor:/var/www/eecoilpack/ee/system/user/addons/ansel/vendor
     networks:
       web:
       default:
@@ -114,6 +113,8 @@ services:
 
 volumes:
   db-volume:
+  ee7-ansel-vendor:
+  coilpack-ansel-vendor:
 
 networks:
   web:

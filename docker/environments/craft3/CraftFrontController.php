@@ -24,11 +24,6 @@ const CRAFT_VENDOR_PATH = __DIR__ . '/vendor';
 /** @psalm-suppress UnresolvableInclude */
 require_once CRAFT_VENDOR_PATH . '/autoload.php';
 
-if (class_exists(VarDumper::class)) {
-    /** @psalm-suppress UnresolvableInclude */
-    require dirname(APP_ROOT) . '/dumper.php';
-}
-
 // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //     dd($_POST);
 // }
