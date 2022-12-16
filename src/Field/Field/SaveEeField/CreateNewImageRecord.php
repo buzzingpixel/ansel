@@ -46,9 +46,9 @@ class CreateNewImageRecord
 
         $imageRecord->content_type = $meta->contentType()->getValue();
 
-        $imageRecord->row_id = $meta->rowId();
+        $imageRecord->row_id = $meta->rowId() ?? 0;
 
-        $imageRecord->col_id = $meta->colId();
+        $imageRecord->col_id = $meta->colId() ?? 0;
 
         $imageRecord->file_id = (int) $savedFile->identifier();
 
