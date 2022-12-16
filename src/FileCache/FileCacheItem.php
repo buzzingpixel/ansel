@@ -98,8 +98,9 @@ class FileCacheItem implements CacheItemInterface
 
     /**
      * @inheritDoc
+     * @phpstan-ignore-next-line
      */
-    public function expiresAt($expiration)
+    public function expiresAt($expiration): self
     {
         $this->expiresAt = $expiration;
 
@@ -110,8 +111,10 @@ class FileCacheItem implements CacheItemInterface
      * @throws Exception
      *
      * @inheritDoc
+     *
+     * @phpstan-ignore-next-line
      */
-    public function expiresAfter($time)
+    public function expiresAfter($time): self
     {
         if ($time instanceof DateInterval) {
             $this->expiresAt((new DateTimeImmutable())->add($time));

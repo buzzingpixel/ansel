@@ -15,10 +15,13 @@ use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
 use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
+use BuzzingPixel\Ansel\RequestCache\RequestCachePool;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use ExpressionEngine\Service\Validation\Result;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Ramsey\Uuid\UuidFactoryInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -81,6 +84,10 @@ class Ansel_ft extends EE_Fieldtype
 
     private EE_Input $input;
 
+    private UuidFactoryInterface $uuidFactory;
+
+    private RequestCachePool $requestCache;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -117,6 +124,12 @@ class Ansel_ft extends EE_Fieldtype
 
         /** @phpstan-ignore-next-line */
         $this->input = $container->get(EE_Input::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->uuidFactory = $container->get(UuidFactoryInterface::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->requestCache = $container->get(RequestCachePool::class);
     }
 
     /**
@@ -131,14 +144,11 @@ class Ansel_ft extends EE_Fieldtype
 
             $fieldRequired = $fieldRequiredString === 'y';
 
-            /** @phpstan-ignore-next-line */
             $minQty = (int) (
-                /** @phpstan-ignore-next-line */
                 $rawEeFieldSettings['ansel']['fieldSettings']['minQty'] ?? ''
             );
 
             if ($fieldRequired && $minQty < 1) {
-                /** @phpstan-ignore-next-line */
                 $rawEeFieldSettings['ansel']['fieldSettings']['minQty'] = '1';
             }
         }
@@ -399,7 +409,9 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * @param mixed[] $data
      *
+     * @throws ContainerExceptionInterface
      * @throws LoaderError
+     * @throws NotFoundExceptionInterface
      * @throws RuntimeError
      * @throws SyntaxError
      *
@@ -455,18 +467,51 @@ class Ansel_ft extends EE_Fieldtype
             return '';
         }
 
+        $dataId = $this->uuidFactory->uuid4()->toString();
+
         // Save the json encoded data for use in the post_save method
-        return (string) json_encode($data);
+
+        if (! isset($data['images'])) {
+            return $dataId;
+        }
+
+        $data['images'] = array_map(
+            static function ($json) {
+                $imageData = json_decode($json, true);
+
+                if (! is_array($imageData)) {
+                    return '';
+                }
+
+                if (isset($imageData['imageUrl'])) {
+                    unset($imageData['imageUrl']);
+                }
+
+                return json_encode($imageData);
+            },
+            $data['images'],
+        );
+
+        $this->requestCache->save($this->requestCache->createItem(
+            $dataId,
+            $data
+        ));
+
+        return $dataId;
     }
 
     /**
      * @param string $data
      *
+     * @throws InvalidArgumentException
+     *
      * @phpstan-ignore-next-line
      */
     public function post_save($data): void
     {
-        $data = json_decode($data, true);
+        $cacheItem = $this->requestCache->getItem($data);
+
+        $data = $cacheItem->get();
 
         $data = is_array($data) ? $data : [];
 
