@@ -27,7 +27,6 @@ if (! class_exists(Craft::class)) {
 
 /**
  * @phpstan-ignore-next-line
- * @noinspection PhpMissingReturnTypeInspection
  */
 function get_instance()
 {
@@ -70,7 +69,12 @@ require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngin
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Library/Mixin/MixableImpl.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Library/Data/Entity.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Library/Data/SerializableEntity.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Content/Structure.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/Model.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Content/StructureModel.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/VariableColumnModel.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Content/ContentModel.php';
+require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/File/FileSystemEntity.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Addon/Module.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Service/Model/Query/Builder.php';
 require_once 'vendor/expressionengine/expressionengine/system/ee/ExpressionEngine/Model/Addon/Action.php';

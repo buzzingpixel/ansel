@@ -34,10 +34,11 @@ RUN apt-get update && \
     docker-php-ext-install mysqli && \
     pecl install imagick && \
     docker-php-ext-enable imagick && \
-    pecl install xdebug-3.1.4 && \
-    docker-php-ext-enable xdebug
+    pecl install xdebug-3.1.4
 
 COPY ./php-custom-config.ini /usr/local/etc/php/conf.d/php-custom-config.ini
 COPY ./fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
+
+# RUN docker-php-ext-enable xdebug

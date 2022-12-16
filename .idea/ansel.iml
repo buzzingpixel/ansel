@@ -144,6 +144,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-queue" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-swiftmailer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/docker/environments/craft3" />
+      <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee7" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
