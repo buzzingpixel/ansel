@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\EeContentType;
 use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
-use BuzzingPixel\Ansel\Field\Field\GetEeField\GetEeFieldAction;
+use BuzzingPixel\Ansel\Field\Field\GetEeField\FtDisplayField;
 use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
@@ -66,8 +66,6 @@ class Ansel_ft extends EE_Fieldtype
         'version' => ANSEL_VER,
     ];
 
-    private GetEeFieldAction $getFieldAction;
-
     private ValidateFieldAction $validateFieldAction;
 
     private SaveFieldAction $saveEeFieldAction;
@@ -84,6 +82,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private ValidateSettings $validateSettings;
 
+    private FtDisplayField $ftDisplayField;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -93,9 +93,6 @@ class Ansel_ft extends EE_Fieldtype
         parent::__construct();
 
         $container = (new ContainerManager())->container();
-
-        /** @phpstan-ignore-next-line */
-        $this->getFieldAction = $container->get(GetEeFieldAction::class);
 
         /** @phpstan-ignore-next-line */
         $this->validateFieldAction = $container->get(
@@ -126,6 +123,9 @@ class Ansel_ft extends EE_Fieldtype
 
         /** @phpstan-ignore-next-line */
         $this->validateSettings = $container->get(ValidateSettings::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->ftDisplayField = $container->get(FtDisplayField::class);
     }
 
     /**
@@ -247,11 +247,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function var_save_settings($data): array
     {
-        return $this->saveSettings->save(
-            $data,
-            /** @phpstan-ignore-next-line */
-            (string) $this->content_type()
-        );
+        return $this->save_settings($data);
     }
 
     /**
@@ -269,7 +265,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function grid_validate_settings(array $data): Result
     {
-        return $this->validateSettings->validate($data);
+        return $this->validate_settings($data);
     }
 
     /**
@@ -283,26 +279,15 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function display_field($value): string
     {
-        // TODO: License check
-
-        $fieldSettings = $this->fieldSettingsFromRaw->get(
-            $this->settings,
-            true
-        );
-
-        return $this->getFieldAction->render(
-            $fieldSettings,
-            new FieldMetaEe(
-                (int) $this->field_id,
-                (string) $this->field_name,
-                new EeContentType($this->content_type()),
-                // We don't have enough info to get this here (thanks EE) and we
-                // don't need it (thankfully)
-                0,
-                /** @phpstan-ignore-next-line */
-                (int) $this->content_id(),
-            ),
+        return $this->ftDisplayField->display(
             $value,
+            $this->settings,
+            $this->field_id,
+            $this->field_name,
+            /** @phpstan-ignore-next-line */
+            (string) $this->content_type(),
+            /** @phpstan-ignore-next-line */
+            (int) $this->content_id()
         );
     }
 
