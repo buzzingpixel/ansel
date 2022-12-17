@@ -15,7 +15,7 @@ use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetDisplaySettings;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\SaveSettings;
-use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\ValidateSettings;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use ExpressionEngine\Service\Validation\Result;
 use Psr\Cache\InvalidArgumentException;
@@ -66,8 +66,6 @@ class Ansel_ft extends EE_Fieldtype
         'version' => ANSEL_VER,
     ];
 
-    private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
-
     private GetEeFieldAction $getFieldAction;
 
     private ValidateFieldAction $validateFieldAction;
@@ -84,6 +82,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private SaveSettings $saveSettings;
 
+    private ValidateSettings $validateSettings;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -93,11 +93,6 @@ class Ansel_ft extends EE_Fieldtype
         parent::__construct();
 
         $container = (new ContainerManager())->container();
-
-        /** @phpstan-ignore-next-line */
-        $this->fieldSettingsValidator = $container->get(
-            FieldSettingsCollectionValidatorContract::class,
-        );
 
         /** @phpstan-ignore-next-line */
         $this->getFieldAction = $container->get(GetEeFieldAction::class);
@@ -128,6 +123,9 @@ class Ansel_ft extends EE_Fieldtype
 
         /** @phpstan-ignore-next-line */
         $this->saveSettings = $container->get(SaveSettings::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->validateSettings = $container->get(ValidateSettings::class);
     }
 
     /**
@@ -263,20 +261,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function validate_settings($data): Result
     {
-        $errors = $this->fieldSettingsValidator->validate(
-            $this->fieldSettingsFromRaw->get(
-                $data
-            ),
-        );
-
-        $result = new Result();
-
-        foreach ($errors as $errorKey => $error) {
-            /** @phpstan-ignore-next-line */
-            $result->addFailed($errorKey, $error);
-        }
-
-        return $result;
+        return $this->validateSettings->validate($data);
     }
 
     /**
@@ -284,7 +269,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function grid_validate_settings(array $data): Result
     {
-        return $this->validate_settings($data);
+        return $this->validateSettings->validate($data);
     }
 
     /**
