@@ -210,7 +210,6 @@ class FieldSettingsCollection
 
         $array['ratioAsNumber'] = $this->ratioAsNumber();
 
-        /** @phpstan-ignore-next-line */
         return $array;
     }
 

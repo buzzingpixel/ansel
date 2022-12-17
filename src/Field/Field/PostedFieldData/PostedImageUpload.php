@@ -20,9 +20,7 @@ class PostedImageUpload
         return new self(
             /** @phpstan-ignore-next-line */
             (string) ($arrayData['cacheDirectory'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['cacheFilePath'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['fileName'] ?? ''),
         );
     }

@@ -10,6 +10,7 @@ use function file_get_contents;
 use function file_put_contents;
 use function getimagesize;
 use function is_dir;
+use function is_resource;
 use function mkdir;
 use function rmdir;
 use function scandir;
@@ -58,6 +59,7 @@ class InternalFunctions
         ?array $options = null,
         ?array $params = null
     ) {
+        /** @phpstan-ignore-next-line */
         return stream_context_create($options, $params);
     }
 
@@ -165,10 +167,17 @@ class InternalFunctions
      */
     public function copy(string $from, string $to, $context = null): bool
     {
+        if (is_resource($context)) {
+            return copy(
+                $from,
+                $to,
+                $context,
+            );
+        }
+
         return copy(
             $from,
             $to,
-            $context
         );
     }
 }

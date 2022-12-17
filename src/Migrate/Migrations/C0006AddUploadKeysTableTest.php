@@ -152,23 +152,19 @@ class C0006AddUploadKeysTableTest extends TestCase
 
         self::assertSame(
             'Command',
-            /** @phpstan-ignore-next-line */
             $this->calls[1]['object'],
         );
 
         self::assertSame(
             'createTable',
-            /** @phpstan-ignore-next-line */
             $this->calls[1]['method'],
         );
 
         self::assertSame(
             '{{%ansel_upload_keys}}',
-            /** @phpstan-ignore-next-line */
             $this->calls[1]['table'],
         );
 
-        /** @phpstan-ignore-next-line */
         $columns = $this->calls[1]['columns'];
 
         assert(is_array($columns));

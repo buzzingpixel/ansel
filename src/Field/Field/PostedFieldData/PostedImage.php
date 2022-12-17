@@ -44,25 +44,15 @@ class PostedImage
         $imageUpload = $arrayData['imageUpload'] ?? null;
 
         return new self(
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['id'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['imageUrl'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['imageFileName'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['sourceImageId'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['x'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['y'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['width'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['height'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['focalX'] ?? ''),
-            /** @phpstan-ignore-next-line */
             (string) ($arrayData['focalY'] ?? ''),
             PostedFieldDataCollection::fromArray(
                 $fieldData

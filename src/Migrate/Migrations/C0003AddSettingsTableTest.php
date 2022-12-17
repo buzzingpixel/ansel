@@ -174,23 +174,19 @@ class C0003AddSettingsTableTest extends TestCase
 
         self::assertSame(
             'Command',
-            /** @phpstan-ignore-next-line */
             $this->calls[1]['object'],
         );
 
         self::assertSame(
             'createTable',
-            /** @phpstan-ignore-next-line */
             $this->calls[1]['method'],
         );
 
         self::assertSame(
             '{{%ansel_settings}}',
-            /** @phpstan-ignore-next-line */
             $this->calls[1]['table'],
         );
 
-        /** @phpstan-ignore-next-line */
         $columns = $this->calls[1]['columns'];
 
         assert(is_array($columns));
