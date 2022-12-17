@@ -15,12 +15,16 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class GetFieldSettings
+class RenderFieldSettings
 {
     private EeCssJs $eeCssJs;
+
     private TwigEnvironment $twig;
+
     private TranslatorContract $translator;
+
     private GetAllLocationSelections $getAllLocations;
+
     private SettingsRepositoryContract $settingsRepository;
 
     public function __construct(

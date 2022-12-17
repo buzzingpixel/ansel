@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Field\Field\Settings\ExpressionEngine;
+namespace BuzzingPixel\Ansel\Field\Settings\ExpressionEngine;
 
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 

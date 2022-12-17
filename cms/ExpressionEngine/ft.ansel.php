@@ -10,14 +10,15 @@ use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SavePayload;
-use BuzzingPixel\Ansel\Field\Field\Settings\ExpressionEngine\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
-use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\FieldSettingsFromRaw;
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetDisplaySettings;
+use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\SaveSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
-use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use ExpressionEngine\Service\Validation\Result;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Twig\Error\LoaderError;
@@ -55,9 +56,6 @@ class Ansel_ft extends EE_Fieldtype
     /** Set field type as tag pair */
     public bool $has_array_data = true;
 
-    /** @var mixed[]|null  */
-    private ?array $postedSettings = null;
-
     /**
      * Required info for EE fieldtype
      *
@@ -68,11 +66,7 @@ class Ansel_ft extends EE_Fieldtype
         'version' => ANSEL_VER,
     ];
 
-    private GetFieldSettings $getFieldSettings;
-
     private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
-
-    private PopulateFieldSettingsFromDefaults $populateFieldSettingsFromDefaults;
 
     private GetEeFieldAction $getFieldAction;
 
@@ -86,6 +80,10 @@ class Ansel_ft extends EE_Fieldtype
 
     private FieldSettingsFromRaw $fieldSettingsFromRaw;
 
+    private GetDisplaySettings $getDisplaySettings;
+
+    private SaveSettings $saveSettings;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -97,16 +95,8 @@ class Ansel_ft extends EE_Fieldtype
         $container = (new ContainerManager())->container();
 
         /** @phpstan-ignore-next-line */
-        $this->getFieldSettings = $container->get(GetFieldSettings::class);
-
-        /** @phpstan-ignore-next-line */
         $this->fieldSettingsValidator = $container->get(
             FieldSettingsCollectionValidatorContract::class,
-        );
-
-        /** @phpstan-ignore-next-line */
-        $this->populateFieldSettingsFromDefaults = $container->get(
-            PopulateFieldSettingsFromDefaults::class,
         );
 
         /** @phpstan-ignore-next-line */
@@ -132,6 +122,12 @@ class Ansel_ft extends EE_Fieldtype
         $this->fieldSettingsFromRaw = $container->get(
             FieldSettingsFromRaw::class,
         );
+
+        /** @phpstan-ignore-next-line */
+        $this->getDisplaySettings = $container->get(GetDisplaySettings::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->saveSettings = $container->get(SaveSettings::class);
     }
 
     /**
@@ -147,47 +143,12 @@ class Ansel_ft extends EE_Fieldtype
     /**
      * @param mixed $data
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    private function getDisplaySettings($data, string $fieldNameRoot): string
-    {
-        $fieldSettings = $this->fieldSettingsFromRaw->get(
-            /** @phpstan-ignore-next-line */
-            $this->postedSettings ?? $data,
-        );
-
-        /** @phpstan-ignore-next-line */
-        $anselData = $this->postedSettings['ansel']['fieldSettings'] ?? null;
-
-        if ($anselData === null) {
-            /** @phpstan-ignore-next-line */
-            $anselData = $data['ansel']['fieldSettings'] ?? null;
-        }
-
-        $isNew = $anselData === null;
-
-        if ($isNew) {
-            $this->populateFieldSettingsFromDefaults->populate(
-                $fieldSettings,
-            );
-        }
-
-        return $this->getFieldSettings->render(
-            $fieldNameRoot,
-            $fieldSettings,
-        )->content();
-    }
-
-    /**
-     * @param mixed $data
-     *
      * @return mixed[]
      *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws InvalidArgumentException
      *
      * @phpstan-ignore-next-line
      */
@@ -198,7 +159,7 @@ class Ansel_ft extends EE_Fieldtype
                 'label' => 'field_options',
                 'group' => 'ansel',
                 'settings' => [
-                    $this->getDisplaySettings(
+                    $this->getDisplaySettings->get(
                         $data,
                         'ansel[fieldSettings]',
                     ),
@@ -215,12 +176,15 @@ class Ansel_ft extends EE_Fieldtype
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws InvalidArgumentException
+     *
+     * @phpstan-ignore-next-line
      */
     public function grid_display_settings($data): array
     {
         return [
             'field_options' => [
-                $this->getDisplaySettings(
+                $this->getDisplaySettings->get(
                     $data,
                     'ansel[fieldSettings]',
                 ),
@@ -236,6 +200,9 @@ class Ansel_ft extends EE_Fieldtype
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws InvalidArgumentException
+     *
+     * @phpstan-ignore-next-line
      */
     public function var_display_settings($data): array
     {
@@ -244,7 +211,7 @@ class Ansel_ft extends EE_Fieldtype
                 'label' => 'field_options',
                 'group' => 'ansel',
                 'settings' => [
-                    $this->getDisplaySettings(
+                    $this->getDisplaySettings->get(
                         $data,
                         'variable_settings[ansel][fieldSettings]',
                     ),
@@ -264,34 +231,11 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function save_settings($data): array
     {
-        // Blocks and low variables ignores the validation result so we have to
-        // throw an exception if there are errors
-        if (
-            $this->content_type() === 'blocks' ||
-            $this->content_type() === 'low_variables'
-        ) {
-            $errors = $this->fieldSettingsValidator->validate(
-                $this->fieldSettingsFromRaw->get(
-                    $data
-                ),
-            );
-
-            if (count($errors) > 0) {
-                $msg = 'Some settings did not validate<br><br><ul>';
-                foreach ($errors as $key => $val) {
-                    $msg .= '<li>' . $key . ': ' . $val . '</li>';
-                }
-
-                $msg .= '</ul>';
-                show_error($msg);
-            }
-        }
-
-        $this->postedSettings = $data;
-
-        $anselData = $data['ansel'] ?? [];
-
-        return ['ansel' => $anselData];
+        return $this->saveSettings->save(
+            $data,
+            /** @phpstan-ignore-next-line */
+            (string) $this->content_type()
+        );
     }
 
     /**
@@ -305,7 +249,11 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function var_save_settings($data): array
     {
-        return $this->save_settings(['ansel' => $data]);
+        return $this->saveSettings->save(
+            $data,
+            /** @phpstan-ignore-next-line */
+            (string) $this->content_type()
+        );
     }
 
     /**
