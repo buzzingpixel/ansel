@@ -65,8 +65,7 @@ class GetCacheItem
         if (
             ! is_array($meta) ||
             ! isset($meta['time']) ||
-            ! is_int($meta['time']) ||
-            ! isset($meta['expires'])
+            ! is_int($meta['time'])
         ) {
             return $this->returnEmpty($key);
         }

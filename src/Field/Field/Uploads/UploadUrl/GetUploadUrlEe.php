@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\Uploads\UploadUrl;
 
-use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
+use BuzzingPixel\Ansel\Shared\SiteMeta;
 use Cp;
 
 use function http_build_query;

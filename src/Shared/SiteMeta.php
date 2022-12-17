@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\Shared\EE;
+namespace BuzzingPixel\Ansel\Shared;
 
 class SiteMeta
 {

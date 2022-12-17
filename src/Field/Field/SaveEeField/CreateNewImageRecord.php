@@ -7,7 +7,7 @@ namespace BuzzingPixel\Ansel\Field\Field\SaveEeField;
 use BuzzingPixel\Ansel\EeSourceHandling\File;
 use BuzzingPixel\Ansel\Field\Field\Persistence\AnselImageEeRecord;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedImage;
-use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
+use BuzzingPixel\Ansel\Shared\SiteMeta;
 use BuzzingPixel\Ansel\Shared\SystemClock;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps

@@ -6,6 +6,7 @@ declare(strict_types=1);
 use BuzzingPixel\Ansel\Field\Field\EeContentType;
 use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
 use BuzzingPixel\Ansel\Field\Field\GetEeField\GetEeFieldAction;
+use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SavePayload;
@@ -15,13 +16,10 @@ use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
 use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
-use BuzzingPixel\Ansel\RequestCache\RequestCachePool;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use ExpressionEngine\Service\Validation\Result;
-use Psr\Cache\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Ramsey\Uuid\UuidFactoryInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -84,9 +82,7 @@ class Ansel_ft extends EE_Fieldtype
 
     private EE_Input $input;
 
-    private UuidFactoryInterface $uuidFactory;
-
-    private RequestCachePool $requestCache;
+    private PostDataImageUrlHandler $postDataImageUrlHandler;
 
     /**
      * @throws ContainerExceptionInterface
@@ -126,10 +122,9 @@ class Ansel_ft extends EE_Fieldtype
         $this->input = $container->get(EE_Input::class);
 
         /** @phpstan-ignore-next-line */
-        $this->uuidFactory = $container->get(UuidFactoryInterface::class);
-
-        /** @phpstan-ignore-next-line */
-        $this->requestCache = $container->get(RequestCachePool::class);
+        $this->postDataImageUrlHandler = $container->get(
+            PostDataImageUrlHandler::class,
+        );
     }
 
     /**
@@ -467,51 +462,19 @@ class Ansel_ft extends EE_Fieldtype
             return '';
         }
 
-        $dataId = $this->uuidFactory->uuid4()->toString();
-
-        // Save the json encoded data for use in the post_save method
-
-        if (! isset($data['images'])) {
-            return $dataId;
-        }
-
-        $data['images'] = array_map(
-            static function ($json) {
-                $imageData = json_decode($json, true);
-
-                if (! is_array($imageData)) {
-                    return '';
-                }
-
-                if (isset($imageData['imageUrl'])) {
-                    unset($imageData['imageUrl']);
-                }
-
-                return json_encode($imageData);
-            },
-            $data['images'],
+        return (string) json_encode(
+            $this->postDataImageUrlHandler->scrub($data)
         );
-
-        $this->requestCache->save($this->requestCache->createItem(
-            $dataId,
-            $data
-        ));
-
-        return $dataId;
     }
 
     /**
      * @param string $data
      *
-     * @throws InvalidArgumentException
-     *
      * @phpstan-ignore-next-line
      */
     public function post_save($data): void
     {
-        $cacheItem = $this->requestCache->getItem($data);
-
-        $data = $cacheItem->get();
+        $data = json_decode($data, true);
 
         $data = is_array($data) ? $data : [];
 

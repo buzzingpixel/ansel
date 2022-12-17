@@ -9,7 +9,6 @@
       <sourceFolder url="file://$MODULE_DIR$/devResources/treasury-ee/treasury" isTestSource="true" packagePrefix="BuzzingPixel\Treasury\" />
       <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee6/system/user/addons/treasury/Vendor" />
       <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee6" />
-      <excludeFolder url="file://$MODULE_DIR$/docker/environments/eecoilpack" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php72" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
@@ -146,6 +145,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/docker/environments/craft3" />
       <excludeFolder url="file://$MODULE_DIR$/docker/environments/ee7" />
+      <excludeFolder url="file://$MODULE_DIR$/docker/environments/eecoilpack" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

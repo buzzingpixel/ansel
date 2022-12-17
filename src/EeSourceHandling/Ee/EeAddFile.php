@@ -6,9 +6,9 @@ namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
 
 use BuzzingPixel\Ansel\EeSourceHandling\FileInstance;
 use BuzzingPixel\Ansel\Shared\ClockContract;
-use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
 use BuzzingPixel\Ansel\Shared\MimeTypeDetector;
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
+use BuzzingPixel\Ansel\Shared\SiteMeta;
 use CI_DB_result;
 use Exception;
 use ExpressionEngine\Model\File\File as FileRecord;

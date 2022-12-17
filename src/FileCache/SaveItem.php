@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\FileCache;
 
-use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use BuzzingPixel\Ansel\Shared\Php\Server;
+use BuzzingPixel\Ansel\Shared\SiteMeta;
 use BuzzingPixel\AnselConfig\Paths;
 use Exception;
 use SplFileInfo;
@@ -62,7 +62,7 @@ class SaveItem
 
         $fullPath = $idPath . '/' . $fileName;
 
-        $this->functions->mkdir($idPath);
+        $this->functions->mkdirIfNotExists($idPath);
 
         $expiresAt = $item->getExpiresAt();
 

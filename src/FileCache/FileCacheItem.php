@@ -77,6 +77,11 @@ class FileCacheItem implements CacheItemInterface
         return $this->file;
     }
 
+    public function getCachedContent(): string
+    {
+        return (string) $this->get()->openFile();
+    }
+
     public function isHit(): bool
     {
         return $this->file->isFile();
@@ -118,6 +123,8 @@ class FileCacheItem implements CacheItemInterface
     {
         if ($time instanceof DateInterval) {
             $this->expiresAt((new DateTimeImmutable())->add($time));
+
+            return $this;
         }
 
         if (is_int($time)) {
@@ -126,6 +133,8 @@ class FileCacheItem implements CacheItemInterface
                     '+ ' . ((string) $time) . ' seconds',
                 )),
             );
+
+            return $this;
         }
 
         $this->expiresAt(null);

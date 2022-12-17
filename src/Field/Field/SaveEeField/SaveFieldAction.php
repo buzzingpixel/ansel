@@ -16,7 +16,7 @@ use BuzzingPixel\Ansel\FileCache\EphemeralFileCachePool;
 use BuzzingPixel\Ansel\ImageManipulation\Manipulator;
 use BuzzingPixel\Ansel\ImageManipulation\OutputType;
 use BuzzingPixel\Ansel\ImageManipulation\Parameters;
-use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
+use BuzzingPixel\Ansel\Shared\SiteMeta;
 use EE_Session;
 use Exception;
 use Psr\Container\ContainerExceptionInterface;

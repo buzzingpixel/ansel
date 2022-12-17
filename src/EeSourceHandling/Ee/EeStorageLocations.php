@@ -6,7 +6,7 @@ namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
 
 use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItem;
 use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItemCollection;
-use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
+use BuzzingPixel\Ansel\Shared\SiteMeta;
 use ExpressionEngine\Model\File\UploadDestination;
 use ExpressionEngine\Service\Model\Collection;
 use ExpressionEngine\Service\Model\Facade as RecordService;

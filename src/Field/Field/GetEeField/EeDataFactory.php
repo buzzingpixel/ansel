@@ -22,7 +22,7 @@ use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedFieldData;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedFieldDataCollection;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedImage;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedImageCollection;
-use BuzzingPixel\Ansel\Shared\EE\SiteMeta;
+use BuzzingPixel\Ansel\Shared\SiteMeta;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\AnselCms\Craft;
 
 use BuzzingPixel\Ansel\Field\Field\GetCraftFieldAction;
+use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
@@ -29,6 +30,8 @@ use function assert;
 use function count;
 use function dd;
 use function is_array;
+use function is_string;
+use function json_decode;
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 
@@ -77,6 +80,8 @@ class AnselCraftField extends Field
 
     private ValidateFieldAction $validateFieldAction;
 
+    private PostDataImageUrlHandler $postDataImageUrlHandler;
+
     /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
@@ -85,25 +90,24 @@ class AnselCraftField extends Field
     {
         $container = (new ContainerManager())->container();
 
-        /** @phpstan-ignore-next-line */
         $this->getFieldSettings = $container->get(GetFieldSettings::class);
 
-        /** @phpstan-ignore-next-line */
         $this->fieldSettingsValidator = $container->get(
             FieldSettingsCollectionValidatorContract::class,
         );
 
-        /** @phpstan-ignore-next-line */
         $this->populateFieldSettingsFromDefaults = $container->get(
             PopulateFieldSettingsFromDefaults::class,
         );
 
-        /** @phpstan-ignore-next-line */
         $this->getFieldAction = $container->get(GetCraftFieldAction::class);
 
-        /** @phpstan-ignore-next-line */
         $this->validateFieldAction = $container->get(
             ValidateFieldAction::class
+        );
+
+        $this->postDataImageUrlHandler = $container->get(
+            PostDataImageUrlHandler::class,
         );
     }
 
@@ -191,7 +195,10 @@ class AnselCraftField extends Field
         ?ElementInterface $element = null
     ): string {
         // $value should either be an array of post-back data, or an empty array
-        $value = is_array($value) ? $value : [];
+        // And we should restore the image URL if a cache for it exists
+        $value = $this->postDataImageUrlHandler->restoreFromCache(
+            is_array($value) ? $value : []
+        );
 
         return $this->getFieldAction->render(
             $this->getFieldSettingsCollection(true),
@@ -203,35 +210,10 @@ class AnselCraftField extends Field
     /**
      * @return mixed
      */
-    // public function normalizeValue($value, ?ElementInterface $element = null)
-    // {
-    //     // If there is no value, we can return null
-    //     /** @phpstan-ignore-next-line */
-    //     if (empty($value)) {
-    //         return null;
-    //     }
-    //
-    //     return $value;
-    //
-    //     // If the value is an array, this is post data and we can return as is
-    //     if (is_array($value)) {
-    //         return $value;
-    //     }
-    //
-    //     // TODO: Normalize value
-    //     // dd('normalizeValue', $value);
-    //
-    //     return $value;
-    // }
-
-    // public function isValueEmpty($value, ElementInterface $element): bool
-    // {
-    //     if (empty($_POST)) {
-    //         return true;
-    //     }
-    //
-    //     dd('isValueEmpty', $value);
-    // }
+    public function normalizeValue($value, ?ElementInterface $element = null)
+    {
+        return $this->postDataImageUrlHandler->scrub($value);
+    }
 
     /**
      * @inheritdoc
@@ -254,8 +236,17 @@ class AnselCraftField extends Field
     {
         $data = $element->getFieldValue((string) $this->handle);
 
+        if (is_string($data)) {
+            $data = json_decode($data, true);
+        }
+
         if (! is_array($data)) {
-            dd('not array', $data);
+            $element->addError(
+                $this->handle,
+                ['An unknown error occurred'],
+            );
+
+            return;
         }
 
         $fieldSettings = $this->getFieldSettingsCollection(true);
@@ -273,7 +264,18 @@ class AnselCraftField extends Field
         ));
     }
 
-    // public function afterElementSave()
+    public function afterElementSave(
+        ElementInterface $element,
+        bool $isNew
+    ): void {
+        $data = $element->getFieldValue($this->handle);
+
+        if (is_string($data)) {
+            $data = json_decode($data, true);
+        }
+
+        dd($data);
+    }
 
     // public function beforeElementDelete()
 }
