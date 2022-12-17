@@ -10,10 +10,10 @@ use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SavePayload;
+use BuzzingPixel\Ansel\Field\Field\Settings\ExpressionEngine\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetFieldSettings;
-use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
 use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\AnselConfig\ContainerManager;
@@ -84,6 +84,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private PostDataImageUrlHandler $postDataImageUrlHandler;
 
+    private FieldSettingsFromRaw $fieldSettingsFromRaw;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -125,38 +127,10 @@ class Ansel_ft extends EE_Fieldtype
         $this->postDataImageUrlHandler = $container->get(
             PostDataImageUrlHandler::class,
         );
-    }
-
-    /**
-     * @param mixed[] $rawEeFieldSettings
-     */
-    private static function getFieldSettingsCollection(
-        array $rawEeFieldSettings,
-        bool $useRequired = false
-    ): FieldSettingsCollection {
-        if ($useRequired) {
-            $fieldRequiredString = $rawEeFieldSettings['field_required'] ?? 'n';
-
-            $fieldRequired = $fieldRequiredString === 'y';
-
-            $minQty = (int) (
-                $rawEeFieldSettings['ansel']['fieldSettings']['minQty'] ?? ''
-            );
-
-            if ($fieldRequired && $minQty < 1) {
-                $rawEeFieldSettings['ansel']['fieldSettings']['minQty'] = '1';
-            }
-        }
 
         /** @phpstan-ignore-next-line */
-        $fieldSettingsArray = $rawEeFieldSettings['ansel']['fieldSettings'] ?? [];
-
-        /** @phpstan-ignore-next-line */
-        unset($fieldSettingsArray['placeholder']);
-
-        return FieldSettingsCollection::fromFieldArray(
-            /** @phpstan-ignore-next-line */
-            $fieldSettingsArray,
+        $this->fieldSettingsFromRaw = $container->get(
+            FieldSettingsFromRaw::class,
         );
     }
 
@@ -179,7 +153,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     private function getDisplaySettings($data, string $fieldNameRoot): string
     {
-        $fieldSettings = self::getFieldSettingsCollection(
+        $fieldSettings = $this->fieldSettingsFromRaw->get(
             /** @phpstan-ignore-next-line */
             $this->postedSettings ?? $data,
         );
@@ -297,7 +271,7 @@ class Ansel_ft extends EE_Fieldtype
             $this->content_type() === 'low_variables'
         ) {
             $errors = $this->fieldSettingsValidator->validate(
-                self::getFieldSettingsCollection(
+                $this->fieldSettingsFromRaw->get(
                     $data
                 ),
             );
@@ -342,7 +316,7 @@ class Ansel_ft extends EE_Fieldtype
     public function validate_settings($data): Result
     {
         $errors = $this->fieldSettingsValidator->validate(
-            self::getFieldSettingsCollection(
+            $this->fieldSettingsFromRaw->get(
                 $data
             ),
         );
@@ -378,7 +352,7 @@ class Ansel_ft extends EE_Fieldtype
     {
         // TODO: License check
 
-        $fieldSettings = self::getFieldSettingsCollection(
+        $fieldSettings = $this->fieldSettingsFromRaw->get(
             $this->settings,
             true
         );
@@ -429,7 +403,7 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function validate($data)
     {
-        $fieldSettings = self::getFieldSettingsCollection(
+        $fieldSettings = $this->fieldSettingsFromRaw->get(
             $this->settings,
             true
         );
@@ -478,7 +452,7 @@ class Ansel_ft extends EE_Fieldtype
 
         $data = is_array($data) ? $data : [];
 
-        $fieldSettings = self::getFieldSettingsCollection(
+        $fieldSettings = $this->fieldSettingsFromRaw->get(
             $this->settings,
             true
         );
