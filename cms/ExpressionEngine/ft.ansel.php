@@ -10,8 +10,7 @@ use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\SavePayload;
-use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
-use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
+use BuzzingPixel\Ansel\Field\Field\Validate\EeFtValidateField;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetDisplaySettings;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\SaveSettings;
@@ -66,8 +65,6 @@ class Ansel_ft extends EE_Fieldtype
         'version' => ANSEL_VER,
     ];
 
-    private ValidateFieldAction $validateFieldAction;
-
     private SaveFieldAction $saveEeFieldAction;
 
     private EE_Input $input;
@@ -84,6 +81,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private FtDisplayField $ftDisplayField;
 
+    private EeFtValidateField $ftValidateField;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -93,11 +92,6 @@ class Ansel_ft extends EE_Fieldtype
         parent::__construct();
 
         $container = (new ContainerManager())->container();
-
-        /** @phpstan-ignore-next-line */
-        $this->validateFieldAction = $container->get(
-            ValidateFieldAction::class
-        );
 
         /** @phpstan-ignore-next-line */
         $this->saveEeFieldAction = $container->get(SaveFieldAction::class);
@@ -126,6 +120,9 @@ class Ansel_ft extends EE_Fieldtype
 
         /** @phpstan-ignore-next-line */
         $this->ftDisplayField = $container->get(FtDisplayField::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->ftValidateField = $container->get(EeFtValidateField::class);
     }
 
     /**
@@ -321,27 +318,9 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function validate($data)
     {
-        $fieldSettings = $this->fieldSettingsFromRaw->get(
+        return $this->ftValidateField->validate(
+            $data,
             $this->settings,
-            true
-        );
-
-        $data = is_array($data) ? $data : [];
-
-        $validatedFieldResult = $this->validateFieldAction->validate(
-            $fieldSettings,
-            PostedData::fromArray($data)
-        );
-
-        if ($validatedFieldResult->hasNoErrors()) {
-            return true;
-        }
-
-        return implode(
-            '<br>',
-            $validatedFieldResult->map(static fn (
-                ValidatedFieldError $error
-            ) => $error->errorMsg())
         );
     }
 
