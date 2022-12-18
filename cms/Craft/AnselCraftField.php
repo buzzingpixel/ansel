@@ -47,29 +47,6 @@ class AnselCraftField extends Field
      */
     public array $fieldSettings = [];
 
-    private static ?Meta $meta = null;
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private static function getMeta(): Meta
-    {
-        if (self::$meta !== null) {
-            return self::$meta;
-        }
-
-        $container = (new ContainerManager())->container();
-
-        $meta = $container->get(Meta::class);
-
-        assert($meta instanceof Meta);
-
-        self::$meta = $meta;
-
-        return $meta;
-    }
-
     private GetFieldSettings $getFieldSettings;
 
     private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
@@ -117,7 +94,11 @@ class AnselCraftField extends Field
      */
     public static function displayName(): string
     {
-        return self::getMeta()->name();
+        $container = (new ContainerManager())->container();
+        $meta      = $container->get(Meta::class);
+        assert($meta instanceof Meta);
+
+        return $meta->name();
     }
 
     public function getContentColumnType(): string
