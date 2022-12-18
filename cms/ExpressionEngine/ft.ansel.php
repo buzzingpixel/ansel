@@ -8,7 +8,6 @@ use BuzzingPixel\Ansel\Field\Field\GetEeField\FtDisplayField;
 use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\SaveEeField\FtPostSave;
 use BuzzingPixel\Ansel\Field\Field\Validate\EeFtValidateField;
-use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetDisplaySettings;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\SaveSettings;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\ValidateSettings;
@@ -94,11 +93,6 @@ class Ansel_ft extends EE_Fieldtype
         /** @phpstan-ignore-next-line */
         $this->postDataImageUrlHandler = $container->get(
             PostDataImageUrlHandler::class,
-        );
-
-        /** @phpstan-ignore-next-line */
-        $this->fieldSettingsFromRaw = $container->get(
-            FieldSettingsFromRaw::class,
         );
 
         /** @phpstan-ignore-next-line */

@@ -9,8 +9,8 @@ use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
+use BuzzingPixel\Ansel\Field\Settings\Craft\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
-use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
 use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
@@ -47,6 +47,8 @@ class AnselCraftField extends Field
      */
     public array $fieldSettings = [];
 
+    private FieldSettingsFromRaw $fieldSettingsFromRaw;
+
     private GetFieldSettings $getFieldSettings;
 
     private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
@@ -66,6 +68,10 @@ class AnselCraftField extends Field
     public function init(): void
     {
         $container = (new ContainerManager())->container();
+
+        $this->fieldSettingsFromRaw = $container->get(
+            FieldSettingsFromRaw::class
+        );
 
         $this->getFieldSettings = $container->get(GetFieldSettings::class);
 
@@ -106,26 +112,6 @@ class AnselCraftField extends Field
         return Schema::TYPE_TEXT;
     }
 
-    private function getFieldSettingsCollection(
-        bool $useRequired = false
-    ): FieldSettingsCollection {
-        unset($this->fieldSettings['placeholder']);
-
-        $fieldSettings = $this->fieldSettings;
-
-        if ($useRequired && $this->required === '1') {
-            $minQty = (int) $fieldSettings['minQty'] ?? '';
-
-            if ($minQty < 1) {
-                $fieldSettings['minQty'] = '1';
-            }
-        }
-
-        return FieldSettingsCollection::fromFieldArray(
-            $fieldSettings,
-        );
-    }
-
     /**
      * @throws RuntimeError
      * @throws SyntaxError
@@ -134,7 +120,9 @@ class AnselCraftField extends Field
      */
     public function getSettingsHtml(): string
     {
-        $fieldSettings = $this->getFieldSettingsCollection();
+        $fieldSettings = $this->fieldSettingsFromRaw->get(
+            $this->fieldSettings,
+        );
 
         if ($this->getIsNew()) {
             $this->populateFieldSettingsFromDefaults->populate(
@@ -153,7 +141,9 @@ class AnselCraftField extends Field
     public function validate($attributeNames = null, $clearErrors = true): bool
     {
         $errors = $this->fieldSettingsValidator->validate(
-            $this->getFieldSettingsCollection(),
+            $this->fieldSettingsFromRaw->get(
+                $this->fieldSettings,
+            ),
         );
 
         if (count($errors) < 1) {
@@ -182,7 +172,10 @@ class AnselCraftField extends Field
         );
 
         return $this->getFieldAction->render(
-            $this->getFieldSettingsCollection(true),
+            $this->fieldSettingsFromRaw->get(
+                $this->fieldSettings,
+                $this->required,
+            ),
             (string) $this->handle,
             PostedData::fromArray($value),
         );
@@ -230,7 +223,10 @@ class AnselCraftField extends Field
             return;
         }
 
-        $fieldSettings = $this->getFieldSettingsCollection(true);
+        $fieldSettings = $this->fieldSettingsFromRaw->get(
+            $this->fieldSettings,
+            $this->required,
+        );
 
         $validatedFieldResult = $this->validateFieldAction->validate(
             $fieldSettings,
