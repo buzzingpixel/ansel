@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\GetEeField;
 
-use BuzzingPixel\Ansel\EeSourceHandling\SourceAdapterFactory;
 use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
 use BuzzingPixel\Ansel\Field\Field\GetFieldRenderContext;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\Shared\EE\EeCssJs;
 use BuzzingPixel\Ansel\Shared\Environment;
+use BuzzingPixel\Ansel\SourceHandling\Ee\EeSourceAdapterFactory;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Twig\Environment as TwigEnvironment;
@@ -29,7 +29,7 @@ class GetEeFieldAction
 
     private GetFieldRenderContext $getFieldRenderContext;
 
-    private SourceAdapterFactory $sourceAdapterFactory;
+    private EeSourceAdapterFactory $sourceAdapterFactory;
 
     private EeDataFactory $eeDataFactory;
 
@@ -38,7 +38,7 @@ class GetEeFieldAction
         TwigEnvironment $twig,
         Environment $environment,
         GetFieldRenderContext $getFieldRenderContext,
-        SourceAdapterFactory $sourceAdapterFactory,
+        EeSourceAdapterFactory $sourceAdapterFactory,
         EeDataFactory $eeDataFactory
     ) {
         $this->eeCssJs               = $eeCssJs;

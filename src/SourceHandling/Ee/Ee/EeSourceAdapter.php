@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Ee;
 
-use BuzzingPixel\Ansel\EeSourceHandling\AnselSourceAdapter;
-use BuzzingPixel\Ansel\EeSourceHandling\File;
-use BuzzingPixel\Ansel\EeSourceHandling\FileCollection;
-use BuzzingPixel\Ansel\EeSourceHandling\FileInstanceCollection;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
+use BuzzingPixel\Ansel\SourceHandling\AnselSourceAdapter;
+use BuzzingPixel\Ansel\SourceHandling\File;
+use BuzzingPixel\Ansel\SourceHandling\FileCollection;
+use BuzzingPixel\Ansel\SourceHandling\FileInstanceCollection;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationCollection;
 use Exception;
 use SplFileInfo;
 

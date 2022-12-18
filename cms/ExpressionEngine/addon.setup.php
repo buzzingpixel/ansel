@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use BuzzingPixel\Ansel\EeSourceHandling\Assets\AssetsSourceAdapter;
-use BuzzingPixel\Ansel\EeSourceHandling\Ee\EeSourceAdapter;
-use BuzzingPixel\Ansel\EeSourceHandling\Treasury\TreasurySourceAdapter;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
+use BuzzingPixel\Ansel\SourceHandling\Ee\Assets\AssetsSourceAdapter;
+use BuzzingPixel\Ansel\SourceHandling\Ee\Ee\EeSourceAdapter;
+use BuzzingPixel\Ansel\SourceHandling\Ee\Treasury\TreasurySourceAdapter;
 use BuzzingPixel\AnselConfig\ContainerManager;
 
 const ANSEL_ENV = 'ee';

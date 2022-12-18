@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\GetEeField;
 
-use BuzzingPixel\Ansel\EeSourceHandling\File;
-use BuzzingPixel\Ansel\EeSourceHandling\FileInstanceCollection;
-use BuzzingPixel\Ansel\EeSourceHandling\SourceAdapterFactory;
 use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
 use BuzzingPixel\Ansel\Field\Field\Persistence\AnselFieldEeRecord;
 use BuzzingPixel\Ansel\Field\Field\Persistence\AnselImageEeRecord;
@@ -23,6 +20,9 @@ use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedFieldDataCollection;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedImage;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedImageCollection;
 use BuzzingPixel\Ansel\Shared\SiteMeta;
+use BuzzingPixel\Ansel\SourceHandling\Ee\EeSourceAdapterFactory;
+use BuzzingPixel\Ansel\SourceHandling\File;
+use BuzzingPixel\Ansel\SourceHandling\FileInstanceCollection;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -36,12 +36,12 @@ class EeDataFactory
 
     private SiteMeta $siteMeta;
 
-    private SourceAdapterFactory $sourceAdapterFactory;
+    private EeSourceAdapterFactory $sourceAdapterFactory;
 
     public function __construct(
         RecordService $recordService,
         SiteMeta $siteMeta,
-        SourceAdapterFactory $sourceAdapterFactory
+        EeSourceAdapterFactory $sourceAdapterFactory
     ) {
         $this->recordService        = $recordService;
         $this->siteMeta             = $siteMeta;

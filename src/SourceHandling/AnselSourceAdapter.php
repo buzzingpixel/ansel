@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling;
+namespace BuzzingPixel\Ansel\SourceHandling;
 
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use SplFileInfo;

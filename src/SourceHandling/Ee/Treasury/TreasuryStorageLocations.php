@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Treasury;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Treasury;
 
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItem;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItemCollection;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationCollection;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationItem;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationItemCollection;
 use BuzzingPixel\Treasury\API\Locations as LocationsApi;
 use BuzzingPixel\Treasury\Model\Locations as LocationsModel;
 use BuzzingPixel\Treasury\Service\Data\Collection;

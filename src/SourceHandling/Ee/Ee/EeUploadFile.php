@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Ee;
 
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use Exception;

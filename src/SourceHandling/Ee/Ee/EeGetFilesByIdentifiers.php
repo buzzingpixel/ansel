@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Ee;
 
-use BuzzingPixel\Ansel\EeSourceHandling\FileInstance;
-use BuzzingPixel\Ansel\EeSourceHandling\FileInstanceCollection;
+use BuzzingPixel\Ansel\SourceHandling\FileInstance;
+use BuzzingPixel\Ansel\SourceHandling\FileInstanceCollection;
 use ExpressionEngine\Model\File\File;
 use ExpressionEngine\Service\Model\Facade as RecordService;
 

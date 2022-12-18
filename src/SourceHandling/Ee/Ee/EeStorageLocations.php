@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Ee;
 
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItem;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItemCollection;
 use BuzzingPixel\Ansel\Shared\SiteMeta;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationItem;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationItemCollection;
 use ExpressionEngine\Model\File\UploadDestination;
 use ExpressionEngine\Service\Model\Collection;
 use ExpressionEngine\Service\Model\Facade as RecordService;

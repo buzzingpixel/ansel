@@ -14,16 +14,16 @@ class SavePayload
 
     private FieldSettingsCollection $fieldSettings;
 
-    private FieldMetaEe $fieldMetaEe;
+    private FieldMetaEe $fieldMeta;
 
     public function __construct(
         PostedData $data,
         FieldSettingsCollection $fieldSettings,
-        FieldMetaEe $fieldMetaEe
+        FieldMetaEe $fieldMeta
     ) {
         $this->data          = $data;
         $this->fieldSettings = $fieldSettings;
-        $this->fieldMetaEe   = $fieldMetaEe;
+        $this->fieldMeta     = $fieldMeta;
     }
 
     public function data(): PostedData
@@ -36,8 +36,8 @@ class SavePayload
         return $this->fieldSettings;
     }
 
-    public function fieldMetaEe(): FieldMetaEe
+    public function fieldMeta(): FieldMetaEe
     {
-        return $this->fieldMetaEe;
+        return $this->fieldMeta;
     }
 }

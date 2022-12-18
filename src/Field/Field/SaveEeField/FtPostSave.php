@@ -51,15 +51,13 @@ class FtPostSave
 
         $data = is_array($data) ? $data : [];
 
-        $fieldSettings = $this->fieldSettingsFromRaw->get(
-            $rawEeFieldSettings,
-            true
-        );
-
         $this->saveFieldAction->save(
             new SavePayload(
                 PostedData::fromArray($data),
-                $fieldSettings,
+                $this->fieldSettingsFromRaw->get(
+                    $rawEeFieldSettings,
+                    true
+                ),
                 new FieldMetaEe(
                     (int) $fieldId,
                     (string) $fieldName,

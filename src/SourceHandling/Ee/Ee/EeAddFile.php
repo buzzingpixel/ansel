@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Ee;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Ee;
 
-use BuzzingPixel\Ansel\EeSourceHandling\FileInstance;
 use BuzzingPixel\Ansel\Shared\ClockContract;
 use BuzzingPixel\Ansel\Shared\MimeTypeDetector;
 use BuzzingPixel\Ansel\Shared\Php\InternalFunctions;
 use BuzzingPixel\Ansel\Shared\SiteMeta;
+use BuzzingPixel\Ansel\SourceHandling\FileInstance;
 use CI_DB_result;
 use Exception;
 use ExpressionEngine\Model\File\File as FileRecord;

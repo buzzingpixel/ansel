@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Assets;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Assets;
 
 use Assets_lib;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItem;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationItemCollection;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationCollection;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationItem;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationItemCollection;
 
 use function count;
 

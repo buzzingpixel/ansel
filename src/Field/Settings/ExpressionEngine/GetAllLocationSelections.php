@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Settings\ExpressionEngine;
 
-use BuzzingPixel\Ansel\EeSourceHandling\SourceAdapterFactory;
-use BuzzingPixel\Ansel\EeSourceHandling\SourceAdapterListItem;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocation;
 use BuzzingPixel\Ansel\Field\Settings\LocationSelectionCollection;
 use BuzzingPixel\Ansel\Field\Settings\LocationSelectionItem;
+use BuzzingPixel\Ansel\SourceHandling\Ee\EeSourceAdapterFactory;
+use BuzzingPixel\Ansel\SourceHandling\SourceAdapterListItem;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocation;
 
 class GetAllLocationSelections
 {
-    private SourceAdapterFactory $sourceAdapterFactory;
+    private EeSourceAdapterFactory $sourceAdapterFactory;
 
-    public function __construct(SourceAdapterFactory $sourceAdapterFactory)
+    public function __construct(EeSourceAdapterFactory $sourceAdapterFactory)
     {
         $this->sourceAdapterFactory = $sourceAdapterFactory;
     }

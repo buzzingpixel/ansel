@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\Ansel\Field\Field\SaveEeField;
 
-use BuzzingPixel\Ansel\EeSourceHandling\File;
 use BuzzingPixel\Ansel\Field\Field\Persistence\AnselImageEeRecord;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedImage;
 use BuzzingPixel\Ansel\Shared\SiteMeta;
 use BuzzingPixel\Ansel\Shared\SystemClock;
+use BuzzingPixel\Ansel\SourceHandling\File;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
 
@@ -30,7 +30,7 @@ class CreateNewImageRecord
         SiteMeta $siteMeta,
         ?int $memberId = null
     ): AnselImageEeRecord {
-        $meta = $payload->fieldMetaEe();
+        $meta = $payload->fieldMeta();
 
         $imageRecord = new AnselImageEeRecord();
 
@@ -38,7 +38,7 @@ class CreateNewImageRecord
 
         $imageRecord->site_id = $siteMeta->siteId();
 
-        $imageRecord->source_id = $payload->fieldMetaEe()->sourceId();
+        $imageRecord->source_id = $payload->fieldMeta()->sourceId();
 
         $imageRecord->content_id = $meta->contentId();
 

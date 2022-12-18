@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee;
 
+use BuzzingPixel\Ansel\SourceHandling\AnselSourceAdapter;
+use BuzzingPixel\Ansel\SourceHandling\SourceAdapterFactory;
+use BuzzingPixel\Ansel\SourceHandling\SourceAdapterListCollection;
+use BuzzingPixel\Ansel\SourceHandling\SourceAdapterListItem;
 use ExpressionEngine\Core\Provider;
 use ExpressionEngine\Service\Addon\Addon;
 use ExpressionEngine\Service\Addon\Factory;
@@ -19,7 +23,7 @@ use function array_values;
 use function assert;
 use function is_array;
 
-class SourceAdapterFactory
+class EeSourceAdapterFactory implements SourceAdapterFactory
 {
     private Factory $addonFactory;
 

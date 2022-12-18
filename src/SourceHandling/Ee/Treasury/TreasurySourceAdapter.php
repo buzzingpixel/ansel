@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\EeSourceHandling\Assets;
+namespace BuzzingPixel\Ansel\SourceHandling\Ee\Treasury;
 
-use BuzzingPixel\Ansel\EeSourceHandling\AnselSourceAdapter;
-use BuzzingPixel\Ansel\EeSourceHandling\File;
-use BuzzingPixel\Ansel\EeSourceHandling\FileCollection;
-use BuzzingPixel\Ansel\EeSourceHandling\StorageLocationCollection;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
+use BuzzingPixel\Ansel\SourceHandling\AnselSourceAdapter;
+use BuzzingPixel\Ansel\SourceHandling\File;
+use BuzzingPixel\Ansel\SourceHandling\FileCollection;
+use BuzzingPixel\Ansel\SourceHandling\StorageLocationCollection;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use ExpressionEngine\Service\Addon\Addon;
 use ExpressionEngine\Service\Addon\Factory;
@@ -19,13 +19,14 @@ use SplFileInfo;
 use function assert;
 use function dd;
 
-class AssetsSourceAdapter implements AnselSourceAdapter
+class TreasurySourceAdapter implements AnselSourceAdapter
 {
-    private AssetsStorageLocations $assetsStorageLocations;
+    private TreasuryStorageLocations $treasuryStorageLocations;
 
-    public function __construct(AssetsStorageLocations $assetsStorageLocations)
-    {
-        $this->assetsStorageLocations = $assetsStorageLocations;
+    public function __construct(
+        TreasuryStorageLocations $treasuryStorageLocations
+    ) {
+        $this->treasuryStorageLocations = $treasuryStorageLocations;
     }
 
     public static function createInstance(): ?self
@@ -45,28 +46,28 @@ class AssetsSourceAdapter implements AnselSourceAdapter
 
         assert($addonFactory instanceof Factory);
 
-        $assets = $addonFactory->get('assets');
+        $treasury = $addonFactory->get('treasury');
 
         /** @phpstan-ignore-next-line */
-        assert($assets instanceof Addon || $assets === null);
+        assert($treasury instanceof Addon || $treasury === null);
 
         /** @phpstan-ignore-next-line */
-        return $assets !== null && $assets->isInstalled();
+        return $treasury !== null && $treasury->isInstalled();
     }
 
     public static function getShortName(): string
     {
-        return 'assets';
+        return 'treasury';
     }
 
     public static function getDisplayName(): string
     {
-        return 'Assets';
+        return 'Treasury';
     }
 
     public function getAllStorageLocations(): StorageLocationCollection
     {
-        return $this->assetsStorageLocations->getAll();
+        return $this->treasuryStorageLocations->getAll();
     }
 
     public function getModalLink(FieldSettingsCollection $fieldSettings): string
