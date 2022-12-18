@@ -28,12 +28,12 @@ class FtDisplayField
     }
 
     /**
-     * @param mixed   $value
-     * @param mixed[] $rawEeFieldSettings
-     * @param scalar  $fieldId
-     * @param scalar  $fieldName
-     * @param scalar  $contentType
-     * @param scalar  $contentId
+     * @param mixed                 $value
+     * @param mixed[]               $rawEeFieldSettings
+     * @param float|int|string|bool $fieldId
+     * @param float|int|string|bool $fieldName
+     * @param float|int|string|bool $contentType
+     * @param float|int|string|bool $contentId
      *
      * @throws ContainerExceptionInterface
      * @throws LoaderError

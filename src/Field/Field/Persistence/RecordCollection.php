@@ -123,7 +123,7 @@ class RecordCollection
     /**
      * @param string[] $excludeProps
      *
-     * @return array<array-key, scalar[]>
+     * @return array<array-key, array<(float|int|string|bool|null)>>
      */
     public function asScalarArray(array $excludeProps = []): array
     {

@@ -56,7 +56,6 @@ class GetInputHtml
             $this->fieldSettingsFromRaw->get(
                 /** @phpstan-ignore-next-line */
                 $field->fieldSettings,
-                /** @phpstan-ignore-next-line */
                 $field->required,
             ),
             (string) $field->handle,

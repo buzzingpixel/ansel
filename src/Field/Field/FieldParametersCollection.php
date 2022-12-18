@@ -47,7 +47,7 @@ class FieldParametersCollection
     }
 
     /**
-     * @return scalar[]
+     * @return array<(float|int|string|bool)>
      */
     public function asArray(): array
     {

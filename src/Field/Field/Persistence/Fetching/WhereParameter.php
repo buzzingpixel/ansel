@@ -8,13 +8,13 @@ class WhereParameter implements Parameter
 {
     private string $property;
 
-    /** @var scalar|scalar[] */
+    /** @var float|int|string|bool|array<(float|int|string|bool|null)>|null */
     private $value;
 
     private Operator $operator;
 
     /**
-     * @param scalar|scalar[] $value
+     * @param float|int|string|bool|array<(float|int|string|bool|null)>|null $value
      */
     public function __construct(
         string $property,

@@ -28,13 +28,13 @@ class FtPostSave
     }
 
     /**
-     * @param mixed   $data
-     * @param mixed[] $rawEeFieldSettings
-     * @param scalar  $fieldId
-     * @param scalar  $fieldName
-     * @param scalar  $contentType
-     * @param scalar  $channelId
-     * @param scalar  $contentId
+     * @param mixed                      $data
+     * @param mixed[]                    $rawEeFieldSettings
+     * @param float|int|string|bool|null $fieldId
+     * @param float|int|string|bool|null $fieldName
+     * @param float|int|string|bool|null $contentType
+     * @param float|int|string|bool|null $channelId
+     * @param float|int|string|bool|null $contentId
      */
     public function save(
         $data,

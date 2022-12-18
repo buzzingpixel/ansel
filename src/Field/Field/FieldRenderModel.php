@@ -6,31 +6,31 @@ namespace BuzzingPixel\Ansel\Field\Field;
 
 class FieldRenderModel
 {
-    /** @var scalar[] */
+    /** @var array<(float|int|string|bool)> */
     private array $fieldSettings;
 
-    /** @var scalar[] */
+    /** @var array<(float|int|string|bool)> */
     private array $customFields;
 
-    /** @var scalar[] */
+    /** @var array<(float|int|string|bool)> */
     private array $parameters;
 
-    /** @var scalar[] */
+    /** @var array<(float|int|string|bool)> */
     private array $translations;
 
-    /** @var scalar[] */
+    /** @var array<(float|int|string|bool)> */
     private array $platform;
 
     /** @var mixed[] */
     private array $data;
 
     /**
-     * @param scalar[] $fieldSettings
-     * @param scalar[] $customFields
-     * @param scalar[] $parameters
-     * @param scalar[] $translations
-     * @param scalar[] $platform
-     * @param mixed[]  $data
+     * @param array<(float|int|string|bool)> $fieldSettings
+     * @param array<(float|int|string|bool)> $customFields
+     * @param array<(float|int|string|bool)> $parameters
+     * @param array<(float|int|string|bool)> $translations
+     * @param array<(float|int|string|bool)> $platform
+     * @param mixed[]                        $data
      */
     public function __construct(
         array $fieldSettings,
@@ -49,7 +49,7 @@ class FieldRenderModel
     }
 
     /**
-     * @return scalar[]
+     * @return array<(float|int|string|bool)>
      */
     public function fieldSettings(): array
     {
@@ -57,7 +57,7 @@ class FieldRenderModel
     }
 
     /**
-     * @return scalar[]
+     * @return array<(float|int|string|bool)>
      */
     public function customFields(): array
     {
@@ -65,7 +65,7 @@ class FieldRenderModel
     }
 
     /**
-     * @return scalar[]
+     * @return array<(float|int|string|bool)>
      */
     public function parameters(): array
     {
@@ -73,7 +73,7 @@ class FieldRenderModel
     }
 
     /**
-     * @return scalar[]
+     * @return array<(float|int|string|bool)>
      */
     public function translations(): array
     {
@@ -81,7 +81,7 @@ class FieldRenderModel
     }
 
     /**
-     * @return scalar[]
+     * @return array<(float|int|string|bool)>
      */
     public function platform(): array
     {

@@ -29,7 +29,7 @@ class GetSettingsHtml
     }
 
     /**
-     * @param scalar[] $rawEeFieldSettings
+     * @param array<(float|int|string|bool|null)> $rawEeFieldSettings
      *
      * @throws SyntaxError
      * @throws InvalidConfigException

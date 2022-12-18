@@ -49,7 +49,7 @@ abstract class Record
     /**
      * @param string[] $excludeProps
      *
-     * @return scalar[]
+     * @return array<(float|int|string|bool|null)>
      */
     public function asArray(array $excludeProps = []): array
     {
@@ -78,7 +78,7 @@ abstract class Record
     }
 
     /**
-     * @param scalar $value
+     * @param float|int|string|bool $value
      *
      * @throws ReflectionException
      * @throws Exception

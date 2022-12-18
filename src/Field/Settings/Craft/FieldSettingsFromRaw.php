@@ -9,8 +9,8 @@ use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 class FieldSettingsFromRaw
 {
     /**
-     * @param scalar[] $rawEeFieldSettings
-     * @param scalar   $required
+     * @param array<(float|int|string|bool|null)> $rawEeFieldSettings
+     * @param float|int|string|bool|null          $required
      */
     public function get(
         array $rawEeFieldSettings,

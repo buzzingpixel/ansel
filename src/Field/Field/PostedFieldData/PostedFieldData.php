@@ -8,7 +8,7 @@ class PostedFieldData
 {
     private string $handle;
 
-    /** @var scalar */
+    /** @var float|int|string|bool|null */
     private $value;
 
     /**
@@ -25,7 +25,7 @@ class PostedFieldData
     }
 
     /**
-     * @param scalar $value
+     * @param float|int|string|bool $value
      */
     public function __construct(
         string $handle,
@@ -41,7 +41,7 @@ class PostedFieldData
     }
 
     /**
-     * @return scalar
+     * @return float|int|string|bool|null
      */
     public function value()
     {

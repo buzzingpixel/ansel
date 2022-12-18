@@ -27,7 +27,7 @@ class GetFieldRenderContext
     }
 
     /**
-     * @param scalar[] $platform
+     * @param array<(float|int|string|bool)> $platform
      *
      * @return mixed[]
      */

@@ -9,7 +9,7 @@ interface Parameter
     public function property(): string;
 
     /**
-     * @return scalar|scalar[]
+     * @return float|int|string|bool|array<(float|int|string|bool|null)>|null
      */
     public function value();
 
