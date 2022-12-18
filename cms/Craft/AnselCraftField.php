@@ -10,9 +10,8 @@ use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\Craft\FieldSettingsFromRaw;
-use BuzzingPixel\Ansel\Field\Settings\Craft\GetFieldSettings;
+use BuzzingPixel\Ansel\Field\Settings\Craft\GetSettingsHtml;
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
-use BuzzingPixel\Ansel\Field\Settings\PopulateFieldSettingsFromDefaults;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use craft\base\ElementInterface;
@@ -49,11 +48,9 @@ class AnselCraftField extends Field
 
     private FieldSettingsFromRaw $fieldSettingsFromRaw;
 
-    private GetFieldSettings $getFieldSettings;
+    private GetSettingsHtml $getSettingsHtml;
 
     private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
-
-    private PopulateFieldSettingsFromDefaults $populateFieldSettingsFromDefaults;
 
     private GetCraftFieldAction $getFieldAction;
 
@@ -73,14 +70,10 @@ class AnselCraftField extends Field
             FieldSettingsFromRaw::class
         );
 
-        $this->getFieldSettings = $container->get(GetFieldSettings::class);
+        $this->getSettingsHtml = $container->get(GetSettingsHtml::class);
 
         $this->fieldSettingsValidator = $container->get(
             FieldSettingsCollectionValidatorContract::class,
-        );
-
-        $this->populateFieldSettingsFromDefaults = $container->get(
-            PopulateFieldSettingsFromDefaults::class,
         );
 
         $this->getFieldAction = $container->get(GetCraftFieldAction::class);
@@ -120,19 +113,10 @@ class AnselCraftField extends Field
      */
     public function getSettingsHtml(): string
     {
-        $fieldSettings = $this->fieldSettingsFromRaw->get(
+        return $this->getSettingsHtml->get(
             $this->fieldSettings,
+            $this->getIsNew(),
         );
-
-        if ($this->getIsNew()) {
-            $this->populateFieldSettingsFromDefaults->populate(
-                $fieldSettings,
-            );
-        }
-
-        return $this->getFieldSettings->render(
-            $fieldSettings,
-        )->content();
     }
 
     /**
