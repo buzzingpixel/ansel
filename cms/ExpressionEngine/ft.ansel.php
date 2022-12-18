@@ -4,12 +4,9 @@
 declare(strict_types=1);
 
 use BuzzingPixel\Ansel\Field\Field\EeContentType;
-use BuzzingPixel\Ansel\Field\Field\FieldMetaEe;
 use BuzzingPixel\Ansel\Field\Field\GetEeField\FtDisplayField;
 use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
-use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
-use BuzzingPixel\Ansel\Field\Field\SaveEeField\SaveFieldAction;
-use BuzzingPixel\Ansel\Field\Field\SaveEeField\SavePayload;
+use BuzzingPixel\Ansel\Field\Field\SaveEeField\FtPostSave;
 use BuzzingPixel\Ansel\Field\Field\Validate\EeFtValidateField;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Settings\ExpressionEngine\GetDisplaySettings;
@@ -65,13 +62,9 @@ class Ansel_ft extends EE_Fieldtype
         'version' => ANSEL_VER,
     ];
 
-    private SaveFieldAction $saveEeFieldAction;
-
     private EE_Input $input;
 
     private PostDataImageUrlHandler $postDataImageUrlHandler;
-
-    private FieldSettingsFromRaw $fieldSettingsFromRaw;
 
     private GetDisplaySettings $getDisplaySettings;
 
@@ -83,6 +76,8 @@ class Ansel_ft extends EE_Fieldtype
 
     private EeFtValidateField $ftValidateField;
 
+    private FtPostSave $ftPostSave;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -92,9 +87,6 @@ class Ansel_ft extends EE_Fieldtype
         parent::__construct();
 
         $container = (new ContainerManager())->container();
-
-        /** @phpstan-ignore-next-line */
-        $this->saveEeFieldAction = $container->get(SaveFieldAction::class);
 
         /** @phpstan-ignore-next-line */
         $this->input = $container->get(EE_Input::class);
@@ -123,6 +115,9 @@ class Ansel_ft extends EE_Fieldtype
 
         /** @phpstan-ignore-next-line */
         $this->ftValidateField = $container->get(EeFtValidateField::class);
+
+        /** @phpstan-ignore-next-line */
+        $this->ftPostSave = $container->get(FtPostSave::class);
     }
 
     /**
@@ -281,10 +276,8 @@ class Ansel_ft extends EE_Fieldtype
             $this->settings,
             $this->field_id,
             $this->field_name,
-            /** @phpstan-ignore-next-line */
-            (string) $this->content_type(),
-            /** @phpstan-ignore-next-line */
-            (int) $this->content_id()
+            $this->content_type(),
+            $this->content_id()
         );
     }
 
@@ -345,28 +338,14 @@ class Ansel_ft extends EE_Fieldtype
      */
     public function post_save($data): void
     {
-        $data = json_decode($data, true);
-
-        $data = is_array($data) ? $data : [];
-
-        $fieldSettings = $this->fieldSettingsFromRaw->get(
+        $this->ftPostSave->save(
+            $data,
             $this->settings,
-            true
-        );
-
-        $this->saveEeFieldAction->save(
-            new SavePayload(
-                PostedData::fromArray($data),
-                $fieldSettings,
-                new FieldMetaEe(
-                    (int) $this->field_id,
-                    (string) $this->field_name,
-                    new EeContentType($this->content_type()),
-                    (int) $this->input->get_post('channel_id'),
-                    /** @phpstan-ignore-next-line */
-                    (int) $this->content_id(),
-                ),
-            ),
+            $this->field_id,
+            $this->field_name,
+            $this->content_type(),
+            $this->input->get_post('channel_id'),
+            $this->content_id(),
         );
     }
 

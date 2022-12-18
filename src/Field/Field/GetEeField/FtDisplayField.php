@@ -32,6 +32,8 @@ class FtDisplayField
      * @param mixed[] $rawEeFieldSettings
      * @param scalar  $fieldId
      * @param scalar  $fieldName
+     * @param scalar  $contentType
+     * @param scalar  $contentId
      *
      * @throws ContainerExceptionInterface
      * @throws LoaderError
@@ -44,8 +46,8 @@ class FtDisplayField
         array $rawEeFieldSettings,
         $fieldId,
         $fieldName,
-        string $contentType,
-        int $contentId
+        $contentType,
+        $contentId
     ): string {
         // TODO: License check
 
@@ -59,11 +61,11 @@ class FtDisplayField
             new FieldMetaEe(
                 (int) $fieldId,
                 (string) $fieldName,
-                new EeContentType($contentType),
+                new EeContentType((string) $contentType),
                 // We don't have enough info to get this here (thanks EE) and we
                 // don't need it (thankfully)
                 0,
-                $contentId,
+                (int) $contentId,
             ),
             $value,
         );
