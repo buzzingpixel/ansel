@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselCms\Craft;
 
-use BuzzingPixel\Ansel\Field\Field\GetCraftFieldAction;
+use BuzzingPixel\Ansel\Field\Field\GetCraftField\GetInputHtml;
 use BuzzingPixel\Ansel\Field\Field\PostDataImageUrlHandler;
 use BuzzingPixel\Ansel\Field\Field\PostedFieldData\PostedData;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
@@ -51,7 +51,7 @@ class AnselCraftField extends Field
 
     private ValidateSettings $validateSettings;
 
-    private GetCraftFieldAction $getFieldAction;
+    private GetInputHtml $getInputHtml;
 
     private ValidateFieldAction $validateFieldAction;
 
@@ -73,7 +73,7 @@ class AnselCraftField extends Field
 
         $this->validateSettings = $container->get(ValidateSettings::class);
 
-        $this->getFieldAction = $container->get(GetCraftFieldAction::class);
+        $this->getInputHtml = $container->get(GetInputHtml::class);
 
         $this->validateFieldAction = $container->get(
             ValidateFieldAction::class
@@ -134,20 +134,7 @@ class AnselCraftField extends Field
         $value,
         ?ElementInterface $element = null
     ): string {
-        // $value should either be an array of post-back data, or an empty array
-        // And we should restore the image URL if a cache for it exists
-        $value = $this->postDataImageUrlHandler->restoreFromCache(
-            is_array($value) ? $value : []
-        );
-
-        return $this->getFieldAction->render(
-            $this->fieldSettingsFromRaw->get(
-                $this->fieldSettings,
-                $this->required,
-            ),
-            (string) $this->handle,
-            PostedData::fromArray($value),
-        );
+        return $this->getInputHtml->get($value, $this);
     }
 
     /**
