@@ -32,11 +32,11 @@ const sites = [
     },
     {
         port: 9980,
-        subdomain: 'eecoilpackphp80',
+        subdomain: 'anseleecoilpackphp80',
     },
     {
         port: 9981,
-        subdomain: 'eecoilpackphp81',
+        subdomain: 'anseleecoilpackphp81',
     },
 ];
 class Localtunnel extends core_1.Command {

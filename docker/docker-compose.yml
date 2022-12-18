@@ -44,6 +44,15 @@ services:
     networks:
       web:
       default:
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-dev_default
+      - traefik.http.routers.ansel.entrypoints=web
+      - traefik.http.routers.ansel.middlewares=https-redirect
+      - traefik.http.routers.ansel.rule=Host(`anselcraft3php74.localtest.me`, `anselcraft3php74.test`, `anselcraft3php80.localtest.me`, `anselcraft3php80.test`, `anselcraft3php81.localtest.me`, `anselcraft3php81.test`, `anselee7php74.localtest.me`, `anselee7php74.test`, `anselee7php80.localtest.me`, `anselee7php80.test`, `anselee7php81.localtest.me`, `anselee7php81.test`, `anseleecoilpackphp80.localtest.me`, `anseleecoilpackphp80.test`, `anseleecoilpackphp81.localtest.me`, `anseleecoilpackphp81.test`)
+      - traefik.http.routers.ansel-secure.entrypoints=websecure
+      - traefik.http.routers.ansel-secure.tls=true
+      - traefik.http.routers.ansel-secure.rule=Host(`anselcraft3php74.localtest.me`, `anselcraft3php74.test`, `anselcraft3php80.localtest.me`, `anselcraft3php80.test`, `anselcraft3php81.localtest.me`, `anselcraft3php81.test`, `anselee7php74.localtest.me`, `anselee7php74.test`, `anselee7php80.localtest.me`, `anselee7php80.test`, `anselee7php81.localtest.me`, `anselee7php81.test`, `anseleecoilpackphp80.localtest.me`, `anseleecoilpackphp80.test`, `anseleecoilpackphp81.localtest.me`, `anseleecoilpackphp81.test`)
 
   ansel-php74:
     env_file:
