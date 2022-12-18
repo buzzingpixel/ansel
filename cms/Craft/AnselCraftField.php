@@ -11,7 +11,7 @@ use BuzzingPixel\Ansel\Field\Field\Validate\ValidatedFieldError;
 use BuzzingPixel\Ansel\Field\Field\Validate\ValidateFieldAction;
 use BuzzingPixel\Ansel\Field\Settings\Craft\FieldSettingsFromRaw;
 use BuzzingPixel\Ansel\Field\Settings\Craft\GetSettingsHtml;
-use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollectionValidatorContract;
+use BuzzingPixel\Ansel\Field\Settings\Craft\ValidateSettings;
 use BuzzingPixel\Ansel\Shared\Meta\Meta;
 use BuzzingPixel\AnselConfig\ContainerManager;
 use craft\base\ElementInterface;
@@ -26,7 +26,6 @@ use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
 use function assert;
-use function count;
 use function dd;
 use function is_array;
 use function is_string;
@@ -50,7 +49,7 @@ class AnselCraftField extends Field
 
     private GetSettingsHtml $getSettingsHtml;
 
-    private FieldSettingsCollectionValidatorContract $fieldSettingsValidator;
+    private ValidateSettings $validateSettings;
 
     private GetCraftFieldAction $getFieldAction;
 
@@ -72,9 +71,7 @@ class AnselCraftField extends Field
 
         $this->getSettingsHtml = $container->get(GetSettingsHtml::class);
 
-        $this->fieldSettingsValidator = $container->get(
-            FieldSettingsCollectionValidatorContract::class,
-        );
+        $this->validateSettings = $container->get(ValidateSettings::class);
 
         $this->getFieldAction = $container->get(GetCraftFieldAction::class);
 
@@ -124,19 +121,7 @@ class AnselCraftField extends Field
      */
     public function validate($attributeNames = null, $clearErrors = true): bool
     {
-        $errors = $this->fieldSettingsValidator->validate(
-            $this->fieldSettingsFromRaw->get(
-                $this->fieldSettings,
-            ),
-        );
-
-        if (count($errors) < 1) {
-            return true;
-        }
-
-        $this->addErrors($errors);
-
-        return false;
+        return $this->validateSettings->validate($this);
     }
 
     /**
