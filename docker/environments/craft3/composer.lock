@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11444a59fa8831205d04b9113ec42da0",
+    "content-hash": "997ac54feed60aa8f13d34e2b58d5706",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -213,7 +213,7 @@
             "dist": {
                 "type": "path",
                 "url": "/var/www/ansel",
-                "reference": "ca1c2bc4ac0e9fd1ce3142a6047fdf22f302bf86"
+                "reference": "685eca9e525fdd35f27ffda7fb71a98ef10ece45"
             },
             "require": {
                 "buzzingpixel/container": "^1.1",
@@ -238,13 +238,13 @@
                 "codedungeon/phpunit-result-printer": "^0.31.0",
                 "craftcms/cms": "^3.7",
                 "doctrine/coding-standard": "^9",
-                "expressionengine/expressionengine": "*",
+                "expressionengine/expressionengine": "7.dev",
                 "phpstan/phpstan": "^1.2.0",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
                 "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "^3.6",
-                "symfony/var-dumper": "^5.3"
+                "symfony/var-dumper": "^5.4"
             },
             "type": "craft-plugin",
             "extra": {
@@ -3067,6 +3067,49 @@
                 "source": "https://github.com/mikehaertl/php-shellcommand/tree/1.6.4"
             },
             "time": "2021-03-17T06:54:33+00:00"
+        },
+        {
+            "name": "morrislaptop/var-dumper-with-context",
+            "version": "v0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/morrislaptop/var-dumper-with-context.git",
+                "reference": "5572e239a83c327ca38df66dc8e87d74592fbf81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/morrislaptop/var-dumper-with-context/zipball/5572e239a83c327ca38df66dc8e87d74592fbf81",
+                "reference": "5572e239a83c327ca38df66dc8e87d74592fbf81",
+                "shasum": ""
+            },
+            "require-dev": {
+                "symfony/var-dumper": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/dump.php"
+                ],
+                "psr-4": {
+                    "Morrislaptop\\VarDumperWithContext\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Craig Morris",
+                    "email": "craig.michael.morris@gmail.com"
+                }
+            ],
+            "description": "Show the line number where the dump method was called",
+            "support": {
+                "issues": "https://github.com/morrislaptop/var-dumper-with-context/issues",
+                "source": "https://github.com/morrislaptop/var-dumper-with-context/tree/v0.3.2"
+            },
+            "time": "2019-10-16T15:27:59+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",

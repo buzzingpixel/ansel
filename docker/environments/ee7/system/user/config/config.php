@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-$projDir = dirname(__DIR__, 3);
-
-require_once $projDir . '/vendor/autoload.php';
-
 $config ??= [];
 
 $config['enable_dock']               = 'y';

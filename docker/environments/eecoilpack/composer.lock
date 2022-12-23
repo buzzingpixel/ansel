@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3fea07a8769b794ae6b6bfec2cc0415",
+    "content-hash": "c4638e626a5746e89d8236bceadcbe2c",
     "packages": [
+        {
+            "name": "akadjon/var-dumper-with-context",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akaDJon/var-dumper-with-context.git",
+                "reference": "2d2cde327dfb421b797d32ce53ca08c8e1b7fe37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akaDJon/var-dumper-with-context/zipball/2d2cde327dfb421b797d32ce53ca08c8e1b7fe37",
+                "reference": "2d2cde327dfb421b797d32ce53ca08c8e1b7fe37",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2",
+                "symfony/var-dumper": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/php/app/dump.php"
+                ],
+                "psr-4": {
+                    "VarDumperWithContext\\": "src/php/app"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "akaDJon",
+                    "email": "akadjonmailbox@gmail.com"
+                }
+            ],
+            "description": "Show the line number where the dump method was called",
+            "support": {
+                "source": "https://github.com/akaDJon/var-dumper-with-context/tree/v1.0.3"
+            },
+            "time": "2022-06-20T07:35:41+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.10.2",

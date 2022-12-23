@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+$projDir = dirname(__DIR__);
+require_once $projDir . '/vendor/autoload.php';
+$wwwDir = dirname(__DIR__, 2);
+require_once $wwwDir . '/dumper.php';
+
 /**
  * This source file is part of the open source project
  * ExpressionEngine (https://expressionengine.com)

@@ -35,6 +35,8 @@ if (file_exists($maintenance)) {
 */
 
 require __DIR__ . '/../vendor/autoload.php';
+$wwwDir = dirname(__DIR__, 2);
+require_once $wwwDir . '/akadjon-dumper/dumper.php';
 
 /*
 |--------------------------------------------------------------------------
