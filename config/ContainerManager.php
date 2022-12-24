@@ -8,6 +8,7 @@ use BuzzingPixel\AnselConfig\Bindings\AddonFactoryBinding;
 use BuzzingPixel\AnselConfig\Bindings\AssetsBinding;
 use BuzzingPixel\AnselConfig\Bindings\ClockBinding;
 use BuzzingPixel\AnselConfig\Bindings\CraftDbConnection;
+use BuzzingPixel\AnselConfig\Bindings\CraftElementsBinding;
 use BuzzingPixel\AnselConfig\Bindings\CraftWebView;
 use BuzzingPixel\AnselConfig\Bindings\EEAlertCollectionBinding;
 use BuzzingPixel\AnselConfig\Bindings\EECIDBForge;
@@ -36,6 +37,7 @@ use BuzzingPixel\AnselConfig\Bindings\SaveUploadKeyBinding;
 use BuzzingPixel\AnselConfig\Bindings\ServerRequest;
 use BuzzingPixel\AnselConfig\Bindings\SettingsRepository;
 use BuzzingPixel\AnselConfig\Bindings\SiteMetaConfig;
+use BuzzingPixel\AnselConfig\Bindings\SourceHandling;
 use BuzzingPixel\AnselConfig\Bindings\TranslatorBinding;
 use BuzzingPixel\AnselConfig\Bindings\TreasuryBindings;
 use BuzzingPixel\AnselConfig\Bindings\Twig;
@@ -82,6 +84,7 @@ class ContainerManager
                 AssetsBinding::get(),
                 ClockBinding::get(),
                 CraftDbConnection::get(),
+                CraftElementsBinding::get(),
                 CraftWebView::get(),
                 EEAlertCollectionBinding::get(),
                 EECIDBForge::get(),
@@ -110,6 +113,7 @@ class ContainerManager
                 ServerRequest::get(),
                 SettingsRepository::get(),
                 SiteMetaConfig::get(),
+                SourceHandling::get(),
                 TranslatorBinding::get(),
                 TreasuryBindings::get(),
                 Twig::get(),

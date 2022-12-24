@@ -14,11 +14,11 @@ class EeGetFileByIdentifier
 {
     private RecordService $recordService;
 
-    private CreateFileInstanceFromRecord $createFileInstance;
+    private EeCreateFileInstanceFromRecord $createFileInstance;
 
     public function __construct(
         RecordService $recordService,
-        CreateFileInstanceFromRecord $createFileInstance
+        EeCreateFileInstanceFromRecord $createFileInstance
     ) {
         $this->recordService      = $recordService;
         $this->createFileInstance = $createFileInstance;

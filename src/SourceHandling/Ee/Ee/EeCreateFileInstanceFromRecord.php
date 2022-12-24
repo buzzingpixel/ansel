@@ -14,7 +14,7 @@ use function is_float;
 use function is_int;
 use function is_string;
 
-class CreateFileInstanceFromRecord
+class EeCreateFileInstanceFromRecord
 {
     public function create(File $record): FileInstance
     {

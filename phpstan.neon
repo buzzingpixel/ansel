@@ -6,7 +6,10 @@ parameters:
     excludePaths:
         - cms/Craft/AnselCraftField.php
         - src/Field/Field/Validate/CraftValidateField.php
+        - src/Field/Field/SaveCraftFields/AfterElementSave.php
         - docker/environments/eecoilpack
+        - src/Shared/CraftAssetQueryBuilderFactory.php
+        - src/SourceHandling/Craft/Craft
     bootstrapFiles:
         - tools-bootstrap.php
 

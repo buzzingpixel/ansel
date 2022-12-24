@@ -2,44 +2,42 @@
 
 declare(strict_types=1);
 
-namespace BuzzingPixel\Ansel\SourceHandling\Ee\Ee;
+namespace BuzzingPixel\Ansel\SourceHandling\Craft;
 
 use BuzzingPixel\Ansel\Field\Settings\FieldSettingsCollection;
 use BuzzingPixel\Ansel\SourceHandling\AnselSourceAdapter;
+use BuzzingPixel\Ansel\SourceHandling\Craft\Craft\CraftAddFile;
+use BuzzingPixel\Ansel\SourceHandling\Craft\Craft\CraftGetFileByIdentifier;
+use BuzzingPixel\Ansel\SourceHandling\Craft\Craft\CraftGetFilesByIdentifiers;
+use BuzzingPixel\Ansel\SourceHandling\Craft\Craft\CraftStorageLocations;
 use BuzzingPixel\Ansel\SourceHandling\File;
 use BuzzingPixel\Ansel\SourceHandling\FileCollection;
-use BuzzingPixel\Ansel\SourceHandling\FileInstanceCollection;
 use BuzzingPixel\Ansel\SourceHandling\StorageLocationCollection;
 use Exception;
 use SplFileInfo;
+use yii\base\InvalidConfigException;
 
-class EeSourceAdapter implements AnselSourceAdapter
+use function dd;
+
+class CraftSourceAdapter implements AnselSourceAdapter
 {
-    private EeStorageLocations $storageLocations;
+    private CraftAddFile $addFile;
 
-    private EeModalLink $modalLink;
+    private CraftStorageLocations $storageLocations;
 
-    private EeGetFileByIdentifier $getFileByIdentifier;
+    private CraftGetFileByIdentifier $getFileByIdentifier;
 
-    private EeAddFile $addFile;
-
-    private EeUploadFile $uploadFile;
-
-    private EeGetFilesByIdentifiers $getFilesByIdentifiers;
+    private CraftGetFilesByIdentifiers $getFilesByIdentifiers;
 
     public function __construct(
-        EeStorageLocations $storageLocations,
-        EeModalLink $modalLink,
-        EeGetFileByIdentifier $getFileByIdentifier,
-        EeAddFile $addFile,
-        EeUploadFile $uploadFile,
-        EeGetFilesByIdentifiers $getFilesByIdentifiers
+        CraftAddFile $addFile,
+        CraftStorageLocations $storageLocations,
+        CraftGetFileByIdentifier $getFileByIdentifier,
+        CraftGetFilesByIdentifiers $getFilesByIdentifiers
     ) {
-        $this->storageLocations      = $storageLocations;
-        $this->modalLink             = $modalLink;
-        $this->getFileByIdentifier   = $getFileByIdentifier;
         $this->addFile               = $addFile;
-        $this->uploadFile            = $uploadFile;
+        $this->storageLocations      = $storageLocations;
+        $this->getFileByIdentifier   = $getFileByIdentifier;
         $this->getFilesByIdentifiers = $getFilesByIdentifiers;
     }
 
@@ -55,12 +53,12 @@ class EeSourceAdapter implements AnselSourceAdapter
 
     public static function getShortName(): string
     {
-        return 'ee';
+        return 'craft';
     }
 
     public static function getDisplayName(): string
     {
-        return 'EE';
+        return 'Craft';
     }
 
     public function getAllStorageLocations(): StorageLocationCollection
@@ -68,18 +66,24 @@ class EeSourceAdapter implements AnselSourceAdapter
         return $this->storageLocations->getAll();
     }
 
+    /**
+     * @throws Exception
+     */
     public function getModalLink(FieldSettingsCollection $fieldSettings): string
     {
-        return $this->modalLink->getLink($fieldSettings);
+        throw new Exception('Not Implemented');
     }
 
+    /**
+     * @throws InvalidConfigException
+     */
     public function getFileByIdentifier(string $identifier): ?File
     {
         return $this->getFileByIdentifier->get($identifier);
     }
 
     /**
-     * @return FileInstanceCollection
+     * @throws InvalidConfigException
      *
      * @inheritDoc
      */
@@ -88,9 +92,6 @@ class EeSourceAdapter implements AnselSourceAdapter
         return $this->getFilesByIdentifiers->get($identifiers);
     }
 
-    /**
-     * @throws Exception
-     */
     public function addFile(
         string $locationIdentifier,
         SplFileInfo $file,
@@ -103,18 +104,12 @@ class EeSourceAdapter implements AnselSourceAdapter
         );
     }
 
-    /**
-     * @throws Exception
-     */
     public function uploadFile(
         string $locationIdentifier,
         SplFileInfo $file,
         ?string $subFolder = null
     ): SplFileInfo {
-        return $this->uploadFile->upload(
-            $locationIdentifier,
-            $file,
-            $subFolder,
-        );
+        // TODO: Implement uploadFile() method.
+        dd('TODO: Implement uploadFile() method.');
     }
 }

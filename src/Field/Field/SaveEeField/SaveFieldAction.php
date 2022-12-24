@@ -16,7 +16,7 @@ use BuzzingPixel\Ansel\ImageManipulation\Manipulator;
 use BuzzingPixel\Ansel\ImageManipulation\OutputType;
 use BuzzingPixel\Ansel\ImageManipulation\Parameters;
 use BuzzingPixel\Ansel\Shared\SiteMeta;
-use BuzzingPixel\Ansel\SourceHandling\Ee\EeSourceAdapterFactory;
+use BuzzingPixel\Ansel\SourceHandling\SourceAdapterFactory;
 use EE_Session;
 use Exception;
 use Psr\Container\ContainerExceptionInterface;
@@ -39,7 +39,7 @@ class SaveFieldAction
 
     private Manipulator $imageManipulator;
 
-    private EeSourceAdapterFactory $sourceFactory;
+    private SourceAdapterFactory $sourceFactory;
 
     private CreateNewImageRecord $createNewRecord;
 
@@ -51,7 +51,7 @@ class SaveFieldAction
         CreateField $createField,
         RecordService $recordService,
         Manipulator $imageManipulator,
-        EeSourceAdapterFactory $sourceFactory,
+        SourceAdapterFactory $sourceFactory,
         CreateNewImageRecord $createNewImageRecord,
         EphemeralFileCachePool $ephemeralFileCachePool
     ) {

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\AnselConfig;
 
+use Craft;
+use RuntimeException;
+
 class Paths
 {
     private string $anselCachePath;
@@ -16,6 +19,23 @@ class Paths
     ) {
         $this->anselCachePath           = $anselCachePath;
         $this->anselCachePathPersistent = $anselCachePathPersistent;
+    }
+
+    public function systemCachePath(): string
+    {
+        switch (ANSEL_ENV) {
+            case 'ee':
+                $sysPath = rtrim(realpath(SYSPATH), '/') . '/';
+                return $sysPath . 'user/cache';
+            case 'craft':
+                return rtrim(Craft::getAlias('@storage'), '/');
+            default:
+                $msg = 'Not implemented for platform ';
+
+                throw new RuntimeException(
+                    $msg . ANSEL_ENV,
+                );
+        }
     }
 
     public function anselCachePath(): string
